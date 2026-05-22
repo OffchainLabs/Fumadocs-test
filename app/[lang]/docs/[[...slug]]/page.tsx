@@ -47,8 +47,21 @@ export default async function Page({
   );
 }
 
+// Defer page generation to first-request time (ISR).
+//
+// `source.generateParams()` would return ~585 (195 pages × 3 locales) static
+// params, which `next build` parallel-prerenders. A race in Next 16.2.6's
+// prerender worker pool surfaces as non-deterministic `null.useContext`
+// crashes (see investigation 2026-05-22). Returning [] sidesteps the race:
+// pages are rendered on first request and cached at the edge, then served
+// statically on subsequent hits. The trade-off is +100-500ms latency on the
+// FIRST view of each page after a deploy — acceptable for a docs site.
+//
+// `dynamicParams` defaults to true for catchall routes, so all valid slugs
+// still render. Revisit when Next.js / Fumadocs fix the prerender race; the
+// fix is to restore `return source.generateParams()`.
 export async function generateStaticParams() {
-  return source.generateParams();
+  return [];
 }
 
 export async function generateMetadata({
