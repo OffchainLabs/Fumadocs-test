@@ -1,0 +1,8 @@
+{
+  "title": "Customize your chain",
+  "pages": [
+    "customize-arbos",
+    "customize-precompile",
+    "customize-stf"
+  ]
+}

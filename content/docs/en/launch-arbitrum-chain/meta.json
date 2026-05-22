@@ -1,0 +1,22 @@
+{
+  "title": "Launch arbitrum chain",
+  "pages": [
+    "a-gentle-introduction",
+    "configure-your-chain",
+    "deploy-an-arbitrum-chain",
+    "maintain-your-chain",
+    "customize-your-chain",
+    "third-party-integrations",
+    "arbitrum-node-runners",
+    "ecosystem-support",
+    "faq-troubleshooting",
+    "aep-license",
+    "arbitrum-chain-sdk-introduction",
+    "concepts",
+    "features",
+    "how-tos",
+    "migrate-between-raases",
+    "migrate-from-another-stack",
+    "reference"
+  ]
+}

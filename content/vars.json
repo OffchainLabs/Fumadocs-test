@@ -1,0 +1,14 @@
+{
+  "latestNitroVersion": "v3.6.4",
+  "latestArbOS": "ArbOS 60 \"Elara\"",
+  "arbOneChainId": 42161,
+  "novaChainId": 42170,
+  "nitroDocsRepo": "https://github.com/OffchainLabs/nitro",
+  "latestNitroNodeImage": "offchainlabs/nitro-node:v3.9.9-6b0af88",
+  "nitroVersionTag": "v3.9.9",
+  "nitroRepositorySlug": "nitro",
+  "nitroPathToArbos": "arbos",
+  "nitroPathToArbosState": "arbos/arbosState",
+  "nitroPathToPrecompiles": "precompiles",
+  "nitroPathToStorage": "arbos/storage"
+}

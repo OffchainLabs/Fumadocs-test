@@ -1,0 +1,14 @@
+{
+  "title": "Validation and security",
+  "pages": [
+    "customizable-challenge-period",
+    "stake-and-validator-configurations",
+    "batch-posting-assertion-control",
+    "arbos-upgrade",
+    "enable-post-4844-blobs",
+    "arbitrum-chain-finality",
+    "batch-poster-fee-tuning",
+    "bold-adoption-for-arbitrum-chains",
+    "config-smart-contract-size-limit"
+  ]
+}

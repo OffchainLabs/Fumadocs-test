@@ -1,0 +1,10 @@
+{
+  "title": "Deploy an arbitrum chain",
+  "pages": [
+    "deploying-an-arbitrum-chain",
+    "deploying-token-bridge",
+    "canonical-factory-contracts",
+    "deploy-your-first-rollup",
+    "run-testnet-infrastructure-first-rollup"
+  ]
+}
