@@ -12,6 +12,10 @@
     "dev": "next dev",
     "start": "next start",
     "types:check": "fumadocs-mdx && next typegen && tsc --noEmit",
+    "inventory-links": "node scripts/inventory-links.mjs",
+    "move-doc": "node scripts/move-doc.mjs",
+    "check-links": "node scripts/check-links.mjs",
+    "restructure": "node scripts/restructure.mjs",
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
