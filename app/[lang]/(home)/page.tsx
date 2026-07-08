@@ -22,7 +22,7 @@ export default async function HomePage({
           Get started
         </Link>
         <Link
-          href="https://github.com/OffchainLabs/arbitrum-docs-v2"
+          href="https://github.com/OffchainLabs/Fumadocs-test"
           className="border border-fd-border px-5 py-2 font-medium"
         >
           GitHub

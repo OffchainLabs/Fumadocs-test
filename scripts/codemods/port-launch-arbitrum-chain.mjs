@@ -17,8 +17,8 @@ import { join, relative, dirname, basename } from 'node:path';
 
 const LEGACY_ROOT = '/Users/allup/OCL/arbitrum-docs-baseline/docs/launch-arbitrum-chain';
 const LEGACY_GLOBAL_PARTIALS = '/Users/allup/OCL/arbitrum-docs-baseline/docs/partials';
-const V2_SECTION_ROOT = '/Users/allup/OCL/arbitrum-docs-v2/content/docs/en/launch-arbitrum-chain';
-const V2_GLOBAL_PARTIALS = '/Users/allup/OCL/arbitrum-docs-v2/content/docs/en/partials';
+const V2_SECTION_ROOT = '/Users/allup/OCL/Fumadocs-test/content/docs/en/launch-arbitrum-chain';
+const V2_GLOBAL_PARTIALS = '/Users/allup/OCL/Fumadocs-test/content/docs/en/partials';
 
 const SKIP_PATHS = new Set([
   // All previously-deferred pages ported via MVP bucket 1 (2026-05-22):

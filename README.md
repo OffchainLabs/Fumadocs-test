@@ -1,4 +1,4 @@
-# arbitrum-docs-v2
+# Fumadocs-test
 
 Arbitrum documentation portal — Next.js 16 / Fumadocs migration of [`OffchainLabs/arbitrum-docs`](https://github.com/OffchainLabs/arbitrum-docs).
 
