@@ -9,11 +9,19 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
   ),
-  // favicon.ico lives in public/ (not app/, which would recreate the
-  // app/favicon.ico route that broke the Vercel build). Declare it
-  // explicitly so Next emits <link rel="icon"> rather than relying on the
-  // implicit browser request.
-  icons: { icon: '/favicon.ico' },
+  // Icons live in public/ (not app/, which would recreate the app/favicon.ico
+  // route that broke the Vercel build). Declared explicitly so Next emits the
+  // <link> tags. `sizes: 'any'` on the .ico mirrors Next's app/favicon.ico
+  // convention and lets browsers reliably pick the multi-size icon. The white
+  // Offchain hexagon on a charcoal tile stays visible on both light and dark
+  // tab strips.
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/icon.png', type: 'image/png', sizes: '512x512' },
+    ],
+    apple: '/apple-icon.png',
+  },
 };
 
 const geist = Geist({
