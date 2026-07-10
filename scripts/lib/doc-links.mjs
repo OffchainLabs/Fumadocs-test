@@ -215,12 +215,18 @@ export function extractRefs(source) {
     refs.push({ surface: 'jsx-attr', rawUrl: inner, range: [start, start + inner.length] });
   }
 
-  const include = /<include\s*>([\s\S]*?)<\/include>/g;
+  const include = /<include\b([^>]*)>([\s\S]*?)<\/include>/g;
   for (let m; (m = include.exec(masked)); ) {
-    const raw = m[1].trim();
+    const raw = m[2].trim();
     if (raw === '') continue;
+    // `cwd` includes are root-anchored (partials-check validates them); they must never be rewritten
+    // on move, so surface them with a null range like an unrewritable expression attr.
+    if (/\bcwd\b/.test(m[1])) {
+      refs.push({ surface: 'include', rawUrl: raw, range: null, skipped: 'cwd' });
+      continue;
+    }
     const innerStart = m.index + m[0].indexOf('>') + 1;
-    const lead = m[1].length - m[1].trimStart().length;
+    const lead = m[2].length - m[2].trimStart().length;
     const start = innerStart + lead;
     refs.push({ surface: 'include', rawUrl: raw, range: [start, start + raw.length] });
   }
