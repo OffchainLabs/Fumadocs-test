@@ -8,7 +8,7 @@ sme: GreatSoshiant, jose-franco
 target_audience: 'Developers deploying and maintaining Arbitrum chains.'
 ---
 
-<include>../partials/_raas-providers-notice.mdx</include>
+<include cwd>content/partials/launch-arbitrum-chain/_raas-providers-notice.mdx</include>
 
 Creating a new Arbitrum chain involves deploying a set of contracts on your chain's <a data-quicklook-from="parent-chain">parent chain</a>. These contracts are:
 
@@ -150,7 +150,7 @@ Again, most of these parameters don't need to be configured, since the Chain SDK
 | `arbitrum.MaxCodeSize`               | number  | Sets the maximum size for contract bytecodes on the chain (it's recommended to use the default 24Kb, and not set it higher than 96Kb). For more information, refer to [Smart contract size limit](/docs/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/config-smart-contract-size-limit.mdx). |
 | `arbitrum.MaxInitCodeSize`           | number  | Maximum initialization bytecode size allowed (usually double the amount set in `MaxCodeSize`).                                                                                                                                                                                                                         |
 
-<include>../partials/_size-limit.mdx</include>
+<include cwd>content/partials/launch-arbitrum-chain/_size-limit.mdx</include>
 
 ## How to create a new Arbitrum chain using the Chain SDK
 

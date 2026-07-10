@@ -22,24 +22,24 @@ import './styles.css';
 // location (single source of truth). Works because next.config.mjs uses
 // createMDX() from fumadocs-mdx/next, which configures the webpack loader to
 // compile .mdx as React component modules.
-import ConfigCustomGasToken from '@/content/docs/en/launch-arbitrum-chain/features/partials/_custom-gas-token-pc.mdx';
-import ConfigAltDa from '@/content/docs/en/launch-arbitrum-chain/features/partials/_alt-da-pc.mdx';
-import ConfigDedicatedThroughput from '@/content/docs/en/launch-arbitrum-chain/partials/_config-dedicated-throughput.mdx';
-import ConfigNativeEth from '@/content/docs/en/launch-arbitrum-chain/features/partials/_native-eth-pc.mdx';
-import ConfigHardware from '@/content/docs/en/launch-arbitrum-chain/partials/_config-hardware.mdx';
-import ConfigRollup from '@/content/docs/en/launch-arbitrum-chain/features/partials/_rollup-pc.mdx';
-import ConfigAnytrust from '@/content/docs/en/launch-arbitrum-chain/features/partials/_anytrust-pc.mdx';
-import ConfigFastwithdrawals from '@/content/docs/en/launch-arbitrum-chain/features/partials/_fast-withdrawals-pc.mdx';
-import ConfigTimeboost from '@/content/docs/en/launch-arbitrum-chain/features/partials/_timeboost-pc.mdx';
-import ConfigBold from '@/content/docs/en/launch-arbitrum-chain/features/partials/_bold-pc.mdx';
-import ConfigPermissionedValidators from '@/content/docs/en/launch-arbitrum-chain/features/partials/_permissioned-validators-pc.mdx';
-import ConfigL1ChallengePeriod from '@/content/docs/en/launch-arbitrum-chain/partials/_config-l1-challenge-period.mdx';
-import ConfigForceInclusion from '@/content/docs/en/launch-arbitrum-chain/partials/_config-force-inclusion.mdx';
-import ConfigAccountAbstraction from '@/content/docs/en/launch-arbitrum-chain/partials/_config-account-abstraction.mdx';
-import ConfigCustomizableGovernance from '@/content/docs/en/launch-arbitrum-chain/partials/_config-customizable-governance.mdx';
-import ConfigDataPostingCosts from '@/content/docs/en/launch-arbitrum-chain/partials/_config-data-posting-costs.mdx';
-import ConfigEVMCompatibility from '@/content/docs/en/launch-arbitrum-chain/partials/_config-evm-compatbility.mdx';
-import ConfigOtherLanguageSupport from '@/content/docs/en/launch-arbitrum-chain/partials/_config-other-language-support.mdx';
+import ConfigCustomGasToken from '@/content/partials/launch-arbitrum-chain/features/_custom-gas-token-pc.mdx';
+import ConfigAltDa from '@/content/partials/launch-arbitrum-chain/features/_alt-da-pc.mdx';
+import ConfigDedicatedThroughput from '@/content/partials/launch-arbitrum-chain/_config-dedicated-throughput.mdx';
+import ConfigNativeEth from '@/content/partials/launch-arbitrum-chain/features/_native-eth-pc.mdx';
+import ConfigHardware from '@/content/partials/launch-arbitrum-chain/_config-hardware.mdx';
+import ConfigRollup from '@/content/partials/launch-arbitrum-chain/features/_rollup-pc.mdx';
+import ConfigAnytrust from '@/content/partials/launch-arbitrum-chain/features/_anytrust-pc.mdx';
+import ConfigFastwithdrawals from '@/content/partials/launch-arbitrum-chain/features/_fast-withdrawals-pc.mdx';
+import ConfigTimeboost from '@/content/partials/launch-arbitrum-chain/features/_timeboost-pc.mdx';
+import ConfigBold from '@/content/partials/launch-arbitrum-chain/features/_bold-pc.mdx';
+import ConfigPermissionedValidators from '@/content/partials/launch-arbitrum-chain/features/_permissioned-validators-pc.mdx';
+import ConfigL1ChallengePeriod from '@/content/partials/launch-arbitrum-chain/_config-l1-challenge-period.mdx';
+import ConfigForceInclusion from '@/content/partials/launch-arbitrum-chain/_config-force-inclusion.mdx';
+import ConfigAccountAbstraction from '@/content/partials/launch-arbitrum-chain/_config-account-abstraction.mdx';
+import ConfigCustomizableGovernance from '@/content/partials/launch-arbitrum-chain/_config-customizable-governance.mdx';
+import ConfigDataPostingCosts from '@/content/partials/launch-arbitrum-chain/_config-data-posting-costs.mdx';
+import ConfigEVMCompatibility from '@/content/partials/launch-arbitrum-chain/_config-evm-compatbility.mdx';
+import ConfigOtherLanguageSupport from '@/content/partials/launch-arbitrum-chain/_config-other-language-support.mdx';
 
 const contentMap: Record<string, React.ComponentType> = {
   'config-custom-gas-token': ConfigCustomGasToken,

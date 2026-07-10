@@ -16,6 +16,9 @@
     "move-doc": "node scripts/move-doc.mjs",
     "check-links": "node scripts/check-links.mjs",
     "restructure": "node scripts/restructure.mjs",
+    "partials:migrate": "node scripts/migrate-partials.mjs",
+    "partials:catalog": "node scripts/generate-partials-catalog.mjs",
+    "partials:check": "node scripts/partials-check.mjs",
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
