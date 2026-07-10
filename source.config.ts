@@ -30,24 +30,20 @@ const arbitrumPageSchema = pageSchema.extend({
 });
 
 /**
- * Exclude partial files (prefix `_`) from the doc collection.
- * Partials are content fragments meant to be inlined via the Fumadocs
- * `<include>` directive — they have no frontmatter and must not be routed.
+ * Partials live in `content/partials/` — outside the doc collection `dir` entirely — so they can
+ * never be routed and need no glob exclusion here. They are inlined via `<include cwd>…</include>`.
+ * `scripts/partials-check.mjs` enforces that no `_`-prefixed file reappears under content/docs.
  */
-const partialExclusions = ['**/_*.mdx', '**/_*.md'];
-
 export const docs = defineDocs({
   dir: 'content/docs',
   docs: {
     schema: arbitrumPageSchema,
-    files: ['**/*.{md,mdx}', ...partialExclusions.map((p) => `!${p}`)],
     postprocess: {
       includeProcessedMarkdown: true,
     },
   },
   meta: {
     schema: metaSchema,
-    files: ['**/meta.json', ...partialExclusions.map((p) => `!${p}`)],
   },
 });
 
