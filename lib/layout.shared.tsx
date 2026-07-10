@@ -2,6 +2,7 @@ import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import { defineI18nUI } from 'fumadocs-ui/i18n';
 import { appName, gitConfig } from './shared';
 import { i18n } from './i18n';
+import { OffchainMark } from '@/components/OffchainMark';
 
 /**
  * UI translations + display names for each locale.
@@ -17,7 +18,12 @@ export const i18nUI = defineI18nUI(i18n, {
 export function baseOptions(_locale: string): BaseLayoutProps {
   return {
     nav: {
-      title: appName,
+      title: (
+        <>
+          <OffchainMark className="h-5 w-auto" />
+          {appName}
+        </>
+      ),
     },
     githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
     i18n: true,

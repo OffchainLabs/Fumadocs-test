@@ -9,9 +9,9 @@ export default async function HomePage({
   const prefix = lang === 'en' ? '' : `/${lang}`;
 
   return (
-    <main className="flex flex-col items-center justify-center text-center flex-1 px-4 py-24 gap-6">
+    <main className="flex flex-col items-center justify-center text-center flex-1 px-4 py-24 gap-6 bg-linear-to-b from-black to-[#565656] text-white">
       <h1 className="text-4xl font-semibold tracking-tight">Arbitrum docs</h1>
-      <p className="text-fd-muted-foreground max-w-xl">
+      <p className="text-white/70 max-w-xl">
         Documentation for Arbitrum chains, the Arbitrum stack, and Orbit.
       </p>
       <div className="flex gap-3">
