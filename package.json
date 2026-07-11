@@ -19,6 +19,9 @@
     "partials:migrate": "node scripts/migrate-partials.mjs",
     "partials:catalog": "node scripts/generate-partials-catalog.mjs",
     "partials:check": "node scripts/partials-check.mjs",
+    "glossary:migrate": "node scripts/migrate-glossary.mjs",
+    "quicklooks:migrate": "node scripts/migrate-quicklooks.mjs",
+    "references:check": "node scripts/references-check.mjs",
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {

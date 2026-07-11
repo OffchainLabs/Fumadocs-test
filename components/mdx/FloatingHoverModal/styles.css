@@ -1,61 +1,8 @@
-/* Trigger link styling */
-.floating-hover-modal__trigger {
-  border-bottom: 1px dotted var(--color-fd-primary);
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.floating-hover-modal__trigger:hover {
-  text-decoration: none;
-}
-
-/* Modal container */
-.floating-hover-modal__content {
-  background: var(--color-fd-popover);
-  border: 1px solid var(--color-fd-border);
-  border-radius: 8px;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-  max-width: 600px;
-  max-height: 80vh;
-  min-width: 400px;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-/* Modal header */
-.floating-hover-modal__header {
-  display: flex;
-  justify-content: flex-end;
-  padding: 8px 12px 0;
-  flex-shrink: 0;
-}
-
-.floating-hover-modal__close {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: var(--color-fd-muted-foreground);
-  padding: 4px 8px;
-  border-radius: 4px;
-  transition: all 0.2s;
-}
-
-.floating-hover-modal__close:hover {
-  background: var(--color-fd-accent);
-  color: var(--color-fd-foreground);
-}
-
-/* Modal body */
-.floating-hover-modal__body {
-  padding: 0 24px 24px;
-  overflow-y: auto;
-  flex: 1;
-}
-
-/* Content styling */
+/*
+ * Content typography for the feature-selector modal body. The popover chrome (container, header,
+ * close, scrolling) now lives in components/HoverPopover; these classes style the MDX rendered by
+ * `mdxComponents` in index.tsx.
+ */
 .floating-modal__title {
   font-size: 24px;
   font-weight: 600;
@@ -122,22 +69,7 @@
   text-decoration: underline;
 }
 
-.floating-modal__link:hover {
-  color: var(--color-fd-primary);
-}
-
-/* Responsive design */
 @media (max-width: 768px) {
-  .floating-hover-modal__content {
-    min-width: 320px;
-    max-width: calc(100vw - 32px);
-    max-height: calc(100vh - 64px);
-  }
-
-  .floating-hover-modal__body {
-    padding: 0 16px 16px;
-  }
-
   .floating-modal__title {
     font-size: 20px;
   }
@@ -145,23 +77,4 @@
   .floating-modal__subtitle {
     font-size: 18px;
   }
-}
-
-/* Scrollbar styling */
-.floating-hover-modal__body::-webkit-scrollbar {
-  width: 8px;
-}
-
-.floating-hover-modal__body::-webkit-scrollbar-track {
-  background: var(--color-fd-background);
-  border-radius: 4px;
-}
-
-.floating-hover-modal__body::-webkit-scrollbar-thumb {
-  background: var(--color-fd-muted);
-  border-radius: 4px;
-}
-
-.floating-hover-modal__body::-webkit-scrollbar-thumb:hover {
-  background: var(--color-fd-accent);
 }

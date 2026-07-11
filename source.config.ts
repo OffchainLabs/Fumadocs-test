@@ -1,6 +1,7 @@
-import { defineConfig, defineDocs } from 'fumadocs-mdx/config';
+import { defineCollections, defineConfig, defineDocs } from 'fumadocs-mdx/config';
 import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
 import { z } from 'zod';
+import { referenceSchema } from './lib/reference-schema';
 
 /**
  * Per PRD §4.1, every doc page requires:
@@ -45,6 +46,21 @@ export const docs = defineDocs({
   meta: {
     schema: metaSchema,
   },
+});
+
+/**
+ * Reference collections back the inline hover-reference system (see
+ * docs/superpowers/specs/2026-07-10-references-glossary-design.md). Every entry shares
+ * `referenceSchema` ({ id, title, sortAs? }); the MDX body is the definition. The glossary is the
+ * first consumer; new reference types (precompiles, config params, …) add a collection with this
+ * schema + one registry entry in `lib/references.ts`. These are a separate collection, so they do
+ * NOT carry the docs page contract. (source.config may only export collections, hence the schema
+ * lives in lib/reference-schema.)
+ */
+export const glossary = defineCollections({
+  type: 'doc',
+  dir: 'content/glossary',
+  schema: referenceSchema,
 });
 
 export default defineConfig({
