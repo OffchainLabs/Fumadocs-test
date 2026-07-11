@@ -9,7 +9,7 @@ sme: GreatSoshiant, jose-franco
 
 <include cwd>content/partials/launch-arbitrum-chain/_raas-providers-notice.mdx</include>
 
-Deploying new <a data-quicklook-from='arbitrum-chain'>Arbitrum chains</a> is done through a [`RollupCreator`](/docs/launch-arbitrum-chain/deploy-an-arbitrum-chain/canonical-factory-contracts.mdx) contract that processes the creation of the needed contracts and sends the initialization messages from the parent chain to the newly created Arbitrum chain. To assist with these operations, the Arbitrum chain SDK contains a series of tools and scripts that help create and manage your chain(s). Its capabilities include:
+Deploying new <Term id="arbitrum-chain">Arbitrum chains</Term> is done through a [`RollupCreator`](/docs/launch-arbitrum-chain/deploy/canonical-factory-contracts) contract that processes the creation of the needed contracts and sends the initialization messages from the parent chain to the newly created Arbitrum chain. To assist with these operations, the Arbitrum chain SDK contains a series of tools and scripts that help create and manage your chain(s). Its capabilities include:
 
 - Configuration and deployment of your Arbitrum chain's core contracts
 - Configuration and deployment of the chain's TokenBridge contracts
@@ -28,19 +28,19 @@ There are two main types of Arbitrum chains. Review the following table to deter
 
 | Chain type   | Description                                                                                                                                                                                                                                                                                                       | Use case                                                       |
 | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| **Rollup**   | Offers Ethereum-grade security by batching, compressing, and posting data to the parent chain, similarly to <a data-quicklook-from='arbitrum-one'>Arbitrum One</a>.                                                                                                                                               | Ideal for applications that require high security guarantees.  |
-| **AnyTrust** | Implements the <a data-quicklook-from='arbitrum-anytrust-protocol'>AnyTrust protocol</a>, relying on an external <a data-quicklook-from='data-availability-committee-dac'>Data Availability Committee (DAC)</a> to store data and provide it on-demand, effectively using it as its Data Availability (DA) layer. | Suitable for applications that require lower transaction fees. |
+| **Rollup**   | Offers Ethereum-grade security by batching, compressing, and posting data to the parent chain, similarly to <Term id="arbitrum-one">Arbitrum One</Term>.                                                                                                                                               | Ideal for applications that require high security guarantees.  |
+| **AnyTrust** | Implements the <Term id="arbitrum-anytrust-protocol">AnyTrust protocol</Term>, relying on an external <Term id="data-availability-committee-dac">Data Availability Committee (DAC)</Term> to store data and provide it on-demand, effectively using it as its Data Availability (DA) layer. | Suitable for applications that require lower transaction fees. |
 
-Additionally, Arbitrum chains can be configured to use **ETH** or any standard **ERC-20** token as the gas token. To understand the implications of using a custom gas token, see [Configure a custom gas token](/docs/launch-arbitrum-chain/configure-your-chain/common/gas/use-a-custom-gas-token-rollup.mdx).
+Additionally, Arbitrum chains can be configured to use **ETH** or any standard **ERC-20** token as the gas token. To understand the implications of using a custom gas token, see [Configure a custom gas token](/docs/launch-arbitrum-chain/configuration/costs/use-a-custom-gas-token-rollup).
 
 ## 2. Deploy your chain
 
-After selecting a chain type, follow [this guide](/docs/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploying-an-arbitrum-chain.mdx) to deploy your chain using the Chain SDK.
+After selecting a chain type, follow [this guide](/docs/launch-arbitrum-chain/deploy/deploying-an-arbitrum-chain) to deploy your chain using the Chain SDK.
 
 ## 3. Configure your Arbitrum chain's node
 
-Once the chain is deployed, you'll need to generate the configuration to run its node. To learn how, visit [Configure your Arbitrum chain's node](/docs/launch-arbitrum-chain/how-tos/arbitrum-chain-sdk-preparing-node-config.mdx).
+Once the chain is deployed, you'll need to generate the configuration to run its node. To learn how, visit [Configure your Arbitrum chain's node](/docs/launch-arbitrum-chain/arbitrum-chain-sdk-preparing-node-config).
 
 ## 4. Deploy your Arbitrum chain's token bridge
 
-Your Arbitrum chain's token bridge contracts allow **ERC-20** tokens to move between your Arbitrum chain and its underlying parent chain. Read [Deploy your Arbitrum chain's token bridge](/docs/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploying-token-bridge.mdx) to learn how to set up your bridge.
+Your Arbitrum chain's token bridge contracts allow **ERC-20** tokens to move between your Arbitrum chain and its underlying parent chain. Read [Deploy your Arbitrum chain's token bridge](/docs/launch-arbitrum-chain/deploy/deploying-token-bridge) to learn how to set up your bridge.
