@@ -1,8 +1,10 @@
-import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import { defineI18nUI } from 'fumadocs-ui/i18n';
-import { appName, gitConfig } from './shared';
-import { i18n } from './i18n';
+import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
+
 import { OffchainMark } from '@/components/OffchainMark';
+
+import { i18n } from './i18n';
+import { appName, gitConfig } from './shared';
 
 /**
  * UI translations + display names for each locale.
@@ -10,9 +12,9 @@ import { OffchainMark } from '@/components/OffchainMark';
  * `en` entries act as defaults for other locales when a key is missing.
  */
 export const i18nUI = defineI18nUI(i18n, {
-  en: { displayName: 'English' },
+  'en': { displayName: 'English' },
   'zh-CN': { displayName: '简体中文', search: '搜索文档' },
-  ja: { displayName: '日本語', search: 'ドキュメントを検索' },
+  'ja': { displayName: '日本語', search: 'ドキュメントを検索' },
 });
 
 export function baseOptions(_locale: string): BaseLayoutProps {
@@ -29,4 +31,3 @@ export function baseOptions(_locale: string): BaseLayoutProps {
     i18n: true,
   };
 }
-

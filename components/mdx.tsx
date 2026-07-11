@@ -1,6 +1,7 @@
+import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
 import defaultMdxComponents from 'fumadocs-ui/mdx';
 import type { MDXComponents } from 'mdx/types';
-import { Tab, Tabs } from 'fumadocs-ui/components/tabs';
+
 import { AddressExplorerLink } from '@/components/mdx/AddressExplorerLink';
 import CustomDetails from '@/components/mdx/CustomDetails';
 import FAQStructuredData from '@/components/mdx/FAQStructuredData';
@@ -9,8 +10,8 @@ import { ImageZoom } from '@/components/mdx/ImageZoom';
 import { Reference } from '@/components/mdx/Reference';
 import { ReferenceList } from '@/components/mdx/ReferenceList';
 import { Term } from '@/components/mdx/Term';
-import { Var } from '@/components/mdx/Var';
 import { VanillaAdmonition } from '@/components/mdx/VanillaAdmonition';
+import { Var } from '@/components/mdx/Var';
 
 export function getMDXComponents(components?: MDXComponents) {
   return {

@@ -1,8 +1,9 @@
-import { NextRequest, NextResponse, NextFetchEvent } from 'next/server';
-import { isMarkdownPreferred, rewritePath } from 'fumadocs-core/negotiation';
 import { createI18nMiddleware } from 'fumadocs-core/i18n/middleware';
-import { docsContentRoute, docsRoute } from '@/lib/shared';
+import { isMarkdownPreferred, rewritePath } from 'fumadocs-core/negotiation';
+import { NextFetchEvent, NextRequest, NextResponse } from 'next/server';
+
 import { i18n } from '@/lib/i18n';
+import { docsContentRoute, docsRoute } from '@/lib/shared';
 
 const { rewrite: rewriteDocs } = rewritePath(
   `${docsRoute}{/*path}`,

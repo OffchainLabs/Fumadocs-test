@@ -10,7 +10,6 @@
  * `<include>`) resolves to an existing file. External links, fragments, JSX expression attrs, and
  * relative-URL links inside partials (which have no fixed URL) are skipped. Anchors are not validated.
  */
-
 import { buildIndex, findBrokenLinks } from './lib/doc-links.mjs';
 
 function main() {

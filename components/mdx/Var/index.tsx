@@ -1,4 +1,4 @@
-import { vars, type VarKey } from '@/content/vars';
+import { type VarKey, vars } from '@/content/vars';
 
 /**
  * Server component that renders a global variable inline in MDX.

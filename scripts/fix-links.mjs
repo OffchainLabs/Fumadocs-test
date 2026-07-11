@@ -10,17 +10,17 @@
  *
  *   node scripts/fix-links.mjs [--dry]
  */
-
 import { writeFileSync } from 'node:fs';
+
 import {
+  applyRewrites,
   buildIndex,
   extractRefs,
-  resolveRefToFile,
-  renderRef,
-  applyRewrites,
-  splitSuffix,
   isExternalOrFragment,
   lineAt,
+  renderRef,
+  resolveRefToFile,
+  splitSuffix,
 } from './lib/doc-links.mjs';
 
 const dry = process.argv.slice(2).includes('--dry');
@@ -55,7 +55,10 @@ function trailingOverlap(linkSegs, candSegs) {
  */
 function chooseTarget(pathPart, candidates) {
   if (candidates.length === 1) return candidates[0].abs;
-  const linkSegs = pathPart.replace(/\.mdx?$/i, '').replace(/^\/|\/$/g, '').split('/');
+  const linkSegs = pathPart
+    .replace(/\.mdx?$/i, '')
+    .replace(/^\/|\/$/g, '')
+    .split('/');
   const scored = candidates
     .map((c) => ({ abs: c.abs, score: trailingOverlap(linkSegs, c.segs) }))
     .sort((a, b) => b.score - a.score);
@@ -82,7 +85,12 @@ for (const file of index.files) {
     const candidates = byBasename.get(base) ?? [];
     const target = candidates.length ? chooseTarget(pathPart, candidates) : null;
     if (!target) {
-      unresolved.push({ rel: file.rel, line: lineAt(file.content, ref.range[0]), url: ref.rawUrl, reason: candidates.length === 0 ? 'no-match' : 'ambiguous' });
+      unresolved.push({
+        rel: file.rel,
+        line: lineAt(file.content, ref.range[0]),
+        url: ref.rawUrl,
+        reason: candidates.length === 0 ? 'no-match' : 'ambiguous',
+      });
       continue;
     }
 
@@ -90,7 +98,12 @@ for (const file of index.files) {
     const style = pathPart.startsWith('/') ? 'urlAbs' : 'urlRel';
     const newPath = renderRef(style, target, file.abs, pathPart, index);
     if (!newPath) {
-      unresolved.push({ rel: file.rel, line: lineAt(file.content, ref.range[0]), url: ref.rawUrl, reason: 'unrenderable' });
+      unresolved.push({
+        rel: file.rel,
+        line: lineAt(file.content, ref.range[0]),
+        url: ref.rawUrl,
+        reason: 'unrenderable',
+      });
       continue;
     }
     rewrites.push({ range: ref.range, newText: newPath + suffix });

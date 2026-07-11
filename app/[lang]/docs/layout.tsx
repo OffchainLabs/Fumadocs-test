@@ -1,7 +1,8 @@
 import { DocsLayout } from 'fumadocs-ui/layouts/docs';
 import type { ReactNode } from 'react';
-import { source } from '@/lib/source';
+
 import { baseOptions } from '@/lib/layout.shared';
+import { source } from '@/lib/source';
 
 export default async function Layout({
   params,

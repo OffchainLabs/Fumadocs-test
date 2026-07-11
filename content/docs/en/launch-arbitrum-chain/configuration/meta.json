@@ -1,8 +1,4 @@
 {
   "title": "Advanced",
-  "pages": [
-    "layer-leap",
-    "config-sequencer-timing-adjustments",
-    "da-api-integration-guide"
-  ]
+  "pages": ["layer-leap", "config-sequencer-timing-adjustments", "da-api-integration-guide"]
 }

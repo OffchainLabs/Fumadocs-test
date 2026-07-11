@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+
 import buildingOrbitFaqs from './data/building-orbit-faqs.json';
 import type { FAQ, FAQStructuredDataProps } from './types';
 
@@ -36,11 +37,11 @@ export default function FAQStructuredData({ faqsId, renderFaqs }: FAQStructuredD
   const faqStructuredData = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    name: 'FAQs for ' + faqsId,
-    mainEntity: faqs.map((faq) => ({
+    'name': 'FAQs for ' + faqsId,
+    'mainEntity': faqs.map((faq) => ({
       '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+      'name': faq.question,
+      'acceptedAnswer': { '@type': 'Answer', 'text': faq.answer },
     })),
   };
 

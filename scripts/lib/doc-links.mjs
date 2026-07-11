@@ -11,8 +11,7 @@
  * are the path minus extension with a trailing `index` dropped (no numeric prefixes, no `slug:`
  * frontmatter override); navigation order lives in per-directory `meta.json` `pages` arrays.
  */
-
-import { readdirSync, readFileSync, existsSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 
 const posix = path.posix;
@@ -41,12 +40,18 @@ function dotSlash(rel) {
 /** Split a raw URL into its path part and the trailing `#anchor`/`?query` suffix. */
 export function splitSuffix(rawUrl) {
   const i = rawUrl.search(/[#?]/);
-  return i < 0 ? { pathPart: rawUrl, suffix: '' } : { pathPart: rawUrl.slice(0, i), suffix: rawUrl.slice(i) };
+  return i < 0
+    ? { pathPart: rawUrl, suffix: '' }
+    : { pathPart: rawUrl.slice(0, i), suffix: rawUrl.slice(i) };
 }
 
 /** True when a link points outside the docs tree (protocol, scheme-relative, or fragment-only). */
 export function isExternalOrFragment(pathPart) {
-  return pathPart.length === 0 || pathPart.startsWith('#') || /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(pathPart);
+  return (
+    pathPart.length === 0 ||
+    pathPart.startsWith('#') ||
+    /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(pathPart)
+  );
 }
 
 /** True when a file is a content partial (underscore-prefixed): imported via `<include>`, not routed. */
@@ -114,16 +119,36 @@ export function buildIndex(repoRoot) {
       urlByAbs.set(abs, url);
       const existing = byUrl.get(url);
       if (existing && existing !== abs) {
-        console.warn(`warning: URL collision ${url}\n  ${toPosix(path.relative(repoRoot, existing))}\n  ${toPosix(path.relative(repoRoot, abs))}`);
+        console.warn(
+          `warning: URL collision ${url}\n  ${toPosix(path.relative(repoRoot, existing))}\n  ${toPosix(path.relative(repoRoot, abs))}`,
+        );
       }
       byUrl.set(url, abs);
       byLocaleSlug.set(`${locale}\0${slug}`, abs);
     }
 
-    files.push({ abs, rel: toPosix(path.relative(repoRoot, abs)), locale, slug, url, content, partial });
+    files.push({
+      abs,
+      rel: toPosix(path.relative(repoRoot, abs)),
+      locale,
+      slug,
+      url,
+      content,
+      partial,
+    });
   }
 
-  return { repoRoot, docsRoot, files, byAbs, localeByAbs, slugByAbs, urlByAbs, byUrl, byLocaleSlug };
+  return {
+    repoRoot,
+    docsRoot,
+    files,
+    byAbs,
+    localeByAbs,
+    slugByAbs,
+    urlByAbs,
+    byUrl,
+    byLocaleSlug,
+  };
 }
 
 /**
@@ -184,7 +209,7 @@ export function extractRefs(source) {
   const refs = [];
 
   const mdInline = /\]\(\s*(<[^>\n]*>|[^)\s]+)(?:\s+"[^"\n]*"|\s+'[^'\n]*')?\s*\)/g;
-  for (let m; (m = mdInline.exec(masked)); ) {
+  for (let m; (m = mdInline.exec(masked));) {
     let raw = m[1];
     let start = m.index + m[0].indexOf(raw, 2);
     let end = start + raw.length;
@@ -197,14 +222,14 @@ export function extractRefs(source) {
   }
 
   const mdDef = /^[ \t]*\[[^\]\n]+\]:[ \t]+(\S+)/gm;
-  for (let m; (m = mdDef.exec(masked)); ) {
+  for (let m; (m = mdDef.exec(masked));) {
     const raw = m[1];
     const start = m.index + m[0].lastIndexOf(raw);
     refs.push({ surface: 'markdown', rawUrl: raw, range: [start, start + raw.length] });
   }
 
   const jsxAttr = /\b(href|to)\s*=\s*("[^"\n]*"|'[^'\n]*'|\{)/g;
-  for (let m; (m = jsxAttr.exec(masked)); ) {
+  for (let m; (m = jsxAttr.exec(masked));) {
     const value = m[2];
     if (value === '{') {
       refs.push({ surface: 'jsx-attr', rawUrl: '', range: null, skipped: 'expression' });
@@ -216,7 +241,7 @@ export function extractRefs(source) {
   }
 
   const include = /<include\b([^>]*)>([\s\S]*?)<\/include>/g;
-  for (let m; (m = include.exec(masked)); ) {
+  for (let m; (m = include.exec(masked));) {
     const raw = m[2].trim();
     if (raw === '') continue;
     // `cwd` includes are root-anchored (partials-check validates them); they must never be rewritten
@@ -260,7 +285,10 @@ export function resolveRefToFile(rawUrl, fromAbs, index) {
     rest = rest.slice(loc[0].length);
   }
   if (!/^\/docs(?=\/|$)/.test(rest)) return null;
-  let slug = rest.replace(/^\/docs\/?/, '').replace(/\.mdx?$/i, '').replace(/\/$/, '');
+  let slug = rest
+    .replace(/^\/docs\/?/, '')
+    .replace(/\.mdx?$/i, '')
+    .replace(/\/$/, '');
   return index.byLocaleSlug.get(`${locale}\0${slug}`) ?? null;
 }
 

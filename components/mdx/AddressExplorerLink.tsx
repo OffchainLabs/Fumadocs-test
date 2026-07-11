@@ -26,9 +26,7 @@ export const AddressExplorerLink = ({ address, chainID, shortenAddress }: Props)
   if (checksummed !== address) {
     throw new Error(`Error: ${address} has invalid checksum; should be ${checksummed}`);
   }
-  const addressLabel = shortenAddress
-    ? address.slice(0, 6) + '...' + address.slice(-4)
-    : address;
+  const addressLabel = shortenAddress ? address.slice(0, 6) + '...' + address.slice(-4) : address;
   return (
     <a href={`${rootUrl}/${address}`} target="_blank" rel="noopener noreferrer">
       {addressLabel}

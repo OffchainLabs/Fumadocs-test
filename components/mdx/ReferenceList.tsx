@@ -1,5 +1,6 @@
-import { listReferences, type ReferenceCollectionName } from '@/lib/references';
 import { getMDXComponents } from '@/components/mdx';
+import { type ReferenceCollectionName, listReferences } from '@/lib/references';
+
 import './reference-list.css';
 
 /**

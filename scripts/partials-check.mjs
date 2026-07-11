@@ -12,24 +12,24 @@
  *
  *   node scripts/partials-check.mjs
  */
-
-import { readFileSync, existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
+import { existsSync, readFileSync } from 'node:fs';
 import path from 'node:path';
+
 import {
   DOCS_DIR,
-  isPartial,
-  walk,
-  listDocs,
-  listPartials,
-  listImporters,
-  parseIncludes,
-  resolveInclude,
-  parsePartialImports,
-  resolvePartialImport,
-  loadRegistry,
   cwdIncludePath,
+  isPartial,
+  listDocs,
+  listImporters,
+  listPartials,
+  loadRegistry,
+  parseIncludes,
+  parsePartialImports,
+  resolveInclude,
+  resolvePartialImport,
   splitFrontmatter,
+  walk,
 } from './lib/partials.mjs';
 
 const repoRoot = process.cwd();
@@ -56,7 +56,9 @@ function checkIncludes() {
     for (const inc of parseIncludes(src)) {
       const targetAbs = resolveInclude(inc, abs, repoRoot);
       if (!existsSync(targetAbs)) {
-        errors.push(`R1 ${rel(abs)}: include target not found — <include${inc.cwd ? ' cwd' : ''}>${inc.target}</include>`);
+        errors.push(
+          `R1 ${rel(abs)}: include target not found — <include${inc.cwd ? ' cwd' : ''}>${inc.target}</include>`,
+        );
       }
     }
   }
@@ -74,7 +76,9 @@ function checkIncludes() {
   for (const abs of listPartials(repoRoot)) {
     for (const inc of parseIncludes(readFileSync(abs, 'utf8'))) {
       if (inc.cwd) {
-        errors.push(`R1 ${rel(abs)}: partial→partial include must be relative, not cwd — <include cwd>${inc.target}</include>`);
+        errors.push(
+          `R1 ${rel(abs)}: partial→partial include must be relative, not cwd — <include cwd>${inc.target}</include>`,
+        );
       }
     }
   }
@@ -83,7 +87,9 @@ function checkIncludes() {
 // R2: no partials left in the routed tree.
 function checkNoRoutedPartials() {
   for (const abs of walk(path.join(repoRoot, DOCS_DIR), isPartial)) {
-    errors.push(`R2 ${rel(abs)}: partial under content/docs — move it to content/partials/ (routing leak).`);
+    errors.push(
+      `R2 ${rel(abs)}: partial under content/docs — move it to content/partials/ (routing leak).`,
+    );
   }
 }
 
@@ -92,17 +98,28 @@ function checkSelfContained(globals) {
   for (const abs of listPartials(repoRoot)) {
     const src = readFileSync(abs, 'utf8');
     if (/^---\n/.test(src)) {
-      warnings.push(`R3 ${rel(abs)}: has YAML frontmatter — vestigial in a partial (stripped by <include>); consider removing.`);
+      warnings.push(
+        `R3 ${rel(abs)}: has YAML frontmatter — vestigial in a partial (stripped by <include>); consider removing.`,
+      );
     }
-    const firstContent = splitFrontmatter(src).body.split('\n').map((l) => l.trim()).find((l) => l !== '');
+    const firstContent = splitFrontmatter(src)
+      .body.split('\n')
+      .map((l) => l.trim())
+      .find((l) => l !== '');
     if (firstContent && /^#\s+\S/.test(firstContent)) {
-      warnings.push(`R3 ${rel(abs)}: starts with a top-level H1 (\`# \`); partials should start at \`##\` or lower.`);
+      warnings.push(
+        `R3 ${rel(abs)}: starts with a top-level H1 (\`# \`); partials should start at \`##\` or lower.`,
+      );
     }
-    const imported = new Set([...src.matchAll(/\bimport\b[^;]*?\b([A-Z][A-Za-z0-9]*)\b/g)].map((m) => m[1]));
+    const imported = new Set(
+      [...src.matchAll(/\bimport\b[^;]*?\b([A-Z][A-Za-z0-9]*)\b/g)].map((m) => m[1]),
+    );
     for (const m of src.matchAll(/<([A-Z][A-Za-z0-9]*)[\s/>]/g)) {
       const name = m[1];
       if (!globals.has(name) && !imported.has(name)) {
-        warnings.push(`R3 ${rel(abs)}: uses <${name}> which is not globally registered or imported in-file.`);
+        warnings.push(
+          `R3 ${rel(abs)}: uses <${name}> which is not globally registered or imported in-file.`,
+        );
       }
     }
   }
@@ -115,7 +132,9 @@ function checkRegistry() {
   for (const [key, entry] of Object.entries(registry)) {
     if (!known.has(key)) errors.push(`R4 registry.json: "${key}" does not match any partial.`);
     if (entry.scope && !['neutral', 'localized'].includes(entry.scope)) {
-      errors.push(`R4 registry.json: "${key}" has invalid scope "${entry.scope}" (expected neutral|localized).`);
+      errors.push(
+        `R4 registry.json: "${key}" has invalid scope "${entry.scope}" (expected neutral|localized).`,
+      );
     }
   }
 }
@@ -123,7 +142,10 @@ function checkRegistry() {
 // R6: catalog freshness (delegate to the generator's --check).
 function checkCatalogFresh() {
   try {
-    execFileSync('node', ['scripts/generate-partials-catalog.mjs', '--check'], { cwd: repoRoot, stdio: 'pipe' });
+    execFileSync('node', ['scripts/generate-partials-catalog.mjs', '--check'], {
+      cwd: repoRoot,
+      stdio: 'pipe',
+    });
   } catch (e) {
     errors.push(`R6 ${(e.stderr?.toString() || e.message).trim()}`);
   }

@@ -1,14 +1,14 @@
-import type { Metadata } from 'next';
 import { RootProvider } from 'fumadocs-ui/provider/next';
+import type { Metadata } from 'next';
 import { Geist, JetBrains_Mono } from 'next/font/google';
 import type { ReactNode } from 'react';
+
 import { i18nUI } from '@/lib/layout.shared';
+
 import '../global.css';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'
-  ),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
   // Icons live in public/ (not app/, which would recreate the app/favicon.ico
   // route that broke the Vercel build). Declared explicitly so Next emits the
   // <link> tags. `sizes: 'any'` on the .ico mirrors Next's app/favicon.ico
@@ -44,11 +44,7 @@ export default async function Layout({
   const { lang } = await params;
 
   return (
-    <html
-      lang={lang}
-      className={`${geist.variable} ${mono.variable}`}
-      suppressHydrationWarning
-    >
+    <html lang={lang} className={`${geist.variable} ${mono.variable}`} suppressHydrationWarning>
       <body className="flex flex-col min-h-screen font-sans">
         <RootProvider
           i18n={i18nUI.provider(lang)}

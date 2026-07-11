@@ -7,15 +7,9 @@
  * Accepts a repo-relative file path (`content/docs/en/foo/bar.mdx`) or a site URL/slug
  * (`/docs/foo/bar`). Read-only.
  */
-
 import path from 'node:path';
-import {
-  buildIndex,
-  extractRefs,
-  resolveRefToFile,
-  lineAt,
-  toPosix,
-} from './lib/doc-links.mjs';
+
+import { buildIndex, extractRefs, lineAt, resolveRefToFile, toPosix } from './lib/doc-links.mjs';
 
 function main() {
   const arg = process.argv.slice(2).find((a) => !a.startsWith('--'));
@@ -49,7 +43,9 @@ function main() {
   }
 
   const total = [...byFile.values()].reduce((n, refs) => n + refs.length, 0);
-  console.log(`${total} inbound link(s) to ${toPosix(path.relative(repoRoot, targetAbs))} across ${byFile.size} file(s):`);
+  console.log(
+    `${total} inbound link(s) to ${toPosix(path.relative(repoRoot, targetAbs))} across ${byFile.size} file(s):`,
+  );
   for (const [abs, refs] of byFile) {
     console.log(`  ${toPosix(path.relative(repoRoot, abs))}`);
     for (const r of refs) console.log(`    :${r.line}  ${r.url}`);
