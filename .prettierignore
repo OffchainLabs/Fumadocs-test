@@ -1,0 +1,30 @@
+# Dependencies
+node_modules
+
+# Build / generated output
+.next
+.source
+.vercel
+out
+next-env.d.ts
+
+# Tooling state
+.serena
+.remember
+
+# Machine-generated
+pnpm-lock.yaml
+
+# MDX content is excluded: Prettier's MDX formatter escapes `*` inside `{/* … */}`
+# expression comments (→ `{/\* … \*/}`), which breaks the MDX/acorn parse and the build.
+# @offchainlabs/prettier-config targets JS/TS style + import order, not doc prose, so MDX
+# is left to authors. (`.md` prose is still formatted.)
+**/*.mdx
+
+# Generated content — format is owned by the generators, not Prettier
+# (formatting these would break `partials:check` catalog-freshness)
+content/partials/CATALOG.md
+content/partials/manifest.json
+
+# Local, git-ignored assistant guidance
+CLAUDE.md
