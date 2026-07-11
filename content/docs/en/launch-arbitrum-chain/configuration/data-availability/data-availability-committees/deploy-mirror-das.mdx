@@ -9,23 +9,23 @@ sme: jose-franco
 
 <VanillaAdmonition type="warning" title="Running a regular DAS vs running a mirror DAS">
 
-The main use-case for running a mirror DAS is to complement your setup as a Data Availability Committee (DAC) member. That means that you should run your main DAS first, and then configure the mirror DAS. Refer to [How to deploy a DAS](/docs/launch-arbitrum-chain/configure-your-chain/common/data-availability/data-availability-committees/deploy-das.mdx) if needed.
+The main use-case for running a mirror DAS is to complement your setup as a Data Availability Committee (DAC) member. That means that you should run your main DAS first, and then configure the mirror DAS. Refer to [How to deploy a DAS](/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/deploy-das) if needed.
 
 </VanillaAdmonition>
 <p>
-  <a data-quicklook-from="arbitrum-anytrust-protocol">AnyTrust</a> chains rely on an external Data Availability Committee (DAC) to store data and provide it on-demand instead of using its <a data-quicklook-from="parent-chain">parent chain</a> as the Data Availability (DA) layer. The members of the DAC run a Data Availability Server (DAS) to handle these operations.
+  <Term id="arbitrum-anytrust-protocol">AnyTrust</Term> chains rely on an external Data Availability Committee (DAC) to store data and provide it on-demand instead of using its <Term id="parent-chain">parent chain</Term> as the Data Availability (DA) layer. The members of the DAC run a Data Availability Server (DAS) to handle these operations.
 </p>
 
-In this how-to, you'll learn how to configure a mirror DAS that serves `GET` requests for stored batches of information through a REST HTTP interface. For a refresher on DACs, refer to the [Introduction](/docs/launch-arbitrum-chain/configure-your-chain/common/data-availability/data-availability-committees/get-started.mdx).
+In this how-to, you'll learn how to configure a mirror DAS that serves `GET` requests for stored batches of information through a REST HTTP interface. For a refresher on DACs, refer to the [Introduction](/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/get-started).
 
 This how-to assumes that you're familiar with:
 
-- How a regular DAS works and what configuration options are available. Refer to [How to deploy a DAS](/docs/launch-arbitrum-chain/configure-your-chain/common/data-availability/data-availability-committees/deploy-das.mdx) for a refresher.
+- How a regular DAS works and what configuration options are available. Refer to [How to deploy a DAS](/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/deploy-das) for a refresher.
 - [Kubernetes](https://kubernetes.io/). The examples in this guide use Kubernetes to containerize your DAS.
 
 ## What is a mirror DAS?
 
-To avoid exposing the REST interface of your main DAS to the public in order to prevent spamming attacks (as explained in [How to deploy a DAS](/docs/launch-arbitrum-chain/configure-your-chain/common/data-availability/data-availability-committees/deploy-das.mdx#security-considerations)), you can choose to run a mirror DAS to complement your setup. The mirror DAS will handle all public REST requests, while reading information from the main DAS via its (now private) REST interface.
+To avoid exposing the REST interface of your main DAS to the public in order to prevent spamming attacks (as explained in [How to deploy a DAS](/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/deploy-das#security-considerations)), you can choose to run a mirror DAS to complement your setup. The mirror DAS will handle all public REST requests, while reading information from the main DAS via its (now private) REST interface.
 
 In general, mirror DA servers serve two main purposes:
 
@@ -34,7 +34,7 @@ In general, mirror DA servers serve two main purposes:
 
 ## Configuration options
 
-A mirror DAS will use the same tool and, thus, the same configuration options as your main DAS. You can find an explanation of those options in [How to deploy a DAS](/docs/launch-arbitrum-chain/configure-your-chain/common/data-availability/data-availability-committees/deploy-das.mdx#configuration-options).
+A mirror DAS will use the same tool and, thus, the same configuration options as your main DAS. You can find an explanation of those options in [How to deploy a DAS](/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/deploy-das#configuration-options).
 
 ## How to deploy a mirror DAS
 
@@ -43,7 +43,7 @@ A mirror DAS will use the same tool and, thus, the same configuration options as
 Gather the following information:
 
 - The latest Nitro docker image: `<Var name="latestNitroNodeImage" />`
-- An RPC endpoint for the <a data-quicklook-from="parent-chain">parent chain</a>. It is recommended to use a [third-party provider RPC](/docs/build-decentralized-apps/reference/node-providers.mdx#third-party-rpc-providers) or [run your own node](/docs/run-arbitrum-node/run-full-node.mdx) to prevent being rate limited.
+- An RPC endpoint for the <Term id="parent-chain">parent chain</Term>. It is recommended to use a [third-party provider RPC](/docs/build-decentralized-apps/reference/node-providers.mdx#third-party-rpc-providers) or [run your own node](/docs/run-arbitrum-node/run-full-node.mdx) to prevent being rate limited.
 - The SequencerInbox contract address in the parent chain.
 - URL of the list of REST endpoints of other DA servers to configure the REST aggregator.
 
@@ -86,7 +86,7 @@ To run the mirror DAS, we'll use the `daserver` tool and we'll configure the fol
 | --rest-addr                                                                 | REST server listening interface (default "localhost")                                                                                                                                       |
 | --rest-port                                                                 | (Optional) REST server listening port (default 9877)                                                                                                                                        |
 | --log-level                                                                 | Log level: 1 - ERROR, 2 - WARN, 3 - INFO, 4 - DEBUG, 5 - TRACE (default 3)                                                                                                                  |
-| --data-availability.rest-aggregator.enable                                  | Enables retrieval of <a data-quicklook-from="sequencer">Sequencer</a> <a data-quicklook-from="batch">Batch</a> data from a list of remote REST endpoints                                    |
+| --data-availability.rest-aggregator.enable                                  | Enables retrieval of <Term id="sequencer">Sequencer</Term> <Term id="batch">Batch</Term> data from a list of remote REST endpoints                                    |
 | --data-availability.rest-aggregator.online-url-list                         | A URL to a list of URLs of REST DAS endpoints that is checked at startup. This option is additive with the URLs option                                                                      |
 | --data-availability.rest-aggregator.urls                                    | List of URLs including 'http://' or 'https://' prefixes and port numbers to REST DAS endpoints. This option is additive with the online-url-list option                                     |
 | --data-availability.rest-aggregator.sync-to-storage.check-already-exists    | When using a REST aggregator, checks if the data already exists in this DAS's storage. Must be disabled for fast sync with an IPFS backend (default true)                                   |
@@ -267,7 +267,7 @@ For a mirror DAS, using a load balancer is recommended to manage incoming traffi
 
 ## What to do next?
 
-Once the DAS is deployed and tested, you'll have to communicate the following information to the <a data-quicklook-from="chain-owner">chain owner</a>, so they can update the chain parameters and configure the sequencer:
+Once the DAS is deployed and tested, you'll have to communicate the following information to the <Term id="chain-owner">chain owner</Term>, so they can update the chain parameters and configure the sequencer:
 
 - The https URL for the REST endpoint (e.g., `das.your-chain.io/rest`)
 

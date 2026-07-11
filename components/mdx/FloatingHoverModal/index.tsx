@@ -1,21 +1,8 @@
 'use client';
 
-import { useState, type ReactNode } from 'react';
-import {
-  useFloating,
-  useHover,
-  useFocus,
-  useDismiss,
-  useRole,
-  useInteractions,
-  FloatingPortal,
-  offset,
-  flip,
-  shift,
-  autoUpdate,
-  useMergeRefs,
-} from '@floating-ui/react';
+import { type ReactNode } from 'react';
 import { MDXProvider } from '@mdx-js/react';
+import { HoverPopover } from '@/components/HoverPopover';
 import './styles.css';
 
 // Static imports of partial MDX files — keeps partials at their canonical v2
@@ -84,15 +71,7 @@ const mdxComponents = {
   ),
 };
 
-export function FloatingHoverModal({
-  href,
-  children,
-}: {
-  href: string;
-  children: ReactNode;
-}) {
-  const [isOpen, setIsOpen] = useState(false);
-
+export function FloatingHoverModal({ href, children }: { href: string; children: ReactNode }) {
   const extractContentKey = (h: string): string | null => {
     const match = h.match(/\/partials\/_?([\w-]+)\.mdx?$/) ?? h.match(/\/partials\/([\w-]+)$/);
     return match ? match[1] : null;
@@ -101,64 +80,20 @@ export function FloatingHoverModal({
   const contentKey = extractContentKey(href);
   const ContentComponent = contentKey ? contentMap[contentKey] : undefined;
 
-  const { refs, floatingStyles, context } = useFloating({
-    open: isOpen,
-    onOpenChange: setIsOpen,
-    middleware: [
-      offset(10),
-      flip({ fallbackAxisSideDirection: 'start' }),
-      shift({ padding: 5 }),
-    ],
-    whileElementsMounted: autoUpdate,
-  });
-
-  const hover = useHover(context, { move: false, delay: { open: 150, close: 150 } });
-  const focus = useFocus(context);
-  const dismiss = useDismiss(context);
-  const role = useRole(context, { role: 'dialog' });
-
-  const { getReferenceProps, getFloatingProps } = useInteractions([hover, focus, dismiss, role]);
-  const ref = useMergeRefs([refs.setReference]);
+  const content = ContentComponent ? (
+    <MDXProvider components={mdxComponents}>
+      <ContentComponent />
+    </MDXProvider>
+  ) : (
+    <div className="floating-modal__error">
+      <h2 className="floating-modal__subtitle">Content not available</h2>
+      <p className="floating-modal__paragraph">The content for &quot;{contentKey}&quot; is not currently available.</p>
+    </div>
+  );
 
   return (
-    <>
-      <button ref={ref} className="floating-hover-modal__trigger" type="button" {...getReferenceProps()}>
-        {children}
-      </button>
-      {isOpen && (
-        <FloatingPortal>
-          <div
-            ref={refs.setFloating}
-            style={floatingStyles}
-            className="floating-hover-modal__content"
-            {...getFloatingProps()}
-          >
-            <div className="floating-hover-modal__header">
-              <button
-                className="floating-hover-modal__close"
-                onClick={() => setIsOpen(false)}
-                aria-label="Close modal"
-              >
-                ×
-              </button>
-            </div>
-            <div className="floating-hover-modal__body">
-              {ContentComponent ? (
-                <MDXProvider components={mdxComponents}>
-                  <ContentComponent />
-                </MDXProvider>
-              ) : (
-                <div className="floating-modal__error">
-                  <h2 className="floating-modal__subtitle">Content Not Available</h2>
-                  <p className="floating-modal__paragraph">
-                    The content for "{contentKey}" is not currently available.
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
-        </FloatingPortal>
-      )}
-    </>
+    <HoverPopover variant="modal" content={content}>
+      {children}
+    </HoverPopover>
   );
 }
