@@ -11,21 +11,21 @@
  *
  *   node scripts/migrate-partials.mjs
  */
-
-import { readFileSync, writeFileSync, mkdirSync, rmSync, readdirSync } from 'node:fs';
+import { mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+
+import { applyRewrites } from './lib/doc-links.mjs';
 import {
   DOCS_DIR,
   PARTIALS_DIR,
+  cwdIncludePath,
   isPartial,
-  walk,
   listDocs,
   listImporters,
-  parsePartialImports,
   mapLegacySpecifier,
-  cwdIncludePath,
+  parsePartialImports,
+  walk,
 } from './lib/partials.mjs';
-import { applyRewrites } from './lib/doc-links.mjs';
 
 const repoRoot = process.cwd();
 
@@ -52,7 +52,9 @@ function rewriteIncludes(source, fromAbs, moveMap) {
     if (target === '') return full;
     const clean = target.replace(/#.*$/, '');
     const cwd = /\bcwd\b/.test(attrs);
-    const targetAbs = cwd ? path.resolve(repoRoot, clean) : path.resolve(path.dirname(fromAbs), clean);
+    const targetAbs = cwd
+      ? path.resolve(repoRoot, clean)
+      : path.resolve(path.dirname(fromAbs), clean);
     const mapped = moveMap.get(targetAbs) ?? targetAbs;
     return fromIsPartial
       ? `<include>${toPosixRel(newFromAbs, mapped)}</include>`

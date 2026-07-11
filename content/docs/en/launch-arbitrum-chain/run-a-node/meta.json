@@ -1,8 +1,4 @@
 {
   "title": "Arbitrum node runners",
-  "pages": [
-    "run-split-validator-node",
-    "high-availability-sequencer-docs",
-    "run-batch-poster"
-  ]
+  "pages": ["run-split-validator-node", "high-availability-sequencer-docs", "run-batch-poster"]
 }

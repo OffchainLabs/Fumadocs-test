@@ -16,16 +16,16 @@ Node 22 LTS · pnpm 10 · TypeScript strict · Tailwind 4.
 
 ## Layout
 
-| Path | Purpose |
-|---|---|
-| `app/[lang]/docs/` | Localized docs routes (en, zh-CN, ja). |
-| `content/docs/<lang>/` | MDX content + `meta.json` sidebars. |
-| `content/partials/` | Reusable `_`-prefixed fragments + generated `CATALOG.md` (see [Partials](#partials)). |
-| `components/mdx/` | Custom MDX components (registered in `components/mdx.tsx`). |
-| `lib/source.ts` | Fumadocs source adapter. |
-| `proxy.ts` | i18n routing + static-asset bypass list. |
-| `scripts/codemods/` | One-shot porting + landing-page generators. |
-| `source.config.ts` | Fumadocs MDX config (Zod-typed frontmatter). |
+| Path                   | Purpose                                                                               |
+| ---------------------- | ------------------------------------------------------------------------------------- |
+| `app/[lang]/docs/`     | Localized docs routes (en, zh-CN, ja).                                                |
+| `content/docs/<lang>/` | MDX content + `meta.json` sidebars.                                                   |
+| `content/partials/`    | Reusable `_`-prefixed fragments + generated `CATALOG.md` (see [Partials](#partials)). |
+| `components/mdx/`      | Custom MDX components (registered in `components/mdx.tsx`).                           |
+| `lib/source.ts`        | Fumadocs source adapter.                                                              |
+| `proxy.ts`             | i18n routing + static-asset bypass list.                                              |
+| `scripts/codemods/`    | One-shot porting + landing-page generators.                                           |
+| `source.config.ts`     | Fumadocs MDX config (Zod-typed frontmatter).                                          |
 
 ## Partials
 
@@ -46,11 +46,13 @@ Two ways to pull a partial into a page:
 
 ```mdx
 <!-- From a doc page: root-anchored, so moving the page never breaks it -->
+
 <include cwd>content/partials/launch-arbitrum-chain/_raas-providers-notice.mdx</include>
 ```
 
 ```mdx
 <!-- From another partial: MUST be file-relative, not cwd -->
+
 <include>../_hardware-requirements.mdx</include>
 ```
 
@@ -70,7 +72,13 @@ enforces this.
 2. Reference it (see above), then run `pnpm partials:catalog` to refresh the catalog + manifest.
 3. Optionally curate its title/summary/tags/scope in `content/partials/registry.json`:
    ```json
-   { "content/partials/<area>/_your-partial.mdx": { "summary": "…", "tags": ["…"], "scope": "neutral" } }
+   {
+     "content/partials/<area>/_your-partial.mdx": {
+       "summary": "…",
+       "tags": ["…"],
+       "scope": "neutral"
+     }
+   }
    ```
 
 ### Commands

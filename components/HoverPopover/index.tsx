@@ -1,20 +1,21 @@
 'use client';
 
-import { useState, type ReactNode } from 'react';
 import {
-  useFloating,
-  useHover,
-  useFocus,
-  useDismiss,
-  useRole,
-  useInteractions,
   FloatingPortal,
-  offset,
-  flip,
-  shift,
   autoUpdate,
+  flip,
+  offset,
+  shift,
+  useDismiss,
+  useFloating,
+  useFocus,
+  useHover,
+  useInteractions,
   useMergeRefs,
+  useRole,
 } from '@floating-ui/react';
+import { type ReactNode, useState } from 'react';
+
 import './styles.css';
 
 /**

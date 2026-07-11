@@ -10,8 +10,7 @@
  *
  * Default source: ../arbitrum-docs_migration-to-fumadocs/docs/partials/glossary
  */
-
-import { readdirSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
 const repoRoot = process.cwd();
@@ -66,7 +65,9 @@ function main() {
     written++;
   }
 
-  console.log(`migrate-glossary: wrote ${written} terms to content/glossary/ (from ${path.relative(repoRoot, srcDir)}).`);
+  console.log(
+    `migrate-glossary: wrote ${written} terms to content/glossary/ (from ${path.relative(repoRoot, srcDir)}).`,
+  );
 }
 
 main();

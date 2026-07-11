@@ -12,8 +12,7 @@
  * directives (cwd- and file-relative), and deriving catalog metadata. `generate-partials-catalog`
  * and `partials-check` are thin CLIs over these primitives.
  */
-
-import { readdirSync, readFileSync, existsSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 
 export const DOCS_DIR = path.join('content', 'docs');
@@ -64,7 +63,7 @@ export function listDocs(repoRoot) {
 export function parseIncludes(source) {
   const re = /<include\b([^>]*)>([\s\S]*?)<\/include>/g;
   const out = [];
-  for (let m; (m = re.exec(source)); ) {
+  for (let m; (m = re.exec(source));) {
     const attrs = m[1];
     const inner = m[2];
     const target = inner.trim();
@@ -111,7 +110,7 @@ export function listImporters(repoRoot) {
 export function parsePartialImports(source) {
   const re = /\bfrom\s*(['"])([^'"]+\.mdx?)\1/g;
   const out = [];
-  for (let m; (m = re.exec(source)); ) {
+  for (let m; (m = re.exec(source));) {
     const specifier = m[2];
     if (!path.basename(specifier).startsWith('_')) continue;
     const start = m.index + m[0].indexOf(specifier);
@@ -161,7 +160,10 @@ const HUMANIZE_STRIP = /(?:-partial|-pc)$/;
 
 /** Turn a partial's basename into a human title, e.g. `_custom-gas-token-note` → "Custom gas token note". */
 export function humanize(absOrBase) {
-  let name = path.basename(absOrBase).replace(/\.mdx?$/i, '').replace(/^_/, '');
+  let name = path
+    .basename(absOrBase)
+    .replace(/\.mdx?$/i, '')
+    .replace(/^_/, '');
   name = name.replace(HUMANIZE_STRIP, '');
   name = name.replace(/-/g, ' ').trim();
   return name ? name.charAt(0).toUpperCase() + name.slice(1) : name;
@@ -247,7 +249,8 @@ export function buildCatalog(repoRoot) {
   // Consumption path 2: ESM `import` of a partial as an MDX component module.
   for (const abs of listImporters(repoRoot)) {
     const src = readFileSync(abs, 'utf8');
-    for (const imp of parsePartialImports(src)) bump(resolvePartialImport(imp.specifier, abs, repoRoot));
+    for (const imp of parsePartialImports(src))
+      bump(resolvePartialImport(imp.specifier, abs, repoRoot));
   }
 
   return partials.map((abs) => {

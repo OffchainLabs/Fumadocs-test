@@ -16,25 +16,24 @@
  * `--dry-run` prints every change without touching the filesystem. Paths are repo-relative files under
  * `content/docs/` (not site URLs). After a real run, verify with `pnpm restructure` or `pnpm check-links`.
  */
-
-import path from 'node:path';
-import { existsSync, readFileSync, writeFileSync, mkdirSync, renameSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
+import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
 
 import {
   CONTENT_DIR,
+  applyRewrites,
   buildIndex,
   computeFileMeta,
-  extractRefs,
-  resolveRefToFile,
   detectStyle,
-  renderRef,
-  applyRewrites,
-  splitSuffix,
+  extractRefs,
   isExternalOrFragment,
   isPartial,
-  readMeta,
   pagesHasRest,
+  readMeta,
+  renderRef,
+  resolveRefToFile,
+  splitSuffix,
   stringifyMeta,
   toPosix,
 } from './lib/doc-links.mjs';
@@ -181,7 +180,9 @@ function updateMeta(fromAbs, toAbs, dryRun) {
       if (i !== -1) {
         meta.data.pages[i] = newBase;
         write(meta);
-        notes.push(`meta.json: renamed '${oldBase}' -> '${newBase}' in ${toPosix(path.basename(path.dirname(meta.path)))}/meta.json`);
+        notes.push(
+          `meta.json: renamed '${oldBase}' -> '${newBase}' in ${toPosix(path.basename(path.dirname(meta.path)))}/meta.json`,
+        );
       }
     }
     return notes;
@@ -199,9 +200,13 @@ function updateMeta(fromAbs, toAbs, dryRun) {
 
   const dstMeta = readMeta(toDir);
   if (!dstMeta || !Array.isArray(dstMeta.data.pages)) {
-    notes.push(`meta.json: dest dir has no explicit pages list — '${newBase}' auto-included by file order (verify ordering).`);
+    notes.push(
+      `meta.json: dest dir has no explicit pages list — '${newBase}' auto-included by file order (verify ordering).`,
+    );
   } else if (pagesHasRest(dstMeta.data.pages)) {
-    notes.push(`meta.json: dest dir uses '...' rest-glob — '${newBase}' auto-included (verify ordering).`);
+    notes.push(
+      `meta.json: dest dir uses '...' rest-glob — '${newBase}' auto-included (verify ordering).`,
+    );
   } else if (dstMeta.data.pages.includes(newBase)) {
     notes.push(`meta.json: '${newBase}' already listed in dest dir`);
   } else {
@@ -229,7 +234,9 @@ function appendRedirect(redirectsPath, source, destination, dryRun) {
   const current = existed ? readFileSync(redirectsPath, 'utf8') : redirectsTemplate();
   if (current.includes(`source: '${source}'`)) return 'exists';
   if (!current.includes(REDIRECTS_END)) {
-    throw new Error(`move-doc: ${path.basename(redirectsPath)} is missing the ${REDIRECTS_END} sentinel`);
+    throw new Error(
+      `move-doc: ${path.basename(redirectsPath)} is missing the ${REDIRECTS_END} sentinel`,
+    );
   }
   const entry = `  { source: '${source}', destination: '${destination}', permanent: true },\n  ${REDIRECTS_END}`;
   const next = current.replace(`  ${REDIRECTS_END}`, entry);
@@ -242,7 +249,9 @@ function ambiguousPartialLinks(records) {
   return records.filter((rec) => {
     if (rec.toAbs !== null || !isPartial(rec.fromAbs)) return false;
     const { pathPart } = splitSuffix(rec.ref.rawUrl);
-    return !isExternalOrFragment(pathPart) && pathPart.startsWith('.') && !/\.mdx?$/i.test(pathPart);
+    return (
+      !isExternalOrFragment(pathPart) && pathPart.startsWith('.') && !/\.mdx?$/i.test(pathPart)
+    );
   });
 }
 
@@ -265,7 +274,9 @@ function main() {
   const fromMeta = computeFileMeta(docsRoot, fromAbs);
   const toMeta = computeFileMeta(docsRoot, toAbs);
   if (fromMeta.locale !== toMeta.locale) {
-    exitErr(`cross-locale moves are not supported (${fromMeta.locale} -> ${toMeta.locale}); move within a locale tree.`);
+    exitErr(
+      `cross-locale moves are not supported (${fromMeta.locale} -> ${toMeta.locale}); move within a locale tree.`,
+    );
   }
 
   const records = scanLinks(index);
@@ -283,37 +294,58 @@ function main() {
 
   const relFrom = toPosix(path.relative(repoRoot, fromAbs));
   const relTo = toPosix(path.relative(repoRoot, toAbs));
-  const inboundCount = [...editsByFile].reduce((n, [abs, rw]) => (abs === fromAbs ? n : n + rw.length), 0);
+  const inboundCount = [...editsByFile].reduce(
+    (n, [abs, rw]) => (abs === fromAbs ? n : n + rw.length),
+    0,
+  );
   const outboundCount = (editsByFile.get(fromAbs) ?? []).length;
 
   console.log(`${dryRun ? '[dry-run] ' : ''}move ${relFrom} -> ${relTo}`);
   console.log(`  url:  ${fromMeta.url}  ->  ${toMeta.url}`);
-  console.log(`  inbound link rewrites: ${inboundCount} across ${[...editsByFile.keys()].filter((a) => a !== fromAbs).length} file(s)`);
+  console.log(
+    `  inbound link rewrites: ${inboundCount} across ${[...editsByFile.keys()].filter((a) => a !== fromAbs).length} file(s)`,
+  );
   console.log(`  moved-file relative links rewritten: ${outboundCount}`);
-  for (const cp of counterparts) console.log(`  locale counterpart: ${toPosix(path.relative(repoRoot, cp.fromAbs))} -> ${toPosix(path.relative(repoRoot, cp.toAbs))}`);
+  for (const cp of counterparts)
+    console.log(
+      `  locale counterpart: ${toPosix(path.relative(repoRoot, cp.fromAbs))} -> ${toPosix(path.relative(repoRoot, cp.toAbs))}`,
+    );
 
   const partialWarns = ambiguousPartialLinks(records);
   if (unrenderable.length) {
-    console.warn(`  WARNING: ${unrenderable.length} reference(s) resolve to the move but can't be auto-rewritten:`);
-    for (const rec of unrenderable) console.warn(`    ${toPosix(path.relative(repoRoot, rec.fromAbs))}: ${rec.ref.rawUrl || '(expression)'}`);
+    console.warn(
+      `  WARNING: ${unrenderable.length} reference(s) resolve to the move but can't be auto-rewritten:`,
+    );
+    for (const rec of unrenderable)
+      console.warn(
+        `    ${toPosix(path.relative(repoRoot, rec.fromAbs))}: ${rec.ref.rawUrl || '(expression)'}`,
+      );
   }
   if (partialWarns.length) {
-    console.warn(`  WARNING: ${partialWarns.length} relative link(s) inside partials can't be resolved (no fixed URL); update manually if affected:`);
-    for (const rec of partialWarns) console.warn(`    ${toPosix(path.relative(repoRoot, rec.fromAbs))}: ${rec.ref.rawUrl}`);
+    console.warn(
+      `  WARNING: ${partialWarns.length} relative link(s) inside partials can't be resolved (no fixed URL); update manually if affected:`,
+    );
+    for (const rec of partialWarns)
+      console.warn(`    ${toPosix(path.relative(repoRoot, rec.fromAbs))}: ${rec.ref.rawUrl}`);
   }
 
   if (dryRun) {
     if (changes.length) {
       console.log('\n  rewrites:');
-      for (const c of changes) console.log(`    ${toPosix(path.relative(repoRoot, c.file))}: ${c.old}  ->  ${c.next}`);
+      for (const c of changes)
+        console.log(`    ${toPosix(path.relative(repoRoot, c.file))}: ${c.old}  ->  ${c.next}`);
     }
     const metaNotes = updateMeta(fromAbs, toAbs, true);
     for (const n of metaNotes) console.log(`  ${n}`);
     if (fromMeta.url !== toMeta.url) {
-      console.log(`  redirect: { source: '${fromMeta.url}', destination: '${toMeta.url}', permanent: true }`);
+      console.log(
+        `  redirect: { source: '${fromMeta.url}', destination: '${toMeta.url}', permanent: true }`,
+      );
       for (const cp of counterparts) {
         const cpTo = computeFileMeta(docsRoot, cp.toAbs);
-        console.log(`  redirect: { source: '${index.urlByAbs.get(cp.fromAbs)}', destination: '${cpTo.url}', permanent: true }`);
+        console.log(
+          `  redirect: { source: '${index.urlByAbs.get(cp.fromAbs)}', destination: '${cpTo.url}', permanent: true }`,
+        );
       }
     }
     console.log('\n[dry-run] no files were changed.');
@@ -328,10 +360,14 @@ function main() {
   }
 
   // Move the primary file, then write it with its own re-based links applied.
-  const movedContent = applyRewrites(index.files.find((f) => f.abs === fromAbs).content, editsByFile.get(fromAbs) ?? []);
+  const movedContent = applyRewrites(
+    index.files.find((f) => f.abs === fromAbs).content,
+    editsByFile.get(fromAbs) ?? [],
+  );
   const staged = moveFile(fromAbs, toAbs, repoRoot);
   writeFileSync(toAbs, movedContent);
-  if (!staged) console.warn('  note: moved without git (untracked source or no work tree) — move is unstaged');
+  if (!staged)
+    console.warn('  note: moved without git (untracked source or no work tree) — move is unstaged');
 
   for (const n of updateMeta(fromAbs, toAbs, false)) console.log(`  ${n}`);
 
@@ -345,11 +381,15 @@ function main() {
   // Redirects (one per affected locale URL).
   const redirectsPath = path.join(repoRoot, 'redirects.config.mjs');
   if (fromMeta.url !== toMeta.url) {
-    console.log(`  redirects.config.mjs: ${appendRedirect(redirectsPath, fromMeta.url, toMeta.url, false)} ${fromMeta.url} -> ${toMeta.url}`);
+    console.log(
+      `  redirects.config.mjs: ${appendRedirect(redirectsPath, fromMeta.url, toMeta.url, false)} ${fromMeta.url} -> ${toMeta.url}`,
+    );
     for (const cp of counterparts) {
       const src = index.urlByAbs.get(cp.fromAbs);
       const dst = computeFileMeta(docsRoot, cp.toAbs).url;
-      console.log(`  redirects.config.mjs: ${appendRedirect(redirectsPath, src, dst, false)} ${src} -> ${dst}`);
+      console.log(
+        `  redirects.config.mjs: ${appendRedirect(redirectsPath, src, dst, false)} ${src} -> ${dst}`,
+      );
     }
   }
 

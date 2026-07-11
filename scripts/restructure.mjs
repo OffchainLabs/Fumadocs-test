@@ -11,9 +11,8 @@
  *
  * There is no separate redirect-sync step: `next.config.mjs` reads `redirects.config.mjs` directly.
  */
-
-import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import path from 'node:path';
 
 const repoRoot = process.cwd();
 
@@ -49,7 +48,9 @@ function main() {
   // aren't mistaken for regressions once it lives at the new path.
   const fromRel = relOf(from);
   const toRel = relOf(to);
-  const beforeKeys = new Set(brokenLinks().map((b) => `${b.rel === fromRel ? toRel : b.rel}|${b.url}`));
+  const beforeKeys = new Set(
+    brokenLinks().map((b) => `${b.rel === fromRel ? toRel : b.rel}|${b.url}`),
+  );
 
   run('node', ['scripts/move-doc.mjs', from, to]);
 
@@ -63,13 +64,15 @@ function main() {
 
   const after = brokenLinks();
   const regressions = after.filter((b) => !beforeKeys.has(`${b.rel}|${b.url}`));
-  const fixedCount = beforeKeys.size - after.filter((b) => beforeKeys.has(`${b.rel}|${b.url}`)).length;
+  const fixedCount =
+    beforeKeys.size - after.filter((b) => beforeKeys.has(`${b.rel}|${b.url}`)).length;
 
   if (regressions.length) {
     console.error(`\nrestructure: ${regressions.length} link(s) broken BY this move:`);
     for (const b of regressions) console.error(`  ${b.rel}:${b.line}  ->  ${b.url}`);
   }
-  if (fixedCount > 0) console.log(`(note: this move also resolved ${fixedCount} previously-broken link(s))`);
+  if (fixedCount > 0)
+    console.log(`(note: this move also resolved ${fixedCount} previously-broken link(s))`);
 
   if (!typesOk || regressions.length) {
     console.error(

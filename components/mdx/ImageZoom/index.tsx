@@ -2,6 +2,7 @@
 
 import { ImageZoom as FumaImageZoom } from 'fumadocs-ui/components/image-zoom';
 import type { ReactNode } from 'react';
+
 import styles from './styles.module.css';
 
 interface ImageZoomProps {
@@ -30,11 +31,7 @@ export function ImageZoom({ src, alt = '', className, caption, children }: Image
   return (
     <figure className={styles.figure}>
       <FumaImageZoom>
-        <img
-          src={src}
-          alt={alt}
-          className={`${styles.thumbnail} ${className ?? ''}`.trim()}
-        />
+        <img src={src} alt={alt} className={`${styles.thumbnail} ${className ?? ''}`.trim()} />
       </FumaImageZoom>
       {captionText && <figcaption className={styles.caption}>{captionText}</figcaption>}
     </figure>

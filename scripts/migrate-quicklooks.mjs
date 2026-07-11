@@ -16,9 +16,9 @@
  *
  *   node scripts/migrate-quicklooks.mjs
  */
-
 import { readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+
 import { walk } from './lib/partials.mjs';
 
 const repoRoot = process.cwd();
@@ -63,7 +63,9 @@ function main() {
     }
   }
 
-  console.log(`migrate-quicklooks: converted ${converted} link(s) to <Term>, unwrapped ${unwrapped} nested link(s) to plain text.`);
+  console.log(
+    `migrate-quicklooks: converted ${converted} link(s) to <Term>, unwrapped ${unwrapped} nested link(s) to plain text.`,
+  );
   if (unwrapReport.length) {
     console.log('\nUnwrapped (hover removed — nested in a string attribute):');
     for (const line of unwrapReport) console.log(`  ${line}`);

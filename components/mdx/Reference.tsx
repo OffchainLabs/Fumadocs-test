@@ -1,7 +1,8 @@
 import { type ReactNode } from 'react';
-import { getReference, type ReferenceCollectionName } from '@/lib/references';
+
 import { HoverPopover } from '@/components/HoverPopover';
 import { getMDXComponents } from '@/components/mdx';
+import { type ReferenceCollectionName, getReference } from '@/lib/references';
 
 /**
  * Inline hover-reference to a typed content collection. Server component: it looks the entry up in

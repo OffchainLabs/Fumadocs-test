@@ -11,10 +11,8 @@
  *
  * Spec: WEEK-4-MVP-bucket2-landings-nav-design-2026-05-22.md
  */
-import {
-  readFileSync, writeFileSync, readdirSync, existsSync, lstatSync,
-} from 'node:fs';
-import { join, resolve, dirname, basename, relative } from 'node:path';
+import { existsSync, lstatSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { basename, dirname, join, relative, resolve } from 'node:path';
 
 const CONTENT_ROOT = resolve(import.meta.dirname, '..', '..', 'content', 'docs', 'en');
 
@@ -70,8 +68,9 @@ function readFrontmatter(filePath) {
 function readMetaJson(dir) {
   const p = join(dir, 'meta.json');
   if (!existsSync(p)) return null;
-  try { return JSON.parse(readFileSync(p, 'utf8')); }
-  catch (e) {
+  try {
+    return JSON.parse(readFileSync(p, 'utf8'));
+  } catch (e) {
     stats.warnings.push(`${relative(CONTENT_ROOT, p)}: invalid JSON — ${e.message}`);
     return null;
   }
@@ -107,12 +106,16 @@ function buildCardsBlock(dir, sectionAbsRoot, sectionUrlSegment) {
       description = `${title} documentation`;
     }
     if (/[<>\n\r]/.test(title) || /[<>\n\r]/.test(description)) {
-      stats.manualReview.push(`${relative(CONTENT_ROOT, res.absPath)}: title/description contains <, >, or newline; skipped card`);
+      stats.manualReview.push(
+        `${relative(CONTENT_ROOT, res.absPath)}: title/description contains <, >, or newline; skipped card`,
+      );
       continue;
     }
     const relFromSectionRoot = relative(sectionAbsRoot, res.absPath).replace(/\.(mdx|md)$/, '');
     const href = `/docs/${sectionUrlSegment}/${relFromSectionRoot}`;
-    cards.push(`  <Card title="${escapeJsxAttr(title)}" description="${escapeJsxAttr(description)}" href="${href}" />`);
+    cards.push(
+      `  <Card title="${escapeJsxAttr(title)}" description="${escapeJsxAttr(description)}" href="${href}" />`,
+    );
   }
   if (cards.length === 0) return '';
   return `<Cards>\n${cards.join('\n')}\n</Cards>\n`;
@@ -134,19 +137,25 @@ function processDir(dir, sectionAbsRoot, sectionUrlSegment) {
     const siblingMdx = join(parent, `${basename(dir)}.mdx`);
     const siblingMd = join(parent, `${basename(dir)}.md`);
     if (existsSync(siblingMdx) || existsSync(siblingMd)) {
-      stats.warnings.push(`${relative(CONTENT_ROOT, dir)}: sibling file with same name exists — skipped`);
+      stats.warnings.push(
+        `${relative(CONTENT_ROOT, dir)}: sibling file with same name exists — skipped`,
+      );
     } else {
       const title = meta.title || humanize(basename(dir));
       const description = `${title} documentation`;
       if (/[<>\n\r]/.test(title)) {
-        stats.manualReview.push(`${relative(CONTENT_ROOT, dir)}: meta.json title contains <, >, or newline; cannot generate landing`);
+        stats.manualReview.push(
+          `${relative(CONTENT_ROOT, dir)}: meta.json title contains <, >, or newline; cannot generate landing`,
+        );
       } else {
         const cardsBlock = buildCardsBlock(dir, sectionAbsRoot, sectionUrlSegment);
         const body = cardsBlock || '{/* No child pages found in meta.json. */}\n';
         const mdx =
           `---\n` +
-          `title: '${title.replace(/'/g, "''")}'` + `\n` +
-          `description: '${description.replace(/'/g, "''")}'` + `\n` +
+          `title: '${title.replace(/'/g, "''")}'` +
+          `\n` +
+          `description: '${description.replace(/'/g, "''")}'` +
+          `\n` +
           `content_type: 'concept'\n` +
           `author: gblanchemain\n` +
           `sme: gblanchemain\n` +
@@ -164,12 +173,19 @@ function processDir(dir, sectionAbsRoot, sectionUrlSegment) {
     let mutated = false;
     const kept = [];
     for (const entry of meta.pages) {
-      if (typeof entry !== 'string') { kept.push(entry); continue; }
+      if (typeof entry !== 'string') {
+        kept.push(entry);
+        continue;
+      }
       const res = resolveEntry(dir, entry);
       if (res.kind === 'missing') {
         const where = `${relative(CONTENT_ROOT, join(dir, 'meta.json'))}:${entry}`;
         stats.manualReview.push(`${where} — broken ref`);
-        if (prune) { stats.prunedRefs.push(where); mutated = true; continue; }
+        if (prune) {
+          stats.prunedRefs.push(where);
+          mutated = true;
+          continue;
+        }
       }
       kept.push(entry);
     }

@@ -1,10 +1,6 @@
 import Link from 'next/link';
 
-export default async function HomePage({
-  params,
-}: {
-  params: Promise<{ lang: string }>;
-}) {
+export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
   const prefix = lang === 'en' ? '' : `/${lang}`;
 

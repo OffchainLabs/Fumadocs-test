@@ -1,5 +1,6 @@
-import type { MDXContent } from 'mdx/types';
 import { glossary } from 'collections/server';
+import type { MDXContent } from 'mdx/types';
+
 import { docsRoute } from './shared';
 
 /**
@@ -37,7 +38,10 @@ export const references = {
 export type ReferenceCollectionName = keyof typeof references;
 
 /** The reference entry for `id` in `collection`, or undefined if absent. */
-export function getReference(collection: ReferenceCollectionName, id: string): ReferenceEntry | undefined {
+export function getReference(
+  collection: ReferenceCollectionName,
+  id: string,
+): ReferenceEntry | undefined {
   return references[collection].entries.find((entry) => entry.id === id);
 }
 

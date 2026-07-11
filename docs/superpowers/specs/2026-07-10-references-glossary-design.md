@@ -8,7 +8,7 @@ Status: implemented (branch `glossary-port`, stacked on `partials-registry`)
 Fumadocs has no built-in glossary — and no tooltip/hover-card primitive either. The Docusaurus
 implementation (per-term files → `build-glossary.ts` → `glossary.json` + a global Tippy.js component
 scanning the DOM for hand-written `<a data-quicklook-from>` links) has a sound architecture but
-several traits not worth porting: manual, build-time-*unvalidated* tagging (silent runtime warns on
+several traits not worth porting: manual, build-time-_unvalidated_ tagging (silent runtime warns on
 typos), a Tippy dependency, pre-rendered HTML strings in JSON (definitions can't use MDX), and a
 bespoke build script.
 
@@ -40,7 +40,7 @@ Extract the `@floating-ui/react` interaction shell from `FloatingHoverModal` int
 ### 3. `<Reference>` (server) + `<Term>` alias
 
 - `components/mdx/Reference.tsx` is a **server component**: `<Reference collection="glossary"
-  id="dapp">text</Reference>` looks the entry up in the registry, renders its title + MDX body on the
+id="dapp">text</Reference>` looks the entry up in the registry, renders its title + MDX body on the
   server, and passes that node as the popover content to the client `HoverPopover`. No generated
   index module and no client bundle of all definitions — each page only carries the terms it cites.
 - `components/mdx/Term.tsx`: `<Term id="dapp">text</Term>` = `<Reference collection="glossary" …>`.
@@ -69,7 +69,7 @@ collection is registered. Fails the build — replacing the old silent runtime w
   - Normal flow: `<a data-quicklook-from="key">text</a>` → `<Term id="key">text</Term>`. Handles
     double/single quotes and the stray-space variant (`= "key"`).
   - **Nested in a string attribute** (e.g. `<VanillaAdmonition title="… <a
-    data-quicklook-from=&quot;key&quot;>text</a> …">`): a JSX component can't live inside a string
+data-quicklook-from=&quot;key&quot;>text</a> …">`): a JSX component can't live inside a string
     attribute, so these are unwrapped to their plain text label and **each occurrence is reported**
     (no silent loss of a working hover — this is a knowingly accepted degradation for term links
     buried in callout titles).

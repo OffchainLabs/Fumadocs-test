@@ -10,10 +10,10 @@
  *   node scripts/generate-partials-catalog.mjs            # write both files
  *   node scripts/generate-partials-catalog.mjs --check    # exit 1 if either file is stale (CI)
  */
-
-import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
-import { buildCatalog, CATALOG_FILE, MANIFEST_FILE } from './lib/partials.mjs';
+
+import { CATALOG_FILE, MANIFEST_FILE, buildCatalog } from './lib/partials.mjs';
 
 const repoRoot = process.cwd();
 
@@ -49,7 +49,8 @@ function renderCatalog(records) {
     lines.push(`## ${a}`, '');
     for (const r of byArea.get(a).sort((x, y) => x.path.localeCompare(y.path))) {
       const tags = r.tags.length ? ` — tags: ${r.tags.map((t) => `\`${t}\``).join(', ')}` : '';
-      const used = r.usedIn === 0 ? '⚠️ unused' : `used in ${r.usedIn} page${r.usedIn === 1 ? '' : 's'}`;
+      const used =
+        r.usedIn === 0 ? '⚠️ unused' : `used in ${r.usedIn} page${r.usedIn === 1 ? '' : 's'}`;
       lines.push(`### ${r.title}`, '');
       if (r.summary) lines.push(r.summary, '');
       lines.push(`- \`${r.snippet}\``, `- ${used}${tags}`, '');
@@ -71,8 +72,10 @@ function main() {
 
   if (process.argv.slice(2).includes('--check')) {
     const stale = [];
-    if (!existsSync(catalogAbs) || readFileSync(catalogAbs, 'utf8') !== catalog) stale.push(CATALOG_FILE);
-    if (!existsSync(manifestAbs) || readFileSync(manifestAbs, 'utf8') !== manifest) stale.push(MANIFEST_FILE);
+    if (!existsSync(catalogAbs) || readFileSync(catalogAbs, 'utf8') !== catalog)
+      stale.push(CATALOG_FILE);
+    if (!existsSync(manifestAbs) || readFileSync(manifestAbs, 'utf8') !== manifest)
+      stale.push(MANIFEST_FILE);
     if (stale.length) {
       console.error(`partials catalog stale: ${stale.join(', ')}. Run \`pnpm partials:catalog\`.`);
       process.exit(1);
@@ -83,7 +86,9 @@ function main() {
 
   writeFileSync(catalogAbs, catalog);
   writeFileSync(manifestAbs, manifest);
-  console.log(`partials catalog: wrote ${records.length} entries to ${CATALOG_FILE} + ${MANIFEST_FILE}.`);
+  console.log(
+    `partials catalog: wrote ${records.length} entries to ${CATALOG_FILE} + ${MANIFEST_FILE}.`,
+  );
 }
 
 main();

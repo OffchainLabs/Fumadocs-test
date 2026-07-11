@@ -9,11 +9,23 @@
  *
  * Usage: node scripts/codemods/port-launch-arbitrum-chain.mjs
  */
-
 import {
-  readFileSync, writeFileSync, mkdirSync, readdirSync, copyFileSync, existsSync, statSync,
+  copyFileSync,
+  existsSync,
+  mkdirSync,
+  readFileSync,
+  readdirSync,
+  statSync,
+  writeFileSync,
 } from 'node:fs';
-import { join, relative, dirname, basename } from 'node:path';
+import { basename, dirname, join, relative } from 'node:path';
+
+// ─────────────────────────────────────────────────────────────────────
+// Transform: vars
+// ─────────────────────────────────────────────────────────────────────
+// Read vars.json once at module load for inside-code-fence substitution.
+// JSX (<Var>) can't run inside MDX code fences, so we resolve those inline.
+import varsJson from '../../content/vars.json' with { type: 'json' };
 
 const LEGACY_ROOT = '/Users/allup/OCL/arbitrum-docs-baseline/docs/launch-arbitrum-chain';
 const LEGACY_GLOBAL_PARTIALS = '/Users/allup/OCL/arbitrum-docs-baseline/docs/partials';
@@ -33,12 +45,24 @@ const GLOBAL_PARTIALS_TO_COPY = [
 ];
 
 const CONTENT_TYPE_ENUM = new Set([
-  'how-to', 'concept', 'quickstart', 'tutorial', 'reference', 'troubleshooting', 'faq',
+  'how-to',
+  'concept',
+  'quickstart',
+  'tutorial',
+  'reference',
+  'troubleshooting',
+  'faq',
 ]);
 
 const SECTION_PREFIXES = [
-  'arbitrum-bridge', 'build-decentralized-apps', 'stylus', 'how-arbitrum-works',
-  'launch-arbitrum-chain', 'run-arbitrum-node', 'for-devs', 'get-started',
+  'arbitrum-bridge',
+  'build-decentralized-apps',
+  'stylus',
+  'how-arbitrum-works',
+  'launch-arbitrum-chain',
+  'run-arbitrum-node',
+  'for-devs',
+  'get-started',
 ];
 
 const ADMONITION_TYPE_MAP = {
@@ -61,9 +85,8 @@ const stats = {
   manualReview: [],
 };
 
-// ─────────────────────────────────────────────────────────────────────
 // Transform: frontmatter
-// ─────────────────────────────────────────────────────────────────────
+
 function transformFrontmatter(content, sourcePath) {
   const fmMatch = content.match(/^---\n([\s\S]*?)\n---\n?/);
 
@@ -92,7 +115,9 @@ function transformFrontmatter(content, sourcePath) {
     // content_type normalization
     let ct = (fm.content_type || 'concept').replace(/^['"]|['"]$/g, '');
     if (!CONTENT_TYPE_ENUM.has(ct)) {
-      stats.manualReview.push(`${sourcePath}: content_type '${ct}' not in enum, defaulted to concept`);
+      stats.manualReview.push(
+        `${sourcePath}: content_type '${ct}' not in enum, defaulted to concept`,
+      );
       ct = 'concept';
     }
     fm.content_type = `'${ct}'`;
@@ -116,8 +141,15 @@ function transformFrontmatter(content, sourcePath) {
 
     // Rebuild — preserve a stable key order
     const ORDER = [
-      'title', 'description', 'sidebar_label', 'sidebar_position',
-      'user_story', 'content_type', 'author', 'sme', 'draft',
+      'title',
+      'description',
+      'sidebar_label',
+      'sidebar_position',
+      'user_story',
+      'content_type',
+      'author',
+      'sme',
+      'draft',
     ];
     let out = '---\n';
     for (const k of ORDER) if (fm[k] !== undefined) out += `${k}: ${fm[k]}\n`;
@@ -132,15 +164,15 @@ function transformFrontmatter(content, sourcePath) {
   // No frontmatter — synthesize a minimal one
   const fallback = basename(sourcePath, '.mdx').replace(/^\d+-/, '').replace(/-/g, ' ');
   stats.warnings.push(`${sourcePath}: no frontmatter, synthesized`);
-  return `---\ntitle: '${fallback}'\ndescription: '${fallback}'\ncontent_type: 'concept'\nauthor: gblanchemain\nsme: gblanchemain\n---\n` + content;
+  return (
+    `---\ntitle: '${fallback}'\ndescription: '${fallback}'\ncontent_type: 'concept'\nauthor: gblanchemain\nsme: gblanchemain\n---\n` +
+    content
+  );
 }
 
 // ─────────────────────────────────────────────────────────────────────
-// Transform: vars
+
 // ─────────────────────────────────────────────────────────────────────
-// Read vars.json once at module load for inside-code-fence substitution.
-// JSX (<Var>) can't run inside MDX code fences, so we resolve those inline.
-import varsJson from '../../content/vars.json' with { type: 'json' };
 
 function transformVars(content) {
   // Legacy uses two shapes: bare `@@varName@@` and Vercel-cache-busting
@@ -162,8 +194,13 @@ function transformVars(content) {
     const fenceMatch = line.match(/^(\s*)(```|~~~)/);
     if (fenceMatch) {
       const delim = fenceMatch[2];
-      if (!inFence) { inFence = true; fenceDelimiter = delim; }
-      else if (delim === fenceDelimiter) { inFence = false; fenceDelimiter = null; }
+      if (!inFence) {
+        inFence = true;
+        fenceDelimiter = delim;
+      } else if (delim === fenceDelimiter) {
+        inFence = false;
+        fenceDelimiter = null;
+      }
     }
     lines[i] = line.replace(
       /@@([A-Za-z_][A-Za-z0-9_]*)(?:=([^@]*))?@@/g,
@@ -232,10 +269,11 @@ function transformPartialImports(content, destPath) {
 function transformAdmonitions(content) {
   // Protect fenced code blocks (``` and ~~~)
   const codeBlocks = [];
-  const protect = (s, fence) => s.replace(
-    new RegExp(`${fence}[\\s\\S]*?${fence}`, 'g'),
-    (m) => { codeBlocks.push(m); return `__CODEBLOCK_${codeBlocks.length - 1}__`; },
-  );
+  const protect = (s, fence) =>
+    s.replace(new RegExp(`${fence}[\\s\\S]*?${fence}`, 'g'), (m) => {
+      codeBlocks.push(m);
+      return `__CODEBLOCK_${codeBlocks.length - 1}__`;
+    });
   let work = content;
   work = protect(work, '```');
   work = protect(work, '~~~');
@@ -301,7 +339,8 @@ function transformHtmlComments(content) {
   // Preserve in fenced code blocks.
   const codeBlocks = [];
   let work = content.replace(/```[\s\S]*?```/g, (m) => {
-    codeBlocks.push(m); return `__CODEBLOCK_${codeBlocks.length - 1}__`;
+    codeBlocks.push(m);
+    return `__CODEBLOCK_${codeBlocks.length - 1}__`;
   });
   work = work.replace(/<!--([\s\S]*?)-->/g, (m, inner) => `{/*${inner}*/}`);
   work = work.replace(/__CODEBLOCK_(\d+)__/g, (m, idx) => codeBlocks[parseInt(idx)]);
@@ -336,36 +375,37 @@ function transformTabs(content, relPath) {
 
   // Warn on unsupported groupId (cross-page sync model differs).
   if (/<Tabs\b[^>]*\bgroupId=/.test(out)) {
-    stats.manualReview.push(`${relPath}: <Tabs groupId="..."> — Fumadocs uses a different cross-page sync model; manual review required`);
+    stats.manualReview.push(
+      `${relPath}: <Tabs groupId="..."> — Fumadocs uses a different cross-page sync model; manual review required`,
+    );
   }
 
   // For each <Tabs ...> block, extract the values=[{label,value}] array, build a
   // label↔value map, rewrite opening tag to <Tabs items={[...labels]}>, and stash
   // a sentinel comment carrying the value→label map so the <TabItem> pass below
   // can rewrite each item's value to the corresponding label.
-  out = out.replace(
-    /<Tabs\b([^>]*)>/g,
-    (full, attrs) => {
-      const valuesMatch = attrs.match(/values=\{(\[[\s\S]*?\])\}/);
-      if (!valuesMatch) return full;
-      let parsed;
-      try {
-        // The values array uses unquoted keys: [{label:'X',value:'x'}].
-        // Convert unquoted keys → JSON keys, single quotes → double, then JSON.parse.
-        const jsonish = valuesMatch[1]
-          .replace(/([{,]\s*)([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:/g, '$1"$2":')
-          .replace(/'/g, '"');
-        parsed = JSON.parse(jsonish);
-      } catch (e) {
-        stats.manualReview.push(`${relPath}: could not parse <Tabs values={...}>; manual review required`);
-        return full;
-      }
-      const labels = parsed.map((v) => v.label);
-      const valueToLabel = Object.fromEntries(parsed.map((v) => [v.value, v.label]));
-      const sentinel = `{/* __TABS_MAP__:${JSON.stringify(valueToLabel)} */}`;
-      return `<Tabs items={${JSON.stringify(labels)}}>${sentinel}`;
-    },
-  );
+  out = out.replace(/<Tabs\b([^>]*)>/g, (full, attrs) => {
+    const valuesMatch = attrs.match(/values=\{(\[[\s\S]*?\])\}/);
+    if (!valuesMatch) return full;
+    let parsed;
+    try {
+      // The values array uses unquoted keys: [{label:'X',value:'x'}].
+      // Convert unquoted keys → JSON keys, single quotes → double, then JSON.parse.
+      const jsonish = valuesMatch[1]
+        .replace(/([{,]\s*)([a-zA-Z_$][a-zA-Z0-9_$]*)\s*:/g, '$1"$2":')
+        .replace(/'/g, '"');
+      parsed = JSON.parse(jsonish);
+    } catch (e) {
+      stats.manualReview.push(
+        `${relPath}: could not parse <Tabs values={...}>; manual review required`,
+      );
+      return full;
+    }
+    const labels = parsed.map((v) => v.label);
+    const valueToLabel = Object.fromEntries(parsed.map((v) => [v.value, v.label]));
+    const sentinel = `{/* __TABS_MAP__:${JSON.stringify(valueToLabel)} */}`;
+    return `<Tabs items={${JSON.stringify(labels)}}>${sentinel}`;
+  });
 
   // Second shape: bare <Tabs> (or with className/defaultValue) followed by
   // <TabItem value="x" label="X" [default]> children — the modern Docusaurus
@@ -386,16 +426,25 @@ function transformTabs(content, relPath) {
         let j = i + 1;
         let blockEnd = -1;
         while (j < lines2.length) {
-          if (/<\/Tabs>/.test(lines2[j])) { blockEnd = j; break; }
+          if (/<\/Tabs>/.test(lines2[j])) {
+            blockEnd = j;
+            break;
+          }
           // Match TabItem with value+label in either order
-          const m1 = lines2[j].match(/<TabItem\b[^>]*\bvalue=(["'])([^"']+)\1[^>]*\blabel=(["'])([^"']+)\3/);
-          const m2 = m1 || lines2[j].match(/<TabItem\b[^>]*\blabel=(["'])([^"']+)\1[^>]*\bvalue=(["'])([^"']+)\3/);
+          const m1 = lines2[j].match(
+            /<TabItem\b[^>]*\bvalue=(["'])([^"']+)\1[^>]*\blabel=(["'])([^"']+)\3/,
+          );
+          const m2 =
+            m1 ||
+            lines2[j].match(/<TabItem\b[^>]*\blabel=(["'])([^"']+)\1[^>]*\bvalue=(["'])([^"']+)\3/);
           if (m1) {
-            const value = m1[2], label = m1[4];
+            const value = m1[2],
+              label = m1[4];
             valueToLabel[value] = label;
             if (!labels.includes(label)) labels.push(label);
           } else if (m2) {
-            const label = m2[2], value = m2[4];
+            const label = m2[2],
+              value = m2[4];
             valueToLabel[value] = label;
             if (!labels.includes(label)) labels.push(label);
           }
@@ -516,7 +565,9 @@ function processFile(srcAbs, relPath) {
       const dir = dirname(destRel);
       const file = basename(destRel);
       destRel = join(dir, `_${file}`);
-      stats.warnings.push(`${relPath}: in partials/ but no underscore prefix; renamed to ${destRel}`);
+      stats.warnings.push(
+        `${relPath}: in partials/ but no underscore prefix; renamed to ${destRel}`,
+      );
     }
 
     const destAbs = join(V2_SECTION_ROOT, destRel);
@@ -630,10 +681,7 @@ function generateMetaJsonForSourceDir(srcDir, destDir) {
 
   const title = humanize(basename(destDir));
   ensureDir(destDir);
-  writeFileSync(
-    join(destDir, 'meta.json'),
-    JSON.stringify({ title, pages }, null, 2) + '\n',
-  );
+  writeFileSync(join(destDir, 'meta.json'), JSON.stringify({ title, pages }, null, 2) + '\n');
 
   for (const sub of subDirs) {
     generateMetaJsonForSourceDir(join(srcDir, sub.srcName), join(destDir, sub.destName));
