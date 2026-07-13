@@ -4,7 +4,7 @@ import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import { OffchainMark } from '@/components/OffchainMark';
 
 import { i18n } from './i18n';
-import { appName, gitConfig } from './shared';
+import { appName, docsRoute, gitConfig } from './shared';
 
 /**
  * UI translations + display names for each locale.
@@ -17,7 +17,8 @@ export const i18nUI = defineI18nUI(i18n, {
   'ja': { displayName: '日本語', search: 'ドキュメントを検索' },
 });
 
-export function baseOptions(_locale: string): BaseLayoutProps {
+export function baseOptions(locale: string): BaseLayoutProps {
+  const prefix = locale === i18n.defaultLanguage ? '' : `/${locale}`;
   return {
     nav: {
       title: (
@@ -27,6 +28,10 @@ export function baseOptions(_locale: string): BaseLayoutProps {
         </>
       ),
     },
+    links: [
+      { text: 'Get started', url: `${prefix}${docsRoute}/get-started` },
+      { text: 'Launch a chain', url: `${prefix}${docsRoute}/launch-arbitrum-chain` },
+    ],
     githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
     i18n: true,
   };
