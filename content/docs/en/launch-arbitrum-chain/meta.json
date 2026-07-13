@@ -2,6 +2,7 @@
   "title": "Launch arbitrum chain",
   "pages": [
     "a-gentle-introduction",
+    "quickstart",
     "configure-your-chain",
     "deploy-an-arbitrum-chain",
     "maintain-your-chain",
