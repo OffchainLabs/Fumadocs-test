@@ -7,6 +7,7 @@ const withMDX = createMDX();
 /** @type {import('next').NextConfig} */
 const config = {
   reactStrictMode: true,
+  devIndicators: false,
   async redirects() {
     return redirects;
   },

@@ -45,7 +45,7 @@ export default async function Layout({
 
   return (
     <html lang={lang} className={`${geist.variable} ${mono.variable}`} suppressHydrationWarning>
-      <body className="flex flex-col min-h-screen font-sans">
+      <body className="flex flex-col min-h-screen font-sans" suppressHydrationWarning>
         <RootProvider
           i18n={i18nUI.provider(lang)}
           theme={{ attribute: 'class', defaultTheme: 'light' }}
