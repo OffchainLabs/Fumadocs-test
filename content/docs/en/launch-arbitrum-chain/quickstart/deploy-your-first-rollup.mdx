@@ -71,7 +71,8 @@ In this step you will deploy your chain's contracts to Arbitrum Sepolia. It will
 
 - Create a new file named `deploy.mjs` in your project folder. Then copy and paste this entire script:
 
-<CustomDetails summary="deploy.mjs">
+<Accordions>
+<Accordion title="deploy.mjs">
 
 ```javascript
 import { createPublicClient, http } from 'viem';
@@ -135,7 +136,8 @@ async function main() {
 main().catch(console.error);
 ```
 
-</CustomDetails>
+</Accordion>
+</Accordions>
 
 - Run the deployment script:
 
@@ -153,7 +155,8 @@ In this step you will create the `node-config.json`—the file your node needs t
 
 - Create a new file named `prepare-node-config.mjs`. Copy and paste this entire script:
 
-<CustomDetails summary="prepare-node-config.mjs">
+<Accordions>
+<Accordion title="prepare-node-config.mjs">
 
 ```javascript
 import { writeFile } from 'fs/promises';
@@ -198,7 +201,8 @@ async function main() {
 main().catch(console.error);
 ```
 
-</CustomDetails>
+</Accordion>
+</Accordions>
 
 - Now run the script:
 
@@ -245,7 +249,8 @@ In this step you'll enable the bridging tokens between your chain and Arbitrum S
 - Open a **new terminal** in the same project folder—leave the node running in the first one.
 - Create a new file named `deploy-token-bridge.mjs`. Copy and paste this entire script:
 
-<CustomDetails summary="deploy-token-bridge.mjs">
+<Accordions>
+<Accordion title="deploy-token-bridge.mjs">
 
 ```javascript
 import { createPublicClient, http, defineChain } from 'viem';
@@ -331,7 +336,8 @@ async function main() {
 main().catch(console.error);
 ```
 
-</CustomDetails>
+</Accordion>
+</Accordions>
 
 - Run the script (it reads from your `.env` file):
 
