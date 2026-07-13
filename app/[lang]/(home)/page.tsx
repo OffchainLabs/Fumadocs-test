@@ -71,7 +71,9 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
               icon={<Server />}
               title="Run testnet infrastructure"
               description="Run your Arbitrum chain infrastructure as a production-level testnet."
-              href={docs('/launch-arbitrum-chain/quickstart/run-testnet-infrastructure-first-rollup')}
+              href={docs(
+                '/launch-arbitrum-chain/quickstart/run-testnet-infrastructure-first-rollup',
+              )}
             />
           </Cards>
         </section>

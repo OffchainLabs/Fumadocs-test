@@ -7,7 +7,7 @@ banner, note, config table, or troubleshooting block, search this file** (⌘F b
 the partial instead of duplicating prose. Curate titles, summaries, and tags in
 `content/partials/registry.json`.
 
-33 partials.
+39 partials.
 
 ## general
 
@@ -24,7 +24,7 @@ the partial instead of duplicating prose. Curate titles, summaries, and tags in
 ### Hardware requirements
 
 - `<include cwd>content/partials/_hardware-requirements.mdx</include>`
-- used in 1 page — tags: `hardware`, `requirements`
+- used in 2 pages — tags: `hardware`, `requirements`
 
 ### Can I use the Chain SDK to deploy a mainnet chain?
 
@@ -32,6 +32,13 @@ Yes!
 
 - `<include cwd>content/partials/_troubleshooting-arbitrum-chain-partial.mdx</include>`
 - used in 1 page — tags: `troubleshooting`, `arbitrum`, `chain`
+
+### How does Stylus manage security issues in smart contracts when interacting with so many different languages?
+
+All languages are compiled to WASM for them to be able to work with Stylus.
+
+- `<include cwd>content/partials/_troubleshooting-stylus-partial.mdx</include>`
+- used in 1 page — tags: `troubleshooting`, `stylus`
 
 ## launch-arbitrum-chain
 
@@ -231,3 +238,40 @@ Make sure you create the directory specified in local-file-storage.data-dir befo
 
 - `<include cwd>content/partials/launch-arbitrum-chain/features/_timeboost-pc.mdx</include>`
 - used in 2 pages — tags: `launch-arbitrum-chain`, `features`, `timeboost`
+
+## stylus
+
+### Installing cargo-stylus
+
+The Stylus CLI is your toolkit for speeding up the development process.
+
+- `<include cwd>content/partials/stylus/_setup-cargo-stylus.mdx</include>`
+- used in 1 page — tags: `stylus`, `setup`, `cargo`
+
+### Installing Docker for local testing
+
+The Nitro devnode (and Docker) lets you spin up a local devnet to test your contracts before deploying them to an actual network.
+
+- `<include cwd>content/partials/stylus/_setup-docker-nitro.mdx</include>`
+- used in 1 page — tags: `stylus`, `setup`, `docker`, `nitro`
+
+### Installing Foundry
+
+Foundry is a toolkit for Ethereum development that includes cast, a command-line tool for interacting with smart contracts, sending transactions, and queryin…
+
+- `<include cwd>content/partials/stylus/_setup-foundry.mdx</include>`
+- used in 1 page — tags: `stylus`, `setup`, `foundry`
+
+### Installing Rust
+
+You'll use Rust to write your smart contracts.
+
+- `<include cwd>content/partials/stylus/_setup-rust-toolchain.mdx</include>`
+- used in 1 page — tags: `stylus`, `setup`, `rust`, `toolchain`
+
+### Stylus no multi inheritance banner
+
+Stylus doesn't support contract multi-inheritance yet.
+
+- `<include cwd>content/partials/stylus/_stylus-no-multi-inheritance-banner-partial.mdx</include>`
+- used in 1 page — tags: `stylus`, `no`, `multi`, `inheritance`, `banner`

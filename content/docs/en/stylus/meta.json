@@ -1,0 +1,16 @@
+{
+  "title": "Stylus",
+  "pages": [
+    "fundamentals",
+    "advanced",
+    "best-practices",
+    "cli-tools",
+    "concepts",
+    "gentle-introduction",
+    "how-tos",
+    "reference",
+    "troubleshooting",
+    "quickstart",
+    "troubleshooting-building-stylus"
+  ]
+}

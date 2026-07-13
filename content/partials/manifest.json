@@ -34,7 +34,7 @@
       "hardware",
       "requirements"
     ],
-    "usedIn": 1,
+    "usedIn": 2,
     "snippet": "<include cwd>content/partials/_hardware-requirements.mdx</include>"
   },
   {
@@ -49,6 +49,18 @@
     ],
     "usedIn": 1,
     "snippet": "<include cwd>content/partials/_troubleshooting-arbitrum-chain-partial.mdx</include>"
+  },
+  {
+    "path": "content/partials/_troubleshooting-stylus-partial.mdx",
+    "title": "How does Stylus manage security issues in smart contracts when interacting with so many different languages?",
+    "summary": "All languages are compiled to WASM for them to be able to work with Stylus.",
+    "scope": "neutral",
+    "tags": [
+      "troubleshooting",
+      "stylus"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/_troubleshooting-stylus-partial.mdx</include>"
   },
   {
     "path": "content/partials/launch-arbitrum-chain/_arbitrum-chain-customize-caution-banner-partial.mdx",
@@ -473,5 +485,74 @@
     ],
     "usedIn": 2,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/features/_timeboost-pc.mdx</include>"
+  },
+  {
+    "path": "content/partials/stylus/_setup-cargo-stylus.mdx",
+    "title": "Installing cargo-stylus",
+    "summary": "The Stylus CLI is your toolkit for speeding up the development process.",
+    "scope": "neutral",
+    "tags": [
+      "stylus",
+      "setup",
+      "cargo"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/stylus/_setup-cargo-stylus.mdx</include>"
+  },
+  {
+    "path": "content/partials/stylus/_setup-docker-nitro.mdx",
+    "title": "Installing Docker for local testing",
+    "summary": "The Nitro devnode (and Docker) lets you spin up a local devnet to test your contracts before deploying them to an actual network.",
+    "scope": "neutral",
+    "tags": [
+      "stylus",
+      "setup",
+      "docker",
+      "nitro"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/stylus/_setup-docker-nitro.mdx</include>"
+  },
+  {
+    "path": "content/partials/stylus/_setup-foundry.mdx",
+    "title": "Installing Foundry",
+    "summary": "Foundry is a toolkit for Ethereum development that includes cast, a command-line tool for interacting with smart contracts, sending transactions, and queryin…",
+    "scope": "neutral",
+    "tags": [
+      "stylus",
+      "setup",
+      "foundry"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/stylus/_setup-foundry.mdx</include>"
+  },
+  {
+    "path": "content/partials/stylus/_setup-rust-toolchain.mdx",
+    "title": "Installing Rust",
+    "summary": "You'll use Rust to write your smart contracts.",
+    "scope": "neutral",
+    "tags": [
+      "stylus",
+      "setup",
+      "rust",
+      "toolchain"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/stylus/_setup-rust-toolchain.mdx</include>"
+  },
+  {
+    "path": "content/partials/stylus/_stylus-no-multi-inheritance-banner-partial.mdx",
+    "title": "Stylus no multi inheritance banner",
+    "summary": "Stylus doesn't support contract multi-inheritance yet.",
+    "scope": "neutral",
+    "tags": [
+      "stylus",
+      "no",
+      "multi",
+      "inheritance",
+      "banner"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/stylus/_stylus-no-multi-inheritance-banner-partial.mdx</include>"
   }
 ]
