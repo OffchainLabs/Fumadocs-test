@@ -7,7 +7,7 @@ banner, note, config table, or troubleshooting block, search this file** (⌘F b
 the partial instead of duplicating prose. Curate titles, summaries, and tags in
 `content/partials/registry.json`.
 
-39 partials.
+40 partials.
 
 ## general
 
@@ -32,6 +32,13 @@ Yes!
 
 - `<include cwd>content/partials/_troubleshooting-arbitrum-chain-partial.mdx</include>`
 - used in 1 page — tags: `troubleshooting`, `arbitrum`, `chain`
+
+### How do I run a node?
+
+See instructions in our guide about running a full node!
+
+- `<include cwd>content/partials/_troubleshooting-nodes-partial.mdx</include>`
+- used in 1 page — tags: `troubleshooting`, `nodes`
 
 ### How does Stylus manage security issues in smart contracts when interacting with so many different languages?
 

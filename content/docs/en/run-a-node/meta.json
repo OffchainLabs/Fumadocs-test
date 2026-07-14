@@ -1,0 +1,11 @@
+{
+  "title": "Run a node",
+  "pages": [
+    "index",
+    "run-batch-poster",
+    "run-split-validator-node",
+    "high-availability-sequencer-docs",
+    "sequencer-content-map",
+    "faq"
+  ]
+}

@@ -311,10 +311,11 @@ export function renderRef(style, targetAbs, containerAbs, originalPathPart, inde
       return dotSlash(toPosix(path.relative(path.dirname(containerAbs), targetAbs)));
     case 'fileAbs': {
       const ext = originalPathPart.match(/\.mdx?$/i)[0];
-      return localePrefix(targetAbs, index) + '/docs' + slugSeg(targetAbs, index) + ext;
+      const { url } = computeFileMeta(index.docsRoot, targetAbs);
+      return url === null ? null : url + ext;
     }
     case 'urlAbs':
-      return localePrefix(targetAbs, index) + '/docs' + slugSeg(targetAbs, index);
+      return computeFileMeta(index.docsRoot, targetAbs).url;
     case 'urlRel': {
       const curl = index.urlByAbs.get(containerAbs);
       const turl = index.urlByAbs.get(targetAbs);
@@ -324,16 +325,6 @@ export function renderRef(style, targetAbs, containerAbs, originalPathPart, inde
     default:
       return null;
   }
-}
-
-function localePrefix(abs, index) {
-  const locale = index.localeByAbs.get(abs);
-  return locale === DEFAULT_LOCALE ? '' : '/' + locale;
-}
-
-function slugSeg(abs, index) {
-  const slug = index.slugByAbs.get(abs);
-  return slug ? '/' + slug : '';
 }
 
 /** Apply byte-range replacements to a source string, back-to-front so offsets stay valid. */

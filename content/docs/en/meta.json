@@ -1,4 +1,4 @@
 {
   "title": "Documentation",
-  "pages": ["get-started", "launch-arbitrum-chain", "stylus", "audit-reports"]
+  "pages": ["get-started", "launch-arbitrum-chain", "run-a-node", "stylus", "audit-reports"]
 }
