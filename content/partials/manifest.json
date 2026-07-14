@@ -46,7 +46,7 @@
       "client",
       "flags"
     ],
-    "usedIn": 1,
+    "usedIn": 2,
     "snippet": "<include cwd>content/partials/_client-flags.mdx</include>"
   },
   {
@@ -249,6 +249,30 @@
     "snippet": "<include cwd>content/partials/_troubleshooting-arbitrum-chain-partial.mdx</include>"
   },
   {
+    "path": "content/partials/_troubleshooting-bridging-partial.mdx",
+    "title": "How do I move assets between One and Nova?",
+    "summary": "Both Arbitrum One and Arbitrum Nova run as layers on top of Ethereum.",
+    "scope": "neutral",
+    "tags": [
+      "troubleshooting",
+      "bridging"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/_troubleshooting-bridging-partial.mdx</include>"
+  },
+  {
+    "path": "content/partials/_troubleshooting-building-partial.mdx",
+    "title": "How does gas work on Arbitrum?",
+    "summary": "Fees on Arbitrum chains are collected on L2 in the chains' native currency (ETH on both Arbitrum One and Nova).",
+    "scope": "neutral",
+    "tags": [
+      "troubleshooting",
+      "building"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/_troubleshooting-building-partial.mdx</include>"
+  },
+  {
     "path": "content/partials/_troubleshooting-nodes-partial.mdx",
     "title": "How do I run a node?",
     "summary": "See instructions in our guide about running a full node!",
@@ -271,6 +295,18 @@
     ],
     "usedIn": 1,
     "snippet": "<include cwd>content/partials/_troubleshooting-stylus-partial.mdx</include>"
+  },
+  {
+    "path": "content/partials/_troubleshooting-users-partial.mdx",
+    "title": "Why do I need ETH to use the Arbitrum network?",
+    "summary": "ETH is the currency used to pay gas fees on Arbitrum, and it powers all transactions on Arbitrum.",
+    "scope": "neutral",
+    "tags": [
+      "troubleshooting",
+      "users"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/_troubleshooting-users-partial.mdx</include>"
   },
   {
     "path": "content/partials/arbitrum-essentials/_token-compatibility.mdx",

@@ -104,7 +104,20 @@ const SECTIONS = {
     srcDir: 'stylus-by-example',
     destDir: 'stylus/stylus-by-example',
   },
-  // ── ADD MORE SECTION ENTRIES HERE (later waves) ──
+  // ── Wave 5: bridge, build-dapps, get-started, notices ──
+  'arbitrum-bridge': { srcDir: 'arbitrum-bridge', destDir: 'arbitrum-bridge' },
+  'build-decentralized-apps': {
+    srcDir: 'build-decentralized-apps',
+    destDir: 'build-decentralized-apps',
+    extraSources: ['for-devs/troubleshooting-building.mdx'],
+  },
+  'get-started': {
+    srcDir: 'get-started',
+    destDir: 'get-started',
+    extraSources: ['learn-more/faq.mdx'],
+  },
+  // notices entry defined above (Task 2 seed). intro/glossary.mdx is intentionally
+  // NOT ported — superseded by the References glossary at /docs/glossary.
 };
 
 const PIN_ENTRIES = ['[Chain info](/docs/chain-info)', '[Contribute](/docs/contribute)'];
@@ -122,6 +135,7 @@ const RESTRUCTURE_REMAPS = [
   ['/docs/arbitrum-essentials/oracles', '/docs/oracles'],
   ['/docs/run-arbitrum-node', '/docs/run-a-node'],
   ['/docs/node-running', '/docs/run-a-node'],
+  ['/docs/intro/glossary', '/docs/glossary'], // superseded by the References glossary
   // Removed Docusaurus content-map landings → the section's Fumadocs index.
   ['/docs/oracles/oracles-content-map', '/docs/oracles'],
   ['/docs/run-a-node/sequencer-content-map', '/docs/run-a-node'],

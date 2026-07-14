@@ -7,7 +7,7 @@ banner, note, config table, or troubleshooting block, search this file** (⌘F b
 the partial instead of duplicating prose. Curate titles, summaries, and tags in
 `content/partials/registry.json`.
 
-81 partials.
+84 partials.
 
 ## arbitrum-essentials
 
@@ -42,7 +42,7 @@ The @arbitrum/sdk is a TypeScript library for bridging tokens and passing messag
 For additional information regarding specific client flags visit their docs: Prysm, Lighthouse, Teku, and Lodestar.
 
 - `<include cwd>content/partials/_client-flags.mdx</include>`
-- used in 1 page — tags: `client`, `flags`
+- used in 2 pages — tags: `client`, `flags`
 
 ### Documentation Contribution Guide
 
@@ -141,6 +141,20 @@ Yes!
 - `<include cwd>content/partials/_troubleshooting-arbitrum-chain-partial.mdx</include>`
 - used in 1 page — tags: `troubleshooting`, `arbitrum`, `chain`
 
+### How do I move assets between One and Nova?
+
+Both Arbitrum One and Arbitrum Nova run as layers on top of Ethereum.
+
+- `<include cwd>content/partials/_troubleshooting-bridging-partial.mdx</include>`
+- used in 1 page — tags: `troubleshooting`, `bridging`
+
+### How does gas work on Arbitrum?
+
+Fees on Arbitrum chains are collected on L2 in the chains' native currency (ETH on both Arbitrum One and Nova).
+
+- `<include cwd>content/partials/_troubleshooting-building-partial.mdx</include>`
+- used in 1 page — tags: `troubleshooting`, `building`
+
 ### How do I run a node?
 
 See instructions in our guide about running a full node!
@@ -154,6 +168,13 @@ All languages are compiled to WASM for them to be able to work with Stylus.
 
 - `<include cwd>content/partials/_troubleshooting-stylus-partial.mdx</include>`
 - used in 1 page — tags: `troubleshooting`, `stylus`
+
+### Why do I need ETH to use the Arbitrum network?
+
+ETH is the currency used to pay gas fees on Arbitrum, and it powers all transactions on Arbitrum.
+
+- `<include cwd>content/partials/_troubleshooting-users-partial.mdx</include>`
+- used in 1 page — tags: `troubleshooting`, `users`
 
 ## launch-arbitrum-chain
 
