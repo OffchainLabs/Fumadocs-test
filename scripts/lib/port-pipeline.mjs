@@ -148,6 +148,18 @@ export function transformVars(content) {
         delim = null;
       }
     }
+    // A var inside a markdown link target — `](@@name@@)` — must resolve to the
+    // literal value, not a <Var> component (a component is invalid as an href).
+    if (!inFence) {
+      lines[i] = lines[i].replace(
+        /\]\(\s*@@([A-Za-z_][A-Za-z0-9_]*)(?:=([^@]*))?@@\s*\)/g,
+        (_f, name, inline) => {
+          if (Object.prototype.hasOwnProperty.call(varsJson, name)) return `](${varsJson[name]})`;
+          if (inline !== undefined) return `](${inline})`;
+          return `](#)`;
+        },
+      );
+    }
     lines[i] = lines[i].replace(
       /@@([A-Za-z_][A-Za-z0-9_]*)(?:=([^@]*))?@@/g,
       (_f, name, inline) => {
@@ -171,6 +183,37 @@ export function transformComponentImports(content) {
     /^import\s+(?:[\w{},\s]+?)\s+from\s+['"]@site\/src\/components\/[^'"]+['"];?\s*$\n?/gm,
     '',
   );
+}
+
+// ─────────────────────────────────────────────────────────────────────
+// Transform: Docusaurus @theme/Tabs + @theme/TabItem → Fumadocs Tabs/Tab
+//   - strip the @theme imports (Tabs/Tab are globally registered)
+//   - <TabItem value="v" label="L"> → <Tab value="L">  (label, else value)
+//   - inject items={[…]} on the enclosing <Tabs> from the child labels
+// Docusaurus-only <Tabs> attrs (groupId) are dropped.
+// ─────────────────────────────────────────────────────────────────────
+export function transformTabs(content) {
+  let work = content
+    .replace(/^import\s+Tabs\s+from\s+['"]@theme\/Tabs['"];?\s*$\n?/gm, '')
+    .replace(/^import\s+TabItem\s+from\s+['"]@theme\/TabItem['"];?\s*$\n?/gm, '');
+  const { work: protectedWork, blocks } = protectCode(work);
+  work = protectedWork.replace(/<Tabs\b([^>]*)>([\s\S]*?)<\/Tabs>/g, (_m, tabsAttrs, inner) => {
+    const labels = [];
+    let newInner = inner.replace(/<TabItem\b([^>]*?)\s*>/g, (_mm, attrs) => {
+      const label = (attrs.match(/\blabel\s*=\s*["']([^"']*)["']/) || [])[1];
+      const value = (attrs.match(/\bvalue\s*=\s*["']([^"']*)["']/) || [])[1];
+      const display = label || value || `Tab ${labels.length + 1}`;
+      labels.push(display);
+      return `<Tab value=${JSON.stringify(display)}>`;
+    });
+    newInner = newInner.replace(/<\/TabItem>/g, '</Tab>');
+    const cleanedAttrs = tabsAttrs.replace(/\s*\bgroupId\s*=\s*["'][^"']*["']/g, '');
+    const itemsAttr = /\bitems\s*=/.test(cleanedAttrs)
+      ? cleanedAttrs
+      : ` items={${JSON.stringify(labels)}}${cleanedAttrs}`;
+    return `<Tabs${itemsAttr}>${newInner}</Tabs>`;
+  });
+  return restoreCode(work, blocks);
 }
 
 // ─────────────────────────────────────────────────────────────────────
@@ -273,7 +316,14 @@ export function transformHeadingAnchors(content) {
 // Transform: Shiki language fixes
 // ─────────────────────────────────────────────────────────────────────
 export function transformShikiLanguages(content) {
-  return content.replace(/^```typscript\b/gm, '```typescript');
+  // Fix a common typo and neutralize fence tags that are not Shiki languages
+  // (Shiki throws on unknown languages, which crashes rendering). These are
+  // URL/output tags, not grammars → render as plain text.
+  const REMAP = { typscript: 'typescript', https: 'text', http: 'text', console: 'text' };
+  return content.replace(/^(\s*)```([A-Za-z][\w+-]*)/gm, (m, indent, lang) => {
+    const fixed = REMAP[lang];
+    return fixed ? `${indent}\`\`\`${fixed}` : m;
+  });
 }
 
 // ─────────────────────────────────────────────────────────────────────
@@ -325,6 +375,7 @@ export function runDocPipeline(content, srcFileAbs, relPath, ctx) {
   content = transformFrontmatter(content, relPath, ctx.stats);
   content = transformVars(content);
   content = transformComponentImports(content);
+  content = transformTabs(content);
   content = transformPartialImports(content, srcFileAbs, relPath, ctx);
   content = transformAdmonitions(content);
   content = transformDetails(content, ctx.stats);

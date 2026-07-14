@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   transformFrontmatter, transformAdmonitions, transformDetails,
-  transformHeadingAnchors, transformLinks,
+  transformHeadingAnchors, transformLinks, transformTabs, transformVars,
 } from './port-pipeline.mjs';
 
 const stats = () => ({ warnings: [], manualReview: [], errors: [] });
@@ -32,4 +32,16 @@ test('heading anchors stripped', () => {
 test('links: strip numeric prefixes + .mdx, non-/docs absolute gets /docs prefix', () => {
   assert.match(transformLinks('[a](/docs/01-foo/02-bar.mdx#x)'), /\]\(\/docs\/foo\/bar#x\)/);
   assert.match(transformLinks('[a](/launch-arbitrum-chain/aep-license)'), /\]\(\/docs\/launch-arbitrum-chain\/aep-license\)/);
+});
+test('tabs: @theme Tabs/TabItem -> Fumadocs Tabs/Tab with items', () => {
+  const src = `import Tabs from '@theme/Tabs';\nimport TabItem from '@theme/TabItem';\n\n<Tabs>\n<TabItem value='npm'>\na\n</TabItem>\n<TabItem value="Yarn">\nb\n</TabItem>\n</Tabs>`;
+  const out = transformTabs(src);
+  assert.doesNotMatch(out, /@theme/);
+  assert.doesNotMatch(out, /TabItem/);
+  assert.match(out, /<Tabs items=\{\["npm","Yarn"\]\}>/);
+  assert.match(out, /<Tab value="npm">/);
+});
+test('vars: var inside a link href resolves to literal value', () => {
+  // nitroDocsRepo is present in content/vars.json
+  assert.match(transformVars('see [repo](@@nitroDocsRepo@@)'), /\]\(https:\/\/github\.com\/OffchainLabs\/nitro\)/);
 });
