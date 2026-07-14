@@ -36,10 +36,13 @@
     "fumadocs-mdx": "15.1.0",
     "fumadocs-twoslash": "3.3.0",
     "fumadocs-ui": "16.11.1",
+    "katex": "0.16.22",
     "lucide-react": "^1.16.0",
     "next": "16.2.6",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
+    "rehype-katex": "7.0.1",
+    "remark-math": "6.0.0",
     "tailwind-merge": "^3.6.0",
     "zod": "^4.4.3"
   },

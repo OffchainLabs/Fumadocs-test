@@ -2,6 +2,8 @@ import { rehypeCodeDefaultOptions } from 'fumadocs-core/mdx-plugins';
 import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
 import { defineCollections, defineConfig, defineDocs } from 'fumadocs-mdx/config';
 import { transformerTwoslash } from 'fumadocs-twoslash';
+import rehypeKatex from 'rehype-katex';
+import remarkMath from 'remark-math';
 import { z } from 'zod';
 
 import { referenceSchema } from './lib/reference-schema';
@@ -71,6 +73,12 @@ export default defineConfig({
     // Fumadocs-mdx already wires `remark-include` internally (verified in
     // dist/build-mdx-*.js). The `<include>` MDX directive works out of the box
     // — no additional remark plugins required for partial inclusion.
+    //
+    // remark-math + rehype-katex render the LaTeX math ($…$ / $$…$$) used across
+    // the ported docs (mirrors the Docusaurus setup). KaTeX CSS is imported in
+    // app/[lang]/layout.tsx.
+    remarkPlugins: [remarkMath],
+    rehypePlugins: (v) => [rehypeKatex, ...v],
     //
     // twoslash only activates on ```ts twoslash blocks (TypeScript). Other
     // languages (shell, Rust, Solidity) fall through to the default transformers.

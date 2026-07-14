@@ -4,6 +4,7 @@ import defaultMdxComponents from 'fumadocs-ui/mdx';
 import type { MDXComponents } from 'mdx/types';
 
 import { AddressExplorerLink } from '@/components/mdx/AddressExplorerLink';
+import { CustomDetails } from '@/components/mdx/CustomDetails';
 import FAQStructuredData from '@/components/mdx/FAQStructuredData';
 import { FloatingHoverModal } from '@/components/mdx/FloatingHoverModal';
 import { ImageZoom } from '@/components/mdx/ImageZoom';
@@ -21,10 +22,12 @@ export function getMDXComponents(components?: MDXComponents) {
     Accordions,
     AddressExplorerLink,
     AEL: AddressExplorerLink,
+    CustomDetails,
     FAQStructuredData,
     FAQStructuredDataJsonLd: FAQStructuredData,
     FloatingHoverModal,
     ImageZoom,
+    ImageWithCaption: ImageZoom,
     Reference,
     ReferenceList,
     Tab,

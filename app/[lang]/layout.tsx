@@ -7,6 +7,8 @@ import { InkeepChatButton } from '@/components/inkeep/inkeep-chat-button';
 import InkeepSearchDialog from '@/components/inkeep/inkeep-search';
 import { i18nUI } from '@/lib/layout.shared';
 
+import 'katex/dist/katex.css';
+
 import '../global.css';
 
 export const metadata: Metadata = {

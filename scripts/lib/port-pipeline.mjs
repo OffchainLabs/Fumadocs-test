@@ -12,7 +12,7 @@
  * `legacyDocsRoot`, `partialRoots`, `partialsToCopy`, and `stats`.
  */
 import { existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
-import { basename, dirname, join, relative, resolve, sep } from 'node:path';
+import { basename, dirname, join, relative, resolve } from 'node:path';
 
 import varsJson from '../../content/vars.json' with { type: 'json' };
 
@@ -257,21 +257,20 @@ export function transformPartialImports(content, srcFileAbs, relPath, ctx) {
   const srcDir = dirname(srcFileAbs);
   const importMap = {};
 
+  const repoRoot = dirname(ctx.legacyDocsRoot); // @site alias → repo root
   let cleaned = content.replace(
     /^import\s+(\w+)\s+from\s+['"]([^'"]+\.mdx?)['"];?\s*$/gm,
     (match, name, imp) => {
-      const targetAbs = resolve(srcDir, imp);
-      const entry = ctx.partialRoots.find((r) => targetAbs.startsWith(r.legacyDir + sep));
-      if (!entry) {
-        ctx.stats.manualReview.push(
-          `${relPath}: partial import '${imp}' outside known partial roots`,
-        );
+      const targetAbs = imp.startsWith('@site/')
+        ? resolve(repoRoot, imp.slice('@site/'.length))
+        : resolve(srcDir, imp);
+      const resolved = ctx.resolvePartial(targetAbs);
+      if (!resolved) {
+        ctx.stats.manualReview.push(`${relPath}: partial import '${imp}' could not be resolved`);
         return match; // leave the import untouched for manual review
       }
-      const base = basename(targetAbs);
-      ctx.partialsToCopy.set(targetAbs, join(entry.destDir, base));
-      const includePath = `${entry.includePrefix}/${base}`;
-      importMap[name] = includePath;
+      ctx.partialsToCopy.set(targetAbs, resolved.destAbs);
+      importMap[name] = resolved.includePath;
       return '';
     },
   );

@@ -7,7 +7,16 @@ banner, note, config table, or troubleshooting block, search this file** (⌘F b
 the partial instead of duplicating prose. Curate titles, summaries, and tags in
 `content/partials/registry.json`.
 
-61 partials.
+81 partials.
+
+## arbitrum-essentials
+
+### Token compatibility with available tooling
+
+If you want your token to be compatible out of the box with all the tooling available (e.g., the Arbitrum bridge), we recommend that you keep the implementat…
+
+- `<include cwd>content/partials/arbitrum-essentials/_token-compatibility.mdx</include>`
+- used in 2 pages — tags: `arbitrum-essentials`, `token`, `compatibility`
 
 ## general
 
@@ -15,6 +24,13 @@ the partial instead of duplicating prose. Curate titles, summaries, and tags in
 
 - `<include cwd>content/partials/_additional-config-params.mdx</include>`
 - used in 1 page — tags: `additional`, `config`, `params`
+
+### Arbitrum SDK
+
+The @arbitrum/sdk is a TypeScript library for bridging tokens and passing messages between parent and child Arbitrum chains.
+
+- `<include cwd>content/partials/_arbitrum-sdk-partial.mdx</include>`
+- used in 1 page — tags: `arbitrum`, `sdk`
 
 ### BoLD Configuration Parameters
 
@@ -45,6 +61,13 @@ Thank you for considering to contribute to the Arbitrum documentation!
 - `<include cwd>content/partials/_hardware-requirements.mdx</include>`
 - used in 5 pages — tags: `hardware`, `requirements`
 
+### KNOW MORE TOOLS?
+
+See something missing?
+
+- `<include cwd>content/partials/_know-more-tools-box-partial.mdx</include>`
+- used in 4 pages — tags: `know`, `more`, `tools`, `box`
+
 ### Local Development Network Flags
 
 - `<include cwd>content/partials/_local-devnet-flags.mdx</include>`
@@ -56,6 +79,11 @@ defaultValue="arb-one-nitro"
 
 - `<include cwd>content/partials/_multidimensional-content-controls-partial.mdx</include>`
 - used in 1 page — tags: `multidimensional`, `content`, `controls`
+
+### Not for Production Warning Banner
+
+- `<include cwd>content/partials/_not-for-production-banner-partial.mdx</include>`
+- used in 19 pages — tags: `not`, `for`, `production`, `banner`
 
 ### Public Preview Banner
 
@@ -69,21 +97,21 @@ This document is currently in public preview and may change significantly as fee
 The following information may be useful to those building on Arbitrum.
 
 - `<include cwd>content/partials/_reference-arbitrum-contract-addresses-partial.mdx</include>`
-- used in 1 page — tags: `reference`, `arbitrum`, `contract`, `addresses`
+- used in 2 pages — tags: `reference`, `arbitrum`, `contract`, `addresses`
 
 ### Arbitrum RPC Endpoints Reference
 
 - Arbitrum public RPCs do not provide Websocket support.
 
 - `<include cwd>content/partials/_reference-arbitrum-rpc-endpoints-partial.mdx</include>`
-- used in 1 page — tags: `reference`, `arbitrum`, `rpc`, `endpoints`
+- used in 2 pages — tags: `reference`, `arbitrum`, `rpc`, `endpoints`
 
 ### Chain parameters
 
 To learn more about the gas target, refer to the Gas and fees deep-dive.
 
 - `<include cwd>content/partials/_reference-chain-parameters.mdx</include>`
-- used in 1 page — tags: `reference`, `chain`, `parameters`
+- used in 2 pages — tags: `reference`, `chain`, `parameters`
 
 ### Reference nova specific
 
@@ -97,14 +125,14 @@ Effective January 31, 2026 (23:59 UTC), the following third-party tools will no 
 Arbitrum One exposes two public endpoints with different roles, shown below: a general-purpose public RPC URL, and a direct sequencer endpoint that accepts o…
 
 - `<include cwd>content/partials/_reference-sequencer-endpoint-behavior-partial.mdx</include>`
-- used in 1 page — tags: `reference`, `sequencer`, `endpoint`, `behavior`
+- used in 2 pages — tags: `reference`, `sequencer`, `endpoint`, `behavior`
 
 ### Third-party RPC Endpoints Reference
 
 Alternatively, to interact with public Arbitrum chains, you can rely on many of the same popular node providers that you are already using on Ethereum:
 
 - `<include cwd>content/partials/_reference-third-party-rpc-endpoints-partial.mdx</include>`
-- used in 1 page — tags: `reference`, `third`, `party`, `rpc`, `endpoints`
+- used in 2 pages — tags: `reference`, `third`, `party`, `rpc`, `endpoints`
 
 ### Can I use the Chain SDK to deploy a mainnet chain?
 
@@ -325,6 +353,120 @@ Make sure you create the directory specified in local-file-storage.data-dir befo
 
 - `<include cwd>content/partials/launch-arbitrum-chain/features/_timeboost-pc.mdx</include>`
 - used in 2 pages — tags: `launch-arbitrum-chain`, `features`, `timeboost`
+
+## precompile-tables
+
+### ArbAddressTable
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbAddressTable.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbaddresstable`
+
+### ArbAggregator
+
+⚠️<code>getPreferredAggregator(address addr)</code>
+
+- `<include cwd>content/partials/precompile-tables/_ArbAggregator.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbaggregator`
+
+### ArbDebug
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbDebug.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbdebug`
+
+### ArbFunctionTable
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbFunctionTable.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbfunctiontable`
+
+### ArbGasInfo
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbGasInfo.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbgasinfo`
+
+### ArbInfo
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbInfo.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbinfo`
+
+### ArbNativeTokenManager
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbNativeTokenManager.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbnativetokenmanager`
+
+### ArbosTest
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbosTest.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbostest`
+
+### ArbOwner
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbOwner.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbowner`
+
+### ArbOwnerPublic
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbOwnerPublic.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbownerpublic`
+
+### ArbRetryableTx
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbRetryableTx.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbretryabletx`
+
+### ArbStatistics
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbStatistics.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbstatistics`
+
+### ArbSys
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbSys.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbsys`
+
+### ArbWasm
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbWasm.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbwasm`
+
+### ArbWasmCache
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbWasmCache.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbwasmcache`
+
+### NodeInterface
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_NodeInterface.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `nodeinterface`
 
 ## run-a-node
 

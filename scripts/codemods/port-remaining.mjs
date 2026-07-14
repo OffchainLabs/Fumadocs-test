@@ -81,7 +81,6 @@ const SECTIONS = {
     isPinnedPage: true,
     src: 'for-devs/dev-tools-and-resources/chain-info.mdx',
     dest: 'chain-info.mdx',
-    partialsDest: 'chain-info',
   },
   'contribute': {
     isPinnedPage: true,
@@ -93,6 +92,17 @@ const SECTIONS = {
     srcDir: 'run-arbitrum-node',
     destDir: 'run-a-node',
     extraSources: ['node-running'],
+  },
+  // ── Wave 4: how-arbitrum-works deep, arbitrum-essentials, stylus-by-example ──
+  'how-arbitrum-works': { srcDir: 'how-arbitrum-works', destDir: 'how-arbitrum-works' },
+  'arbitrum-essentials': {
+    srcDir: 'arbitrum-essentials',
+    destDir: 'arbitrum-essentials',
+    excludeSubdirs: ['oracles'], // consumed into the top-level oracles section (Wave 1)
+  },
+  'stylus-by-example': {
+    srcDir: 'stylus-by-example',
+    destDir: 'stylus/stylus-by-example',
   },
   // ── ADD MORE SECTION ENTRIES HERE (later waves) ──
 };
@@ -133,54 +143,6 @@ function escapeRe(s) {
 // ─────────────────────────────────────────────────────────────────────
 // Helpers
 // ─────────────────────────────────────────────────────────────────────
-function findPartialsDirs(root) {
-  const out = [];
-  const rec = (dir) => {
-    for (const e of readdirSync(dir, { withFileTypes: true })) {
-      if (!e.isDirectory()) continue;
-      const full = join(dir, e.name);
-      if (e.name === 'partials') out.push(full);
-      else rec(full);
-    }
-  };
-  rec(root);
-  return out;
-}
-
-function buildPartialRoots(entry) {
-  const roots = [];
-  const sectionDest = join(PARTIALS, entry.destDir);
-  const sectionPrefix = `content/partials/${entry.destDir}`;
-
-  // Explicit section-local partials root.
-  roots.push({
-    legacyDir: join(LEGACY, entry.srcDir, 'partials'),
-    destDir: sectionDest,
-    includePrefix: sectionPrefix,
-  });
-
-  // Catch-all: any nested dir named `partials` under the source roots maps to the
-  // same section partials registry. Keeps no partial import dropped silently.
-  const sourceRoots = [entry.srcDir, ...(entry.extraSources || [])]
-    .map((s) => join(LEGACY, s))
-    .filter((p) => existsSync(p) && statSync(p).isDirectory());
-  for (const root of sourceRoots) {
-    for (const dir of findPartialsDirs(root)) {
-      if (!roots.some((r) => r.legacyDir === dir)) {
-        roots.push({ legacyDir: dir, destDir: sectionDest, includePrefix: sectionPrefix });
-      }
-    }
-  }
-
-  // Global partials root (lowest priority fallback).
-  roots.push({
-    legacyDir: join(LEGACY, 'partials'),
-    destDir: PARTIALS,
-    includePrefix: 'content/partials',
-  });
-  return roots;
-}
-
 function toDestRel(rel, mdToMdx) {
   let destRel = rel
     .split('/')
@@ -357,19 +319,43 @@ function report(stats, planned, dryRun) {
 // ─────────────────────────────────────────────────────────────────────
 // Section / pinned-page runners
 // ─────────────────────────────────────────────────────────────────────
-function newCtx(entry) {
+// Deterministic global partial resolver: maps ANY source partial (regardless of
+// which section imports it) to its single registry location, so cross-section
+// imports resolve to the same file the owning section's port produced. Mirrors
+// the section→destDir remaps used elsewhere.
+function resolvePartial(targetAbs) {
+  const rel = relative(LEGACY, targetAbs);
+  if (rel.startsWith('..')) return null;
+  const parts = rel.split(sep);
+  if (!parts.includes('partials')) return null;
+  const base = parts[parts.length - 1];
+  const section = parts[0];
+  let sub;
+  if (section === 'partials') sub = ''; // top-level docs/partials → global root
+  else if (rel.includes(`for-devs${sep}dev-tools-and-resources${sep}partials`))
+    sub = 'precompile-tables';
+  else if (section === 'for-devs') sub = ''; // dissolved for-devs shared → global root
+  else if (section === 'run-arbitrum-node' || section === 'node-running') sub = 'run-a-node';
+  else if (section === 'stylus-by-example') sub = 'stylus';
+  else sub = section; // same-name section subfolder
+  return {
+    destAbs: sub ? join(PARTIALS, sub, base) : join(PARTIALS, base),
+    includePath: sub ? `content/partials/${sub}/${base}` : `content/partials/${base}`,
+  };
+}
+
+function newCtx() {
   const stats = { pagesPorted: 0, partialsCopied: 0, warnings: [], manualReview: [], errors: [] };
   return {
     legacyDocsRoot: LEGACY,
-    partialRoots: buildPartialRoots(entry),
+    resolvePartial,
     partialsToCopy: new Map(),
     stats,
   };
 }
 
 function runPinnedPage(entry, dryRun) {
-  const partialsDest = entry.partialsDest ?? basename(entry.dest).replace(/\.mdx?$/, '');
-  const ctx = newCtx({ ...entry, srcDir: dirname(entry.src), destDir: partialsDest });
+  const ctx = newCtx();
   const planned = { pages: [], partials: [] };
   console.log(`=== port-remaining: pinned page ===`);
   console.log(`Source: ${join(LEGACY, entry.src)}`);
@@ -547,7 +533,7 @@ function synthSectionIndex(dirAbs, { title, description }) {
 }
 
 function runSection(entry, dryRun) {
-  const ctx = newCtx(entry);
+  const ctx = newCtx();
   const planned = { pages: [], partials: [] };
   console.log(`=== port-remaining: ${entry.srcDir} ===`);
   console.log(`Source: ${join(LEGACY, entry.srcDir)}`);
