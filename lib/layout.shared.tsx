@@ -1,6 +1,6 @@
 import { defineI18nUI } from 'fumadocs-ui/i18n';
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { BookOpen, Boxes, Braces, Code, Coins, Radio } from 'lucide-react';
+import { BookOpen, Braces, Code, Coins } from 'lucide-react';
 
 import { OffchainMark } from '@/components/OffchainMark';
 
@@ -80,20 +80,6 @@ export function baseOptions(locale: string): BaseLayoutProps {
             description: 'Machine-to-machine payments on Arbitrum.',
             url: docHref('build-decentralized-apps'),
             menu: { className: 'lg:col-start-2' },
-          },
-          {
-            icon: <Radio className={menuIconClass} />,
-            text: 'Oracles',
-            description: 'Integrate price feeds and VRF from oracle providers.',
-            url: docHref('oracles'),
-            menu: { className: 'lg:col-start-3' },
-          },
-          {
-            icon: <Boxes className={menuIconClass} />,
-            text: 'Third-party docs',
-            description: 'Guides for tools and services in the Arbitrum ecosystem.',
-            url: docHref('third-party-docs'),
-            menu: { className: 'lg:col-start-3' },
           },
         ],
       },
