@@ -7,7 +7,7 @@ banner, note, config table, or troubleshooting block, search this file** (⌘F b
 the partial instead of duplicating prose. Curate titles, summaries, and tags in
 `content/partials/registry.json`.
 
-48 partials.
+61 partials.
 
 ## general
 
@@ -20,6 +20,13 @@ the partial instead of duplicating prose. Curate titles, summaries, and tags in
 
 - `<include cwd>content/partials/_bold-config-params.mdx</include>`
 - used in 1 page — tags: `bold`, `config`, `params`
+
+### Client flags
+
+For additional information regarding specific client flags visit their docs: Prysm, Lighthouse, Teku, and Lodestar.
+
+- `<include cwd>content/partials/_client-flags.mdx</include>`
+- used in 1 page — tags: `client`, `flags`
 
 ### Documentation Contribution Guide
 
@@ -36,7 +43,26 @@ Thank you for considering to contribute to the Arbitrum documentation!
 ### Hardware requirements
 
 - `<include cwd>content/partials/_hardware-requirements.mdx</include>`
-- used in 2 pages — tags: `hardware`, `requirements`
+- used in 5 pages — tags: `hardware`, `requirements`
+
+### Local Development Network Flags
+
+- `<include cwd>content/partials/_local-devnet-flags.mdx</include>`
+- used in 1 page — tags: `local`, `devnet`, `flags`
+
+### Multidimensional Content Controls
+
+defaultValue="arb-one-nitro"
+
+- `<include cwd>content/partials/_multidimensional-content-controls-partial.mdx</include>`
+- used in 1 page — tags: `multidimensional`, `content`, `controls`
+
+### Public Preview Banner
+
+This document is currently in public preview and may change significantly as feedback is captured from readers like you.
+
+- `<include cwd>content/partials/_public-preview-banner-partial.mdx</include>`
+- ⚠️ unused — tags: `public`, `preview`, `banner`
 
 ### Arbitrum Contract Addresses Reference
 
@@ -299,6 +325,65 @@ Make sure you create the directory specified in local-file-storage.data-dir befo
 
 - `<include cwd>content/partials/launch-arbitrum-chain/features/_timeboost-pc.mdx</include>`
 - used in 2 pages — tags: `launch-arbitrum-chain`, `features`, `timeboost`
+
+## run-a-node
+
+### Dao chains example
+
+shell
+
+- `<include cwd>content/partials/run-a-node/_dao-chains-example.mdx</include>`
+- used in 1 page — tags: `run-a-node`, `dao`, `chains`, `example`
+
+### Dao chains parameters
+
+Breaking the title ordering here (it should be h3 instead of h4) so these titles don't appear in the right-hand sidebar
+
+- `<include cwd>content/partials/run-a-node/_dao-chains-parameters.mdx</include>`
+- used in 1 page — tags: `run-a-node`, `dao`, `chains`, `parameters`
+
+### Optional orbit sequencer compatible cli
+
+- `<include cwd>content/partials/run-a-node/_optional-orbit-sequencer-compatible-cli-partial.mdx</include>`
+- used in 1 page — tags: `run-a-node`, `optional`, `orbit`, `sequencer`, `compatible`, `cli`
+
+### Optional parameters
+
+- `<include cwd>content/partials/run-a-node/_optional-parameters.mdx</include>`
+- used in 1 page — tags: `run-a-node`, `optional`, `parameters`
+
+### Orbit chains example
+
+shell
+
+- `<include cwd>content/partials/run-a-node/_orbit-chains-example.mdx</include>`
+- used in 1 page — tags: `run-a-node`, `orbit`, `chains`, `example`
+
+### Orbit chains parameters
+
+Breaking the title ordering here (it should be h3 instead of h4) so these titles don't appear in the right-hand sidebar
+
+- `<include cwd>content/partials/run-a-node/_orbit-chains-parameters.mdx</include>`
+- used in 1 page — tags: `run-a-node`, `orbit`, `chains`, `parameters`
+
+### Path node parameters
+
+- execution.caching.state-scheme=path - sets state scheme → chooses TrieDB implementation
+
+- `<include cwd>content/partials/run-a-node/_path-node-parameters.mdx</include>`
+- used in 1 page — tags: `run-a-node`, `path`, `node`, `parameters`
+
+### Tx prechecker parameters
+
+- `<include cwd>content/partials/run-a-node/_tx-prechecker-parameters.mdx</include>`
+- used in 1 page — tags: `run-a-node`, `tx`, `prechecker`, `parameters`
+
+### How often should I be upgrading my ArbOS version?
+
+It is strongly recommended to keep your Nitro's node software up-to-date as best you can to ensure you are benefting from the latest improvements to the Arbi…
+
+- `<include cwd>content/partials/run-a-node/_upgrade-cadence-recommendations-partial.mdx</include>`
+- used in 1 page — tags: `run-a-node`, `upgrade`, `cadence`, `recommendations`
 
 ## stylus
 

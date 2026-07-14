@@ -1,0 +1,51 @@
+---
+partial_type: component
+title: 'Multidimensional Content Controls'
+description: 'Interactive controls for content with multiple dimensions (tabs, widgets)'
+author: anegg0
+last_reviewed: 2025-01-15
+---
+
+<MultiDimensionalContentWidget />
+
+{/* todo: end the annoyance of this file not being clearly tightly coupled to the MultiDimensionalContentWidget.js file that lives somewhere else; probably move this file next to that other file */}
+
+<div className='dynamic-content-tabs'>
+  <Tabs items={["others","win"]} defaultValue="others" values={[
+    {label: 'Operating system:', value: 'label'},
+    {label: 'Linux, MacOS, Arm64', value: 'others'},
+    {label: 'Windows', value: 'win'}
+  ]}>
+    <Tab value="others"></Tab>
+    <Tab value="win"></Tab>
+  </Tabs>
+
+<Tabs items={["arb-one-nitro","arb-one-classic","arb-nova","arb-sepolia","localhost"]}
+  defaultValue="arb-one-nitro"
+  values={[
+    { label: 'Network:', value: 'label' },
+    { label: 'Arbitrum One (Nitro)', value: 'arb-one-nitro' },
+    { label: 'Arbitrum One (Classic)', value: 'arb-one-classic' },
+    { label: 'Arbitrum Nova', value: 'arb-nova' },
+    { label: 'Arbitrum Sepolia', value: 'arb-sepolia' },
+    { label: 'Localhost', value: 'localhost' },
+  ]}
+>
+  <Tab value="arb-one-nitro"></Tab>
+  <Tab value="arb-one-classic"></Tab>
+  <Tab value="arb-nova"></Tab>
+  <Tab value="arb-sepolia"></Tab>
+  <Tab value="localhost"></Tab>
+</Tabs>
+
+  <Tabs items={["full-node","archive-node","validator-node"]} defaultValue="full-node" values={[
+        {label: 'Node type:', value: 'label'},
+        {label: 'Full node', value: 'full-node'},
+        {label: 'Archive node', value: 'archive-node'},
+        {label: 'Validator node', value: 'validator-node'}
+    ]}>
+    <Tab value="full-node"></Tab>
+    <Tab value="archive-node"></Tab>
+    <Tab value="validator-node"></Tab>
+  </Tabs>
+</div>

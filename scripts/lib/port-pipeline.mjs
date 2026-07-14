@@ -197,23 +197,57 @@ export function transformTabs(content) {
     .replace(/^import\s+Tabs\s+from\s+['"]@theme\/Tabs['"];?\s*$\n?/gm, '')
     .replace(/^import\s+TabItem\s+from\s+['"]@theme\/TabItem['"];?\s*$\n?/gm, '');
   const { work: protectedWork, blocks } = protectCode(work);
-  work = protectedWork.replace(/<Tabs\b([^>]*)>([\s\S]*?)<\/Tabs>/g, (_m, tabsAttrs, inner) => {
-    const labels = [];
-    let newInner = inner.replace(/<TabItem\b([^>]*?)\s*>/g, (_mm, attrs) => {
-      const label = (attrs.match(/\blabel\s*=\s*["']([^"']*)["']/) || [])[1];
-      const value = (attrs.match(/\bvalue\s*=\s*["']([^"']*)["']/) || [])[1];
-      const display = label || value || `Tab ${labels.length + 1}`;
-      labels.push(display);
-      return `<Tab value=${JSON.stringify(display)}>`;
-    });
-    newInner = newInner.replace(/<\/TabItem>/g, '</Tab>');
-    const cleanedAttrs = tabsAttrs.replace(/\s*\bgroupId\s*=\s*["'][^"']*["']/g, '');
-    const itemsAttr = /\bitems\s*=/.test(cleanedAttrs)
-      ? cleanedAttrs
-      : ` items={${JSON.stringify(labels)}}${cleanedAttrs}`;
-    return `<Tabs${itemsAttr}>${newInner}</Tabs>`;
+  work = protectedWork;
+
+  // Drop Docusaurus "unclickable-element" label TabItems (a group-heading hack
+  // with no Fumadocs equivalent) so they don't become empty "label" tabs.
+  work = work.replace(/<TabItem\b[^>]*unclickable[^>]*>\s*<\/TabItem>\s*/g, '');
+
+  // Flat rename: <TabItem value="v" label="L"> → <Tab value="L">; </TabItem> → </Tab>.
+  // Done globally so nesting depth is irrelevant.
+  work = work.replace(/<TabItem\b([^>]*?)\/?>/g, (_m, attrs) => {
+    const label = (attrs.match(/\blabel\s*=\s*["']([^"']*)["']/) || [])[1];
+    const value = (attrs.match(/\bvalue\s*=\s*["']([^"']*)["']/) || [])[1];
+    return `<Tab value=${JSON.stringify(label || value || 'Tab')}>`;
   });
-  return restoreCode(work, blocks);
+  work = work.replace(/<\/TabItem>/g, '</Tab>');
+
+  // Drop Docusaurus-only Tabs attrs, then inject items from each Tabs' direct-child
+  // <Tab> values (nesting-aware via a stack so inner tabs get their own list).
+  work = work.replace(/<Tabs\b[^>]*>/g, (m) =>
+    m.replace(/\s*\bgroupId\s*=\s*["'][^"']*["']/g, '').replace(/\s*\bclassName\s*=\s*["'][^"']*["']/g, ''),
+  );
+  return restoreCode(injectTabsItems(work), blocks);
+}
+
+// Stack-based items injection: for every <Tabs …> tag, insert items={[…]} built
+// from the values of its DIRECT-child <Tab> tags (skips tabs that already list items).
+function injectTabsItems(work) {
+  const tagRe = /<Tabs\b[^>]*>|<\/Tabs>|<Tab\b[^>]*>/g;
+  const stack = [];
+  const edits = [];
+  let m;
+  while ((m = tagRe.exec(work)) !== null) {
+    const tag = m[0];
+    if (tag.startsWith('</Tabs')) {
+      const ctx = stack.pop();
+      if (ctx) edits.push(ctx);
+    } else if (tag.startsWith('<Tabs')) {
+      stack.push({ values: [], insertAt: m.index + '<Tabs'.length, hasItems: /\bitems\s*=/.test(tag) });
+    } else {
+      const v = (tag.match(/\bvalue="([^"]*)"/) || [])[1];
+      if (stack.length) {
+        const top = stack[stack.length - 1];
+        top.values.push(v ?? `Tab ${top.values.length + 1}`);
+      }
+    }
+  }
+  edits.sort((a, b) => b.insertAt - a.insertAt);
+  for (const e of edits) {
+    if (e.hasItems) continue;
+    work = work.slice(0, e.insertAt) + ` items={${JSON.stringify(e.values)}}` + work.slice(e.insertAt);
+  }
+  return work;
 }
 
 // ─────────────────────────────────────────────────────────────────────

@@ -41,6 +41,23 @@ test('tabs: @theme Tabs/TabItem -> Fumadocs Tabs/Tab with items', () => {
   assert.match(out, /<Tabs items=\{\["npm","Yarn"\]\}>/);
   assert.match(out, /<Tab value="npm">/);
 });
+test('tabs: nested Tabs each get their own items; every TabItem closed', () => {
+  const src = `<Tabs>\n<TabItem value="outer">\n<Tabs>\n<TabItem value="inner1">a</TabItem>\n<TabItem value="inner2">b</TabItem>\n</Tabs>\n</TabItem>\n<TabItem value="outer2">c</TabItem>\n</Tabs>`;
+  const out = transformTabs(src);
+  assert.doesNotMatch(out, /TabItem/);
+  assert.match(out, /<Tabs items=\{\["outer","outer2"\]\}>/);
+  assert.match(out, /<Tabs items=\{\["inner1","inner2"\]\}>/);
+  // balanced: same count of <Tab ...> opens and </Tab> closes
+  const opens = (out.match(/<Tab\s/g) || []).length;
+  const closes = (out.match(/<\/Tab>/g) || []).length;
+  assert.equal(opens, closes);
+});
+test('tabs: drops unclickable-element label pseudo-tabs', () => {
+  const src = `<Tabs>\n<TabItem className="unclickable-element" value="label"></TabItem>\n<TabItem value="a">x</TabItem>\n</Tabs>`;
+  const out = transformTabs(src);
+  assert.match(out, /items=\{\["a"\]\}/);
+  assert.doesNotMatch(out, /label/);
+});
 test('vars: var inside a link href resolves to literal value', () => {
   // nitroDocsRepo is present in content/vars.json
   assert.match(transformVars('see [repo](@@nitroDocsRepo@@)'), /\]\(https:\/\/github\.com\/OffchainLabs\/nitro\)/);

@@ -26,6 +26,18 @@
     "snippet": "<include cwd>content/partials/_bold-config-params.mdx</include>"
   },
   {
+    "path": "content/partials/_client-flags.mdx",
+    "title": "Client flags",
+    "summary": "For additional information regarding specific client flags visit their docs: Prysm, Lighthouse, Teku, and Lodestar.",
+    "scope": "neutral",
+    "tags": [
+      "client",
+      "flags"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/_client-flags.mdx</include>"
+  },
+  {
     "path": "content/partials/_contribute-docs-partial.mdx",
     "title": "Documentation Contribution Guide",
     "summary": "Thank you for considering to contribute to the Arbitrum documentation!",
@@ -58,8 +70,47 @@
       "hardware",
       "requirements"
     ],
-    "usedIn": 2,
+    "usedIn": 5,
     "snippet": "<include cwd>content/partials/_hardware-requirements.mdx</include>"
+  },
+  {
+    "path": "content/partials/_local-devnet-flags.mdx",
+    "title": "Local Development Network Flags",
+    "summary": "",
+    "scope": "neutral",
+    "tags": [
+      "local",
+      "devnet",
+      "flags"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/_local-devnet-flags.mdx</include>"
+  },
+  {
+    "path": "content/partials/_multidimensional-content-controls-partial.mdx",
+    "title": "Multidimensional Content Controls",
+    "summary": "defaultValue=\"arb-one-nitro\"",
+    "scope": "neutral",
+    "tags": [
+      "multidimensional",
+      "content",
+      "controls"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/_multidimensional-content-controls-partial.mdx</include>"
+  },
+  {
+    "path": "content/partials/_public-preview-banner-partial.mdx",
+    "title": "Public Preview Banner",
+    "summary": "This document is currently in public preview and may change significantly as feedback is captured from readers like you.",
+    "scope": "neutral",
+    "tags": [
+      "public",
+      "preview",
+      "banner"
+    ],
+    "usedIn": 0,
+    "snippet": "<include cwd>content/partials/_public-preview-banner-partial.mdx</include>"
   },
   {
     "path": "content/partials/_reference-arbitrum-contract-addresses-partial.mdx",
@@ -604,6 +655,133 @@
     ],
     "usedIn": 2,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/features/_timeboost-pc.mdx</include>"
+  },
+  {
+    "path": "content/partials/run-a-node/_dao-chains-example.mdx",
+    "title": "Dao chains example",
+    "summary": "shell",
+    "scope": "neutral",
+    "tags": [
+      "run-a-node",
+      "dao",
+      "chains",
+      "example"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/run-a-node/_dao-chains-example.mdx</include>"
+  },
+  {
+    "path": "content/partials/run-a-node/_dao-chains-parameters.mdx",
+    "title": "Dao chains parameters",
+    "summary": "Breaking the title ordering here (it should be h3 instead of h4) so these titles don't appear in the right-hand sidebar",
+    "scope": "neutral",
+    "tags": [
+      "run-a-node",
+      "dao",
+      "chains",
+      "parameters"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/run-a-node/_dao-chains-parameters.mdx</include>"
+  },
+  {
+    "path": "content/partials/run-a-node/_optional-orbit-sequencer-compatible-cli-partial.mdx",
+    "title": "Optional orbit sequencer compatible cli",
+    "summary": "",
+    "scope": "neutral",
+    "tags": [
+      "run-a-node",
+      "optional",
+      "orbit",
+      "sequencer",
+      "compatible",
+      "cli"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/run-a-node/_optional-orbit-sequencer-compatible-cli-partial.mdx</include>"
+  },
+  {
+    "path": "content/partials/run-a-node/_optional-parameters.mdx",
+    "title": "Optional parameters",
+    "summary": "",
+    "scope": "neutral",
+    "tags": [
+      "run-a-node",
+      "optional",
+      "parameters"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/run-a-node/_optional-parameters.mdx</include>"
+  },
+  {
+    "path": "content/partials/run-a-node/_orbit-chains-example.mdx",
+    "title": "Orbit chains example",
+    "summary": "shell",
+    "scope": "neutral",
+    "tags": [
+      "run-a-node",
+      "orbit",
+      "chains",
+      "example"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/run-a-node/_orbit-chains-example.mdx</include>"
+  },
+  {
+    "path": "content/partials/run-a-node/_orbit-chains-parameters.mdx",
+    "title": "Orbit chains parameters",
+    "summary": "Breaking the title ordering here (it should be h3 instead of h4) so these titles don't appear in the right-hand sidebar",
+    "scope": "neutral",
+    "tags": [
+      "run-a-node",
+      "orbit",
+      "chains",
+      "parameters"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/run-a-node/_orbit-chains-parameters.mdx</include>"
+  },
+  {
+    "path": "content/partials/run-a-node/_path-node-parameters.mdx",
+    "title": "Path node parameters",
+    "summary": "- execution.caching.state-scheme=path - sets state scheme → chooses TrieDB implementation",
+    "scope": "neutral",
+    "tags": [
+      "run-a-node",
+      "path",
+      "node",
+      "parameters"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/run-a-node/_path-node-parameters.mdx</include>"
+  },
+  {
+    "path": "content/partials/run-a-node/_tx-prechecker-parameters.mdx",
+    "title": "Tx prechecker parameters",
+    "summary": "",
+    "scope": "neutral",
+    "tags": [
+      "run-a-node",
+      "tx",
+      "prechecker",
+      "parameters"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/run-a-node/_tx-prechecker-parameters.mdx</include>"
+  },
+  {
+    "path": "content/partials/run-a-node/_upgrade-cadence-recommendations-partial.mdx",
+    "title": "How often should I be upgrading my ArbOS version?",
+    "summary": "It is strongly recommended to keep your Nitro's node software up-to-date as best you can to ensure you are benefting from the latest improvements to the Arbi…",
+    "scope": "neutral",
+    "tags": [
+      "run-a-node",
+      "upgrade",
+      "cadence",
+      "recommendations"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/run-a-node/_upgrade-cadence-recommendations-partial.mdx</include>"
   },
   {
     "path": "content/partials/stylus/_setup-cargo-stylus.mdx",

@@ -88,6 +88,12 @@ const SECTIONS = {
     src: 'for-devs/contribute.mdx',
     dest: 'contribute.mdx',
   },
+  // ── Wave 3: merge run-arbitrum-node + node-running into run-a-node ──
+  'run-a-node': {
+    srcDir: 'run-arbitrum-node',
+    destDir: 'run-a-node',
+    extraSources: ['node-running'],
+  },
   // ── ADD MORE SECTION ENTRIES HERE (later waves) ──
 };
 
