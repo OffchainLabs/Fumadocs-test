@@ -9,6 +9,7 @@
     "arbitrum-vs-ethereum",
     "precompiles",
     "nodeinterface",
-    "reference"
+    "reference",
+    "..."
   ]
 }

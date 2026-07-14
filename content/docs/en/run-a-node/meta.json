@@ -9,6 +9,7 @@
     "run-split-validator-node",
     "high-availability-sequencer-docs",
     "sequencer-content-map",
-    "faq"
+    "faq",
+    "..."
   ]
 }

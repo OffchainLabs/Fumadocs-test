@@ -18,8 +18,12 @@ export const i18nUI = defineI18nUI(i18n, {
   'ja': { displayName: '日本語', search: 'ドキュメントを検索' },
 });
 
+/** Shared styling for the secondary icons in the "Build apps" menu. */
+const menuIconClass = 'bg-fd-primary text-fd-primary-foreground mb-2 rounded-md p-1';
+
 export function baseOptions(locale: string): BaseLayoutProps {
   const prefix = locale === i18n.defaultLanguage ? '' : `/${locale}`;
+  const docHref = (section: string) => `${prefix}${docsRoute}/${section}`;
   return {
     nav: {
       title: (
@@ -30,7 +34,10 @@ export function baseOptions(locale: string): BaseLayoutProps {
       ),
     },
     links: [
-      { text: 'Get started', url: `${prefix}${docsRoute}/get-started` },
+      // Primary entry points only. Run a chain, Run a node, How Arbitrum works,
+      // Bridge, and Notices are reached through the root:true sidebar tabs
+      // (content/docs/en/*/meta.json), so they are intentionally not mirrored here.
+      { text: 'Get started', url: docHref('get-started') },
       {
         type: 'menu',
         text: 'Build apps',
@@ -39,7 +46,7 @@ export function baseOptions(locale: string): BaseLayoutProps {
             icon: <Code />,
             text: 'Solidity',
             description: 'Deploy Solidity smart contracts to Arbitrum chains.',
-            url: `${prefix}${docsRoute}/build-decentralized-apps`,
+            url: docHref('build-decentralized-apps'),
             menu: {
               className: 'md:row-span-2',
               banner: (
@@ -53,30 +60,21 @@ export function baseOptions(locale: string): BaseLayoutProps {
             },
           },
           {
-            icon: (
-              <Braces className="bg-fd-primary text-fd-primary-foreground mb-2 rounded-md p-1" />
-            ),
+            icon: <Braces className={menuIconClass} />,
             text: 'Stylus',
             description: 'Write contracts in Rust, C, and C++ that compile to WebAssembly.',
-            url: `${prefix}${docsRoute}/stylus`,
+            url: docHref('stylus'),
             menu: { className: 'lg:col-start-2' },
           },
           {
-            icon: (
-              <BookOpen className="bg-fd-primary text-fd-primary-foreground mb-2 rounded-md p-1" />
-            ),
+            icon: <BookOpen className={menuIconClass} />,
             text: 'Arbitrum essentials',
             description: 'Bridging, precompiles, the NodeInterface, and platform reference.',
-            url: `${prefix}${docsRoute}/arbitrum-essentials`,
+            url: docHref('arbitrum-essentials'),
             menu: { className: 'lg:col-start-2' },
           },
         ],
       },
-      { text: 'Run a chain', url: `${prefix}${docsRoute}/launch-arbitrum-chain` },
-      { text: 'Run a node', url: `${prefix}${docsRoute}/run-a-node` },
-      { text: 'How Arbitrum works', url: `${prefix}${docsRoute}/how-arbitrum-works` },
-      { text: 'Bridge', url: `${prefix}${docsRoute}/arbitrum-bridge` },
-      { text: 'Notices', url: `${prefix}${docsRoute}/notices` },
     ],
     githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
     i18n: true,
