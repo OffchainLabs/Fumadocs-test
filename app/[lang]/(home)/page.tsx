@@ -44,7 +44,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         </p>
         <div className="flex gap-3">
           <Link
-            href={docs('/build-decentralized-apps')}
+            href={docs('/build-decentralized-apps/quickstart-solidity-remix')}
             className="rounded-md bg-fd-primary text-fd-primary-foreground px-5 py-2 font-medium"
           >
             Solidity quickstart
@@ -72,13 +72,13 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
               icon={<Cpu />}
               title="Inside Nitro"
               description="A technical deep dive into Nitro's architecture."
-              href={docs('/how-arbitrum-works')}
+              href={docs('/how-arbitrum-works/inside-arbitrum-nitro')}
             />
             <Card
               icon={<ShieldCheck />}
               title="Inside AnyTrust"
               description="A technical deep dive into the AnyTrust protocol."
-              href={docs('/how-arbitrum-works/deep-dives')}
+              href={docs('/how-arbitrum-works/deep-dives/anytrust-protocol')}
             />
             <Card
               icon={<FileText />}
@@ -102,7 +102,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
               icon={<Code />}
               title="Quickstart (Solidity)"
               description="Deploy your first Solidity smart contract to Arbitrum using Remix."
-              href={docs('/build-decentralized-apps')}
+              href={docs('/build-decentralized-apps/quickstart-solidity-remix')}
             />
             <Card
               icon={<Rocket />}
@@ -120,7 +120,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
               icon={<Network />}
               title="Chain info"
               description="Chain IDs, RPC endpoints, and network parameters."
-              href={docs('/build-decentralized-apps')}
+              href={docs('/chain-info')}
             />
           </Cards>
         </section>
@@ -162,19 +162,19 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
               icon={<Server />}
               title="Run a full node"
               description="Access Arbitrum chains without connecting to a third-party node."
-              href={docs('/run-a-node')}
+              href={docs('/run-a-node/run-full-node')}
             />
             <Card
               icon={<Database />}
               title="Run an archive node"
               description="Access extensive historical data for advanced analytical purposes."
-              href={docs('/run-a-node')}
+              href={docs('/run-a-node/more-types/run-archive-node')}
             />
             <Card
               icon={<Radio />}
               title="Run a feed relay"
               description="Distribute the sequencer feed across multiple nodes."
-              href={docs('/run-a-node')}
+              href={docs('/run-a-node/run-feed-relay')}
             />
             <Card
               icon={<HardDrive />}
@@ -192,7 +192,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
               icon={<ArrowRightLeft />}
               title="Quickstart (bridge)"
               description="Step-by-step instructions for first-time bridge users."
-              href={docs('/arbitrum-bridge')}
+              href={docs('/arbitrum-bridge/quickstart')}
             />
             <Card
               icon={<Compass />}
