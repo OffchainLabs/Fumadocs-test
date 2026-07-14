@@ -15,7 +15,7 @@ While this feature allows an <Term id="arbitrum-chain">Arbitrum chain</Term> to 
 However, by using a third-party <Term id="bridge">bridge</Term> for the chain's gas token, your chain's gas token—and thus its liveness—becomes directly dependent on the security and integrity of the third-party bridge provider.
 
 </VanillaAdmonition>
-<VanillaAdmonition type="info" title="While Native Mint/Burn was introduced in ArbOS 41, we strongly recommend that teams upgrade to [ArbOS 51 Dia](/docs/run-arbitrum-node/arbos-releases/arbos51) to enable this feature.">
+<VanillaAdmonition type="info" title="While Native Mint/Burn was introduced in ArbOS 41, we strongly recommend that teams upgrade to [ArbOS 51 Dia](/docs/run-a-node/arbos-releases/arbos51) to enable this feature.">
 
 If you want to learn more about the concept of native mint/burn and the impact on your chain, refer to the [Choose native mint/burn page](/docs/launch-arbitrum-chain/features/common/gas-and-fees/choose-native-mint-burn.mdx).
 
@@ -30,11 +30,11 @@ Before starting, ensure that the chain has:
 | ------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `nitro-contracts`  | [v3.1.0](https://github.com/OffchainLabs/nitro-contracts/releases/tag/v3.1.0) or higher                                                                   |
 | `nitro-node`       | [v3.9.3](https://github.com/OffchainLabs/nitro/releases/tag/v3.9.3) or higher (includes the fix for `ArbNativeTokenManager` precompile inclusion)         |
-| `go-ethereum` fork | Included in [ArbOS 51 Dia](/docs/run-arbitrum-node/arbos-releases/arbos51) (please use the latest <Term id="wasm">WASM</Term> module root) or later |
+| `go-ethereum` fork | Included in [ArbOS 51 Dia](/docs/run-a-node/arbos-releases/arbos51) (please use the latest <Term id="wasm">WASM</Term> module root) or later |
 
 We suggest the following baseline or values for production chains:
 
-- [ArbOS version 51](/docs/run-arbitrum-node/arbos-releases/arbos51) or later.
+- [ArbOS version 51](/docs/run-a-node/arbos-releases/arbos51) or later.
 - Call [`ArbOwner.setNativeTokenManagementFrom`](https://github.com/OffchainLabs/nitro-precompile-interfaces/blob/f49a4889b486fd804a7901203f5f663cfd1581c8/ArbOwner.sol#L38-L40) to activate with a future timestamp ≥ 7 days ahead. This is recommended for chains which are already live.
 - Native-token owners list: only the bridge adapter contract(s) to minimize the attack surface.
 - <Term id="outbox">Outbox</Term> sweep bot: run once per hour to prevent stray collateral build-up.
@@ -49,7 +49,7 @@ We suggest the following baseline or values for production chains:
 
 Below steps show the flow a <Term id="chain-owner">chain owners</Term> can use to allowlist a bridge adapter. The example below uses a Foundry call, but you can also use other tools to interact with the precompiles directly.
 
-1. Update your chain to [ArbOS 51 Dia](/docs/run-arbitrum-node/arbos-releases/arbos51) binaries and deploy the consensus-v51 WASM root.
+1. Update your chain to [ArbOS 51 Dia](/docs/run-a-node/arbos-releases/arbos51) binaries and deploy the consensus-v51 WASM root.
 2. Call [`setNativeTokenManagementFrom`](https://github.com/OffchainLabs/nitro-precompile-interfaces/blob/f49a4889b486fd804a7901203f5f663cfd1581c8/ArbOwner.sol#L38-L40) with the chain owner and a UNIX timestamp that is 7+ days in the future to enable the feature, otherwise the call will fail.
 
    :::important
@@ -158,7 +158,7 @@ There may be situations where you want to disable the feature temporarily, e.g.,
 
 ### Can I run the feature on an older ArbOS version?
 
-While native mint/burn was technically introduced in ArbOS 41, we strongly recommend upgrading to [ArbOS 51 Dia](/docs/run-arbitrum-node/arbos-releases/arbos51) for those enabling this feature.
+While native mint/burn was technically introduced in ArbOS 41, we strongly recommend upgrading to [ArbOS 51 Dia](/docs/run-a-node/arbos-releases/arbos51) for those enabling this feature.
 
 ### What happens to value-bearing withdrawals once I disable the feature?
 

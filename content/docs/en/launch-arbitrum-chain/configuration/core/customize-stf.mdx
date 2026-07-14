@@ -16,7 +16,7 @@ Before customizing your Arbitrum chain, it's important to understand what the St
 This guide is only necessary for changes that modify the STF.
 
 To customize other node behavior, such as RPC behavior or the sequencer's ordering policy, you can simply
-[build your own node](/docs/run-arbitrum-node/nitro/build-nitro-locally.mdx) without worrying about the rest of this guide. However, changes that modify the STF require updating the fraud proving system to recognize the new behavior as correct. Otherwise, the fraud prover would side with unmodified nodes, which would win fraud proofs against your modified node.
+[build your own node](/docs/run-a-node/nitro/build-nitro-locally) without worrying about the rest of this guide. However, changes that modify the STF require updating the fraud proving system to recognize the new behavior as correct. Otherwise, the fraud prover would side with unmodified nodes, which would win fraud proofs against your modified node.
 
 Here's some examples of modifications that affect the STF:
 
@@ -119,7 +119,7 @@ This method will only run the customized Nitro node (i.e., it will not run Block
 docker run --rm -it -v /path/to/your/node/dir:/home/user/.arbitrum -p 0.0.0.0:8449:8449 custom-nitro-node --conf.file /home/user/.arbitrum/nodeConfig.json
 ```
 
-<VanillaAdmonition type="info" title="The instructions provided in [How to run a full node](/docs/run-arbitrum-node/run-full-node.mdx) **will not** work with your Arbitrum chain node. See [Optional parameters (Arbitrum chain)](/docs/run-arbitrum-node/run-full-node.mdx#optional-parameters) for Arbitrum chain-specific CLI flags.">
+<VanillaAdmonition type="info" title="The instructions provided in [How to run a full node](/docs/run-a-node/run-full-node) **will not** work with your Arbitrum chain node. See [Optional parameters (Arbitrum chain)](/docs/run-a-node/run-full-node#optional-parameters) for Arbitrum chain-specific CLI flags.">
 
 </VanillaAdmonition>
 Once your node is running, you can try out your modifications to the State Transition Function and confirm they work as expected.

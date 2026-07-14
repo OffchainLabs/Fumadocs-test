@@ -25,7 +25,7 @@ Note that upgrading your node version _must occur_ before the deadline establish
 
 While every ArbOS upgrade will require an update to the <Term id="wasm-module-root">WASM module root</Term>, not every ArbOS upgrade will require an upgrade to the chain's `nitro-contracts` version.
 
-If necessary, as defined in the release notes for each ArbOS release ([example of ArbOS 51](/docs/run-arbitrum-node/arbos-releases/arbos51.mdx)), you may need to deploy new versions of some (or all) of the Nitro contracts to the <Term id="parent-chain">parent chain</Term> of your Arbitrum chain. These contracts include the rollup logic, bridging logic, fraud-proof contracts, and interfaces for interacting with Nitro precompiles. To verify the current version of your Nitro contracts, follow [these instructions](https://github.com/OffchainLabs/chain-actions/blob/main/README.md#check-version-and-upgrade-path) while replacing the inbox contract address and network name with that of your Arbitrum chain. This information will allow you to find the correct upgrade path for your Nitro contracts.
+If necessary, as defined in the release notes for each ArbOS release ([example of ArbOS 51](/docs/run-a-node/arbos-releases/arbos51)), you may need to deploy new versions of some (or all) of the Nitro contracts to the <Term id="parent-chain">parent chain</Term> of your Arbitrum chain. These contracts include the rollup logic, bridging logic, fraud-proof contracts, and interfaces for interacting with Nitro precompiles. To verify the current version of your Nitro contracts, follow [these instructions](https://github.com/OffchainLabs/chain-actions/blob/main/README.md#check-version-and-upgrade-path) while replacing the inbox contract address and network name with that of your Arbitrum chain. This information will allow you to find the correct upgrade path for your Nitro contracts.
 
 To update the WASM module root and deploy your chain's Nitro contracts to the parent chain for the most recent ArbOS release, you will need the following inputs (obtained from the [requirements for the targeted ArbOS release](/docs/launch-arbitrum-chain/overview)):
 
@@ -69,8 +69,8 @@ When scheduling the ArbOS upgrade through `ArbOwner.scheduleArbOSUpgrade` you mu
 
 #### Step 4: Enable ArbOS specific configurations or feature flags (not always required)
 
-For some ArbOS upgrades, such as [ArbOS 51 Dia](/docs/run-arbitrum-node/arbos-releases/arbos51.mdx), there may be additional requirements or steps that need to be satisfied to ensure your Arbitrum chain can use all of the new features and improvements made available in that particular ArbOS release.
+For some ArbOS upgrades, such as [ArbOS 51 Dia](/docs/run-a-node/arbos-releases/arbos51), there may be additional requirements or steps that need to be satisfied to ensure your Arbitrum chain can use all of the new features and improvements made available in that particular ArbOS release.
 
-If there are additional requirements for the targeted ArbOS release you're attempting to upgrade to; the additional requirements will be listed on the reference pages for [the targeted ArbOS release](/docs/launch-arbitrum-chain/overview#list-of-available-arbos-releases). For example, the additional requirements for <Term id="arbitrum-chains">Arbitrum Chains</Term> upgrading to ArbOS 51 can be found [here on the ArbOS 51 docs](/docs/run-arbitrum-node/arbos-releases/arbos51.mdx).
+If there are additional requirements for the targeted ArbOS release you're attempting to upgrade to; the additional requirements will be listed on the reference pages for [the targeted ArbOS release](/docs/launch-arbitrum-chain/overview#list-of-available-arbos-releases). For example, the additional requirements for <Term id="arbitrum-chains">Arbitrum Chains</Term> upgrading to ArbOS 51 can be found [here on the ArbOS 51 docs](/docs/run-a-node/arbos-releases/arbos51).
 
 Congratulations! You've upgraded your Arbitrum chain(s) to the specified ArbOS version.

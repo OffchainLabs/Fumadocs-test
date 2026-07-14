@@ -31,7 +31,7 @@ Cargo Stylus provides several debugging capabilities:
   - **LLDB** (macOS)
   - **StylusDB** (macOS/Linux) - recommended for advanced debugging
 - **[Cast](https://book.getfoundry.sh/cast/)** (an Ethereum CLI tool)
-- **[Arbitrum RPC provider](#rpc-endpoint-compatibility)** with tracing endpoints enabled or a [local Stylus dev node](/docs/run-arbitrum-node/run-nitro-dev-node)
+- **[Arbitrum RPC provider](#rpc-endpoint-compatibility)** with tracing endpoints enabled or a [local Stylus dev node](/docs/run-a-node/run-nitro-dev-node)
 
 ## Installation and setup
 
@@ -294,7 +294,7 @@ Both `cargo stylus trace` and `cargo stylus replay` require an RPC endpoint that
 | `jsTracer`     | (default)             | Limited - most providers don't support this |
 | `stylusTracer` | `--use-native-tracer` | Broader support from RPC providers          |
 
-Both tracers are available on local nodes, but `stylusTracer` is more efficient. See the [list of RPC providers](/docs/for-devs/dev-tools-and-resources/chain-info#third-party-rpc-providers) for tracing support information.
+Both tracers are available on local nodes, but `stylusTracer` is more efficient. See the [list of RPC providers](/docs/chain-info#third-party-rpc-providers) for tracing support information.
 
 ## Limitations
 
