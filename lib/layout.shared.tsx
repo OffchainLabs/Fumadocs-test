@@ -1,6 +1,6 @@
 import { defineI18nUI } from 'fumadocs-ui/i18n';
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
-import { BookOpen, Braces, Code } from 'lucide-react';
+import { BookOpen, Braces, Code, Coins } from 'lucide-react';
 
 import { OffchainMark } from '@/components/OffchainMark';
 
@@ -34,9 +34,10 @@ export function baseOptions(locale: string): BaseLayoutProps {
       ),
     },
     links: [
-      // Primary entry points only. Run a chain, Run a node, How Arbitrum works,
-      // Bridge, and Notices are reached through the root:true sidebar tabs
-      // (content/docs/en/*/meta.json), so they are intentionally not mirrored here.
+      // Mirrors the Docusaurus top navbar (docusaurus.config.js `navbar.items`):
+      // Get started · Build apps · Launch a chain · Run a node · Use the bridge ·
+      // How it works · Notices. Targets point to the nearest existing Fumadocs page
+      // to avoid 404s where a Docusaurus leaf has not been ported yet.
       { text: 'Get started', url: docHref('get-started') },
       {
         type: 'menu',
@@ -44,11 +45,11 @@ export function baseOptions(locale: string): BaseLayoutProps {
         items: [
           {
             icon: <Code />,
-            text: 'Solidity',
+            text: 'Build with Solidity',
             description: 'Deploy Solidity smart contracts to Arbitrum chains.',
             url: docHref('build-decentralized-apps'),
             menu: {
-              className: 'md:row-span-2',
+              className: 'md:row-span-3',
               banner: (
                 <div className="-mx-3 -mt-3 flex flex-col justify-end rounded-t-lg bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-400 p-4 pt-20 text-white">
                   <p className="text-base font-semibold">Build apps on Arbitrum</p>
@@ -61,9 +62,9 @@ export function baseOptions(locale: string): BaseLayoutProps {
           },
           {
             icon: <Braces className={menuIconClass} />,
-            text: 'Stylus',
+            text: 'Build with Stylus',
             description: 'Write contracts in Rust, C, and C++ that compile to WebAssembly.',
-            url: docHref('stylus'),
+            url: docHref('stylus/quickstart'),
             menu: { className: 'lg:col-start-2' },
           },
           {
@@ -73,8 +74,20 @@ export function baseOptions(locale: string): BaseLayoutProps {
             url: docHref('arbitrum-essentials'),
             menu: { className: 'lg:col-start-2' },
           },
+          {
+            icon: <Coins className={menuIconClass} />,
+            text: 'Machine Payments Protocol (MPP)',
+            description: 'Machine-to-machine payments on Arbitrum.',
+            url: docHref('build-decentralized-apps'),
+            menu: { className: 'lg:col-start-2' },
+          },
         ],
       },
+      { text: 'Launch a chain', url: docHref('launch-arbitrum-chain') },
+      { text: 'Run a node', url: docHref('run-a-node') },
+      { text: 'Use the bridge', url: docHref('arbitrum-bridge') },
+      { text: 'How it works', url: docHref('how-arbitrum-works') },
+      { text: 'Notices', url: docHref('notices') },
     ],
     githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
     i18n: true,
