@@ -1,5 +1,7 @@
+import { rehypeCodeDefaultOptions } from 'fumadocs-core/mdx-plugins';
 import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
 import { defineCollections, defineConfig, defineDocs } from 'fumadocs-mdx/config';
+import { transformerTwoslash } from 'fumadocs-twoslash';
 import { z } from 'zod';
 
 import { referenceSchema } from './lib/reference-schema';
@@ -69,5 +71,12 @@ export default defineConfig({
     // Fumadocs-mdx already wires `remark-include` internally (verified in
     // dist/build-mdx-*.js). The `<include>` MDX directive works out of the box
     // — no additional remark plugins required for partial inclusion.
+    //
+    // twoslash only activates on ```ts twoslash blocks (TypeScript). Other
+    // languages (shell, Rust, Solidity) fall through to the default transformers.
+    rehypeCodeOptions: {
+      ...rehypeCodeDefaultOptions,
+      transformers: [...(rehypeCodeDefaultOptions.transformers ?? []), transformerTwoslash()],
+    },
   },
 });
