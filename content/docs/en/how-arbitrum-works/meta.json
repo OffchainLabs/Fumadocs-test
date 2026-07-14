@@ -3,5 +3,14 @@
   "icon": "Cog",
   "root": true,
   "description": "The protocols and mechanisms behind Arbitrum Nitro.",
-  "pages": ["index", "deep-dives", "reference", "bold", "timeboost", "..."]
+  "pages": [
+    "index",
+    "deep-dives",
+    "reference",
+    "bold",
+    "timeboost",
+    "...",
+    "[Chain info](/docs/chain-info)",
+    "[Contribute](/docs/contribute)"
+  ]
 }

@@ -1,0 +1,9 @@
+{
+  "title": "Configure token gateway",
+  "pages": [
+    "custom",
+    "generic-custom",
+    "standard",
+    "..."
+  ]
+}

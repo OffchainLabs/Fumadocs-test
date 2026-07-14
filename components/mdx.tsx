@@ -4,9 +4,11 @@ import defaultMdxComponents from 'fumadocs-ui/mdx';
 import type { MDXComponents } from 'mdx/types';
 
 import { AddressExplorerLink } from '@/components/mdx/AddressExplorerLink';
+import { CustomDetails } from '@/components/mdx/CustomDetails';
 import FAQStructuredData from '@/components/mdx/FAQStructuredData';
 import { FloatingHoverModal } from '@/components/mdx/FloatingHoverModal';
 import { ImageZoom } from '@/components/mdx/ImageZoom';
+import { PendingWidget } from '@/components/mdx/PendingWidget';
 import { Reference } from '@/components/mdx/Reference';
 import { ReferenceList } from '@/components/mdx/ReferenceList';
 import { Term } from '@/components/mdx/Term';
@@ -20,10 +22,12 @@ export function getMDXComponents(components?: MDXComponents) {
     Accordions,
     AddressExplorerLink,
     AEL: AddressExplorerLink,
+    CustomDetails,
     FAQStructuredData,
     FAQStructuredDataJsonLd: FAQStructuredData,
     FloatingHoverModal,
     ImageZoom,
+    ImageWithCaption: ImageZoom,
     Reference,
     ReferenceList,
     Tab,
@@ -31,6 +35,14 @@ export function getMDXComponents(components?: MDXComponents) {
     Term,
     VanillaAdmonition,
     Var,
+    // Placeholders for not-yet-ported interactive widgets (see PendingWidget).
+    VendingMachine: () => <PendingWidget name="VendingMachine" />,
+    EdgeChallengeFlow: () => <PendingWidget name="EdgeChallengeFlow" />,
+    FlowChart: () => <PendingWidget name="FlowChart" />,
+    MultiDimensionalContentWidget: () => <PendingWidget name="MultiDimensionalContentWidget" />,
+    GenerateTroubleshootingReportWidget: () => (
+      <PendingWidget name="GenerateTroubleshootingReportWidget" />
+    ),
     ...components,
   } satisfies MDXComponents;
 }

@@ -216,7 +216,7 @@ Our function now emits an event, which means that when calling it, the state wil
 function sayHi() external returns(string memory);
 ```
 
-Next, build Nitro by following the instructions in [How to build Nitro locally](/docs/run-arbitrum-node/nitro/build-nitro-locally.mdx). Note that if you've already built the Docker image, you still need run the last step to rebuild.
+Next, build Nitro by following the instructions in [How to build Nitro locally](/docs/run-a-node/nitro/build-nitro-locally). Note that if you've already built the Docker image, you still need run the last step to rebuild.
 
 Run Nitro with the following command:
 
@@ -294,7 +294,7 @@ func (con ArbInfo) GetBalanceCustom(c ctx, evm mech, account addr) (huge, error)
 
 To register this new precompile method, refer to Option 1 above.
 
-Next, build Nitro by following the instructions in [How to build Nitro locally](/docs/run-arbitrum-node/nitro/build-nitro-locally.mdx). Note that if you've already built the Docker image, you still need run the last step to rebuild.
+Next, build Nitro by following the instructions in [How to build Nitro locally](/docs/run-a-node/nitro/build-nitro-locally). Note that if you've already built the Docker image, you still need run the last step to rebuild.
 
 Run Nitro with the following command:
 
@@ -379,7 +379,7 @@ The two responses will look like this, respectively:
 
 Here we can see that the gas cost incurred by the execution of the first transaction is `gasUsed - gasUsedForL1 = 22938`. Similarly, the gas cost incurred by the execution of the second transaction is `22538`. If you subtract the two, the result is `400`, as expected.
 
-To learn more about the gas cost model, see [how to estimate gas](/docs/build-decentralized-apps/how-to-estimate-gas.mdx).
+To learn more about the gas cost model, see [how to estimate gas](/docs/arbitrum-essentials/how-to-estimate-gas).
 
 ## Option 5: Call and modify state
 

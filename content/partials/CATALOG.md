@@ -7,7 +7,16 @@ banner, note, config table, or troubleshooting block, search this file** (⌘F b
 the partial instead of duplicating prose. Curate titles, summaries, and tags in
 `content/partials/registry.json`.
 
-40 partials.
+84 partials.
+
+## arbitrum-essentials
+
+### Token compatibility with available tooling
+
+If you want your token to be compatible out of the box with all the tooling available (e.g., the Arbitrum bridge), we recommend that you keep the implementat…
+
+- `<include cwd>content/partials/arbitrum-essentials/_token-compatibility.mdx</include>`
+- used in 2 pages — tags: `arbitrum-essentials`, `token`, `compatibility`
 
 ## general
 
@@ -16,15 +25,114 @@ the partial instead of duplicating prose. Curate titles, summaries, and tags in
 - `<include cwd>content/partials/_additional-config-params.mdx</include>`
 - used in 1 page — tags: `additional`, `config`, `params`
 
+### Arbitrum SDK
+
+The @arbitrum/sdk is a TypeScript library for bridging tokens and passing messages between parent and child Arbitrum chains.
+
+- `<include cwd>content/partials/_arbitrum-sdk-partial.mdx</include>`
+- used in 1 page — tags: `arbitrum`, `sdk`
+
 ### BoLD Configuration Parameters
 
 - `<include cwd>content/partials/_bold-config-params.mdx</include>`
 - used in 1 page — tags: `bold`, `config`, `params`
 
+### Client flags
+
+For additional information regarding specific client flags visit their docs: Prysm, Lighthouse, Teku, and Lodestar.
+
+- `<include cwd>content/partials/_client-flags.mdx</include>`
+- used in 2 pages — tags: `client`, `flags`
+
+### Documentation Contribution Guide
+
+Thank you for considering to contribute to the Arbitrum documentation!
+
+- `<include cwd>content/partials/_contribute-docs-partial.mdx</include>`
+- used in 1 page — tags: `contribute`, `docs`
+
+### Faucet list
+
+- `<include cwd>content/partials/_faucet-list-partial.mdx</include>`
+- used in 1 page — tags: `faucet`, `list`
+
 ### Hardware requirements
 
 - `<include cwd>content/partials/_hardware-requirements.mdx</include>`
-- used in 2 pages — tags: `hardware`, `requirements`
+- used in 5 pages — tags: `hardware`, `requirements`
+
+### KNOW MORE TOOLS?
+
+See something missing?
+
+- `<include cwd>content/partials/_know-more-tools-box-partial.mdx</include>`
+- used in 4 pages — tags: `know`, `more`, `tools`, `box`
+
+### Local Development Network Flags
+
+- `<include cwd>content/partials/_local-devnet-flags.mdx</include>`
+- used in 1 page — tags: `local`, `devnet`, `flags`
+
+### Multidimensional Content Controls
+
+defaultValue="arb-one-nitro"
+
+- `<include cwd>content/partials/_multidimensional-content-controls-partial.mdx</include>`
+- used in 1 page — tags: `multidimensional`, `content`, `controls`
+
+### Not for Production Warning Banner
+
+- `<include cwd>content/partials/_not-for-production-banner-partial.mdx</include>`
+- used in 19 pages — tags: `not`, `for`, `production`, `banner`
+
+### Public Preview Banner
+
+This document is currently in public preview and may change significantly as feedback is captured from readers like you.
+
+- `<include cwd>content/partials/_public-preview-banner-partial.mdx</include>`
+- ⚠️ unused — tags: `public`, `preview`, `banner`
+
+### Arbitrum Contract Addresses Reference
+
+The following information may be useful to those building on Arbitrum.
+
+- `<include cwd>content/partials/_reference-arbitrum-contract-addresses-partial.mdx</include>`
+- used in 2 pages — tags: `reference`, `arbitrum`, `contract`, `addresses`
+
+### Arbitrum RPC Endpoints Reference
+
+- Arbitrum public RPCs do not provide Websocket support.
+
+- `<include cwd>content/partials/_reference-arbitrum-rpc-endpoints-partial.mdx</include>`
+- used in 2 pages — tags: `reference`, `arbitrum`, `rpc`, `endpoints`
+
+### Chain parameters
+
+To learn more about the gas target, refer to the Gas and fees deep-dive.
+
+- `<include cwd>content/partials/_reference-chain-parameters.mdx</include>`
+- used in 2 pages — tags: `reference`, `chain`, `parameters`
+
+### Reference nova specific
+
+Effective January 31, 2026 (23:59 UTC), the following third-party tools will no longer be supported for Arbitrum Nova environments:
+
+- `<include cwd>content/partials/_reference-nova-specific.mdx</include>`
+- used in 1 page — tags: `reference`, `nova`, `specific`
+
+### Sequencer Endpoint Behavior Reference
+
+Arbitrum One exposes two public endpoints with different roles, shown below: a general-purpose public RPC URL, and a direct sequencer endpoint that accepts o…
+
+- `<include cwd>content/partials/_reference-sequencer-endpoint-behavior-partial.mdx</include>`
+- used in 2 pages — tags: `reference`, `sequencer`, `endpoint`, `behavior`
+
+### Third-party RPC Endpoints Reference
+
+Alternatively, to interact with public Arbitrum chains, you can rely on many of the same popular node providers that you are already using on Ethereum:
+
+- `<include cwd>content/partials/_reference-third-party-rpc-endpoints-partial.mdx</include>`
+- used in 2 pages — tags: `reference`, `third`, `party`, `rpc`, `endpoints`
 
 ### Can I use the Chain SDK to deploy a mainnet chain?
 
@@ -32,6 +140,20 @@ Yes!
 
 - `<include cwd>content/partials/_troubleshooting-arbitrum-chain-partial.mdx</include>`
 - used in 1 page — tags: `troubleshooting`, `arbitrum`, `chain`
+
+### How do I move assets between One and Nova?
+
+Both Arbitrum One and Arbitrum Nova run as layers on top of Ethereum.
+
+- `<include cwd>content/partials/_troubleshooting-bridging-partial.mdx</include>`
+- used in 1 page — tags: `troubleshooting`, `bridging`
+
+### How does gas work on Arbitrum?
+
+Fees on Arbitrum chains are collected on L2 in the chains' native currency (ETH on both Arbitrum One and Nova).
+
+- `<include cwd>content/partials/_troubleshooting-building-partial.mdx</include>`
+- used in 1 page — tags: `troubleshooting`, `building`
 
 ### How do I run a node?
 
@@ -46,6 +168,13 @@ All languages are compiled to WASM for them to be able to work with Stylus.
 
 - `<include cwd>content/partials/_troubleshooting-stylus-partial.mdx</include>`
 - used in 1 page — tags: `troubleshooting`, `stylus`
+
+### Why do I need ETH to use the Arbitrum network?
+
+ETH is the currency used to pay gas fees on Arbitrum, and it powers all transactions on Arbitrum.
+
+- `<include cwd>content/partials/_troubleshooting-users-partial.mdx</include>`
+- used in 1 page — tags: `troubleshooting`, `users`
 
 ## launch-arbitrum-chain
 
@@ -245,6 +374,179 @@ Make sure you create the directory specified in local-file-storage.data-dir befo
 
 - `<include cwd>content/partials/launch-arbitrum-chain/features/_timeboost-pc.mdx</include>`
 - used in 2 pages — tags: `launch-arbitrum-chain`, `features`, `timeboost`
+
+## precompile-tables
+
+### ArbAddressTable
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbAddressTable.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbaddresstable`
+
+### ArbAggregator
+
+⚠️<code>getPreferredAggregator(address addr)</code>
+
+- `<include cwd>content/partials/precompile-tables/_ArbAggregator.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbaggregator`
+
+### ArbDebug
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbDebug.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbdebug`
+
+### ArbFunctionTable
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbFunctionTable.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbfunctiontable`
+
+### ArbGasInfo
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbGasInfo.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbgasinfo`
+
+### ArbInfo
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbInfo.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbinfo`
+
+### ArbNativeTokenManager
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbNativeTokenManager.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbnativetokenmanager`
+
+### ArbosTest
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbosTest.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbostest`
+
+### ArbOwner
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbOwner.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbowner`
+
+### ArbOwnerPublic
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbOwnerPublic.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbownerpublic`
+
+### ArbRetryableTx
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbRetryableTx.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbretryabletx`
+
+### ArbStatistics
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbStatistics.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbstatistics`
+
+### ArbSys
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbSys.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbsys`
+
+### ArbWasm
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbWasm.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbwasm`
+
+### ArbWasmCache
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_ArbWasmCache.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `arbwasmcache`
+
+### NodeInterface
+
+Interface
+
+- `<include cwd>content/partials/precompile-tables/_NodeInterface.mdx</include>`
+- used in 1 page — tags: `precompile-tables`, `nodeinterface`
+
+## run-a-node
+
+### Dao chains example
+
+shell
+
+- `<include cwd>content/partials/run-a-node/_dao-chains-example.mdx</include>`
+- used in 1 page — tags: `run-a-node`, `dao`, `chains`, `example`
+
+### Dao chains parameters
+
+Breaking the title ordering here (it should be h3 instead of h4) so these titles don't appear in the right-hand sidebar
+
+- `<include cwd>content/partials/run-a-node/_dao-chains-parameters.mdx</include>`
+- used in 1 page — tags: `run-a-node`, `dao`, `chains`, `parameters`
+
+### Optional orbit sequencer compatible cli
+
+- `<include cwd>content/partials/run-a-node/_optional-orbit-sequencer-compatible-cli-partial.mdx</include>`
+- used in 1 page — tags: `run-a-node`, `optional`, `orbit`, `sequencer`, `compatible`, `cli`
+
+### Optional parameters
+
+- `<include cwd>content/partials/run-a-node/_optional-parameters.mdx</include>`
+- used in 1 page — tags: `run-a-node`, `optional`, `parameters`
+
+### Orbit chains example
+
+shell
+
+- `<include cwd>content/partials/run-a-node/_orbit-chains-example.mdx</include>`
+- used in 1 page — tags: `run-a-node`, `orbit`, `chains`, `example`
+
+### Orbit chains parameters
+
+Breaking the title ordering here (it should be h3 instead of h4) so these titles don't appear in the right-hand sidebar
+
+- `<include cwd>content/partials/run-a-node/_orbit-chains-parameters.mdx</include>`
+- used in 1 page — tags: `run-a-node`, `orbit`, `chains`, `parameters`
+
+### Path node parameters
+
+- execution.caching.state-scheme=path - sets state scheme → chooses TrieDB implementation
+
+- `<include cwd>content/partials/run-a-node/_path-node-parameters.mdx</include>`
+- used in 1 page — tags: `run-a-node`, `path`, `node`, `parameters`
+
+### Tx prechecker parameters
+
+- `<include cwd>content/partials/run-a-node/_tx-prechecker-parameters.mdx</include>`
+- used in 1 page — tags: `run-a-node`, `tx`, `prechecker`, `parameters`
+
+### How often should I be upgrading my ArbOS version?
+
+It is strongly recommended to keep your Nitro's node software up-to-date as best you can to ensure you are benefting from the latest improvements to the Arbi…
+
+- `<include cwd>content/partials/run-a-node/_upgrade-cadence-recommendations-partial.mdx</include>`
+- used in 1 page — tags: `run-a-node`, `upgrade`, `cadence`, `recommendations`
 
 ## stylus
 

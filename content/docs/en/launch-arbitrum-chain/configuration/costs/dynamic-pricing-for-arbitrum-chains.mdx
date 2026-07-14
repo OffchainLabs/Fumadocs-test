@@ -9,7 +9,7 @@ sme: asomani
 
 ## Dynamic pricing: a new pricing algorithm introduced in ArbOS 51 Dia
 
-<Term id="arbitrum-chain">Arbitrum chains</Term> support a new gas pricing algorithm that uses multiple-gas targets, as part of the [ArbOS 51 upgrade](/docs/run-arbitrum-node/arbos-releases/arbos51), to reduce the frequency and severity of child-chain gas price spikes. This is the first optimization of many towards Dynamic Pricing.
+<Term id="arbitrum-chain">Arbitrum chains</Term> support a new gas pricing algorithm that uses multiple-gas targets, as part of the [ArbOS 51 upgrade](/docs/run-a-node/arbos-releases/arbos51), to reduce the frequency and severity of child-chain gas price spikes. This is the first optimization of many towards Dynamic Pricing.
 
 - This change is **backward compatible**. Setting new <Term id="gas-target">gas targets</Term> is **not mandatory**; if no new configuration is set, the legacy gas pricing algorithm with a single gas target remains active.
 - **Additional details:** For those interested in how these values are derived, refer to the [Gas and fees](/docs/launch-arbitrum-chain/features/common/gas-and-fees#the-gas-target) page as it provides the underlying parameters used to calculate the new gas targets and adjustment windows.
