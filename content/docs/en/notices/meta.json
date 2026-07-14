@@ -1,0 +1,6 @@
+{
+  "title": "Notices",
+  "icon": "Bell",
+  "root": true,
+  "description": "Upgrade notices for Arbitrum chains and node operators."
+}

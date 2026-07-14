@@ -1,0 +1,15 @@
+{
+  "title": "Run a node",
+  "icon": "Server",
+  "root": true,
+  "description": "Run the machines that power Arbitrum chains.",
+  "pages": [
+    "index",
+    "run-batch-poster",
+    "run-split-validator-node",
+    "high-availability-sequencer-docs",
+    "sequencer-content-map",
+    "faq",
+    "..."
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "title": "Arbitrum essentials",
+  "icon": "BookOpen",
+  "root": true,
+  "description": "Language-agnostic guidance for building on Arbitrum.",
+  "pages": [
+    "index",
+    "bridging",
+    "arbitrum-vs-ethereum",
+    "precompiles",
+    "nodeinterface",
+    "reference",
+    "..."
+  ]
+}

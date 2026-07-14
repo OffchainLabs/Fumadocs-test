@@ -51,6 +51,18 @@
     "snippet": "<include cwd>content/partials/_troubleshooting-arbitrum-chain-partial.mdx</include>"
   },
   {
+    "path": "content/partials/_troubleshooting-nodes-partial.mdx",
+    "title": "How do I run a node?",
+    "summary": "See instructions in our guide about running a full node!",
+    "scope": "neutral",
+    "tags": [
+      "troubleshooting",
+      "nodes"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/_troubleshooting-nodes-partial.mdx</include>"
+  },
+  {
     "path": "content/partials/_troubleshooting-stylus-partial.mdx",
     "title": "How does Stylus manage security issues in smart contracts when interacting with so many different languages?",
     "summary": "All languages are compiled to WASM for them to be able to work with Stylus.",
