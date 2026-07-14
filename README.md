@@ -14,6 +14,16 @@ pnpm types:check
 
 Node 22 LTS · pnpm 10 · TypeScript strict · Tailwind 4.
 
+Search and the "Ask AI" chat button are powered by [Inkeep](https://inkeep.com). Set the
+publishable key in a local `.env` (gitignored):
+
+```bash
+NEXT_PUBLIC_INKEEP_API_KEY=<inkeep-search-key>
+```
+
+Config lives in `lib/inkeep.ts`; the widgets mount in `components/inkeep/` and are wired into
+`RootProvider` in `app/[lang]/layout.tsx` (Inkeep replaces the built-in Fumadocs search dialog).
+
 ## Layout
 
 | Path                   | Purpose                                                                               |

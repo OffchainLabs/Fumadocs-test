@@ -3,6 +3,8 @@ import type { Metadata } from 'next';
 import { Geist, JetBrains_Mono } from 'next/font/google';
 import type { ReactNode } from 'react';
 
+import { InkeepChatButton } from '@/components/inkeep/inkeep-chat-button';
+import InkeepSearchDialog from '@/components/inkeep/inkeep-search';
 import { i18nUI } from '@/lib/layout.shared';
 
 import '../global.css';
@@ -49,8 +51,10 @@ export default async function Layout({
         <RootProvider
           i18n={i18nUI.provider(lang)}
           theme={{ attribute: 'class', defaultTheme: 'light' }}
+          search={{ SearchDialog: InkeepSearchDialog }}
         >
           {children}
+          <InkeepChatButton />
         </RootProvider>
       </body>
     </html>
