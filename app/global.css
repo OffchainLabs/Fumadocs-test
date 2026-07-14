@@ -21,6 +21,7 @@
   --color-fd-accent-foreground: #3b3b3b;
   --color-fd-ring: #0041f8;
   --color-fd-overlay: rgba(59, 59, 59, 0.4);
+  --spacing-page: 1436px;
 }
 
 /* Derived dark variant (brand is light-first): grayscale surfaces, brand-cyan accent. */
@@ -53,13 +54,25 @@ html > body[data-scroll-locked] {
   --removed-body-scroll-bar-size: 0px !important;
 }
 
-#nd-docs-layout *,
-#nd-home-layout *,
-#nd-nav *,
-[data-radix-popper-content-wrapper] * {
-  border-radius: 0 !important;
-}
+@theme inline {
+  --animate-marquee: marquee var(--duration) infinite linear;
+  --animate-marquee-vertical: marquee-vertical var(--duration) linear infinite;
 
-#nd-docs-layout .fd-step::before {
-  border-radius: 9999px !important;
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(calc(-100% - var(--gap)));
+    }
+  }
+
+  @keyframes marquee-vertical {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(calc(-100% - var(--gap)));
+    }
+  }
 }
