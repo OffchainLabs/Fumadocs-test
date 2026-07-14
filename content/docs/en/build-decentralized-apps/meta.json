@@ -2,5 +2,10 @@
   "title": "Build apps with Solidity",
   "icon": "Code",
   "root": true,
-  "description": "Deploy Solidity smart contracts to Arbitrum chains."
+  "description": "Deploy Solidity smart contracts to Arbitrum chains.",
+  "pages": [
+    "...",
+    "[Chain info](/docs/chain-info)",
+    "[Contribute](/docs/contribute)"
+  ]
 }

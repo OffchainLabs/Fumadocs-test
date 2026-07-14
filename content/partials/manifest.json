@@ -26,6 +26,30 @@
     "snippet": "<include cwd>content/partials/_bold-config-params.mdx</include>"
   },
   {
+    "path": "content/partials/_contribute-docs-partial.mdx",
+    "title": "Documentation Contribution Guide",
+    "summary": "Thank you for considering to contribute to the Arbitrum documentation!",
+    "scope": "neutral",
+    "tags": [
+      "contribute",
+      "docs"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/_contribute-docs-partial.mdx</include>"
+  },
+  {
+    "path": "content/partials/_faucet-list-partial.mdx",
+    "title": "Faucet list",
+    "summary": "",
+    "scope": "neutral",
+    "tags": [
+      "faucet",
+      "list"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/_faucet-list-partial.mdx</include>"
+  },
+  {
     "path": "content/partials/_hardware-requirements.mdx",
     "title": "Hardware requirements",
     "summary": "",
@@ -36,6 +60,89 @@
     ],
     "usedIn": 2,
     "snippet": "<include cwd>content/partials/_hardware-requirements.mdx</include>"
+  },
+  {
+    "path": "content/partials/_reference-arbitrum-contract-addresses-partial.mdx",
+    "title": "Arbitrum Contract Addresses Reference",
+    "summary": "The following information may be useful to those building on Arbitrum.",
+    "scope": "neutral",
+    "tags": [
+      "reference",
+      "arbitrum",
+      "contract",
+      "addresses"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/_reference-arbitrum-contract-addresses-partial.mdx</include>"
+  },
+  {
+    "path": "content/partials/_reference-arbitrum-rpc-endpoints-partial.mdx",
+    "title": "Arbitrum RPC Endpoints Reference",
+    "summary": "- Arbitrum public RPCs do not provide Websocket support.",
+    "scope": "neutral",
+    "tags": [
+      "reference",
+      "arbitrum",
+      "rpc",
+      "endpoints"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/_reference-arbitrum-rpc-endpoints-partial.mdx</include>"
+  },
+  {
+    "path": "content/partials/_reference-chain-parameters.mdx",
+    "title": "Chain parameters",
+    "summary": "To learn more about the gas target, refer to the Gas and fees deep-dive.",
+    "scope": "neutral",
+    "tags": [
+      "reference",
+      "chain",
+      "parameters"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/_reference-chain-parameters.mdx</include>"
+  },
+  {
+    "path": "content/partials/_reference-nova-specific.mdx",
+    "title": "Reference nova specific",
+    "summary": "Effective January 31, 2026 (23:59 UTC), the following third-party tools will no longer be supported for Arbitrum Nova environments:",
+    "scope": "neutral",
+    "tags": [
+      "reference",
+      "nova",
+      "specific"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/_reference-nova-specific.mdx</include>"
+  },
+  {
+    "path": "content/partials/_reference-sequencer-endpoint-behavior-partial.mdx",
+    "title": "Sequencer Endpoint Behavior Reference",
+    "summary": "Arbitrum One exposes two public endpoints with different roles, shown below: a general-purpose public RPC URL, and a direct sequencer endpoint that accepts o…",
+    "scope": "neutral",
+    "tags": [
+      "reference",
+      "sequencer",
+      "endpoint",
+      "behavior"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/_reference-sequencer-endpoint-behavior-partial.mdx</include>"
+  },
+  {
+    "path": "content/partials/_reference-third-party-rpc-endpoints-partial.mdx",
+    "title": "Third-party RPC Endpoints Reference",
+    "summary": "Alternatively, to interact with public Arbitrum chains, you can rely on many of the same popular node providers that you are already using on Ethereum:",
+    "scope": "neutral",
+    "tags": [
+      "reference",
+      "third",
+      "party",
+      "rpc",
+      "endpoints"
+    ],
+    "usedIn": 1,
+    "snippet": "<include cwd>content/partials/_reference-third-party-rpc-endpoints-partial.mdx</include>"
   },
   {
     "path": "content/partials/_troubleshooting-arbitrum-chain-partial.mdx",

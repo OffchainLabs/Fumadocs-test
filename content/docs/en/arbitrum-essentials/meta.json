@@ -10,6 +10,8 @@
     "precompiles",
     "nodeinterface",
     "reference",
-    "..."
+    "...",
+    "[Chain info](/docs/chain-info)",
+    "[Contribute](/docs/contribute)"
   ]
 }

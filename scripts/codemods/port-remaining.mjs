@@ -76,6 +76,18 @@ const SECTIONS = {
     meta: { title: 'Third-party docs', icon: 'Boxes', root: true, description: 'Guides for tools and services in the Arbitrum ecosystem.' },
     synthIndex: { title: 'Third-party docs', description: 'Guides for integrating third-party tools and services with Arbitrum.' },
   },
+  // ── Wave 2: pinned pages shown in every sidebar ──
+  'chain-info': {
+    isPinnedPage: true,
+    src: 'for-devs/dev-tools-and-resources/chain-info.mdx',
+    dest: 'chain-info.mdx',
+    partialsDest: 'chain-info',
+  },
+  'contribute': {
+    isPinnedPage: true,
+    src: 'for-devs/contribute.mdx',
+    dest: 'contribute.mdx',
+  },
   // ── ADD MORE SECTION ENTRIES HERE (later waves) ──
 };
 
@@ -286,7 +298,9 @@ function runPinSidebars(dryRun) {
     const metaPath = join(V2, e.name, 'meta.json');
     if (!existsSync(metaPath)) continue;
     const meta = JSON.parse(readFileSync(metaPath, 'utf8'));
-    if (!Array.isArray(meta.pages)) continue;
+    // A section with no explicit pages array auto-lists its files; seed one with a
+    // rest glob so the pins can be appended without dropping the auto-listing.
+    if (!Array.isArray(meta.pages)) meta.pages = ['...'];
     let changed = false;
     for (const pin of PIN_ENTRIES) {
       if (!meta.pages.includes(pin)) {
@@ -348,7 +362,8 @@ function newCtx(entry) {
 }
 
 function runPinnedPage(entry, dryRun) {
-  const ctx = newCtx({ srcDir: dirname(entry.src), destDir: '.', ...entry });
+  const partialsDest = entry.partialsDest ?? basename(entry.dest).replace(/\.mdx?$/, '');
+  const ctx = newCtx({ ...entry, srcDir: dirname(entry.src), destDir: partialsDest });
   const planned = { pages: [], partials: [] };
   console.log(`=== port-remaining: pinned page ===`);
   console.log(`Source: ${join(LEGACY, entry.src)}`);

@@ -3,5 +3,11 @@
   "icon": "Rocket",
   "root": true,
   "description": "Quickstarts and orientation for building on Arbitrum.",
-  "pages": ["index", "arbitrum-introduction", "..."]
+  "pages": [
+    "index",
+    "arbitrum-introduction",
+    "...",
+    "[Chain info](/docs/chain-info)",
+    "[Contribute](/docs/contribute)"
+  ]
 }

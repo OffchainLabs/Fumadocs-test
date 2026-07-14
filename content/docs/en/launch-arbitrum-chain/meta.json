@@ -22,6 +22,8 @@
     "migrate-between-raases",
     "migrate-from-another-stack",
     "reference",
-    "..."
+    "...",
+    "[Chain info](/docs/chain-info)",
+    "[Contribute](/docs/contribute)"
   ]
 }

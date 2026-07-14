@@ -2,5 +2,10 @@
   "title": "Arbitrum bridge",
   "icon": "ArrowLeftRight",
   "root": true,
-  "description": "Move ETH and ERC-20 tokens between Ethereum and Arbitrum."
+  "description": "Move ETH and ERC-20 tokens between Ethereum and Arbitrum.",
+  "pages": [
+    "...",
+    "[Chain info](/docs/chain-info)",
+    "[Contribute](/docs/contribute)"
+  ]
 }

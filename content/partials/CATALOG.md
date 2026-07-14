@@ -7,7 +7,7 @@ banner, note, config table, or troubleshooting block, search this file** (⌘F b
 the partial instead of duplicating prose. Curate titles, summaries, and tags in
 `content/partials/registry.json`.
 
-40 partials.
+48 partials.
 
 ## general
 
@@ -21,10 +21,64 @@ the partial instead of duplicating prose. Curate titles, summaries, and tags in
 - `<include cwd>content/partials/_bold-config-params.mdx</include>`
 - used in 1 page — tags: `bold`, `config`, `params`
 
+### Documentation Contribution Guide
+
+Thank you for considering to contribute to the Arbitrum documentation!
+
+- `<include cwd>content/partials/_contribute-docs-partial.mdx</include>`
+- used in 1 page — tags: `contribute`, `docs`
+
+### Faucet list
+
+- `<include cwd>content/partials/_faucet-list-partial.mdx</include>`
+- used in 1 page — tags: `faucet`, `list`
+
 ### Hardware requirements
 
 - `<include cwd>content/partials/_hardware-requirements.mdx</include>`
 - used in 2 pages — tags: `hardware`, `requirements`
+
+### Arbitrum Contract Addresses Reference
+
+The following information may be useful to those building on Arbitrum.
+
+- `<include cwd>content/partials/_reference-arbitrum-contract-addresses-partial.mdx</include>`
+- used in 1 page — tags: `reference`, `arbitrum`, `contract`, `addresses`
+
+### Arbitrum RPC Endpoints Reference
+
+- Arbitrum public RPCs do not provide Websocket support.
+
+- `<include cwd>content/partials/_reference-arbitrum-rpc-endpoints-partial.mdx</include>`
+- used in 1 page — tags: `reference`, `arbitrum`, `rpc`, `endpoints`
+
+### Chain parameters
+
+To learn more about the gas target, refer to the Gas and fees deep-dive.
+
+- `<include cwd>content/partials/_reference-chain-parameters.mdx</include>`
+- used in 1 page — tags: `reference`, `chain`, `parameters`
+
+### Reference nova specific
+
+Effective January 31, 2026 (23:59 UTC), the following third-party tools will no longer be supported for Arbitrum Nova environments:
+
+- `<include cwd>content/partials/_reference-nova-specific.mdx</include>`
+- used in 1 page — tags: `reference`, `nova`, `specific`
+
+### Sequencer Endpoint Behavior Reference
+
+Arbitrum One exposes two public endpoints with different roles, shown below: a general-purpose public RPC URL, and a direct sequencer endpoint that accepts o…
+
+- `<include cwd>content/partials/_reference-sequencer-endpoint-behavior-partial.mdx</include>`
+- used in 1 page — tags: `reference`, `sequencer`, `endpoint`, `behavior`
+
+### Third-party RPC Endpoints Reference
+
+Alternatively, to interact with public Arbitrum chains, you can rely on many of the same popular node providers that you are already using on Ethereum:
+
+- `<include cwd>content/partials/_reference-third-party-rpc-endpoints-partial.mdx</include>`
+- used in 1 page — tags: `reference`, `third`, `party`, `rpc`, `endpoints`
 
 ### Can I use the Chain SDK to deploy a mainnet chain?
 
