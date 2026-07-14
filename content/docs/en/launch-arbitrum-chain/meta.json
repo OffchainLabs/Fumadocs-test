@@ -1,5 +1,8 @@
 {
   "title": "Launch arbitrum chain",
+  "icon": "Network",
+  "root": true,
+  "description": "Configure, deploy, and operate your own Arbitrum chain.",
   "pages": [
     "a-gentle-introduction",
     "quickstart",

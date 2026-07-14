@@ -1,0 +1,7 @@
+{
+  "title": "How Arbitrum works",
+  "icon": "Cog",
+  "root": true,
+  "description": "The protocols and mechanisms behind Arbitrum Nitro.",
+  "pages": ["index", "deep-dives", "reference", "bold", "timeboost"]
+}

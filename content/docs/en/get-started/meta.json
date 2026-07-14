@@ -1,4 +1,7 @@
 {
   "title": "Get started",
+  "icon": "Rocket",
+  "root": true,
+  "description": "Quickstarts and orientation for building on Arbitrum.",
   "pages": ["index", "arbitrum-introduction"]
 }

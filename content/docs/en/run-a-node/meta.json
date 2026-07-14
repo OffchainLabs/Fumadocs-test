@@ -1,5 +1,8 @@
 {
   "title": "Run a node",
+  "icon": "Server",
+  "root": true,
+  "description": "Run the machines that power Arbitrum chains.",
   "pages": [
     "index",
     "run-batch-poster",

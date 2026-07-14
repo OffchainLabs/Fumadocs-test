@@ -1,6 +1,10 @@
 {
   "title": "Stylus",
+  "icon": "Braces",
+  "root": true,
+  "description": "Build apps with Stylus in Rust, C, and C++.",
   "pages": [
+    "index",
     "fundamentals",
     "advanced",
     "best-practices",
