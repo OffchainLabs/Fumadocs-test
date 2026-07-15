@@ -5,7 +5,7 @@ import { BookOpen, Braces, Code, Coins } from 'lucide-react';
 import { OffchainMark } from '@/components/OffchainMark';
 
 import { i18n } from './i18n';
-import { appName, docsRoute, gitConfig } from './shared';
+import { appName, docsRoute } from './shared';
 
 /**
  * UI translations + display names for each locale.
@@ -89,7 +89,6 @@ export function baseOptions(locale: string): BaseLayoutProps {
       { text: 'How it works', url: docHref('how-arbitrum-works') },
       { text: 'Notices', url: docHref('notices') },
     ],
-    githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
     i18n: true,
   };
 }
