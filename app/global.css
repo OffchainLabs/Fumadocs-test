@@ -64,6 +64,12 @@
     max-width: 15rem;
   }
 
+  /* Nav links centered between the logo and the right-side controls,
+     so they sit over the content column */
+  & > div:last-child > div:first-child {
+    margin-inline: auto;
+  }
+
   /* Keep each link label on one line */
   a,
   button {
