@@ -1,4 +1,4 @@
-import { DocsLayout } from 'fumadocs-ui/layouts/docs';
+import { DocsLayout } from 'fumadocs-ui/layouts/notebook';
 import type { CSSProperties, ReactNode } from 'react';
 
 import { baseOptions } from '@/lib/layout.shared';
@@ -16,8 +16,8 @@ export default async function Layout({
   return (
     <DocsLayout
       {...base}
+      nav={{ ...base.nav, mode: 'top' }}
       tree={source.pageTree[lang]}
-      links={base.links?.filter((item) => item.type === 'icon')}
       tabs={{
         transform(option, node) {
           if (!node.icon) return option;

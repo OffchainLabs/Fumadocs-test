@@ -46,6 +46,57 @@
   --color-fd-overlay: rgba(0, 0, 0, 0.6);
 }
 
+/* Top navbar (notebook layout, nav mode "top"): mirror the legacy Docusaurus
+   navbar — logo, nav links on a single line, search pushed to the far right.
+   Overrides the default row (title flex-1 | search | links flex-1), which
+   squeezes the links into half the row and wraps their labels. */
+#nd-subnav [data-header-body] {
+  /* Title group: natural width instead of half the row */
+  & > div:first-child {
+    flex: 0 0 auto;
+  }
+
+  /* Search: far right, like the legacy navbar; hugs its content
+     (default w-full stretches it, leaving a blank gap before the hotkey) */
+  & > [data-search-full] {
+    order: 1;
+    width: auto;
+    max-width: 15rem;
+  }
+
+  /* Keep each link label on one line */
+  a,
+  button {
+    white-space: nowrap;
+  }
+
+  /* Tight zone (lg–xl): links are visible but space is scarce —
+     compress link gaps and drop the search hotkey hint */
+  @media (max-width: 1280px) {
+    & > div:last-child > div:first-child {
+      gap: 0.75rem;
+    }
+
+    & > [data-search-full] kbd {
+      display: none;
+    }
+  }
+
+  /* Narrowest band before links collapse into the sidebar (lg = 1024px):
+     icon-only search (font-size: 0 hides its bare text node) */
+  @media (max-width: 1104px) {
+    & > div:last-child > div:first-child {
+      gap: 0.5rem;
+    }
+
+    & > [data-search-full] {
+      font-size: 0;
+      gap: 0;
+      padding-inline: 0.5rem;
+    }
+  }
+}
+
 html {
   scrollbar-gutter: stable;
 }
