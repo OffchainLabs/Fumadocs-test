@@ -9,7 +9,7 @@ sme: Mehdi
 
 ## The Rollup chain assertions vs. child chain blocks
 
-The Rollup chain consists of assertions, which serve as checkpoints summarizing multiple child chain blocks. Assertions are what give Arbitrum its hard finality guarantee — for the broader soft- vs. hard-finality picture, see [Finality](/docs/how-arbitrum-works/deep-dives/sequencer#finality).
+The Rollup chain consists of assertions, which serve as checkpoints summarizing multiple child chain blocks. Assertions are what give Arbitrum its <a data-quicklook-from="hard-finality">hard finality</a> guarantee — for the broader soft- vs. hard-finality picture, see [Finality](/docs/how-arbitrum-works/deep-dives/finality).
 
 - Child chain blocks contain individual transaction data
 - Assertions provide state summaries recorded on Ethereum
@@ -38,9 +38,9 @@ Arbitrum ensures assertions are automatically confirmed or rejected based on pro
 
 For more details on how the Rollup chain works under <a data-quicklook-from="bold">BoLD</a>, the [gentle introduction](/docs/how-arbitrum-works/bold/gentle-introduction) provides an overview that touches on the Rollup chain.
 
-<VanillaAdmonition type="note" title="Validators and proposers serve different roles">
+<VanillaAdmonition type="note" title="Validators and <a data-quicklook-from=&quot;proposer&quot;>proposers</a> serve different roles">
 
-Validators validate transactions by computing the next <a data-quicklook-from="chain-state">chain state</a> using the chain's [STF](/docs/how-arbitrum-works/deep-dives/stf-gentle-intro), whereas proposers can also assert and challenge the chain state on the parent chain.
+Validators validate transactions by computing the next <a data-quicklook-from="chain-state">chain state</a> using the chain's [STF](/docs/how-arbitrum-works/deep-dives/stf), whereas proposers can also assert and challenge the chain state on the <a data-quicklook-from="parent-chain">parent chain</a>.
 
 </VanillaAdmonition>
 Except for the assertion number, the assertion's contents are merely claims by its proposer. Arbitrum doesn't know at first whether any of these fields are correct. The protocol should eventually confirm the assertion if all of these fields are correct. The protocol should eventually reject the assertion if any of these fields are incorrect.
