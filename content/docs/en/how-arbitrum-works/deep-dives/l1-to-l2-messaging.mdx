@@ -37,7 +37,7 @@ We generally categorize these parent-to-child chain messaging methods as follows
 
 This section will explore these categories in detail and explain how they work. The diagram below illustrates the various paths available for parent-to-child chain communication and asset transfers.
 
-<ImageZoom src="/img/haw-l1-to-l2.svg" alt="Parent to child messaging" className="img-600px" />
+<ImageZoom src="/img/haw-l1-to-l2.svg" alt="Parent to child messaging" className="img-800px" />
 
 ## Native token bridging
 
@@ -68,7 +68,7 @@ Note on caller type and aliasing:
 - **If the caller is a `7702-enabled account` (EOA with temporary contract code)**:
   - The **ETH** goes to the aliased address, similar to contracts. This is due to the presence of runtime code during execution, and ensures consistent aliasing behavior post-EIP-7702.
 
-<ImageZoom src="/img/haw-aliasing.svg" alt="Address aliasing" className="img-600px" />
+<ImageZoom src="/img/haw-aliasing.svg" alt="Address aliasing" className="img-800px" />
 
 ### Address aliasing
 
@@ -137,7 +137,7 @@ The Delayed Inbox provides methods for unsigned messages from both EOAs and cont
 
 [<a data-quicklook-from="arbitrum-nitro">Arbitrum Nitro</a>](/docs/how-arbitrum-works/inside-arbitrum-nitro) defines various **message types** to distinguish between the categories described above (signed vs. unsigned, EOAs vs. contracts, etc.). These message types help the protocol route and process each incoming message securely.
 
-For the full list of message-type identifiers used by ArbOS, see [`L1IncomingMessage`](https://github.com/OffchainLabs/nitro/blob/4ac7e9268e9885a025e0060c9ec30f9612f9e651/arbos/incomingmessage.go#L54) and the [ArbOS messages section](/docs/how-arbitrum-works/deep-dives/arbos#messages).
+For the full list of message-type identifiers used by <a data-quicklook-from="arbos">ArbOS</a>, see [`L1IncomingMessage`](https://github.com/OffchainLabs/nitro/blob/4ac7e9268e9885a025e0060c9ec30f9612f9e651/arbos/incomingmessage.go#L54) and the [ArbOS messages section](/docs/how-arbitrum-works/deep-dives/arbos#messages-and-blocks).
 
 <VanillaAdmonition type="note" title="Refer to the [Address aliasing](#address-aliasing) discussion for more background. This mechanism ensures that a parent chain contract can't impersonate a child chain address unless it provides a valid signature as an EOA.">
 
