@@ -33,6 +33,12 @@ const arbitrumPageSchema = pageSchema.extend({
   author: z.string(),
   sme: z.string(),
   draft: z.boolean().default(false),
+  /**
+   * Free-form label for an archived version of a page (e.g. "ArbOS 20 (v1)"). Only set on the
+   * archived MDX files consumed by the `docsVersions` collection; live pages leave it unset.
+   * See docs/superpowers/specs/2026-07-17-partial-versioning-design.md.
+   */
+  version: z.string().optional(),
 });
 
 /**
@@ -44,6 +50,12 @@ export const docs = defineDocs({
   dir: 'content/docs',
   docs: {
     schema: arbitrumPageSchema,
+    // Partial versioning (option #1, sibling files): archived versions live beside their page as
+    // `*.v<n>.mdx` (e.g. start-here.v1.mdx). picomatch array patterns are pure OR — `!`-negation
+    // does not subtract — so we exclude the archive suffix with a single extglob include instead.
+    // `**/!(*.v+([0-9])).mdx` matches every .mdx except `*.v<digits>.mdx`; `**/*.json` keeps meta.
+    // See docs/superpowers/specs/2026-07-17-partial-versioning-design.md.
+    files: ['**/!(*.v+([0-9])).mdx', '**/*.json'],
     postprocess: {
       includeProcessedMarkdown: true,
     },
@@ -51,6 +63,21 @@ export const docs = defineDocs({
   meta: {
     schema: metaSchema,
   },
+});
+
+/**
+ * Archived page versions for partial versioning (option #1, sibling files).
+ *
+ * A separate, non-routed doc collection (same idiom as `glossary` below): it compiles the
+ * `*.v<n>.mdx` archive files that the routed `docs` collection excludes, so archives never appear in
+ * nav, search, sitemap, or llms.txt. `lib/versions.ts` indexes these by file path and the docs page
+ * renders the selected one. See docs/superpowers/specs/2026-07-17-partial-versioning-design.md.
+ */
+export const docsVersions = defineCollections({
+  type: 'doc',
+  dir: 'content/docs',
+  files: ['**/*.v+([0-9]).mdx'],
+  schema: arbitrumPageSchema,
 });
 
 /**

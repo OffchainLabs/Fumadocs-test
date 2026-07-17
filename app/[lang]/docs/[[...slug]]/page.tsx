@@ -10,32 +10,60 @@ import { createRelativeLink } from 'fumadocs-ui/mdx';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
+import { VersionSwitcher } from '@/components/VersionSwitcher';
 import { getMDXComponents } from '@/components/mdx';
 import { gitConfig } from '@/lib/shared';
 import { getPageImage, getPageMarkdownUrl, source } from '@/lib/source';
+import {
+  LATEST_ID,
+  VERSION_PARAM,
+  archiveRepoPath,
+  canonicalSlug,
+  getArchive,
+  getVersions,
+} from '@/lib/versions';
 
 export default async function Page({
   params,
+  searchParams,
 }: {
   params: Promise<{ lang: string; slug?: string[] }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { lang, slug } = await params;
   const page = source.getPage(slug, lang);
   if (!page) notFound();
 
-  const MDX = page.data.body;
+  // Partial versioning: only English pages in the registry expose a version dropdown. Other
+  // locales and unregistered pages render Latest exactly as before.
+  const slugKey = canonicalSlug(slug);
+  const versions = lang === 'en' ? getVersions(slugKey) : undefined;
+  const requested = (await searchParams)[VERSION_PARAM];
+  const requestedId = Array.isArray(requested) ? requested[0] : requested;
+  // Unknown/absent `?v=` falls back to Latest (no 404).
+  const archive = versions ? getArchive(slugKey, requestedId) : undefined;
+  const currentVersionId = archive ? requestedId! : LATEST_ID;
+
+  const MDX = archive ? archive.body : page.data.body;
+  const title = archive ? archive.title : page.data.title;
+  const description = archive ? archive.description : page.data.description;
+  const toc = archive ? archive.toc : page.data.toc;
   const markdownUrl = getPageMarkdownUrl(page).url;
+  // For an archived version, point the "edit" link at the archive file (whose repo-relative path
+  // depends on the storage strategy, so it comes from lib/versions.ts) rather than the live page.
+  const repoPath = archive ? archiveRepoPath(archive) : `content/docs/${lang}/${page.path}`;
 
   return (
-    <DocsPage toc={page.data.toc} full={page.data.full}>
-      <DocsTitle>{page.data.title}</DocsTitle>
-      <DocsDescription className="mb-0">{page.data.description}</DocsDescription>
+    <DocsPage toc={toc} full={page.data.full}>
+      <DocsTitle>{title}</DocsTitle>
+      <DocsDescription className="mb-0">{description}</DocsDescription>
       <div className="flex flex-row gap-2 items-center border-b pb-6">
         <MarkdownCopyButton markdownUrl={markdownUrl} />
         <ViewOptionsPopover
           markdownUrl={markdownUrl}
-          githubUrl={`https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/content/docs/${lang}/${page.path}`}
+          githubUrl={`https://github.com/${gitConfig.user}/${gitConfig.repo}/blob/${gitConfig.branch}/${repoPath}`}
         />
+        {versions ? <VersionSwitcher options={versions} current={currentVersionId} /> : null}
       </div>
       <DocsBody>
         <MDX
