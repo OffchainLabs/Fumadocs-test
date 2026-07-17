@@ -33,6 +33,12 @@ const arbitrumPageSchema = pageSchema.extend({
   author: z.string(),
   sme: z.string(),
   draft: z.boolean().default(false),
+  /**
+   * Free-form label for an archived version of a page (e.g. "ArbOS 20 (v1)"). Only set on the
+   * archived MDX files consumed by the `docsVersions` collection; live pages leave it unset.
+   * See docs/superpowers/specs/2026-07-17-partial-versioning-design.md.
+   */
+  version: z.string().optional(),
 });
 
 /**
@@ -51,6 +57,23 @@ export const docs = defineDocs({
   meta: {
     schema: metaSchema,
   },
+});
+
+/**
+ * Archived page versions for partial versioning (option #2, version subfolders).
+ *
+ * A separate, non-routed doc collection (same idiom as `glossary` below). Its content lives
+ * **outside** `content/docs` — at `content/_versions/<id>/<locale>/…`, mirroring how
+ * `content/partials/` sits outside the routed tree — so the router never sees it (picomatch array
+ * globs are OR and can't exclude a subfolder inside the routed dir). `lib/versions.ts` indexes these
+ * by file path and the docs page renders the selected one.
+ * See docs/superpowers/specs/2026-07-17-partial-versioning-design.md.
+ */
+export const docsVersions = defineCollections({
+  type: 'doc',
+  dir: 'content/_versions',
+  files: ['**/*.mdx'],
+  schema: arbitrumPageSchema,
 });
 
 /**
