@@ -1,6 +1,7 @@
 import { DocsLayout } from 'fumadocs-ui/layouts/notebook';
 import type { CSSProperties, ReactNode } from 'react';
 
+import { CollapseSidebarByDefault } from '@/components/CollapseSidebarByDefault';
 import { baseOptions } from '@/lib/layout.shared';
 import { source } from '@/lib/source';
 
@@ -35,6 +36,7 @@ export default async function Layout({
         },
       }}
     >
+      <CollapseSidebarByDefault />
       {children}
     </DocsLayout>
   );
