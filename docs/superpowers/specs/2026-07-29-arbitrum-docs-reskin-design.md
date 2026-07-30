@@ -1,10 +1,10 @@
-# Reskin the Fumadocs site with the arbitrum-docs visual style — design
 
 **Date:** 2026-07-29
 **Repo:** `~/OCL/Fumadocs-test` · branch `switch-to-arbitrum-ui`
 **Reference:** `~/OCL/arbitrum-docs` (Docusaurus 3.10, the live `docs.arbitrum.io`)
 **Goal:** Adopt the Arbitrum brand identity — palette, typeface, prose scale — from the production
 Docusaurus site, on Fumadocs' existing rounded geometry.
+# Reskin the Fumadocs site with the arbitrum-docs visual style — design
 
 ## Supersedes a prior constraint
 
@@ -22,6 +22,7 @@ replaced with the Arbitrum palette. Everything else from that spec — rounded c
 | Geometry | **Unchanged** — Fumadocs rounded corners retained |
 | Typeface | Aeonik + Aeonik Fono, from the arbitrum-docs binaries |
 | Heading weights | Clamped to 500 (only real outlines; no synthetic bold) |
+| Brand marks | Arbitrum logo + favicon; app icons on opaque `#213147` |
 | Verification | Browser side-by-side against live `docs.arbitrum.io`, light + dark |
 
 ## Architecture
@@ -177,8 +178,10 @@ Fumadocs' defaults — not the Offchain palette. Pass `primaryColor="hsl(211 99%
 `primaryTextColor="hsl(188 100% 53%)"`. The generator hardcodes `backgroundColor: "#0c0c0c"`;
 closing that would require replacing `DefaultImage` with local JSX, which is **out of scope**.
 
-**4. Inkeep.** `lib/inkeep.ts:71` sets `primaryBrandColor: '#213147'`, themed independently. Repoint
-to the primary blue.
+**4. Inkeep — no change.** `lib/inkeep.ts:71` sets `primaryBrandColor: '#213147'`. An earlier draft of
+this spec proposed repointing it to the primary blue; that was wrong. `#213147` is exactly the navy
+fill of `public/img/logo.svg`, deliberately matched to the mark rendered beside the widget. Leave it.
+`lib/inkeep.ts:78` already points `aiAssistantAvatar` at `/img/logo.svg` — correct as-is.
 
 **No work:** code blocks. Shiki is wired via `rehypeCodeDefaultOptions`, and Fumadocs' `shiki.css`
 drives the code surface from `--color-fd-*`, matching arbitrum-docs' `--prism-background-color:
@@ -219,8 +222,45 @@ Checklist, traced to the section each item falsifies:
     headings crisp at 40px, no faux-bold smearing
 §3  h2 bottom rule · links underlined 2px primary at 4px offset ·
     list markers primary · blockquote 3px primary + tint · thead 8% primary
-§4  five admonition variants match both modes · hero blue→teal · Inkeep accent
+§4  five admonition variants match both modes · hero blue→teal
+§6  navbar shows the Arbitrum logo, legible in BOTH modes (navy element on
+    navy background is the risk) · browser tab shows the Arbitrum favicon ·
+    icon.png / apple-icon.png opaque navy, mark centred not stretched
 ```
+
+## §6 — Brand marks
+
+The Arbitrum marks are **already in the repo**, imported alongside content: `public/img/logo.svg`
+(four-colour: navy `#213147`, blue `#12AAFF`, light blue `#9DCCED`, white `#FFFFFF`),
+`logo_black.svg`, `favicon.ico` (105.7 KB, arbitrum-docs' own — currently unreferenced),
+`stylus-logo.svg`, `cupcake_icon.svg`. Three surfaces still carry Offchain marks.
+
+**1. Navbar.** `lib/layout.shared.tsx:31` renders `<OffchainMark className="h-5 w-auto" />`, an inline
+single-path silhouette using `fill="currentColor"` (`components/OffchainMark.tsx`). Replace with
+`public/img/logo.svg`. Because the Arbitrum mark is four-colour, it **cannot** become a
+`currentColor` component — it must be an image. arbitrum-docs uses one `src` with no `srcDark`
+(`docusaurus.config.js:197-201`), so use the same logo in both modes. `components/OffchainMark.tsx`
+becomes unused once its only consumer changes; remove it in the same commit as an orphan created by
+this change.
+
+**2. `favicon.ico`.** Replace `public/favicon.ico` (14.7 KB, Offchain) with `public/img/favicon.ico`
+(105.7 KB, Arbitrum). Distinct files, distinct md5s. Already wired via `metadata.icons` in
+`app/[lang]/layout.tsx:22-27`, so no code change — a file swap only.
+
+**3. App icons.** `public/icon.png` (512×512) and `public/apple-icon.png` (180×180) are 8-bit
+gray+alpha Offchain marks with no Arbitrum equivalent at those sizes. Generate from `logo.svg`
+letterboxed onto a solid `#213147` canvas:
+
+```bash
+rsvg-convert -h 400 public/img/logo.svg -o /tmp/mark.png
+magick -size 512x512 xc:'#213147' /tmp/mark.png -gravity center -composite public/icon.png
+magick public/icon.png -resize 180x180 public/apple-icon.png
+```
+
+`logo.svg` is portrait (1080 × 1218.5) — letterbox, never stretch. **Opaque, not transparent:** the
+mark contains white internal elements that become holes on a transparent PNG and vanish against light
+browser chrome; iOS also composites `apple-touch-icon` transparency onto white. `rsvg-convert` and
+`magick` are both available locally.
 
 ## Out of scope
 
@@ -237,7 +277,12 @@ Checklist, traced to the section each item falsifies:
 
 `app/[lang]/(home)/hero-bg.tsx` and `marquee.tsx` are orphaned — nothing imports them, only
 self-references. The `--animate-marquee` / `--animate-marquee-vertical` keyframes in `global.css` are
-dead with them. Removal is a separate cleanup, not part of this reskin.
+dead with them. All six `public/brand/*.svg` Offchain files are likewise unreferenced; their last
+consumers were the deleted marquee/hero landing. Removal is a separate cleanup, not part of this
+reskin.
+
+Distinct from these: `components/OffchainMark.tsx` is orphaned **by** §6 and is removed there, per
+the rule that we clean up orphans our own changes create.
 
 ## Implementation order
 
@@ -245,4 +290,5 @@ dead with them. Removal is a separate cleanup, not part of this reskin.
 2. §2 fonts — independent of §1; both must land before prose reads correctly.
 3. §3 prose layer.
 4. §4 component islands.
-5. §5 verification (gates, then browser).
+5. §6 brand marks — independent of §1–§4; can land in parallel.
+6. §5 verification (gates, then browser).
