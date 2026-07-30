@@ -2,8 +2,6 @@ import { defineI18nUI } from 'fumadocs-ui/i18n';
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import { BookOpen, Braces, Code, Coins } from 'lucide-react';
 
-import { OffchainMark } from '@/components/OffchainMark';
-
 import { i18n } from './i18n';
 import { appName, docsRoute } from './shared';
 
@@ -28,7 +26,12 @@ export function baseOptions(locale: string): BaseLayoutProps {
     nav: {
       title: (
         <>
-          <OffchainMark className="h-5 w-auto" />
+          {/* The Arbitrum mark is four-colour (navy/blue/light-blue/white), so it
+              cannot be a currentColor component the way OffchainMark was. Used in
+              both light and dark, matching arbitrum-docs docusaurus.config.js,
+              which sets `src` with no `srcDark`. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/img/logo.svg" alt="" className="h-5 w-auto" />
           {appName}
         </>
       ),

@@ -16,9 +16,9 @@ export const metadata: Metadata = {
   // Icons live in public/ (not app/, which would recreate the app/favicon.ico
   // route that broke the Vercel build). Declared explicitly so Next emits the
   // <link> tags. `sizes: 'any'` on the .ico mirrors Next's app/favicon.ico
-  // convention and lets browsers reliably pick the multi-size icon. The white
-  // Offchain hexagon on a charcoal tile stays visible on both light and dark
-  // tab strips.
+  // convention and lets browsers reliably pick the multi-size icon. The Arbitrum
+  // mark sits on an opaque #213147 tile so its white internal elements stay
+  // visible on both light and dark tab strips.
   icons: {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
