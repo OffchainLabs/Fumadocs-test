@@ -224,9 +224,9 @@ Expected: three files, roughly 80 KB / 83 KB / 38 KB.
 
 ```bash
 cd /Users/allup/OCL/Fumadocs-test/public/fonts
-uvx --from fonttools fonttools ttLib.woff2 compress aeonik-regular.otf
-uvx --from fonttools fonttools ttLib.woff2 compress aeonik-medium.otf
-uvx --from fonttools fonttools ttLib.woff2 compress aeonik-fono-regular.woff
+uvx --from "fonttools[woff]" fonttools ttLib.woff2 compress aeonik-regular.otf
+uvx --from "fonttools[woff]" fonttools ttLib.woff2 compress aeonik-medium.otf
+uvx --from "fonttools[woff]" fonttools ttLib.woff2 compress aeonik-fono-regular.woff
 ls -la
 ```
 
