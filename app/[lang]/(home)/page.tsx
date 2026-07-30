@@ -31,13 +31,13 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
   return (
     <main className="flex flex-col flex-1">
       <section className="flex flex-col items-center justify-center text-center px-4 py-24 gap-6 bg-linear-[135deg] from-arbitrum-gradient-from to-arbitrum-gradient-to text-white">
-        <h1 className="text-4xl font-semibold tracking-tight">Get started with Arbitrum</h1>
-        <p className="text-white/80 max-w-2xl">
+        <h1 className="text-4xl font-medium tracking-tight">Get started with Arbitrum</h1>
+        <p className="text-white max-w-2xl">
           Arbitrum is the finance-native platform providing infrastructure for applications,
           tokenization, and dedicated chains. These docs explain the protocols, chains, services,
           and SDKs developers use to build on the Arbitrum platform.
         </p>
-        <p className="text-white/60 max-w-2xl">
+        <p className="text-white/85 max-w-2xl">
           In the programmable economy, markets, transactions, and business processes run in
           software. Arbitrum provides the infrastructure for those systems to execute with
           configurable rules and Ethereum settlement.
@@ -60,7 +60,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
       <div className="mx-auto w-full max-w-5xl px-4 py-16 flex flex-col gap-12">
         <section className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold tracking-tight">Understand Arbitrum</h2>
+          <h2 className="text-2xl font-medium tracking-tight">Understand Arbitrum</h2>
           <Cards>
             <Card
               icon={<BookOpen />}
@@ -96,7 +96,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         </section>
 
         <section className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold tracking-tight">Build decentralized apps</h2>
+          <h2 className="text-2xl font-medium tracking-tight">Build decentralized apps</h2>
           <Cards>
             <Card
               icon={<Code />}
@@ -126,7 +126,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         </section>
 
         <section className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold tracking-tight">Launch your own chain</h2>
+          <h2 className="text-2xl font-medium tracking-tight">Launch your own chain</h2>
           <Cards>
             <Card
               icon={<BookOpen />}
@@ -158,7 +158,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         </section>
 
         <section className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold tracking-tight">Run a node</h2>
+          <h2 className="text-2xl font-medium tracking-tight">Run a node</h2>
           <Cards>
             <Card
               icon={<Server />}
@@ -188,7 +188,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         </section>
 
         <section className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold tracking-tight">Bridge tokens</h2>
+          <h2 className="text-2xl font-medium tracking-tight">Bridge tokens</h2>
           <Cards>
             <Card
               icon={<ArrowRightLeft />}

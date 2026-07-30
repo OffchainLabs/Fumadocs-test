@@ -1,6 +1,7 @@
 import { RootProvider } from 'fumadocs-ui/provider/next';
 import 'katex/dist/katex.css';
 import type { Metadata } from 'next';
+import { JetBrains_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 import type { ReactNode } from 'react';
 
@@ -57,6 +58,17 @@ const mono = localFont({
   src: [{ path: '../../public/fonts/aeonik-fono-regular.woff2', weight: '400', style: 'normal' }],
 });
 
+// Aeonik Fono is the brand "mono" but is NOT actually fixed-pitch
+// (post.isFixedPitch = 0; advances range 283-799 at 1000 upem). It stays on
+// --font-mono for inline code, where brand texture matters and drift is
+// invisible. Fenced blocks use a true monospace via --font-code so CLI output,
+// ASCII diagrams and aligned comments stay in column.
+const code = JetBrains_Mono({
+  variable: '--font-code',
+  subsets: ['latin'],
+  display: 'swap',
+});
+
 export default async function Layout({
   params,
   children,
@@ -67,7 +79,11 @@ export default async function Layout({
   const { lang } = await params;
 
   return (
-    <html lang={lang} className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
+    <html
+      lang={lang}
+      className={`${sans.variable} ${mono.variable} ${code.variable}`}
+      suppressHydrationWarning
+    >
       <body className="flex flex-col min-h-screen font-sans" suppressHydrationWarning>
         <RootProvider
           i18n={i18nUI.provider(lang)}
