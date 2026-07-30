@@ -1,6 +1,6 @@
 import { RootProvider } from 'fumadocs-ui/provider/next';
 import type { Metadata } from 'next';
-import { Geist, JetBrains_Mono } from 'next/font/google';
+import localFont from 'next/font/local';
 import type { ReactNode } from 'react';
 
 import { InkeepChatButton } from '@/components/inkeep/inkeep-chat-button';
@@ -28,14 +28,34 @@ export const metadata: Metadata = {
   },
 };
 
-const geist = Geist({
+// Aeonik is the Arbitrum brand typeface, self-hosted from arbitrum-docs.
+// Only 400 and 500 exist — there is no Bold or Black face. Heading weights are
+// clamped to 500 in global.css so nothing requests a weight the browser would
+// have to synthesize. Fallback stack copied from arbitrum-docs _variables.scss.
+const sans = localFont({
   variable: '--font-sans',
-  subsets: ['latin'],
+  display: 'swap',
+  fallback: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'system-ui', 'sans-serif'],
+  src: [
+    { path: '../../public/fonts/aeonik-regular.woff2', weight: '400', style: 'normal' },
+    { path: '../../public/fonts/aeonik-medium.woff2', weight: '500', style: 'normal' },
+  ],
 });
 
-const mono = JetBrains_Mono({
+const mono = localFont({
   variable: '--font-mono',
-  subsets: ['latin'],
+  display: 'swap',
+  fallback: [
+    'ui-monospace',
+    'SF Mono',
+    'Cascadia Code',
+    'Segoe UI Mono',
+    'Menlo',
+    'Monaco',
+    'Consolas',
+    'monospace',
+  ],
+  src: [{ path: '../../public/fonts/aeonik-fono-regular.woff2', weight: '400', style: 'normal' }],
 });
 
 export default async function Layout({
@@ -48,7 +68,7 @@ export default async function Layout({
   const { lang } = await params;
 
   return (
-    <html lang={lang} className={`${geist.variable} ${mono.variable}`} suppressHydrationWarning>
+    <html lang={lang} className={`${sans.variable} ${mono.variable}`} suppressHydrationWarning>
       <body className="flex flex-col min-h-screen font-sans" suppressHydrationWarning>
         <RootProvider
           i18n={i18nUI.provider(lang)}
