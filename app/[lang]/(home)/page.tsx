@@ -30,7 +30,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
 
   return (
     <main className="flex flex-col flex-1">
-      <section className="flex flex-col items-center justify-center text-center px-4 py-24 gap-6 bg-linear-to-b from-black to-[#565656] text-white">
+      <section className="flex flex-col items-center justify-center text-center px-4 py-24 gap-6 bg-linear-[135deg] from-arbitrum-gradient-from to-arbitrum-gradient-to text-white">
         <h1 className="text-4xl font-semibold tracking-tight">Get started with Arbitrum</h1>
         <p className="text-white/80 max-w-2xl">
           Arbitrum is the finance-native platform providing infrastructure for applications,

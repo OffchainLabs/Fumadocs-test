@@ -13,7 +13,16 @@ export async function GET(_req: Request, { params }: RouteContext<'/og/docs/[...
   if (!page) notFound();
 
   return new ImageResponse(
-    <DefaultImage title={page.data.title} description={page.data.description} site={appName} />,
+    <DefaultImage
+      title={page.data.title}
+      description={page.data.description}
+      site={appName}
+      // Arbitrum blue accent / teal site label. The generator hardcodes a
+      // #0c0c0c background internally; matching Arbitrum's navy exactly would
+      // require replacing DefaultImage with local JSX, which is out of scope.
+      primaryColor="hsl(211 99% 45%)"
+      primaryTextColor="hsl(188 100% 53%)"
+    />,
     {
       width: 1200,
       height: 630,
