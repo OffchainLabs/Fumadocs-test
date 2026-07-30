@@ -37,7 +37,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
           tokenization, and dedicated chains. These docs explain the protocols, chains, services,
           and SDKs developers use to build on the Arbitrum platform.
         </p>
-        <p className="text-white/85 max-w-2xl">
+        <p className="text-white max-w-2xl">
           In the programmable economy, markets, transactions, and business processes run in
           software. Arbitrum provides the infrastructure for those systems to execute with
           configurable rules and Ethereum settlement.

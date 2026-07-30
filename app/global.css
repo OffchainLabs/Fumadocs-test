@@ -239,6 +239,16 @@ pre code {
   font-family: var(--font-code), ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace;
 }
 
+/* Fumadocs' typography plugin sets these two to 600 in the `utilities` layer,
+   and the prose block above does not declare them — so definition terms and
+   table headers were the last prose elements still asking for a weight Aeonik
+   does not have (it ships 400 and 500 only), which the browser synthesizes.
+   Unlayered, so this wins over the plugin. */
+.prose :where(dt),
+.prose :where(thead th) {
+  font-weight: 500;
+}
+
 /* Top navbar (notebook layout, nav mode "top"): mirror the legacy Docusaurus
    navbar — logo, nav links on a single line, search pushed to the far right.
    Overrides the default row (title flex-1 | search | links flex-1), which
