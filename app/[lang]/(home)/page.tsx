@@ -144,7 +144,9 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
               icon={<Settings />}
               title="Configure your chain"
               description="Set up throughput, gas tokens, data availability, governance, and more."
-              href={docs('/launch-arbitrum-chain/configuration/core/additional-configuration-parameters')}
+              href={docs(
+                '/launch-arbitrum-chain/configuration/core/additional-configuration-parameters',
+              )}
             />
             <Card
               icon={<ArrowRightLeft />}

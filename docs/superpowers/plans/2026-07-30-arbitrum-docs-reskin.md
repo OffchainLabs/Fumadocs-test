@@ -37,16 +37,16 @@ arbitrum-docs' SCSS partials — 959 lines of them target Docusaurus DOM classes
 
 ## File Structure
 
-| File | Responsibility | Task |
-|---|---|---|
-| `app/global.css` | Brand tokens (light + dark), gradient tokens, `.prose` treatment | 1, 3 |
-| `public/fonts/*.woff2` | Aeonik + Aeonik Fono binaries | 2 |
-| `app/[lang]/layout.tsx` | Font wiring via `next/font/local`; icon metadata | 2, 6 |
-| `components/mdx/VanillaAdmonition/styles.module.css` | Five admonition variants, both modes | 4 |
-| `app/[lang]/(home)/page.tsx` | Landing hero gradient | 5 |
-| `app/og/docs/[...slug]/route.tsx` | OG image brand accent | 5 |
-| `lib/layout.shared.tsx` | Navbar brand mark | 6 |
-| `public/{favicon.ico,icon.png,apple-icon.png}` | Browser/OS icons | 6 |
+| File                                                 | Responsibility                                                   | Task |
+| ---------------------------------------------------- | ---------------------------------------------------------------- | ---- |
+| `app/global.css`                                     | Brand tokens (light + dark), gradient tokens, `.prose` treatment | 1, 3 |
+| `public/fonts/*.woff2`                               | Aeonik + Aeonik Fono binaries                                    | 2    |
+| `app/[lang]/layout.tsx`                              | Font wiring via `next/font/local`; icon metadata                 | 2, 6 |
+| `components/mdx/VanillaAdmonition/styles.module.css` | Five admonition variants, both modes                             | 4    |
+| `app/[lang]/(home)/page.tsx`                         | Landing hero gradient                                            | 5    |
+| `app/og/docs/[...slug]/route.tsx`                    | OG image brand accent                                            | 5    |
+| `lib/layout.shared.tsx`                              | Navbar brand mark                                                | 6    |
+| `public/{favicon.ico,icon.png,apple-icon.png}`       | Browser/OS icons                                                 | 6    |
 
 ## Baseline capture
 
@@ -65,9 +65,11 @@ earlier July 14 plan — content has landed since and that measurement is stale.
 ### Task 1: Remap brand tokens to the Arbitrum palette
 
 **Files:**
+
 - Modify: `app/global.css:6-47` (the comment + `@theme` block + `.dark` block)
 
 **Interfaces:**
+
 - Produces: `--color-fd-*` (17 tokens × 2 modes) consumed by every later task and by all existing
   `bg-fd-*` / `text-fd-*` utilities. Also `--color-arbitrum-gradient-from` / `-to`, consumed by
   Task 5.
@@ -153,7 +155,7 @@ curl -s http://localhost:3210/docs/get-started | grep -c 'nd-docs-layout'
 Expected: `1` or more (page rendered). Then confirm the compiled stylesheet carries the new primary.
 
 **Two gotchas make the naive grep fail against a correct implementation.** (1) In dev, Turbopack
-serves CSS from `/_next/static/chunks/*.css`, *not* `/_next/static/css/*.css` — that second path is
+serves CSS from `/_next/static/chunks/*.css`, _not_ `/_next/static/css/*.css` — that second path is
 the production layout. (2) Lightning CSS **normalizes `hsl()` to hex** while compiling, so the literal
 string `211 99% 45%` never appears in output. Grep for the hex instead.
 
@@ -196,11 +198,13 @@ gradient tokens for the landing hero."
 ### Task 2: Wire the Aeonik typeface
 
 **Files:**
+
 - Create: `public/fonts/aeonik-regular.woff2`, `public/fonts/aeonik-medium.woff2`,
   `public/fonts/aeonik-fono-regular.woff2`
 - Modify: `app/[lang]/layout.tsx:3` (import), `:31-39` (font declarations), `:51` (className)
 
 **Interfaces:**
+
 - Consumes: nothing from Task 1 (independent).
 - Produces: CSS variables `--font-sans` and `--font-mono` on `<html>`. These are the **same names**
   the current Geist/JetBrains setup produces, and `<body className="font-sans">` already consumes
@@ -341,9 +345,11 @@ Replaces Geist and JetBrains Mono."
 ### Task 3: Add the Arbitrum prose treatment
 
 **Files:**
+
 - Modify: `app/global.css` (append a new `@layer components` block after the `.dark` block)
 
 **Interfaces:**
+
 - Consumes: `--color-fd-primary`, `--color-fd-border`, `--color-fd-muted`,
   `--color-fd-muted-foreground` from Task 1; `--font-sans` from Task 2.
 - Produces: styling for `.prose`, the class `DocsBody` renders. No JS interface.
@@ -582,9 +588,11 @@ weights clamped to 500 (Aeonik has no bold face)."
 ### Task 4: Reskin the admonitions
 
 **Files:**
+
 - Modify: `components/mdx/VanillaAdmonition/styles.module.css` (full rewrite)
 
 **Interfaces:**
+
 - Consumes: `--color-fd-foreground`, `--color-fd-muted-foreground` from Task 1.
 - Produces: nothing consumed later. The component's class names (`.admonition`,
   `.admonitionHeader`, `.admonitionIcon`, `.admonitionTitle`, `.admonitionContent`, `.icon`, and the
@@ -746,10 +754,12 @@ component inherits Aeonik instead of forcing system-ui."
 ### Task 5: Brand the landing hero and OG images
 
 **Files:**
+
 - Modify: `app/[lang]/(home)/page.tsx:33` (hero section classes)
 - Modify: `app/og/docs/[...slug]/route.tsx:16` (image props)
 
 **Interfaces:**
+
 - Consumes: `--color-arbitrum-gradient-from` / `-to` from Task 1.
 - Produces: nothing consumed later.
 
@@ -861,7 +871,8 @@ If the utility did not generate, fall back to an explicit arbitrary value, which
 compile:
 
 ```tsx
-className="... bg-[linear-gradient(135deg,var(--color-arbitrum-gradient-from),var(--color-arbitrum-gradient-to))] text-white"
+className =
+  '... bg-[linear-gradient(135deg,var(--color-arbitrum-gradient-from),var(--color-arbitrum-gradient-to))] text-white';
 ```
 
 Re-run the grep against `linear-gradient(135deg` to confirm.
@@ -885,12 +896,14 @@ black-to-gray. OG images get the Arbitrum accent colours."
 ### Task 6: Swap in the Arbitrum brand marks
 
 **Files:**
+
 - Modify: `lib/layout.shared.tsx:5` (import), `:29-35` (nav title)
 - Delete: `components/OffchainMark.tsx`
 - Replace: `public/favicon.ico`, `public/icon.png`, `public/apple-icon.png`
 - Modify: `app/[lang]/layout.tsx:16-21` (stale comment)
 
 **Interfaces:**
+
 - Consumes: nothing from Tasks 1–5 (independent; can land in parallel).
 - Produces: nothing consumed later.
 
@@ -1042,6 +1055,7 @@ internals stay legible. Removes the now-orphaned OffchainMark."
 **Files:** none — verification only.
 
 **Interfaces:**
+
 - Consumes: everything from Tasks 1–6.
 
 - [ ] **Step 1: Run the automated gates**
@@ -1095,13 +1109,13 @@ Reference is the **live** site — no local Docusaurus build needed. Using Claud
 each pair in both light and dark (toggle via the site's theme switcher), saving to
 `scratchpad/reskin/{page}-{mode}-{side}.png`:
 
-| Page | Reference | Target |
-|---|---|---|
-| get-started | `https://docs.arbitrum.io/get-started/` | `http://localhost:3210/docs/get-started` |
+| Page               | Reference                                      | Target                                          |
+| ------------------ | ---------------------------------------------- | ----------------------------------------------- |
+| get-started        | `https://docs.arbitrum.io/get-started/`        | `http://localhost:3210/docs/get-started`        |
 | how-arbitrum-works | `https://docs.arbitrum.io/how-arbitrum-works/` | `http://localhost:3210/docs/how-arbitrum-works` |
-| stylus | `https://docs.arbitrum.io/stylus/` | `http://localhost:3210/docs/stylus` |
-| admonitions | the equivalent live page, if one exists | the page from Step 3 |
-| landing | `https://docs.arbitrum.io/` | `http://localhost:3210/` |
+| stylus             | `https://docs.arbitrum.io/stylus/`             | `http://localhost:3210/docs/stylus`             |
+| admonitions        | the equivalent live page, if one exists        | the page from Step 3                            |
+| landing            | `https://docs.arbitrum.io/`                    | `http://localhost:3210/`                        |
 
 If a target URL 404s, find the real slug with `curl -s http://localhost:3210/llms.txt | head -40`.
 

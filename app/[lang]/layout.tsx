@@ -1,4 +1,5 @@
 import { RootProvider } from 'fumadocs-ui/provider/next';
+import 'katex/dist/katex.css';
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import type { ReactNode } from 'react';
@@ -6,8 +7,6 @@ import type { ReactNode } from 'react';
 import { InkeepChatButton } from '@/components/inkeep/inkeep-chat-button';
 import InkeepSearchDialog from '@/components/inkeep/inkeep-search';
 import { i18nUI } from '@/lib/layout.shared';
-
-import 'katex/dist/katex.css';
 
 import '../global.css';
 

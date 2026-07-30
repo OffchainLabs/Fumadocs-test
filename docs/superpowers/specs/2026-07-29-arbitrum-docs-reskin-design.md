@@ -1,29 +1,29 @@
-
 **Date:** 2026-07-29
 **Repo:** `~/OCL/Fumadocs-test` · branch `switch-to-arbitrum-ui`
 **Reference:** `~/OCL/arbitrum-docs` (Docusaurus 3.10, the live `docs.arbitrum.io`)
 **Goal:** Adopt the Arbitrum brand identity — palette, typeface, prose scale — from the production
 Docusaurus site, on Fumadocs' existing rounded geometry.
+
 # Reskin the Fumadocs site with the arbitrum-docs visual style — design
 
 ## Supersedes a prior constraint
 
 [`2026-07-14-fumadocs-styling-adoption-design.md`](2026-07-14-fumadocs-styling-adoption-design.md)
-adopted **fumadocs.dev's** styling and stated: *"the `--color-fd-*` tokens in `app/global.css` stay
-exactly as-is."* This spec reverses that constraint by explicit decision. The Offchain palette is
+adopted **fumadocs.dev's** styling and stated: _"the `--color-fd-*` tokens in `app/global.css` stay
+exactly as-is."_ This spec reverses that constraint by explicit decision. The Offchain palette is
 replaced with the Arbitrum palette. Everything else from that spec — rounded corners, twoslash,
 `cn()` — stays.
 
 ## Decisions
 
-| Decision | Choice |
-|---|---|
-| Colour | Full Arbitrum palette (blue / teal / navy), replacing Offchain |
-| Geometry | **Unchanged** — Fumadocs rounded corners retained |
-| Typeface | Aeonik + Aeonik Fono, from the arbitrum-docs binaries |
-| Heading weights | Clamped to 500 (only real outlines; no synthetic bold) |
-| Brand marks | Arbitrum logo + favicon; app icons on opaque `#213147` |
-| Verification | Browser side-by-side against live `docs.arbitrum.io`, light + dark |
+| Decision        | Choice                                                             |
+| --------------- | ------------------------------------------------------------------ |
+| Colour          | Full Arbitrum palette (blue / teal / navy), replacing Offchain     |
+| Geometry        | **Unchanged** — Fumadocs rounded corners retained                  |
+| Typeface        | Aeonik + Aeonik Fono, from the arbitrum-docs binaries              |
+| Heading weights | Clamped to 500 (only real outlines; no synthetic bold)             |
+| Brand marks     | Arbitrum logo + favicon; app icons on opaque `#213147`             |
+| Verification    | Browser side-by-side against live `docs.arbitrum.io`, light + dark |
 
 ## Architecture
 
@@ -53,31 +53,31 @@ them would add permanent dead code and `--ifm-*` names that `CLAUDE.md` forbids.
 Rewrite the `@theme` and `.dark` blocks in `app/global.css`. Values stay in `hsl()` notation so each
 line is directly comparable against `_variables.scss` by eye.
 
-| `--color-fd-*` | Light | Dark |
-|---|---|---|
-| `background` | `hsl(0 0% 100%)` | `hsl(222 47% 6%)` |
-| `foreground` | `hsl(222 47% 11%)` | `hsl(210 40% 98%)` |
-| `muted` | `hsl(210 40% 96%)` | `hsl(217 33% 12%)` |
-| `muted-foreground` | `hsl(215 16% 47%)` | `hsl(215 20% 65%)` |
-| `popover` | `hsl(0 0% 100%)` | `hsl(222 47% 8%)` |
-| `popover-foreground` | `hsl(222 47% 11%)` | `hsl(210 40% 98%)` |
-| `card` | `hsl(0 0% 100%)` | `hsl(222 47% 8%)` |
-| `card-foreground` | `hsl(222 47% 11%)` | `hsl(210 40% 98%)` |
-| `border` | `hsl(214 32% 91%)` | `hsl(217 33% 17%)` |
-| `primary` | `hsl(211 99% 45%)` | `hsl(188 100% 53%)` |
-| `primary-foreground` | `hsl(0 0% 100%)` | `hsl(222 47% 6%)` |
-| `secondary` | `hsl(210 40% 96%)` | `hsl(217 33% 17%)` |
-| `secondary-foreground` | `hsl(222 47% 11%)` | `hsl(210 40% 98%)` |
-| `accent` | `hsl(210 40% 96%)` | `hsl(217 33% 17%)` |
-| `accent-foreground` | `hsl(222 47% 11%)` | `hsl(210 40% 98%)` |
-| `ring` | `hsl(211 99% 45%)` | `hsl(188 100% 53%)` |
-| `overlay` | `hsl(222 47% 11% / 0.5)` | `hsl(222 47% 4% / 0.8)` |
+| `--color-fd-*`         | Light                    | Dark                    |
+| ---------------------- | ------------------------ | ----------------------- |
+| `background`           | `hsl(0 0% 100%)`         | `hsl(222 47% 6%)`       |
+| `foreground`           | `hsl(222 47% 11%)`       | `hsl(210 40% 98%)`      |
+| `muted`                | `hsl(210 40% 96%)`       | `hsl(217 33% 12%)`      |
+| `muted-foreground`     | `hsl(215 16% 47%)`       | `hsl(215 20% 65%)`      |
+| `popover`              | `hsl(0 0% 100%)`         | `hsl(222 47% 8%)`       |
+| `popover-foreground`   | `hsl(222 47% 11%)`       | `hsl(210 40% 98%)`      |
+| `card`                 | `hsl(0 0% 100%)`         | `hsl(222 47% 8%)`       |
+| `card-foreground`      | `hsl(222 47% 11%)`       | `hsl(210 40% 98%)`      |
+| `border`               | `hsl(214 32% 91%)`       | `hsl(217 33% 17%)`      |
+| `primary`              | `hsl(211 99% 45%)`       | `hsl(188 100% 53%)`     |
+| `primary-foreground`   | `hsl(0 0% 100%)`         | `hsl(222 47% 6%)`       |
+| `secondary`            | `hsl(210 40% 96%)`       | `hsl(217 33% 17%)`      |
+| `secondary-foreground` | `hsl(222 47% 11%)`       | `hsl(210 40% 98%)`      |
+| `accent`               | `hsl(210 40% 96%)`       | `hsl(217 33% 17%)`      |
+| `accent-foreground`    | `hsl(222 47% 11%)`       | `hsl(210 40% 98%)`      |
+| `ring`                 | `hsl(211 99% 45%)`       | `hsl(188 100% 53%)`     |
+| `overlay`              | `hsl(222 47% 11% / 0.5)` | `hsl(222 47% 4% / 0.8)` |
 
 Two new gradient tokens (source: `--arbitrum-gradient-primary`, 135°):
 
 ```css
 --color-arbitrum-gradient-from: hsl(211 99% 45%);
---color-arbitrum-gradient-to:   hsl(188 100% 53%);
+--color-arbitrum-gradient-to: hsl(188 100% 53%);
 ```
 
 `--spacing-page: 1436px` is Fumadocs-side layout, not brand — unchanged.
@@ -120,8 +120,8 @@ resolve identically. Three overrides are needed:
 
 ```css
 --tw-prose-quote-borders: var(--color-fd-primary);
---tw-prose-captions:      var(--color-fd-muted-foreground);
---tw-prose-kbd-shadows:   color-mix(in oklab, var(--color-fd-primary) 50%, transparent);
+--tw-prose-captions: var(--color-fd-muted-foreground);
+--tw-prose-kbd-shadows: color-mix(in oklab, var(--color-fd-primary) 50%, transparent);
 ```
 
 **Structure needs writing** — one `@layer` block in `app/global.css` scoped to `.prose` (the class
@@ -153,13 +153,13 @@ Four colour islands sit outside the token layer.
 palette and its own dark-mode text colours; it is entirely token-blind. Remap to arbitrum-docs'
 five-variant system:
 
-| Variant | Light accent / bg-alpha / text | Dark accent / bg-alpha / text |
-|---|---|---|
-| `info` | `hsl(211 99% 45%)` · .08 · `hsl(211 99% 30%)` | `hsl(188 100% 53%)` · .10 · `hsl(188 100% 75%)` |
-| `tip` | `hsl(147 72% 35%)` · .08 · `hsl(147 72% 25%)` | `hsl(142 71% 45%)` · .10 · `hsl(142 71% 65%)` |
-| `warning` | `hsl(38 92% 50%)` · .10 · `hsl(32 81% 29%)` | `hsl(45 93% 47%)` · .12 · `hsl(48 96% 70%)` |
-| `danger` | `hsl(0 72% 51%)` · .08 · `hsl(0 72% 35%)` | `hsl(0 62% 55%)` · .12 · `hsl(0 62% 75%)` |
-| `note` | `hsl(215 16% 47%)` · .10 · `hsl(215 16% 35%)` † | `hsl(215 20% 65%)` · .10 · `hsl(215 20% 80%)` |
+| Variant   | Light accent / bg-alpha / text                  | Dark accent / bg-alpha / text                   |
+| --------- | ----------------------------------------------- | ----------------------------------------------- |
+| `info`    | `hsl(211 99% 45%)` · .08 · `hsl(211 99% 30%)`   | `hsl(188 100% 53%)` · .10 · `hsl(188 100% 75%)` |
+| `tip`     | `hsl(147 72% 35%)` · .08 · `hsl(147 72% 25%)`   | `hsl(142 71% 45%)` · .10 · `hsl(142 71% 65%)`   |
+| `warning` | `hsl(38 92% 50%)` · .10 · `hsl(32 81% 29%)`     | `hsl(45 93% 47%)` · .12 · `hsl(48 96% 70%)`     |
+| `danger`  | `hsl(0 72% 51%)` · .08 · `hsl(0 72% 35%)`       | `hsl(0 62% 55%)` · .12 · `hsl(0 62% 75%)`       |
+| `note`    | `hsl(215 16% 47%)` · .10 · `hsl(215 16% 35%)` † | `hsl(215 20% 65%)` · .10 · `hsl(215 20% 80%)`   |
 
 † Light-mode `note` is **derived, not sourced**: arbitrum-docs defines `alert--secondary` only in
 `_darkmode.scss` and falls through to an Infima default in light. Values above extend the dark
