@@ -54,6 +54,184 @@
   --color-fd-overlay: hsl(222 47% 4% / 0.8);
 }
 
+/* Arbitrum prose treatment, ported from arbitrum-docs `_typography.scss` (which
+   scopes to `article .markdown`; Fumadocs' DocsBody renders `.prose`).
+
+   Colour is almost free: Fumadocs' typography plugin already defaults every
+   --tw-prose-* variable to a --color-fd-* token, so Task 1 cascades into prose
+   automatically. Only three variables differ from the reference.
+
+   Selectors use :where() to keep specificity at 0,1,0 so Tailwind utilities can
+   still override, and exclude `.not-prose` (Fumadocs' heading-anchor links) and
+   `[data-card]` (Fumadocs Card links) — both would otherwise pick up the
+   underline treatment. All heading weights are 500: Aeonik has no heavier face. */
+@layer components {
+  .prose {
+    --tw-prose-quote-borders: var(--color-fd-primary);
+    --tw-prose-captions: var(--color-fd-muted-foreground);
+    --tw-prose-kbd-shadows: color-mix(in oklab, var(--color-fd-primary) 50%, transparent);
+
+    font-size: 1rem;
+    line-height: 1.75;
+
+    :where(h1, h2, h3, h4, h5, h6) {
+      font-weight: 500;
+      scroll-margin-top: 80px;
+      text-wrap: balance;
+    }
+
+    :where(h1) {
+      font-size: 2.5rem;
+      line-height: 1.1;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+
+    :where(h1:first-child) {
+      font-size: 2.25rem;
+    }
+
+    :where(h2) {
+      font-size: 1.625rem;
+      line-height: 1.25;
+      margin-top: 2.5em;
+      margin-bottom: 1em;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--color-fd-border);
+    }
+
+    :where(h3) {
+      font-size: 1.375rem;
+      line-height: 1.4;
+      margin-top: 2em;
+      margin-bottom: 0.75em;
+    }
+
+    :where(h4) {
+      font-size: 1.125rem;
+      line-height: 1.5;
+      margin-top: 1.75em;
+      margin-bottom: 0.5em;
+    }
+
+    :where(h5, h6) {
+      font-size: 0.875rem;
+      line-height: 1.5;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    :where(h6) {
+      color: var(--color-fd-muted-foreground);
+    }
+
+    :where(strong) {
+      font-weight: 500;
+    }
+
+    :where(a):not(:where([data-card], [data-quicklook-from], .not-prose, .not-prose *)) {
+      font-weight: 500;
+      text-decoration: underline;
+      text-decoration-color: var(--color-fd-primary);
+      text-decoration-thickness: 2px;
+      text-underline-offset: 4px;
+      transition:
+        color 0.2s ease,
+        text-decoration-color 0.2s ease;
+
+      &:hover {
+        color: var(--color-fd-primary);
+        text-decoration-color: currentColor;
+      }
+    }
+
+    :where(ul > li)::marker {
+      color: var(--color-fd-primary);
+      font-size: 0.9em;
+    }
+
+    :where(ol > li)::marker {
+      color: var(--color-fd-primary);
+      font-weight: 500;
+      font-feature-settings: 'tnum' 1;
+    }
+
+    :where(blockquote) {
+      border-inline-start-width: 3px;
+      border-inline-start-color: var(--color-fd-primary);
+      background: color-mix(in oklab, var(--color-fd-primary) 5%, transparent);
+      padding: 1rem 1.25rem;
+    }
+
+    :where(:not(pre) > code) {
+      font-size: 0.875em;
+      font-weight: 500;
+      padding: 0.2em 0.4em;
+      border: 1px solid var(--color-fd-border);
+      background: var(--color-fd-muted);
+    }
+
+    :where(thead) {
+      background: color-mix(in oklab, var(--color-fd-primary) 8%, var(--color-fd-muted));
+    }
+
+    :where(thead th) {
+      font-size: 0.8125rem;
+      padding: 0.75rem 1rem;
+    }
+
+    :where(tbody td) {
+      padding: 0.75rem 1rem;
+      vertical-align: top;
+    }
+
+    :where(tbody tr) {
+      border-bottom: 1px solid color-mix(in oklab, var(--color-fd-border) 50%, transparent);
+    }
+  }
+
+  @media (max-width: 736px) {
+    .prose {
+      font-size: 0.9375rem;
+      line-height: 1.7;
+
+      :where(h1) {
+        font-size: 1.875rem;
+      }
+
+      :where(h1:first-child) {
+        font-size: 1.75rem;
+      }
+
+      :where(h2) {
+        font-size: 1.375rem;
+        margin-top: 2em;
+      }
+
+      :where(h3) {
+        font-size: 1.25rem;
+        margin-top: 1.5em;
+        margin-bottom: 0.5em;
+      }
+
+      :where(h4) {
+        font-size: 1.0625rem;
+      }
+
+      :where(table) {
+        font-size: 0.8125rem;
+      }
+
+      :where(thead th),
+      :where(tbody td) {
+        padding: 0.625rem 0.75rem;
+      }
+    }
+  }
+}
+
 /* Top navbar (notebook layout, nav mode "top"): mirror the legacy Docusaurus
    navbar — logo, nav links on a single line, search pushed to the far right.
    Overrides the default row (title flex-1 | search | links flex-1), which
