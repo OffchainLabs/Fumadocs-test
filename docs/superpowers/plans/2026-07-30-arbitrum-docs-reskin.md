@@ -150,14 +150,34 @@ sleep 25
 curl -s http://localhost:3210/docs/get-started | grep -c 'nd-docs-layout'
 ```
 
-Expected: `1` or more (page rendered). Then confirm the compiled stylesheet carries the new primary:
+Expected: `1` or more (page rendered). Then confirm the compiled stylesheet carries the new primary.
+
+**Two gotchas make the naive grep fail against a correct implementation.** (1) In dev, Turbopack
+serves CSS from `/_next/static/chunks/*.css`, *not* `/_next/static/css/*.css` — that second path is
+the production layout. (2) Lightning CSS **normalizes `hsl()` to hex** while compiling, so the literal
+string `211 99% 45%` never appears in output. Grep for the hex instead.
 
 ```bash
-CSS=$(curl -s http://localhost:3210/docs/get-started | grep -o '/_next/static/css/[^"]*\.css' | head -1)
-curl -s "http://localhost:3210$CSS" | grep -c '211 99% 45%'
+curl -s http://localhost:3210/docs/get-started -o /tmp/skin-page.html
+: > /tmp/skin-all.css
+for u in $(grep -oE '/_next/static/chunks/[^"]*\.css' /tmp/skin-page.html | sort -u); do
+  curl -s "http://localhost:3210$u" >> /tmp/skin-all.css
+done
+grep -o -- '--color-fd-primary: *[^;]*' /tmp/skin-all.css | sort -u
 ```
 
-Expected: `1` or more. If `0`, the `@theme` block did not compile — check for a stray brace.
+Expected, exactly these two lines — `#016fe4` is `hsl(211 99% 45%)` and `#0fdfff` is
+`hsl(188 100% 53%)`:
+
+```
+--color-fd-primary: #016fe4
+--color-fd-primary: #0fdfff
+```
+
+If the output is empty, the `@theme` block did not compile — check for a stray brace. If the values
+differ, a token was mistyped. Also confirm the source file kept `hsl()` notation (the constraint
+applies to the source, not the compiled output): `grep -cF 'hsl(' app/global.css` → expect 37.
+
 Then: `pkill -f 'next dev'`
 
 - [ ] **Step 4: Commit**
@@ -522,15 +542,28 @@ Expected: PASS.
 The h2 bottom border is the most recognizable signature of this section, and a CSS nesting error
 would silently drop the whole block.
 
+Note the two gotchas from Task 1: dev CSS lives under `/_next/static/chunks/*.css` (not
+`/_next/static/css/`), and Lightning CSS normalizes colour functions — so grep for property names,
+which survive compilation, rather than colour literals.
+
 ```bash
 pkill -f 'next dev' 2>/dev/null; sleep 1
 PORT=3210 pnpm dev &
-sleep 25
-CSS=$(curl -s http://localhost:3210/docs/get-started | grep -o '/_next/static/css/[^"]*\.css' | head -1)
-curl -s "http://localhost:3210$CSS" | grep -c 'text-underline-offset:4px\|text-underline-offset: 4px'
+sleep 30
+curl -s http://localhost:3210/docs/get-started -o /tmp/skin-page.html
+: > /tmp/skin-all.css
+for u in $(grep -oE '/_next/static/chunks/[^"]*\.css' /tmp/skin-page.html | sort -u); do
+  curl -s "http://localhost:3210$u" >> /tmp/skin-all.css
+done
+for p in text-underline-offset scroll-margin-top --tw-prose-quote-borders text-wrap; do
+  printf '%-28s %s\n' "$p" "$(grep -c -- "$p" /tmp/skin-all.css)"
+done
 ```
 
-Expected: `1` or more. If `0`, the `@layer components` block failed to compile — check nesting braces.
+Expected: a non-zero count on every one of the four. A `0` on all four means the
+`@layer components` block failed to compile — check nesting braces. A `0` on just one means that
+specific rule was dropped.
+
 Then: `pkill -f 'next dev'`
 
 - [ ] **Step 4: Commit**
@@ -804,13 +837,28 @@ genuine failure in this task.
 Now assert the gradient utility actually compiled. A misspelled or unsupported Tailwind class does
 **not** change the HTTP status — it silently emits nothing, so the hero would just look unstyled:
 
+Per Task 1's gotchas, dev CSS is under `/_next/static/chunks/*.css`:
+
 ```bash
-CSS=$(curl -s http://localhost:3210/ | grep -o '/_next/static/css/[^"]*\.css' | head -1)
-curl -s "http://localhost:3210$CSS" | grep -c 'arbitrum-gradient-from'
+curl -s http://localhost:3210/ -o /tmp/skin-home.html
+: > /tmp/skin-home.css
+for u in $(grep -oE '/_next/static/chunks/[^"]*\.css' /tmp/skin-home.html | sort -u); do
+  curl -s "http://localhost:3210$u" >> /tmp/skin-home.css
+done
+grep -c 'arbitrum-gradient-from' /tmp/skin-home.css
 ```
 
-Expected: `1` or more. If `0`, the `bg-linear-[135deg]` / `from-*` / `to-*` combination did not
-generate. Fall back to an explicit arbitrary value, which cannot fail to compile:
+Expected: `2` or more — one for the `@theme` token declaration and at least one for the generated
+gradient-stop utility. **`1` is a failure**, not a pass: it means the token declaration compiled but
+the `from-arbitrum-gradient-from` utility did not generate. Confirm which by checking for a
+gradient-stop custom property alongside it:
+
+```bash
+grep -c -- '--tw-gradient-from' /tmp/skin-home.css
+```
+
+If the utility did not generate, fall back to an explicit arbitrary value, which cannot fail to
+compile:
 
 ```tsx
 className="... bg-[linear-gradient(135deg,var(--color-arbitrum-gradient-from),var(--color-arbitrum-gradient-to))] text-white"
