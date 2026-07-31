@@ -67,7 +67,7 @@ function handleInkeepEvent(event: InkeepCallbackEvent): void {
 }
 
 export const inkeepBaseSettings: InkeepBaseSettings = {
-  apiKey: process.env.NEXT_PUBLIC_INKEEP_API_KEY,
+  apiKey: process.env.INKEEP_API_KEY,
   primaryBrandColor: '#213147',
   organizationDisplayName: 'Arbitrum',
   onEvent: handleInkeepEvent,
