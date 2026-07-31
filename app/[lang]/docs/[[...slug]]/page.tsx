@@ -55,7 +55,7 @@ export default async function Page({
 
   return (
     <DocsPage toc={toc} full={page.data.full}>
-      <DocsTitle>{title}</DocsTitle>
+      <DocsTitle className="font-medium">{title}</DocsTitle>
       <DocsDescription className="mb-0">{description}</DocsDescription>
       <div className="flex flex-row gap-2 items-center border-b pb-6">
         <MarkdownCopyButton markdownUrl={markdownUrl} />

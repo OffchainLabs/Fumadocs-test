@@ -3,47 +3,250 @@
 @import 'fumadocs-ui/css/preset.css';
 @import 'fumadocs-twoslash/twoslash.css';
 
-/* Offchain brand palette (official tokens): grayscale + tan neutrals, brand-blue accent. Light mode. */
+/* Arbitrum brand palette, ported from arbitrum-docs `src/css/partials/_variables.scss` (:root).
+   Values kept in hsl() notation so each line is directly comparable against the source. */
 @theme {
-  --color-fd-background: #ffffff;
-  --color-fd-foreground: #3b3b3b;
-  --color-fd-muted: #f3f3f3;
-  --color-fd-muted-foreground: #666666;
-  --color-fd-popover: #ffffff;
-  --color-fd-popover-foreground: #3b3b3b;
-  --color-fd-card: #ffffff;
-  --color-fd-card-foreground: #3b3b3b;
-  --color-fd-border: #cccccc;
-  --color-fd-primary: #0041f8;
-  --color-fd-primary-foreground: #ffffff;
-  --color-fd-secondary: #f3f3f3;
-  --color-fd-secondary-foreground: #3b3b3b;
-  --color-fd-accent: #cec5ba;
-  --color-fd-accent-foreground: #3b3b3b;
-  --color-fd-ring: #0041f8;
-  --color-fd-overlay: rgba(59, 59, 59, 0.4);
+  --color-fd-background: hsl(0 0% 100%);
+  --color-fd-foreground: hsl(222 47% 11%);
+  --color-fd-muted: hsl(210 40% 96%);
+  --color-fd-muted-foreground: hsl(215 16% 47%);
+  --color-fd-popover: hsl(0 0% 100%);
+  --color-fd-popover-foreground: hsl(222 47% 11%);
+  --color-fd-card: hsl(0 0% 100%);
+  --color-fd-card-foreground: hsl(222 47% 11%);
+  --color-fd-border: hsl(214 32% 91%);
+  --color-fd-primary: hsl(211 99% 45%);
+  --color-fd-primary-foreground: hsl(0 0% 100%);
+  --color-fd-secondary: hsl(210 40% 96%);
+  --color-fd-secondary-foreground: hsl(222 47% 11%);
+  --color-fd-accent: hsl(210 40% 96%);
+  --color-fd-accent-foreground: hsl(222 47% 11%);
+  --color-fd-ring: hsl(211 99% 45%);
+  --color-fd-overlay: hsl(222 47% 11% / 0.5);
+
+  /* Hero gradient: a darkened variant of the brand blue->teal gradient. The
+     source gradient (hsl(211 99% 45%) -> hsl(188 100% 53%)) fails WCAG AA with
+     white text at the teal end (1.61:1), so the hero runs logo navy -> brand
+     blue instead: 13.35:1 and 4.78:1 against white. */
+  --color-arbitrum-gradient-from: hsl(215 37% 20%);
+  --color-arbitrum-gradient-to: hsl(211 99% 45%);
+
   --spacing-page: 1436px;
 }
 
-/* Derived dark variant (brand is light-first): grayscale surfaces, brand-cyan accent. */
+/* Dark: navy-tinted surfaces, teal primary. Ported from arbitrum-docs
+   `src/css/partials/_darkmode.scss` ([data-theme='dark']). */
 .dark {
-  --color-fd-background: #1c1c1c;
-  --color-fd-foreground: #f3f3f3;
-  --color-fd-muted: #2a2a2a;
-  --color-fd-muted-foreground: #999999;
-  --color-fd-popover: #242424;
-  --color-fd-popover-foreground: #f3f3f3;
-  --color-fd-card: #242424;
-  --color-fd-card-foreground: #f3f3f3;
-  --color-fd-border: #3b3b3b;
-  --color-fd-primary: #22e7fe;
-  --color-fd-primary-foreground: #1c1c1c;
-  --color-fd-secondary: #2a2a2a;
-  --color-fd-secondary-foreground: #f3f3f3;
-  --color-fd-accent: #3b3b3b;
-  --color-fd-accent-foreground: #f3f3f3;
-  --color-fd-ring: #22e7fe;
-  --color-fd-overlay: rgba(0, 0, 0, 0.6);
+  --color-fd-background: hsl(222 47% 6%);
+  --color-fd-foreground: hsl(210 40% 98%);
+  --color-fd-muted: hsl(217 33% 12%);
+  --color-fd-muted-foreground: hsl(215 20% 65%);
+  --color-fd-popover: hsl(222 47% 8%);
+  --color-fd-popover-foreground: hsl(210 40% 98%);
+  --color-fd-card: hsl(222 47% 8%);
+  --color-fd-card-foreground: hsl(210 40% 98%);
+  --color-fd-border: hsl(217 33% 17%);
+  --color-fd-primary: hsl(188 100% 53%);
+  --color-fd-primary-foreground: hsl(222 47% 6%);
+  --color-fd-secondary: hsl(217 33% 17%);
+  --color-fd-secondary-foreground: hsl(210 40% 98%);
+  --color-fd-accent: hsl(217 33% 17%);
+  --color-fd-accent-foreground: hsl(210 40% 98%);
+  --color-fd-ring: hsl(188 100% 53%);
+  --color-fd-overlay: hsl(222 47% 4% / 0.8);
+}
+
+/* Arbitrum prose treatment, ported from arbitrum-docs `_typography.scss` (which
+   scopes to `article .markdown`; Fumadocs' DocsBody renders `.prose`).
+
+   Colour is almost free: Fumadocs' typography plugin already defaults every
+   --tw-prose-* variable to a --color-fd-* token, so Task 1 cascades into prose
+   automatically. Only three variables differ from the reference.
+
+   Selectors use :where() to keep specificity at 0,1,0 so Tailwind utilities can
+   still override, and exclude `.not-prose` (Fumadocs' heading-anchor links) and
+   `[data-card]` (Fumadocs Card links) — both would otherwise pick up the
+   underline treatment. All heading weights are 500: Aeonik has no heavier face. */
+.prose {
+  --tw-prose-quote-borders: var(--color-fd-primary);
+  --tw-prose-captions: var(--color-fd-muted-foreground);
+  --tw-prose-kbd-shadows: color-mix(in oklab, var(--color-fd-primary) 50%, transparent);
+
+  font-size: 1rem;
+  line-height: 1.75;
+
+  :where(h1, h2, h3, h4, h5, h6) {
+    font-weight: 500;
+    scroll-margin-top: 80px;
+    text-wrap: balance;
+  }
+
+  :where(h1) {
+    font-size: 2.5rem;
+    line-height: 1.1;
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  :where(h1:first-child) {
+    font-size: 2.25rem;
+  }
+
+  :where(h2) {
+    font-size: 1.625rem;
+    line-height: 1.25;
+    margin-top: 2.5em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--color-fd-border);
+  }
+
+  :where(h3) {
+    font-size: 1.375rem;
+    line-height: 1.4;
+    margin-top: 2em;
+    margin-bottom: 0.75em;
+  }
+
+  :where(h4) {
+    font-size: 1.125rem;
+    line-height: 1.5;
+    margin-top: 1.75em;
+    margin-bottom: 0.5em;
+  }
+
+  :where(h5, h6) {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-top: 1.5em;
+    margin-bottom: 0.5em;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  :where(h6) {
+    color: var(--color-fd-muted-foreground);
+  }
+
+  :where(strong) {
+    font-weight: 500;
+  }
+
+  :where(a):not(:where([data-card], [data-quicklook-from], .not-prose, .not-prose *)) {
+    font-weight: 500;
+    text-decoration: underline;
+    text-decoration-color: var(--color-fd-primary);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 4px;
+    transition:
+      color 0.2s ease,
+      text-decoration-color 0.2s ease;
+
+    &:hover {
+      color: var(--color-fd-primary);
+      text-decoration-color: currentColor;
+    }
+  }
+
+  :where(ul > li)::marker {
+    color: var(--color-fd-primary);
+    font-size: 0.9em;
+  }
+
+  :where(ol > li)::marker {
+    color: var(--color-fd-primary);
+    font-weight: 500;
+    font-feature-settings: 'tnum' 1;
+  }
+
+  :where(blockquote) {
+    border-inline-start-width: 3px;
+    border-inline-start-color: var(--color-fd-primary);
+    background: color-mix(in oklab, var(--color-fd-primary) 5%, transparent);
+    padding: 1rem 1.25rem;
+  }
+
+  :where(:not(pre) > code) {
+    font-size: 0.875em;
+    font-weight: 500;
+    padding: 0.2em 0.4em;
+    border: 1px solid var(--color-fd-border);
+    background: var(--color-fd-muted);
+  }
+
+  :where(thead) {
+    background: color-mix(in oklab, var(--color-fd-primary) 8%, var(--color-fd-muted));
+  }
+
+  :where(thead th) {
+    font-size: 0.8125rem;
+    padding: 0.75rem 1rem;
+  }
+
+  :where(tbody td) {
+    padding: 0.75rem 1rem;
+    vertical-align: top;
+  }
+
+  :where(tbody tr) {
+    border-bottom: 1px solid color-mix(in oklab, var(--color-fd-border) 50%, transparent);
+  }
+}
+
+@media (max-width: 736px) {
+  .prose {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+
+    :where(h1) {
+      font-size: 1.875rem;
+    }
+
+    :where(h1:first-child) {
+      font-size: 1.75rem;
+    }
+
+    :where(h2) {
+      font-size: 1.375rem;
+      margin-top: 2em;
+    }
+
+    :where(h3) {
+      font-size: 1.25rem;
+      margin-top: 1.5em;
+      margin-bottom: 0.5em;
+    }
+
+    :where(h4) {
+      font-size: 1.0625rem;
+    }
+
+    :where(table) {
+      font-size: 0.8125rem;
+    }
+
+    :where(thead th),
+    :where(tbody td) {
+      padding: 0.625rem 0.75rem;
+    }
+  }
+}
+
+/* Fenced code blocks use a true monospace; inline code keeps brand Aeonik Fono.
+   See the --font-code comment in app/[lang]/layout.tsx. */
+pre,
+pre code {
+  font-family: var(--font-code), ui-monospace, 'SF Mono', Menlo, Monaco, Consolas, monospace;
+}
+
+/* Fumadocs' typography plugin sets these two to 600 in the `utilities` layer,
+   and the prose block above does not declare them — so definition terms and
+   table headers were the last prose elements still asking for a weight Aeonik
+   does not have (it ships 400 and 500 only), which the browser synthesizes.
+   Unlayered, so this wins over the plugin. */
+.prose :where(dt),
+.prose :where(thead th) {
+  font-weight: 500;
 }
 
 /* Top navbar (notebook layout, nav mode "top"): mirror the legacy Docusaurus

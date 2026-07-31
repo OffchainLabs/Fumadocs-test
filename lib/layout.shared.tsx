@@ -2,8 +2,6 @@ import { defineI18nUI } from 'fumadocs-ui/i18n';
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import { BookOpen, Braces, Code, Coins } from 'lucide-react';
 
-import { OffchainMark } from '@/components/OffchainMark';
-
 import { i18n } from './i18n';
 import { appName, docsRoute } from './shared';
 
@@ -28,7 +26,12 @@ export function baseOptions(locale: string): BaseLayoutProps {
     nav: {
       title: (
         <>
-          <OffchainMark className="h-5 w-auto" />
+          {/* The Arbitrum mark is four-colour (navy/blue/light-blue/white), so it
+              cannot be a currentColor component the way OffchainMark was. Used in
+              both light and dark, matching arbitrum-docs docusaurus.config.js,
+              which sets `src` with no `srcDark`. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/img/logo.svg" alt="" width={18} height={20} className="h-5 w-auto" />
           {appName}
         </>
       ),
@@ -52,7 +55,7 @@ export function baseOptions(locale: string): BaseLayoutProps {
               className: 'md:row-span-3',
               banner: (
                 <div className="-mx-3 -mt-3 flex flex-col justify-end rounded-t-lg bg-gradient-to-br from-blue-600 via-blue-500 to-cyan-400 p-4 pt-20 text-white">
-                  <p className="text-base font-semibold">Build apps on Arbitrum</p>
+                  <p className="text-base font-medium">Build apps on Arbitrum</p>
                   <p className="text-sm text-white/80">
                     Deploy smart contracts and decentralized apps.
                   </p>
