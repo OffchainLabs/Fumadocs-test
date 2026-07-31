@@ -18,7 +18,7 @@ Search and the "Ask AI" chat button are powered by [Inkeep](https://inkeep.com).
 publishable key in a local `.env` (gitignored):
 
 ```bash
-INKEEP_API_KEY=<inkeep-search-key>
+NEXT_PUBLIC_INKEEP_API_KEY=<inkeep-search-key>
 ```
 
 Config lives in `lib/inkeep.ts`; the widgets mount in `components/inkeep/` and are wired into
