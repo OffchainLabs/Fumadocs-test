@@ -27,11 +27,14 @@
     "postinstall": "fumadocs-mdx"
   },
   "dependencies": {
+    "@base-ui/react": "^1.6.0",
     "@ethersproject/address": "5.8.0",
     "@floating-ui/react": "0.27.19",
+    "@fumadocs/base-ui": "^16.14.0",
     "@inkeep/cxkit-react": "0.5.119",
     "@mdx-js/react": "3.1.1",
     "class-variance-authority": "0.7.1",
+    "cnfast": "^0.1.0",
     "fumadocs-core": "16.11.1",
     "fumadocs-mdx": "15.1.0",
     "fumadocs-twoslash": "3.3.0",
