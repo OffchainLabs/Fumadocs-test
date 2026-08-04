@@ -15,15 +15,20 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
   // Icons live in public/ (not app/, which would recreate the app/favicon.ico
   // route that broke the Vercel build). Declared explicitly so Next emits the
-  // <link> tags. `sizes: 'any'` on the .ico mirrors Next's app/favicon.ico
-  // convention and lets browsers reliably pick the multi-size icon. The Arbitrum
-  // mark sits on an opaque #213147 tile so its white internal elements stay
-  // visible on both light and dark tab strips.
+  // <link> tags.
+  //
+  // The rasters are fallbacks for clients without SVG-favicon support (Safari
+  // most notably) and are rendered from the same vector, so they show the same
+  // mark rather than a different one. Concrete `sizes` on the .ico matter: with
+  // `sizes: 'any'` browsers treat it as scalable and prefer it over the SVG.
   icons: {
     icon: [
-      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.ico', sizes: '16x16 32x32 48x48' },
+      { url: '/img/logo.svg', type: 'image/svg+xml' },
       { url: '/icon.png', type: 'image/png', sizes: '512x512' },
     ],
+    // Not a favicon: iOS composites transparent home-screen icons onto black,
+    // so this one keeps its opaque #213147 tile.
     apple: '/apple-icon.png',
   },
 };
