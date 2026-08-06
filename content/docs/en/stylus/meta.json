@@ -1,5 +1,5 @@
 {
-  "title": "Stylus",
+  "title": "Build apps with Stylus",
   "icon": "Braces",
   "root": true,
   "description": "Build apps with Stylus in Rust, C, and C++.",
