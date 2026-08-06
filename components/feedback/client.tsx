@@ -11,9 +11,12 @@ import { cn } from '@/lib/cn';
 
 import { type PageFeedback, pageFeedback } from './schema';
 
-// Ported from the upstream Fumadocs docs app (apps/docs/components/feedback/client.tsx).
-// Page-level feedback only: the block-level `FeedbackText` variant was left behind because it
-// requires the `remarkFeedbackBlock` MDX plugin and would change the pipeline for every page.
+type Opinion = PageFeedback['opinion'];
+
+const RATINGS: { opinion: Opinion; label: string; Icon: typeof ThumbsUp }[] = [
+  { opinion: 'good', label: 'Good', Icon: ThumbsUp },
+  { opinion: 'bad', label: 'Bad', Icon: ThumbsDown },
+];
 
 const rateButtonVariants = cva(
   'inline-flex items-center gap-2 px-3 py-2 rounded-full font-medium border text-sm [&_svg]:size-4 disabled:cursor-not-allowed',
@@ -45,12 +48,12 @@ export function Feedback({
 }) {
   const pathname = usePathname();
   const { previous, setPrevious } = useSubmissionStorage(pathname);
-  const [opinion, setOpinion] = useState<'good' | 'bad' | null>(null);
+  const [opinion, setOpinion] = useState<Opinion | null>(null);
   const [message, setMessage] = useState('');
   const [failed, setFailed] = useState(false);
   const [isPending, startTransition] = useTransition();
 
-  function submit(e?: SyntheticEvent) {
+  function submit(e: SyntheticEvent) {
     if (opinion == null) return;
 
     startTransition(async () => {
@@ -60,8 +63,8 @@ export function Feedback({
         message,
       };
 
-      // An error escaping this transition would surface as a page-level render failure, so the
-      // action's own rejection is caught here as well as inside the action.
+      // An error escaping this transition would surface as a page-level render failure. The action
+      // handles its own failures, so this only catches a failure to invoke it at all.
       let sent = false;
       try {
         sent = await onSendAction(feedback);
@@ -77,7 +80,7 @@ export function Feedback({
       setOpinion(null);
     });
 
-    e?.preventDefault();
+    e.preventDefault();
   }
 
   const activeOpinion = previous?.opinion ?? opinion;
@@ -86,32 +89,29 @@ export function Feedback({
     <Collapsible
       open={opinion !== null || previous !== null}
       onOpenChange={(v) => {
-        if (!v) setOpinion(null);
+        if (!v) {
+          setOpinion(null);
+          setFailed(false);
+        }
       }}
       className="border-y py-3"
     >
       <div className="flex flex-row items-center gap-2">
         <p className="text-sm font-medium pe-2">How is this guide?</p>
-        <button
-          disabled={previous !== null}
-          className={cn(rateButtonVariants({ active: activeOpinion === 'good' }))}
-          onClick={() => {
-            setOpinion('good');
-          }}
-        >
-          <ThumbsUp />
-          Good
-        </button>
-        <button
-          disabled={previous !== null}
-          className={cn(rateButtonVariants({ active: activeOpinion === 'bad' }))}
-          onClick={() => {
-            setOpinion('bad');
-          }}
-        >
-          <ThumbsDown />
-          Bad
-        </button>
+        {RATINGS.map(({ opinion: value, label, Icon }) => (
+          <button
+            key={value}
+            disabled={previous !== null}
+            className={rateButtonVariants({ active: activeOpinion === value })}
+            onClick={() => {
+              setFailed(false);
+              setOpinion(value);
+            }}
+          >
+            <Icon />
+            {label}
+          </button>
+        ))}
       </div>
       <CollapsibleContent className="mt-3">
         {previous ? (
@@ -132,7 +132,10 @@ export function Feedback({
             <textarea
               autoFocus
               value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              onChange={(e) => {
+                setFailed(false);
+                setMessage(e.target.value);
+              }}
               className="border rounded-lg bg-fd-secondary text-fd-secondary-foreground p-3 resize-none focus-visible:outline-none placeholder:text-fd-muted-foreground"
               placeholder="Leave your feedback..."
               onKeyDown={(e) => {
@@ -150,7 +153,7 @@ export function Feedback({
                 Submit
               </button>
               {failed ? (
-                <p className="text-sm text-fd-muted-foreground">
+                <p role="alert" className="text-sm text-fd-muted-foreground">
                   Could not send your feedback. Please try again.
                 </p>
               ) : null}
@@ -170,8 +173,19 @@ function useSubmissionStorage(key: string) {
     const item = localStorage.getItem(storageKey);
     if (item === null) return;
 
-    const result = pageFeedback.safeParse(JSON.parse(item));
+    // Drop anything unreadable rather than trusting it: `JSON.parse` throws on malformed input,
+    // and an uncaught throw in an effect fails the page render.
+    let parsed: unknown;
+    try {
+      parsed = JSON.parse(item);
+    } catch {
+      localStorage.removeItem(storageKey);
+      return;
+    }
+
+    const result = pageFeedback.safeParse(parsed);
     if (result.success) setValue(result.data);
+    else localStorage.removeItem(storageKey);
   }, [storageKey]);
 
   return {

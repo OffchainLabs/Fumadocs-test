@@ -1,8 +1,5 @@
-'use client';
-
-import { useEffect, useRef } from 'react';
-
 import buildingOrbitFaqs from './data/building-orbit-faqs.json';
+import { FAQHashScroll } from './hash-scroll';
 import type { FAQ, FAQStructuredDataProps } from './types';
 
 const FAQ_MAP: Record<string, FAQ[]> = {
@@ -10,24 +7,6 @@ const FAQ_MAP: Record<string, FAQ[]> = {
 };
 
 export default function FAQStructuredData({ faqsId, renderFaqs }: FAQStructuredDataProps) {
-  const scrolledRef = useRef(false);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const hash = window.location.hash;
-    if (hash && !scrolledRef.current) {
-      const id = hash.replace('#', '');
-      const element = document.getElementById(id);
-      if (element) {
-        window.scrollTo({
-          top: element.getBoundingClientRect().top + window.scrollY - 20,
-          behavior: 'smooth',
-        });
-        scrolledRef.current = true;
-      }
-    }
-  }, []);
-
   const faqs = FAQ_MAP[faqsId];
   if (!faqs) {
     console.warn(`FAQStructuredData: unknown faqsId="${faqsId}"`);
@@ -47,6 +26,7 @@ export default function FAQStructuredData({ faqsId, renderFaqs }: FAQStructuredD
 
   return (
     <>
+      <FAQHashScroll />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
