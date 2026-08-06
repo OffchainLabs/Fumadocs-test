@@ -34,18 +34,20 @@ const rateButtonVariants = cva(
  * A submitted rating is remembered in `localStorage` per pathname, so returning to a page shows
  * the thank-you state instead of an empty form. "Submit Again" clears that record.
  *
- * @param onSendAction - Server action receiving the validated feedback. Rejecting leaves the form
- *   open with the message intact, so the reader can retry.
+ * @param onSendAction - Server action receiving the validated feedback. Returns whether the event
+ *   was recorded; a `false` (or a rejection) leaves the form open with the message intact so the
+ *   reader can retry.
  */
 export function Feedback({
   onSendAction,
 }: {
-  onSendAction: (feedback: PageFeedback) => Promise<void>;
+  onSendAction: (feedback: PageFeedback) => Promise<boolean>;
 }) {
   const pathname = usePathname();
   const { previous, setPrevious } = useSubmissionStorage(pathname);
   const [opinion, setOpinion] = useState<'good' | 'bad' | null>(null);
   const [message, setMessage] = useState('');
+  const [failed, setFailed] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   function submit(e?: SyntheticEvent) {
@@ -58,7 +60,18 @@ export function Feedback({
         message,
       };
 
-      await onSendAction(feedback);
+      // An error escaping this transition would surface as a page-level render failure, so the
+      // action's own rejection is caught here as well as inside the action.
+      let sent = false;
+      try {
+        sent = await onSendAction(feedback);
+      } catch {
+        sent = false;
+      }
+
+      setFailed(!sent);
+      if (!sent) return;
+
       setPrevious(feedback);
       setMessage('');
       setOpinion(null);
@@ -128,13 +141,20 @@ export function Feedback({
                 }
               }}
             />
-            <button
-              type="submit"
-              className={cn(buttonVariants({ color: 'outline' }), 'w-fit px-3')}
-              disabled={isPending}
-            >
-              Submit
-            </button>
+            <div className="flex flex-row items-center gap-3">
+              <button
+                type="submit"
+                className={cn(buttonVariants({ color: 'outline' }), 'w-fit px-3')}
+                disabled={isPending}
+              >
+                Submit
+              </button>
+              {failed ? (
+                <p className="text-sm text-fd-muted-foreground">
+                  Could not send your feedback. Please try again.
+                </p>
+              ) : null}
+            </div>
           </form>
         )}
       </CollapsibleContent>
