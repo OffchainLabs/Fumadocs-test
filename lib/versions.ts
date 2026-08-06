@@ -4,7 +4,7 @@ import type { MDXContent } from 'mdx/types';
 
 /**
  * Partial page versioning registry (see
- * docs/superpowers/specs/2026-07-17-partial-versioning-design.md).
+ * .claude/docs/superpowers/specs/2026-07-17-partial-versioning-design.md).
  *
  * A hand-picked set of pages expose a version dropdown: **Latest** (the live page in the routed
  * `docs` collection) plus one or more archived versions. Archived versions are compiled by the

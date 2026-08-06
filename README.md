@@ -101,7 +101,7 @@ pnpm partials:check     # validate include/import resolution, no routing leak, c
 `partials:check` fails on: an unresolved include or partial import, a `_`-prefixed file left under
 `content/docs/`, a `cwd` include inside a partial, a bad `registry.json` entry, or a stale catalog.
 
-Design notes: [`docs/superpowers/specs/2026-07-09-partials-registry-design.md`](docs/superpowers/specs/2026-07-09-partials-registry-design.md).
+Design notes: [`.claude/docs/superpowers/specs/2026-07-09-partials-registry-design.md`](.claude/docs/superpowers/specs/2026-07-09-partials-registry-design.md).
 
 ## Conventions
 
