@@ -11,7 +11,9 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { VersionSwitcher } from '@/components/VersionSwitcher';
+import { Feedback } from '@/components/feedback/client';
 import { getMDXComponents } from '@/components/mdx';
+import { submitPageFeedback } from '@/lib/feedback';
 import { gitConfig } from '@/lib/shared';
 import { getPageImage, getPageMarkdownUrl, source } from '@/lib/source';
 import {
@@ -72,6 +74,7 @@ export default async function Page({
           })}
         />
       </DocsBody>
+      <Feedback onSendAction={submitPageFeedback} />
     </DocsPage>
   );
 }
