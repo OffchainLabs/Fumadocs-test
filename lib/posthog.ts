@@ -2,13 +2,19 @@
 
 import { type PageFeedback, pageFeedback } from '@/components/feedback/schema';
 
-// Docs feedback sink. Upstream Fumadocs opens a GitHub Discussion per page (apps/docs/lib/github.ts,
-// which needs a GitHub App plus two secrets); this site sends the submission to PostHog instead, so
-// feedback lands alongside the readership data already queried for content-gap analysis.
+// Docs feedback sink. Upstream opens a GitHub Discussion per page, which needs a GitHub App and two
+// secrets; this site captures to PostHog instead so feedback lands alongside the readership data
+// already used for content-gap analysis.
 //
-// Capture happens here on the server rather than through `window.posthog`: the browser-side bridge
-// in lib/inkeep.ts no-ops because the PostHog client SDK is not loaded in this app, so a
-// client-side `capture()` would discard the feedback silently.
+// `'use server'` is at module scope rather than inside the function (upstream uses the in-function
+// form in apps/docs/lib/github.ts, which it must, because that module also exports plain
+// constants). Exporting nothing but the action makes file scope a compile-time guarantee: a
+// non-async export here fails the build rather than quietly making this importable from a client
+// component.
+//
+// Capture is server-side because the PostHog client SDK is not loaded in this app — the browser
+// bridge in lib/inkeep.ts no-ops on `window.posthog`, so a client-side `capture()` would discard
+// the submission silently.
 //
 // API: https://posthog.com/docs/api/capture
 
@@ -24,19 +30,21 @@ const POSTHOG_HOST = 'https://us.i.posthog.com';
  *
  * @returns whether the event reached PostHog.
  */
-export async function submitPageFeedback(feedback: PageFeedback): Promise<boolean> {
+export async function onPageFeedbackAction(feedback: PageFeedback): Promise<boolean> {
   // A server action is a public endpoint — re-validate rather than trusting the caller.
   const parsed = pageFeedback.safeParse(feedback);
   if (!parsed.success) {
-    console.error('[feedback] rejected malformed payload:', parsed.error.issues);
+    console.error('[Feedback] rejected malformed payload:', parsed.error.issues);
     return false;
   }
   const { opinion, url, message } = parsed.data;
 
+  // Read on the server despite the NEXT_PUBLIC_ prefix: that is PostHog's documented name for the
+  // publishable `phc_` project token, which is write-only and safe to expose either way.
   const apiKey = process.env.NEXT_PUBLIC_POSTHOG_KEY;
   if (!apiKey) {
     console.error(
-      '[feedback] dropping submission: NEXT_PUBLIC_POSTHOG_KEY is unset. Set it to the PostHog ' +
+      '[Feedback] dropping submission: NEXT_PUBLIC_POSTHOG_KEY is unset. Set it to the PostHog ' +
         'project token (Project settings → Project API key) in .env.local, and on Vercel for ' +
         'both Preview and Production.',
     );
@@ -65,14 +73,14 @@ export async function submitPageFeedback(feedback: PageFeedback): Promise<boolea
 
     if (!response.ok) {
       console.error(
-        `[feedback] PostHog rejected the event (${response.status}): ${await response.text()}`,
+        `[Feedback] PostHog rejected the event (${response.status}): ${await response.text()}`,
       );
       return false;
     }
 
     return true;
   } catch (error) {
-    console.error('[feedback] could not reach PostHog:', error);
+    console.error('[Feedback] could not reach PostHog:', error);
     return false;
   }
 }
