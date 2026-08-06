@@ -5,7 +5,7 @@ import { docsRoute } from './shared';
 
 /**
  * Registry for the inline hover-reference system (see
- * docs/superpowers/specs/2026-07-10-references-glossary-design.md).
+ * .claude/docs/superpowers/specs/2026-07-10-references-glossary-design.md).
  *
  * Each reference collection is a `defineCollections` doc collection (schema `{ id, title, sortAs? }`,
  * body = the definition). To add a reference type: define the collection in `source.config.ts` and

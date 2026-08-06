@@ -1,6 +1,6 @@
 /**
  * versioned-docs-check — build-time advisory for the partial page versioning registry
- * (lib/versions.ts, see docs/superpowers/specs/2026-07-17-partial-versioning-design.md).
+ * (lib/versions.ts, see .claude/docs/superpowers/specs/2026-07-17-partial-versioning-design.md).
  *
  * The versioning registry pins a hand-picked set of documents: each versioned live page and each
  * archived snapshot. Editing any of them affects versioned content (a live page diverging from its

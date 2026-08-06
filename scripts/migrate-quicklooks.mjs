@@ -1,6 +1,6 @@
 /**
  * migrate-quicklooks — one-shot codemod: convert legacy Docusaurus glossary links to the `<Term>`
- * component (see docs/superpowers/specs/2026-07-10-references-glossary-design.md).
+ * component (see .claude/docs/superpowers/specs/2026-07-10-references-glossary-design.md).
  *
  * Two contexts:
  *   A. Normal MDX flow: `<a data-quicklook-from="key">text</a>` (literal single/double quotes, with

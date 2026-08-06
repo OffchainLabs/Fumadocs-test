@@ -36,7 +36,7 @@ const arbitrumPageSchema = pageSchema.extend({
   /**
    * Free-form label for an archived version of a page (e.g. "ArbOS 20 (v1)"). Only set on the
    * archived MDX files consumed by the `docsVersions` collection; live pages leave it unset.
-   * See docs/superpowers/specs/2026-07-17-partial-versioning-design.md.
+   * See .claude/docs/superpowers/specs/2026-07-17-partial-versioning-design.md.
    */
   version: z.string().optional(),
 });
@@ -67,7 +67,7 @@ export const docs = defineDocs({
  * `content/partials/` sits outside the routed tree — so the router never sees it (picomatch array
  * globs are OR and can't exclude a subfolder inside the routed dir). `lib/versions.ts` indexes these
  * by file path and the docs page renders the selected one.
- * See docs/superpowers/specs/2026-07-17-partial-versioning-design.md.
+ * See .claude/docs/superpowers/specs/2026-07-17-partial-versioning-design.md.
  */
 export const docsVersions = defineCollections({
   type: 'doc',
@@ -78,7 +78,7 @@ export const docsVersions = defineCollections({
 
 /**
  * Reference collections back the inline hover-reference system (see
- * docs/superpowers/specs/2026-07-10-references-glossary-design.md). Every entry shares
+ * .claude/docs/superpowers/specs/2026-07-10-references-glossary-design.md). Every entry shares
  * `referenceSchema` ({ id, title, sortAs? }); the MDX body is the definition. The glossary is the
  * first consumer; new reference types (precompiles, config params, …) add a collection with this
  * schema + one registry entry in `lib/references.ts`. These are a separate collection, so they do

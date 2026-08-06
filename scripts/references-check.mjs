@@ -1,6 +1,6 @@
 /**
  * references-check — build-time guardrail for the inline hover-reference system
- * (docs/superpowers/specs/2026-07-10-references-glossary-design.md). Replaces the old glossary's
+ * (.claude/docs/superpowers/specs/2026-07-10-references-glossary-design.md). Replaces the old glossary's
  * silent runtime `console.warn` on unknown terms.
  *
  * Errors (exit 1):

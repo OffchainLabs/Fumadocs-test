@@ -9,7 +9,7 @@ import { LATEST_ID, VERSION_PARAM, type VersionOption } from '@/lib/versions';
 
 /**
  * Per-page version selector, rendered only on versioned pages (see
- * docs/superpowers/specs/2026-07-17-partial-versioning-design.md). Selecting a version navigates to
+ * .claude/docs/superpowers/specs/2026-07-17-partial-versioning-design.md). Selecting a version navigates to
  * a shareable URL: the bare path for Latest, or `?v=<id>` for an archived version. Server-rendered
  * on navigation, so the choice is bookmarkable.
  */
