@@ -5,6 +5,7 @@ import { JetBrains_Mono } from 'next/font/google';
 import localFont from 'next/font/local';
 import type { ReactNode } from 'react';
 
+import { Footer } from '@/components/footer';
 import { InkeepChatButton } from '@/components/inkeep/inkeep-chat-button';
 import InkeepSearchDialog from '@/components/inkeep/inkeep-search';
 import { i18nUI } from '@/lib/layout.shared';
@@ -96,6 +97,9 @@ export default async function Layout({
           search={{ SearchDialog: InkeepSearchDialog }}
         >
           {children}
+          {/* Fumadocs exposes no footer slot, so the site footer is a sibling of
+              the layout inside the flex column body. See components/footer.tsx. */}
+          <Footer />
           <InkeepChatButton />
         </RootProvider>
       </body>
