@@ -95,7 +95,7 @@ If the parent chain is Ethereum, also set `configmap.data.parent-chain.blob-clie
   </Tabs>
 </div>
 
-<VanillaAdmonition type="caution" title="Defaults that commonly trip up operators">
+<VanillaAdmonition type="warning" title="Defaults that commonly trip up operators">
 
 - **Don't copy the chart README's init example verbatim.** It uses `nitro-genesis.tar`, which syncs from genesis — a huge, slow process on a chain with a long history, such as Arbitrum One. Where a pruned snapshot exists, prefer `configmap.data.init.latest=pruned` (default base `https://snapshot.arbitrum.foundation/`).
 - **The chart changes the RPC path prefix.** Defaults are `http.rpcprefix=/rpc` and `ws.rpcprefix=/ws`, so RPC is served at `http://host:8547/rpc`, not vanilla Nitro's `/`. Clients that omit `/rpc` get a 404.
@@ -155,7 +155,7 @@ git -C community-helm-charts show 430a2cc~1:operations/grafana/dashboards/overvi
 
 Then in Grafana, go to **Dashboards → Import** and paste `overview.json`.
 
-<VanillaAdmonition type="caution">
+<VanillaAdmonition type="warning">
 
 This exported dashboard has no `__inputs` datasource prompt, and its `Source` variable is hard-pinned to an internal Mimir UID. After importing, you **must** repoint the `Source` variable to your own Prometheus instance, or every panel will read "No data." Then set `nitronodejob` to this node's scrape job, and leave `sequencerjob`, `validatorjob`, and `relayjob` empty so only the full-node rows render.
 
@@ -231,7 +231,7 @@ For **Arbitrum One**, those resolve to:
 | DB snapshot               | `https://snapshot.arbitrum.foundation/`                                                        |
 | Parent chain              | Your Ethereum L1 execution RPC + L1 beacon/blob endpoint                                       |
 
-<VanillaAdmonition type="caution" title="Firewall egress">
+<VanillaAdmonition type="warning" title="Firewall egress">
 
 For a default Arbitrum One full node, allow `*.arbitrum.io` (443 HTTPS + WSS), `snapshot.arbitrum.foundation` (443, init only), and your own L1 RPC + beacon hosts. For other chains, allow that chain's sequencer, feed, and snapshot hosts, plus your parent-chain endpoints. **Additional outbound paths exist only if you enable them:** the version alerter (off by default, queries an operator-set endpoint), the classic redirect, or DA/REST endpoints (AnyTrust chains such as Nova).
 
