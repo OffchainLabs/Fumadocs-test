@@ -8,6 +8,7 @@
     "gas-target",
     "state-growth",
     "post-launch-contract-deployments",
+    "bp-recovery",
     "..."
   ]
 }
