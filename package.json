@@ -16,6 +16,7 @@
     "move-doc": "node scripts/move-doc.mjs",
     "check-links": "node scripts/check-links.mjs",
     "nav:check": "node scripts/nav-check.mjs",
+    "drift": "node scripts/upstream-drift.mjs",
     "restructure": "node scripts/restructure.mjs",
     "partials:migrate": "node scripts/migrate-partials.mjs",
     "partials:catalog": "node scripts/generate-partials-catalog.mjs",
