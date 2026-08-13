@@ -1,4 +1,4 @@
 {
   "title": "Configure your chain",
-  "pages": ["core", "costs", "data-availability", "sequencer", "validation", "..."]
+  "pages": ["chain-config-reference", "core", "costs", "data-availability", "sequencer", "validation", "..."]
 }
