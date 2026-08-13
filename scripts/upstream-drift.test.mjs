@@ -43,3 +43,8 @@ test('bodyLineCount excludes frontmatter', () => {
 test('bodyLineCount handles a file with no frontmatter', () => {
   assert.equal(bodyLineCount('just\ntwo lines'), 2);
 });
+
+test('bodyLineCount ignores the trailing empty element from a final newline', () => {
+  assert.equal(bodyLineCount('just\ntwo lines\n'), 2);
+  assert.equal(bodyLineCount(['---', 'title: X', '---', 'body one', 'body two', ''].join('\n')), 2);
+});
