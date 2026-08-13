@@ -19,7 +19,9 @@
 - **Partials carry no frontmatter.** Doc→partial: root-anchored `<include cwd>content/partials/…</include>`. Partial→partial: file-relative `<include>../x.mdx</include>`.
 - **Docusaurus→Fumadocs syntax conversions**, apply to every ported page: `:::note`/`:::warning`/`:::caution` → `<VanillaAdmonition type="note|warning|caution">`; `import Tabs from '@theme/Tabs'` → Fumadocs `Tabs`/`Tab`; strip numeric filename prefixes (`01-foo.mdx` → `foo.mdx`); convert `import X from './partials/_x.mdx'` + `<X />` to `<include>`.
 - **Never hand-edit** `.source/`, `content/partials/CATALOG.md`, `content/partials/manifest.json`. Regenerate with `pnpm partials:catalog`.
-- **`pnpm types:check` validates frontmatter and types only** — not links, not rendering, not correctness. Every content task must additionally pass `pnpm check-links` and be viewed in `pnpm dev`.
+- **`pnpm types:check` validates frontmatter and types only** — not links, not rendering, not correctness. Every content task must additionally pass the link check and be viewed in `pnpm dev`.
+- **The link gate is a regression gate, never "zero broken links".** The repo has **112 pre-existing broken internal links** — roughly 100 `audit-reports/*.pdf` targets with no `hosted-pdfs/` directory in this repo, plus 10 false positives where `check-links` flags `/img/` assets that do exist under `public/`. The baseline is snapshotted at `.superpowers/sdd/2026-08-13-close-arbitrum-docs-content-gap/baseline-links.json`. Every task must introduce **no new** broken links; do not try to fix the pre-existing ones.
+- **Use `node scripts/<name>.mjs --json`, not `pnpm <script> --json`,** when parsing output. pnpm prints a banner to stdout that corrupts JSON.
 - **Commit per task.** Never push to `main`; work on a feature branch.
 
 ## File Structure
@@ -360,8 +362,21 @@ Expected: `nav-check: no navigation defects.`
 Run: `pnpm types:check`
 Expected: exits 0
 
-Run: `pnpm check-links`
-Expected: 1 broken link — the known `run-full-node-with-helm` dangling link, fixed in Task 2. No others.
+Run: `node scripts/check-links.mjs --json > /tmp/links-now.json` and compare against the recorded baseline:
+
+```bash
+node -e "
+const base=new Set(require('$PWD/.superpowers/sdd/2026-08-13-close-arbitrum-docs-content-gap/baseline-links.json').map(x=>x.rel+':'+x.line+'->'+x.url));
+const now=require('/tmp/links-now.json');
+const added=now.filter(x=>!base.has(x.rel+':'+x.line+'->'+x.url));
+console.log('new broken links:', added.length);
+for(const a of added) console.log('  '+a.rel+':'+a.line+' -> '+a.url);
+"
+```
+
+Expected: `new broken links: 0`.
+
+**The repo has 112 pre-existing broken links** (mostly `audit-reports/*.pdf` targets with no `hosted-pdfs/` directory, plus 10 false positives where `check-links` flags `/img/` assets that do exist in `public/`). Fixing those is out of scope. The gate for every task in this plan is **no new broken links**, never zero.
 
 - [ ] **Step 11: Confirm the pages actually render in the sidebar**
 
@@ -393,8 +408,10 @@ Independent of everything else, both currently live.
 
 - [ ] **Step 1: Reproduce the broken link**
 
-Run: `pnpm check-links`
-Expected: reports `content/docs/en/run-a-node/run-full-node.mdx:20 -> /docs/launch-arbitrum-chain/run-a-node/run-full-node-with-helm`
+Run: `node scripts/check-links.mjs --json | node -e "let s='';process.stdin.on('data',d=>s+=d).on('end',()=>{const b=JSON.parse(s);console.log(b.filter(x=>x.url.includes('run-full-node-with-helm')))})"`
+Expected: one entry — `content/docs/en/run-a-node/run-full-node.mdx:20 -> /docs/launch-arbitrum-chain/run-a-node/run-full-node-with-helm`
+
+The repo carries 112 pre-existing broken links (see Global Constraints); do not attempt to fix them here.
 
 - [ ] **Step 2: Remove the dangling link**
 
@@ -406,10 +423,10 @@ This page covers running a node with Docker.
 
 Delete the rest of the sentence (the Kubernetes clause and its link). Task 5 restores it.
 
-- [ ] **Step 3: Verify the link check passes**
+- [ ] **Step 3: Verify no new broken links**
 
-Run: `pnpm check-links`
-Expected: `check-links: no broken internal links.`
+Run the baseline-comparison snippet from Task 1 Step 10.
+Expected: `new broken links: 0`, and the `run-full-node-with-helm` entry is gone from the current report (it was in the baseline, so removing it is an improvement, not a regression).
 
 - [ ] **Step 4: Correct the ArbOS 61 notice**
 
@@ -449,7 +466,7 @@ Both trees stay live, so drift reappears weekly. This turns the manual audit int
 - Modify: `package.json`
 
 **Interfaces:**
-- Produces: `normalizeSlug(filePath) -> string`, `SECTION_MAP` (object), `mapSectionPath(relPath) -> string`, `bodyLineCount(source) -> number`. Consumed by no later task; the CLI is used in Tasks 5–7 to confirm items drop off the report.
+- Produces: `normalizeSlug(filePath) -> string`, `SECTION_MAP` (object), `RENAME_MAP` (object), `mapSectionPath(relPath) -> string`, `bodyLineCount(source) -> number`. Consumed by no later task; the CLI is used in Tasks 5–7 to confirm items drop off the report.
 
 - [ ] **Step 1: Write the failing test**
 
@@ -479,6 +496,18 @@ test('mapSectionPath applies the Tree A -> Tree B section renames', () => {
 
 test('mapSectionPath leaves unmapped sections untouched', () => {
   assert.equal(mapSectionPath('how-arbitrum-works/x.mdx'), 'how-arbitrum-works/x.mdx');
+});
+
+test('mapSectionPath applies whole-file renames, and they beat section prefixes', () => {
+  assert.equal(
+    mapSectionPath('launch-arbitrum-chain/operate/monitoring.mdx'),
+    'launch-arbitrum-chain/operate/monitoring-tools-and-considerations.mdx',
+  );
+  // This one also matches the chain-config -> configuration section prefix; the rename must win.
+  assert.equal(
+    mapSectionPath('launch-arbitrum-chain/chain-config/sequencer/sequencer-timing-adjustments.mdx'),
+    'launch-arbitrum-chain/configuration/sequencer/config-sequencer-timing-adjustments.mdx',
+  );
 });
 
 test('bodyLineCount excludes frontmatter', () => {
@@ -518,6 +547,25 @@ export const SECTION_MAP = {
   'stylus-by-example': 'stylus',
 };
 
+/**
+ * Whole-file renames, Tree A relative path -> Tree B relative path.
+ *
+ * Pairing is otherwise done on the normalized slug, which cannot match a page whose filename changed
+ * during the migration. Without these entries the renamed pages below are reported ABSENT (looks like
+ * a missing page) instead of GUTTED (a present page that lost content) — the wrong verdict for the
+ * wrong reason. Add an entry here whenever a port renames a file.
+ */
+export const RENAME_MAP = {
+  'launch-arbitrum-chain/operate/monitoring.mdx':
+    'launch-arbitrum-chain/operate/monitoring-tools-and-considerations.mdx',
+  'launch-arbitrum-chain/operate/ownership-and-access.mdx':
+    'launch-arbitrum-chain/operate/ownership-access-control.mdx',
+  'launch-arbitrum-chain/overview/introduction.mdx':
+    'launch-arbitrum-chain/overview/a-gentle-introduction.mdx',
+  'launch-arbitrum-chain/chain-config/sequencer/sequencer-timing-adjustments.mdx':
+    'launch-arbitrum-chain/configuration/sequencer/config-sequencer-timing-adjustments.mdx',
+};
+
 /** Reduce a path to a comparable slug: basename, no extension, no ordering prefix, alphanumeric only. */
 export function normalizeSlug(filePath) {
   const base = filePath.split('/').pop() ?? '';
@@ -529,8 +577,10 @@ export function normalizeSlug(filePath) {
     .replace(/[^a-z0-9]/g, '');
 }
 
-/** Rewrite a Tree A relative path onto Tree B's section layout. */
+/** Rewrite a Tree A relative path onto Tree B's layout. Explicit renames win over section prefixes. */
 export function mapSectionPath(relPath) {
+  if (Object.hasOwn(RENAME_MAP, relPath)) return RENAME_MAP[relPath];
+
   const keys = Object.keys(SECTION_MAP).sort((a, b) => b.length - a.length);
   for (const from of keys) {
     if (relPath === from || relPath.startsWith(`${from}/`)) {
@@ -553,7 +603,7 @@ export function bodyLineCount(source) {
 - [ ] **Step 4: Run the test to verify it passes**
 
 Run: `node --test scripts/upstream-drift.test.mjs`
-Expected: PASS, 5 tests
+Expected: PASS, 6 tests
 
 - [ ] **Step 5: Write the CLI**
 
@@ -686,6 +736,8 @@ Expected: exit 1. The output must include, at minimum:
 - `GUTTED ratio 0.2 167->33 launch-arbitrum-chain/operate/monitoring.mdx -> launch-arbitrum-chain/operate/monitoring-tools-and-considerations.mdx`
 
 If `monitoring.mdx` does not appear with roughly that ratio, the section mapping or body counting is wrong — fix before continuing. This is the calibration check: those three numbers were verified by hand.
+
+The `monitoring.mdx` line is specifically the `RENAME_MAP` check. Without that map the file is reported ABSENT rather than GUTTED, because slug pairing cannot match `monitoring` to `monitoring-tools-and-considerations`. If you see it under ABSENT, `RENAME_MAP` is not being applied.
 
 - [ ] **Step 8: Commit**
 
