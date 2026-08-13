@@ -1,4 +1,11 @@
 {
   "title": "Ecosystem support",
-  "pages": ["layer-leap", "bridge-ui", "da-api-integration-guide", "bridged-usdc-standard", "..."]
+  "pages": [
+    "layer-leap",
+    "bridge-ui",
+    "da-api-integration-guide",
+    "bridged-usdc-standard",
+    "exchange-integration-checklist",
+    "..."
+  ]
 }
