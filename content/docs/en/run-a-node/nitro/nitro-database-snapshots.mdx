@@ -16,10 +16,13 @@ There are multiple ways to supply Nitro with the database snapshot. The most str
 
 ## Downloading the latest snapshot
 
-Nitro has a CLI configuration for downloading the latest snapshot from a remote server. Set the flag `--init.latest` to either `archive`, `pruned`, or `genesis`, and Nitro will download the preferred snapshot. You may also change the `--init.latest-base` flag to set the base URL when searching for the latest snapshot.
+Nitro has a CLI configuration for downloading the latest snapshot from a remote server. Set the flag `--init.latest` to either `archive`, `pruned`, or `genesis`, and Nitro will download the preferred snapshot. Nitro rejects any other value. You may also change the `--init.latest-base` flag to set the base URL when searching for the latest snapshot.
 
-<VanillaAdmonition type="info" title="PathDB snapshot auto-download with `--init.latest` is not yet supported.">
-:::
+<VanillaAdmonition type="info">
+
+All three kinds that `--init.latest` accepts resolve to HashDB snapshots, so `--init.latest` cannot bootstrap a PathDB node. See [PathDB snapshots](#pathdb-snapshots).
+
+</VanillaAdmonition>
 
 ### How it works
 
@@ -41,13 +44,55 @@ Nitro also supports importing files from the local file system. In this case, yo
 
 ---
 
+## PathDB snapshots
+
+A snapshot only works with a node whose state scheme matches the snapshot's. A PathDB snapshot won't initialize a HashDB node, and the reverse also fails.
+
+`--init.latest` can't help you here: it accepts only `archive`, `pruned`, and `genesis`, and all three resolve to HashDB snapshots. Snapshots built with the `path` scheme are published under two separate kinds that `--init.latest` doesn't accept:
+
+| Kind           | Node type | Available for               |
+| :--------------- | :---------- | :----------------------------- |
+| `full-path`    | Full node | Arbitrum One, Nova, Sepolia |
+| `archive-path` | Archive   | Arbitrum One, Sepolia       |
+
+Every PathDB snapshot is pruned to its state-history window, because PathDB prunes as the node runs. There is no unpruned `path` variant to publish.
+
+### Initialize a PathDB node
+
+Each chain publishes a pointer file naming the current snapshot directory for each kind. Read it to find the URL:
+
+```shell
+curl https://snapshot.arbitrum.foundation/arb1/latest-full-path.txt
+```
+
+Use `latest-archive-path.txt` for an archive node. For Arbitrum Sepolia, substitute `sepolia-rollup` for `arb1`.
+
+The file contains a directory path, such as `arb1/2026-08-01-a78755ba/`. Pass the full URL to that directory, including the trailing slash:
+
+```shell
+--init.url https://snapshot.arbitrum.foundation/arb1/2026-08-01-a78755ba/
+```
+
+Nitro reads the `.manifest.txt` file in that directory to enumerate the snapshot parts, downloads each part, and verifies its checksum.
+
+Before downloading terabytes, confirm you have the right snapshot. Each directory publishes a `metadata.json` naming its `state_scheme`, `snapshot_kind`, and total size:
+
+```shell
+curl https://snapshot.arbitrum.foundation/arb1/2026-08-01-a78755ba/metadata.json
+```
+
+Your node's `--execution.caching.state-scheme` must match the snapshot's `state_scheme`. See [Choose a state scheme](/docs/run-a-node/run-full-node.mdx#choose-a-state-scheme).
+
+---
+
 ## Downloading the snapshot manually
 
-:::tip For most users, automatic download is recommended
+<VanillaAdmonition type="tip" title="For most users, automatic download is recommended">
 
 Use `--init.latest pruned` (or `archive`) to enable Nitro's automatic handling of multi-part downloads, checksum verification, and extraction. In contrast, manual downloading is preferable only when you need to host a single snapshot locally for multiple nodes, offering direct control but requiring additional effort.
 
 </VanillaAdmonition>
+
 It is possible to download the snapshot manually and supply the archive instead of having Nitro download it.
 
 The first step is downloading the snapshot. The command below illustrates how to do that on the command line using wget. The `-c` flag tells the wget to continue the download from where it left off, which is helpful because snapshots can be huge files, and the download can fail mid-way. The `-P` flag tells wget to place the snapshot on the temporary dir.
@@ -82,6 +127,14 @@ d1b6fb9aeeb23903cdbb2a7cca8e6909bff4ee8e51c8a5acac2a142b3e3a5437  archive.tar.pa
 f37e4552453202f2044e58b307bab7e466205bd280426abbc84f8646c6430cfa  archive.tar.part4
 972c5f513faca6ac4fadd22c70bea97707c6d38e9a646432bc311f0ca10497ed  archive.tar.part5
 ```
+
+<VanillaAdmonition type="note">
+
+For directory-style snapshot URLs, the manifest is the `.manifest.txt` file inside the directory. For example, `https://snapshot.arbitrum.foundation/arb1/2026-08-01-a78755ba/.manifest.txt`. Its part names include the directory prefix, so resolve them against the parent of the snapshot URL.
+
+The same directory also holds a `metadata.json` giving each part's filename, size, and both SHA-256 and xxHash checksums. Either file works for a manual download; Nitro itself reads `.manifest.txt`.
+
+</VanillaAdmonition>
 
 After downloading all the parts and verifying their checksums, you may use the command below to join them into a single archive.
 
