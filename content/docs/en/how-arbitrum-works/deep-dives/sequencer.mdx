@@ -9,6 +9,16 @@ sme: Mehdi
 
 The Sequencer’s job is to receive, admit, and order transactions and then publish and post the resulting blocks. The moment ordered transactions are handed to the execution engine, responsibility shifts to the <a data-quicklook-from="state-transition-function">State Transition Function (STF)</a> and <a data-quicklook-from="arbos">ArbOS</a>, where transactions are executed against the chain state, gas is metered, and the new state root is computed. Throughout this section, we flag those handoff points and point to the relevant pages rather than duplicating them.
 
+<ImageZoom src="/img/haw-sequencer-operations.svg" alt="Sequencer operations" className="img-600px" />
+
+## Sequencing and broadcasting
+
+The Sequencer communicates the transaction sequence it has ordered through two channels: the real-time Sequencer feed, and batches posted to the parent chain.
+
+<ImageZoom src="/img/haw-sequencer-feed.svg" alt="Sequencer feed" className="img-600px" />
+
+The real-time feed is a live broadcast that publishes transactions instantly as they are sequenced, so subscribed nodes and clients can process them and update their local state without waiting for the batch that eventually posts them to the parent chain — this is what gives users [soft finality](/docs/how-arbitrum-works/deep-dives/finality). The parent-chain batches are the durable, hard-finality record of the same sequence; see [Batch posting](#batch-posting) below.
+
 ## A transaction’s path through the Sequencer
 
 <ImageZoom src="/img/sequencer-path.png" alt="Sequencer path" className="img-600px" />
@@ -38,6 +48,33 @@ The produced block comes back to the Sequencer as a sequenced message. The Trans
 
 Independent of the loop above, the BatchPoster reads sequenced messages from the TransactionStreamer, Brotli-compresses them with adaptive compression levels, and posts them to the SequencerInbox using either calldata or EIP-4844 blobs, as described in the [batch poster](/docs/how-arbitrum-works/deep-dives/batchposter) documentation. Once those batches are finalized on the parent chain, the transactions reach [hard finality](/docs/how-arbitrum-works/deep-dives/finality).
 
+## Batch posting
+
+Once transactions are ordered, the Sequencer groups them into batches, compresses the batch, and submits it to the `SequencerInbox` contract on the parent chain. This is what turns the feed's soft finality into the parent chain's [hard finality](/docs/how-arbitrum-works/deep-dives/finality).
+
+<ImageZoom src="/img/haw-batching.svg" alt="Batching" className="img-600px" />
+
+A batch is sealed once the accumulated transactions reach a size threshold, or once a time threshold elapses since the last batch — whichever comes first — so that the fixed cost of posting to the parent chain is amortized over more transactions without unduly delaying any single one.
+
+<ImageZoom src="/img/haw-compression.svg" alt="Compression" className="img-600px" />
+
+Before posting, the batch is compressed with the Brotli algorithm, which exposes a compression level from 0 to 11: higher levels compress more but cost more compute time. Arbitrum adjusts this level dynamically based on the current backlog of batches waiting to be posted — favoring speed over compression ratio when the backlog grows, so the backlog clears rather than compounding. See [Compression levels](/docs/how-arbitrum-works/deep-dives/gas-and-fees.mdx#compression-levels) for the exact thresholds and how compression interacts with parent-chain pricing.
+
+<ImageZoom src="/img/haw-submit-to-sequencer-inbox.svg" alt="Submit to Sequencer inbox" className="img-600px" />
+
+The batch poster — the Externally Owned Account that submits on the Sequencer's behalf — posts the compressed batch to the parent chain using one of two `SequencerInbox` methods, depending on parent-chain support and current network conditions:
+
+1. **`addSequencerL2BatchFromBlobs`**: the default when the parent chain supports [EIP-4844](https://eips.ethereum.org/EIPS/eip-4844). The batch data is included as blobs rather than calldata, which is cheaper.
+2. **`addSequencerL2Batch`**: used when blob space is constrained or blob fees are high, or as the only option on parent chains without EIP-4844. The compressed batch is included directly in the transaction's calldata.
+
+<VanillaAdmonition type="note">
+
+The Sequencer continuously monitors network conditions to select the most cost-effective batch posting method, ensuring optimal operation under varying conditions.
+
+</VanillaAdmonition>
+
+Only the Sequencer can call these methods, and batch posting costs are reimbursed through ArbOS's parent-chain pricer — see [Parent chain gas pricing](/docs/how-arbitrum-works/deep-dives/gas-and-fees.mdx#parent-chain-gas-pricing) and [ArbOS state](/docs/how-arbitrum-works/deep-dives/arbos.mdx#arbos-state). For the batch poster's internal pipeline — how it pulls messages off the stream, seals and self-checks a batch, and hands it to the transaction-shipping layer — see [the batch poster](/docs/how-arbitrum-works/deep-dives/batchposter).
+
 ## High availability: the Sequencer coordinator
 
 In production, several Sequencer nodes run under a single logical Sequencer, with the SeqCoordinator electing a single active leader via Redis. A chosen-sequencer key records the current leader, which holds a short, time-limited lockout (roughly one minute by default) that it must continually refresh. The active node writes signed messages to Redis; standby nodes follow along so that, if the leader fails or steps down, another can take over with minimal disruption. Activation clears any forwarders and resumes block production; deactivation sets up forwarding to the new leader and pauses local production.
@@ -45,6 +82,10 @@ In production, several Sequencer nodes run under a single logical Sequencer, wit
 ## Delayed messages from the parent chain
 
 Not every transaction originates with a direct RPC submission. Deposits and <a data-quicklook-from="retryable-ticket">retryable tickets</a> enter through the parent chain’s <a data-quicklook-from="delayed-inbox">delayed inbox</a>. The DelayedSequencer watches for these messages to finalize on the parent chain, then sequences them into the child chain so they appear in the ordering and on the feed alongside ordinary transactions. As with execution generally, the act of applying a delayed message is ArbOS/STF territory; the DelayedSequencer’s role is to decide when it enters the order.
+
+The Nitro node can instead be configured to add delayed inbox transactions immediately after they are submitted to the parent chain, before they finalize there. This lowers latency but introduces the risk of a child-chain reorg if the transaction fails to finalize on the parent chain. To avoid that risk, on Arbitrum One and Nova the DelayedSequencer includes these transactions in the feed only after they are finalized on the parent chain.
+
+You can also see how the feed sends incoming messages over WebSocket and how to extract message data from it in [Read Sequencer Feed](/docs/run-a-node/sequencer/read-sequencer-feed).
 
 ## Timeboost express lane
 
