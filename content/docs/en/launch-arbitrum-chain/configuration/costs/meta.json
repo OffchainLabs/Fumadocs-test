@@ -1,4 +1,16 @@
 {
-  "title": "Advanced",
-  "pages": ["layer-leap", "config-sequencer-timing-adjustments", "da-api-integration-guide"]
+  "title": "Fees and costs",
+  "pages": [
+    "fee-management",
+    "configure-native-mint-burn-gas-token",
+    "use-a-custom-gas-token-rollup",
+    "use-a-custom-gas-token-anytrust",
+    "dynamic-pricing-for-arbitrum-chains",
+    "gas-optimization-tools",
+    "aep-fee-router-introduction",
+    "calculate-aep-fees",
+    "set-up-aep-fee-router",
+    "reporting-on-fees",
+    "..."
+  ]
 }

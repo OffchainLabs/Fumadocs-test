@@ -1,4 +1,4 @@
 {
-  "title": "Advanced",
-  "pages": ["layer-leap", "config-sequencer-timing-adjustments", "da-api-integration-guide"]
+  "title": "Configure your chain",
+  "pages": ["core", "costs", "data-availability", "sequencer", "validation", "..."]
 }

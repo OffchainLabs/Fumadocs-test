@@ -1,14 +1,13 @@
 {
-  "title": "Validation and security",
+  "title": "Operate your chain",
   "pages": [
-    "customizable-challenge-period",
-    "stake-and-validator-configurations",
-    "batch-posting-assertion-control",
     "arbos-upgrade",
-    "enable-post-4844-blobs",
-    "arbitrum-chain-finality",
-    "batch-poster-fee-tuning",
-    "bold-adoption-for-arbitrum-chains",
-    "config-smart-contract-size-limit"
+    "monitoring-tools-and-considerations",
+    "ownership-access-control",
+    "key-rotation",
+    "gas-target",
+    "state-growth",
+    "post-launch-contract-deployments",
+    "..."
   ]
 }

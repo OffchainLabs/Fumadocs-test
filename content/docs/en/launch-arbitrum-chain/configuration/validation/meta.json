@@ -1,4 +1,10 @@
 {
-  "title": "Advanced",
-  "pages": ["layer-leap", "config-sequencer-timing-adjustments", "da-api-integration-guide"]
+  "title": "Validation and security",
+  "pages": [
+    "customizable-challenge-period",
+    "stake-and-validator-configurations",
+    "arbitrum-chain-finality",
+    "fast-withdrawals",
+    "..."
+  ]
 }

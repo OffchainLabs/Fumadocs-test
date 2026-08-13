@@ -1,4 +1,4 @@
 {
-  "title": "Advanced",
-  "pages": ["layer-leap", "config-sequencer-timing-adjustments", "da-api-integration-guide"]
+  "title": "Data availability",
+  "pages": ["config-data-availability", "data-availability-committees", "enable-post-4844-blobs", "..."]
 }
