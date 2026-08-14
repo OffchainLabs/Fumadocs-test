@@ -5,7 +5,10 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useId } from 'react';
 
 import { cn } from '@/lib/cn';
-import { LATEST_ID, VERSION_PARAM, type VersionOption } from '@/lib/versions';
+// Imported from `lib/versions-constants` rather than `lib/versions`: the latter imports the
+// generated `collections/server` index, which would pull every compiled MDX page into this client
+// component's bundle.
+import { LATEST_ID, VERSION_PARAM, type VersionOption } from '@/lib/versions-constants';
 
 /**
  * Per-page version selector, rendered only on versioned pages (see

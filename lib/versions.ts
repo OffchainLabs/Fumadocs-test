@@ -2,6 +2,11 @@ import { docsVersions } from 'collections/server';
 import type { TOCItemType } from 'fumadocs-core/toc';
 import type { MDXContent } from 'mdx/types';
 
+import { LATEST_ID, LATEST_LABEL, type VersionOption } from '@/lib/versions-constants';
+
+export { LATEST_ID, LATEST_LABEL, VERSION_PARAM } from '@/lib/versions-constants';
+export type { VersionOption } from '@/lib/versions-constants';
+
 /**
  * Partial page versioning registry (see
  * .claude/docs/superpowers/specs/2026-07-17-partial-versioning-design.md).
@@ -45,13 +50,6 @@ export function archiveRepoPath(entry: VersionedEntry): string {
   return `${ARCHIVE_ROOT}/${entry.info.path}`;
 }
 
-/** Dropdown label for the live page (the canonical, un-versioned URL). */
-export const LATEST_LABEL = 'Latest';
-/** Search-param key that selects an archived version (e.g. `?v=v1`). */
-export const VERSION_PARAM = 'v';
-/** The id representing the live page. */
-export const LATEST_ID = 'latest';
-
 interface VersionSource {
   /** Stable id used in the `?v=` URL. */
   id: string;
@@ -77,12 +75,6 @@ const VERSIONED: Record<string, VersionSource[]> = {
     { id: 'v1', archivePath: 'v1/en/run-a-node/nitro/build-nitro-locally.mdx' },
   ],
 };
-
-/** A version option resolved for display in the switcher. */
-export interface VersionOption {
-  id: string;
-  label: string;
-}
 
 function findArchive(path: string): VersionedEntry | undefined {
   return archives.find((entry) => entry.info.path === path);
