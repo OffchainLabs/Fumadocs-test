@@ -2,7 +2,6 @@
   "title": "Operate your chain",
   "pages": [
     "arbos-upgrade",
-    "upgrade-runbook",
     "bold-upgrade-playbook",
     "monitoring-tools-and-considerations",
     "ownership-access-control",
@@ -11,7 +10,6 @@
     "state-growth",
     "post-launch-contract-deployments",
     "bp-recovery",
-    "validator-troubleshooting",
     "..."
   ]
 }
