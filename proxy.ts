@@ -26,6 +26,7 @@ export default function proxy(request: NextRequest, event: NextFetchEvent) {
     path === '/icon.png' ||
     path === '/apple-icon.png' ||
     path === '/nitro-whitepaper.pdf' ||
+    path.startsWith('/audit-reports/') ||
     path === '/llms.txt' ||
     path === '/llms-full.txt' ||
     path.startsWith('/llms.mdx/') ||
