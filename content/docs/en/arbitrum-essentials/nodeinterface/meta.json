@@ -1,3 +1,4 @@
 {
-  "title": "NodeInterface"
+  "title": "NodeInterface",
+  "pages": ["overview", "reference", "..."]
 }
