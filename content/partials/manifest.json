@@ -410,18 +410,18 @@
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/_config-dedicated-throughput.mdx</include>"
   },
   {
-    "path": "content/partials/launch-arbitrum-chain/_config-evm-compatbility.mdx",
-    "title": "Config evm compatbility",
+    "path": "content/partials/launch-arbitrum-chain/_config-evm-compatibility.mdx",
+    "title": "Config evm compatibility",
     "summary": "EVM compatibility refers to the ability of Layer-2 scaling solutions to fully support and execute smart contracts and transactions designed for the Ethereum…",
     "scope": "neutral",
     "tags": [
       "launch-arbitrum-chain",
       "config",
       "evm",
-      "compatbility"
+      "compatibility"
     ],
     "usedIn": 1,
-    "snippet": "<include cwd>content/partials/launch-arbitrum-chain/_config-evm-compatbility.mdx</include>"
+    "snippet": "<include cwd>content/partials/launch-arbitrum-chain/_config-evm-compatibility.mdx</include>"
   },
   {
     "path": "content/partials/launch-arbitrum-chain/_config-force-inclusion.mdx",

@@ -8,7 +8,7 @@ import ConfigAccountAbstraction from '@/content/partials/launch-arbitrum-chain/_
 import ConfigCustomizableGovernance from '@/content/partials/launch-arbitrum-chain/_config-customizable-governance.mdx';
 import ConfigDataPostingCosts from '@/content/partials/launch-arbitrum-chain/_config-data-posting-costs.mdx';
 import ConfigDedicatedThroughput from '@/content/partials/launch-arbitrum-chain/_config-dedicated-throughput.mdx';
-import ConfigEVMCompatibility from '@/content/partials/launch-arbitrum-chain/_config-evm-compatbility.mdx';
+import ConfigEVMCompatibility from '@/content/partials/launch-arbitrum-chain/_config-evm-compatibility.mdx';
 import ConfigForceInclusion from '@/content/partials/launch-arbitrum-chain/_config-force-inclusion.mdx';
 import ConfigHardware from '@/content/partials/launch-arbitrum-chain/_config-hardware.mdx';
 import ConfigL1ChallengePeriod from '@/content/partials/launch-arbitrum-chain/_config-l1-challenge-period.mdx';

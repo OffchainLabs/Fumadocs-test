@@ -220,12 +220,12 @@ You may need dedicated throughput if your chain requires high performance or con
 - `<include cwd>content/partials/launch-arbitrum-chain/_config-dedicated-throughput.mdx</include>`
 - used in 1 page — tags: `launch-arbitrum-chain`, `config`, `dedicated`, `throughput`
 
-### Config evm compatbility
+### Config evm compatibility
 
 EVM compatibility refers to the ability of Layer-2 scaling solutions to fully support and execute smart contracts and transactions designed for the Ethereum…
 
-- `<include cwd>content/partials/launch-arbitrum-chain/_config-evm-compatbility.mdx</include>`
-- used in 1 page — tags: `launch-arbitrum-chain`, `config`, `evm`, `compatbility`
+- `<include cwd>content/partials/launch-arbitrum-chain/_config-evm-compatibility.mdx</include>`
+- used in 1 page — tags: `launch-arbitrum-chain`, `config`, `evm`, `compatibility`
 
 ### Config force inclusion
 
