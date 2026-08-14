@@ -337,3 +337,16 @@ html > body[data-scroll-locked] {
     }
   }
 }
+
+/* Scenario/solution tables on the node troubleshooting page. Ported from arbitrum-docs
+   `.small-table`: dense rows so long log lines and their fixes stay scannable side by side. */
+.prose :where(table.small-table) {
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.prose :where(table.small-table th),
+.prose :where(table.small-table td) {
+  padding: 0.5rem 0.75rem;
+  vertical-align: top;
+}

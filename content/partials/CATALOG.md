@@ -75,8 +75,6 @@ See something missing?
 
 ### Multidimensional Content Controls
 
-defaultValue="arb-one-nitro"
-
 - `<include cwd>content/partials/_multidimensional-content-controls-partial.mdx</include>`
 - used in 1 page — tags: `multidimensional`, `content`, `controls`
 

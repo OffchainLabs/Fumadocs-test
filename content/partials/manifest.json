@@ -115,7 +115,7 @@
   {
     "path": "content/partials/_multidimensional-content-controls-partial.mdx",
     "title": "Multidimensional Content Controls",
-    "summary": "defaultValue=\"arb-one-nitro\"",
+    "summary": "",
     "scope": "neutral",
     "tags": [
       "multidimensional",
