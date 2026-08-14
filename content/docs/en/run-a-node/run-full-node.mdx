@@ -42,7 +42,7 @@ Pick based on how you want to handle pruning and whether you need block validati
 - **Choose HashDB** if your node runs the block validator, or if you want the simplest initialization. `--init.latest pruned` downloads and verifies the snapshot for you. You then prune manually, and your node is offline while it does.
 - **Choose PathDB** if you want to avoid manual prune cycles. Nitro prunes online, so the node keeps serving RPC and disk use stays within the window you set with `--execution.caching.state-history`. Initialization takes more work: you pass the snapshot URL to `--init.url` yourself.
 
-On **archive** nodes the case for PathDB is stronger, because it cuts disk use substantially. See [How to run an archive node](/docs/run-a-node/more-types/run-archive-node.mdx).
+On **archive** nodes the case for PathDB is stronger, because it cuts disk use substantially. See [How to run an archive node](/docs/run-a-node/more-types/run-archive-node).
 
 <VanillaAdmonition type="warning" title="PathDB and block validation">
 

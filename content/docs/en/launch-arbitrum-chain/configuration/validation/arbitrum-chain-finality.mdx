@@ -9,7 +9,7 @@ sme: leartulaj
 
 ## Child chain transactions
 
-Generally, transactions executed through the <Term id="sequencer">Sequencer</Term> on Arbitrum chains [achieve finality](/docs/how-arbitrum-works/deep-dives/transaction-lifecycle.mdx) equivalent to their <Term id="parent-chain">parent chain</Term> once the relevant transaction data has been [posted in a batch](/docs/how-arbitrum-works/inside-arbitrum-nitro.mdx). This means that transactions on <Term id="arbitrum-chains">Arbitrum Chains</Term> are considered final in minutes.
+Generally, transactions executed through the <Term id="sequencer">Sequencer</Term> on Arbitrum chains [achieve finality](/docs/how-arbitrum-works/deep-dives/transaction-lifecycle) equivalent to their <Term id="parent-chain">parent chain</Term> once the relevant transaction data has been [posted in a batch](/docs/how-arbitrum-works/inside-arbitrum-nitro). This means that transactions on <Term id="arbitrum-chains">Arbitrum Chains</Term> are considered final in minutes.
 
 ## Parent chain → child chain transactions
 
@@ -33,4 +33,4 @@ Note, however, that if you choose to enable fast bridging, a re-org of un-finali
 
 ## Child chain → parent chain transactions
 
-Normally, [outgoing transactions](/docs/how-arbitrum-works/deep-dives/l2-to-l1-messaging.mdx) must wait until the <Term id="assertion">assertion</Term> that includes their L2 message is confirmed (~one week) before a <Term id="client">client</Term> can execute the message on L1. However, in the near future [AnyTrust](/docs/how-arbitrum-works/deep-dives/anytrust-protocol.mdx) chains will be able to leverage their DAC to enable fast confirmations of withdrawals through the native token <Term id="bridge">bridge</Term>. By immediately confirming assertions that have been signed by the DAC, finality can be reduced to ~15 minutes.
+Normally, [outgoing transactions](/docs/how-arbitrum-works/deep-dives/l2-to-l1-messaging) must wait until the <Term id="assertion">assertion</Term> that includes their L2 message is confirmed (~one week) before a <Term id="client">client</Term> can execute the message on L1. However, in the near future [AnyTrust](/docs/how-arbitrum-works/deep-dives/anytrust-protocol) chains will be able to leverage their DAC to enable fast confirmations of withdrawals through the native token <Term id="bridge">bridge</Term>. By immediately confirming assertions that have been signed by the DAC, finality can be reduced to ~15 minutes.
