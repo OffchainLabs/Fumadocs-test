@@ -5,12 +5,13 @@
   "description": "The protocols and mechanisms behind Arbitrum Nitro.",
   "pages": [
     "index",
+    "inside-arbitrum-nitro",
     "deep-dives",
     "reference",
     "bold",
-    "timeboost",
     "...",
     "[Chain info](/docs/chain-info)",
+    "[Audit reports](/docs/audit-reports)",
     "[Contribute](/docs/contribute)"
   ]
 }

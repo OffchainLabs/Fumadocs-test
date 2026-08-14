@@ -4,8 +4,13 @@
   "root": true,
   "description": "Deploy Solidity smart contracts to Arbitrum chains.",
   "pages": [
+    "quickstart-solidity-remix",
+    "quickstart-create-a-token",
+    "machine-payments-protocol",
+    "troubleshooting-building",
     "...",
     "[Chain info](/docs/chain-info)",
+    "[Audit reports](/docs/audit-reports)",
     "[Contribute](/docs/contribute)"
   ]
 }
