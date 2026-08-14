@@ -281,14 +281,14 @@ It is highly recommended that you work with a Rollup-as-a-Service (RaaS) provide
 The DAS comes with the option of producing Prometheus metrics.
 
 - `<include cwd>content/partials/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/_das-metrics.mdx</include>`
-- used in 2 pages — tags: `launch-arbitrum-chain`, `configuration`, `data-availability`, `data-availability-committees`, `das`, `metrics`
+- used in 3 pages — tags: `launch-arbitrum-chain`, `configuration`, `data-availability`, `data-availability-committees`, `das`, `metrics`
 
 ### Das optional parameters
 
 Besides the parameters described in this guide, there are some more options that can be useful when running the DAS.
 
 - `<include cwd>content/partials/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/_das-optional-parameters.mdx</include>`
-- used in 2 pages — tags: `launch-arbitrum-chain`, `configuration`, `data-availability`, `data-availability-committees`, `das`, `optional`, `parameters`
+- used in 3 pages — tags: `launch-arbitrum-chain`, `configuration`, `data-availability`, `data-availability-committees`, `das`, `optional`, `parameters`
 
 ### Gcs parameters
 

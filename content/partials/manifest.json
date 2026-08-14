@@ -535,7 +535,7 @@
       "das",
       "metrics"
     ],
-    "usedIn": 2,
+    "usedIn": 3,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/_das-metrics.mdx</include>"
   },
   {
@@ -552,7 +552,7 @@
       "optional",
       "parameters"
     ],
-    "usedIn": 2,
+    "usedIn": 3,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/_das-optional-parameters.mdx</include>"
   },
   {
