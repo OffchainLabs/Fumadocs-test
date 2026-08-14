@@ -11,7 +11,7 @@
  * are the path minus extension with a trailing `index` dropped (no numeric prefixes, no `slug:`
  * frontmatter override); navigation order lives in per-directory `meta.json` `pages` arrays.
  */
-import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 
 const posix = path.posix;
@@ -292,6 +292,30 @@ export function resolveRefToFile(rawUrl, fromAbs, index) {
   return index.byLocaleSlug.get(`${locale}\0${slug}`) ?? null;
 }
 
+/**
+ * Does a root-absolute link path point at a real file under `public/`?
+ *
+ * Next serves static bytes from `public/`, so `/audit-reports/x.pdf` is the correct URL for
+ * `public/audit-reports/x.pdf`. The docs index only knows `content/docs`, so without this check
+ * every asset link — PDFs, images — looks broken.
+ *
+ * Relative paths are excluded deliberately: they resolve against the page's own URL inside the docs
+ * route tree, never against the static root, so `audit-reports/x.pdf` written on `/docs/audit-reports`
+ * really is a 404 and must keep being reported.
+ */
+export function resolvesToPublicAsset(pathPart, repoRoot) {
+  if (!pathPart.startsWith('/')) return false;
+
+  const publicRoot = path.join(repoRoot, 'public');
+  const abs = path.resolve(publicRoot, `.${pathPart}`);
+
+  // Refuse anything that escapes `public/` — such a URL is not servable regardless of what is there.
+  const rel = path.relative(publicRoot, abs);
+  if (rel.startsWith('..') || path.isAbsolute(rel)) return false;
+
+  return existsSync(abs) && statSync(abs).isFile();
+}
+
 /** Classify how a link is written, so a rewrite reproduces the same form. */
 export function detectStyle(pathPart, surface) {
   if (surface === 'include') return 'include';
@@ -372,6 +396,9 @@ export function findBrokenLinks(index) {
         continue;
       }
       if (resolveRefToFile(ref.rawUrl, file.abs, index) !== null) continue;
+      // Static assets live outside the docs index: `/audit-reports/x.pdf` is served from
+      // `public/audit-reports/x.pdf`. Without this the checker reports every asset link as broken.
+      if (resolvesToPublicAsset(pathPart, index.repoRoot)) continue;
       if (isPartial(file.abs) && !pathPart.startsWith('/') && !/\.mdx?$/i.test(pathPart)) continue;
       broken.push({
         file: file.abs,
