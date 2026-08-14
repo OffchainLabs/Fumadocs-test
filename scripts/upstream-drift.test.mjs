@@ -1,7 +1,13 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 
-import { bodyLineCount, mapSectionPath, normalizeSlug } from './lib/tree-compare.mjs';
+import {
+  bodyLineCount,
+  buildTreeIndex,
+  mapSectionPath,
+  normalizeSlug,
+  resolveTreeBMatch,
+} from './lib/tree-compare.mjs';
 
 test('normalizeSlug strips numeric prefixes, extension and case', () => {
   assert.equal(normalizeSlug('run-arbitrum-node/01-overview.mdx'), 'overview');
@@ -47,4 +53,50 @@ test('bodyLineCount handles a file with no frontmatter', () => {
 test('bodyLineCount ignores the trailing empty element from a final newline', () => {
   assert.equal(bodyLineCount('just\ntwo lines\n'), 2);
   assert.equal(bodyLineCount(['---', 'title: X', '---', 'body one', 'body two', ''].join('\n')), 2);
+});
+
+test('resolveTreeBMatch does not let a bare-slug collision mispair a directory-qualified page', () => {
+  // Two Tree B files share the same bare slug ("gentleintroduction") in different directories, the
+  // exact shape of the real BoLD-vs-Stylus bug: bIndex keyed on bare slug alone let the second file
+  // walked silently clobber the first, so the BoLD page paired against the Stylus page instead.
+  const index = buildTreeIndex([
+    'stylus/gentle-introduction.mdx',
+    'how-arbitrum-works/bold/gentle-introduction.mdx',
+  ]);
+  assert.equal(
+    resolveTreeBMatch(index, 'how-arbitrum-works/bold/gentle-introduction.mdx'),
+    'how-arbitrum-works/bold/gentle-introduction.mdx',
+  );
+  assert.notEqual(
+    resolveTreeBMatch(index, 'how-arbitrum-works/bold/gentle-introduction.mdx'),
+    'stylus/gentle-introduction.mdx',
+  );
+});
+
+test('resolveTreeBMatch falls back to a unique bare-slug match across renamed directories', () => {
+  // A genuine cross-directory move: no directory-qualified key matches, but the bare slug is unique
+  // in Tree B, so the fallback still pairs it instead of reporting it ABSENT.
+  const index = buildTreeIndex(['new-section/unique-page-name.mdx']);
+  assert.equal(
+    resolveTreeBMatch(index, 'old-section/unique-page-name.mdx'),
+    'new-section/unique-page-name.mdx',
+  );
+});
+
+test('resolveTreeBMatch refuses an ambiguous bare-slug fallback', () => {
+  // Same collision as above, but queried from a Tree A directory that has no directory-qualified
+  // counterpart at all: the bare slug is ambiguous (two candidates), so it must not guess.
+  const index = buildTreeIndex([
+    'stylus/gentle-introduction.mdx',
+    'how-arbitrum-works/bold/gentle-introduction.mdx',
+  ]);
+  assert.equal(resolveTreeBMatch(index, 'unmatched-dir/gentle-introduction.mdx'), null);
+});
+
+test('resolveTreeBMatch still applies whole-file renames via mapSectionPath', () => {
+  const index = buildTreeIndex(['launch-arbitrum-chain/operate/monitoring-tools-and-considerations.mdx']);
+  assert.equal(
+    resolveTreeBMatch(index, 'launch-arbitrum-chain/operate/monitoring.mdx'),
+    'launch-arbitrum-chain/operate/monitoring-tools-and-considerations.mdx',
+  );
 });

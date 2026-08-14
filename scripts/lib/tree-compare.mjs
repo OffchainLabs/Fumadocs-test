@@ -58,6 +58,47 @@ export function mapSectionPath(relPath) {
   return relPath;
 }
 
+/**
+ * Build a Tree B lookup index from its relative file paths (posix-separated).
+ *
+ * Keys on directory + normalized slug so pages that share a bare slug (`index`, `overview`, …) in
+ * different directories can't clobber each other. A bare-slug index is also kept as a fallback for
+ * genuine cross-directory moves that a directory-qualified key can't find — but only for slugs that
+ * are unique across Tree B, so an ambiguous bare slug is never guessed at.
+ */
+export function buildTreeIndex(relPaths) {
+  const byDirSlug = new Map();
+  const bareSlugCounts = new Map();
+  const bareSlug = new Map();
+
+  for (const rel of relPaths) {
+    const dir = rel.split('/').slice(0, -1).join('/');
+    const slug = normalizeSlug(rel);
+    byDirSlug.set(`${dir}\0${slug}`, rel);
+
+    const count = (bareSlugCounts.get(slug) ?? 0) + 1;
+    bareSlugCounts.set(slug, count);
+    if (count === 1) bareSlug.set(slug, rel);
+    else bareSlug.delete(slug);
+  }
+
+  return { byDirSlug, bareSlug };
+}
+
+/**
+ * Resolve a Tree A relative path to its Tree B counterpart, or `null` if none is found.
+ *
+ * Maps the Tree A path onto Tree B's layout first (section renames + whole-file renames), then
+ * matches on directory + slug. Falls back to an unambiguous bare-slug match so a page that moved to
+ * an unmapped directory can still pair, without letting a bare-slug collision mispair anything.
+ */
+export function resolveTreeBMatch(index, relA) {
+  const mapped = mapSectionPath(relA);
+  const dir = mapped.split('/').slice(0, -1).join('/');
+  const slug = normalizeSlug(mapped);
+  return index.byDirSlug.get(`${dir}\0${slug}`) ?? index.bareSlug.get(slug) ?? null;
+}
+
 /** Count body lines, excluding a leading YAML frontmatter block. */
 export function bodyLineCount(source) {
   const lines = source.split('\n');

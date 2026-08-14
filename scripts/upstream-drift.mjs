@@ -11,12 +11,18 @@
  *   GUTTED  a page present here whose body is under 70% of the legacy body
  *   Each ABSENT item is labelled DRIFT (added upstream after the port window closed, never in scope)
  *   or MISS (existed before the port window closed and should have been ported).
+ *
+ * NOT YET A RELIABLE WORK LIST: pairing depends on `RENAME_MAP` in lib/tree-compare.mjs, which
+ * currently covers only a handful of the ~34 known migration renames. A page ported under a new
+ * name that isn't in `RENAME_MAP` still surfaces here as ABSENT (looks unported) rather than being
+ * matched to its real counterpart. Treat ABSENT entries as a starting point to investigate, not a
+ * ground-truth backlog, until `RENAME_MAP` is filled in.
  */
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 
-import { bodyLineCount, mapSectionPath, normalizeSlug } from './lib/tree-compare.mjs';
+import { bodyLineCount, buildTreeIndex, resolveTreeBMatch } from './lib/tree-compare.mjs';
 
 const PORT_WINDOW_END = '2026-07-10';
 const GUTTED_RATIO = 0.7;
@@ -63,16 +69,14 @@ function main() {
     return;
   }
 
-  const bIndex = new Map();
-  for (const rel of listDocs(treeB)) bIndex.set(normalizeSlug(rel), rel);
+  const bIndex = buildTreeIndex(listDocs(treeB));
 
   const absent = [];
   const gutted = [];
 
   for (const relA of listDocs(treeA)) {
     if (SKIP.some((re) => re.test(relA))) continue;
-    const slug = normalizeSlug(mapSectionPath(relA));
-    const relB = bIndex.get(slug);
+    const relB = resolveTreeBMatch(bIndex, relA);
 
     if (!relB) {
       const added = addedDate(treeARepo, relA);
