@@ -346,7 +346,9 @@ export function lineAt(content, offset) {
 
 /**
  * Find every broken internal link in the tree: an internal ref (not external/fragment/expression)
- * that resolves to no existing file. Relative-URL links inside partials are skipped (no fixed URL).
+ * that resolves to no existing file, or that carries a literal `.md`/`.mdx` suffix (always 404s at
+ * runtime even though it resolves once the extension is stripped — see the inline comment below).
+ * Relative-URL links inside partials are skipped (no fixed URL).
  *
  * @returns {Array<{file:string, rel:string, line:number, url:string}>}
  */
@@ -357,6 +359,18 @@ export function findBrokenLinks(index) {
       if (ref.range === null) continue;
       const { pathPart } = splitSuffix(ref.rawUrl);
       if (isExternalOrFragment(pathPart)) continue;
+      // A literal `.md`/`.mdx` suffix always 404s at runtime: `proxy.ts` only rewrites a bare `.md`
+      // suffix, so the URL falls through to Fumadocs with an extension no page owns. `<include>`
+      // directives are exempt — they splice a partial at build time and never become a URL.
+      if (ref.surface !== 'include' && /\.mdx?$/i.test(pathPart)) {
+        broken.push({
+          file: file.abs,
+          rel: file.rel,
+          line: lineAt(file.content, ref.range[0]),
+          url: ref.rawUrl,
+        });
+        continue;
+      }
       if (resolveRefToFile(ref.rawUrl, file.abs, index) !== null) continue;
       if (isPartial(file.abs) && !pathPart.startsWith('/') && !/\.mdx?$/i.test(pathPart)) continue;
       broken.push({

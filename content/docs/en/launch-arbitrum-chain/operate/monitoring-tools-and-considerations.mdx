@@ -86,7 +86,7 @@ The sequencer accepts <a data-quicklook-from="transaction">transactions</a>, ord
 
 <VanillaAdmonition type="warning">
 
-`eth_syncing` returns `false` once a node is fully synced, so it is useful for tracking a node that is catching up, not for steady-state health. Its out-of-sync output is **not a stable API** and can change between Nitro versions, so do not build production alerting on the exact field shape. For a fully synced node, use the metrics above and an RPC liveness check (an `eth_chainId` call returning HTTP 200) instead. See [`eth_syncing`](/docs/arbitrum-essentials/arbitrum-vs-ethereum/rpc-methods.mdx#eth_syncing) for the full field reference.
+`eth_syncing` returns `false` once a node is fully synced, so it is useful for tracking a node that is catching up, not for steady-state health. Its out-of-sync output is **not a stable API** and can change between Nitro versions, so do not build production alerting on the exact field shape. For a fully synced node, use the metrics above and an RPC liveness check (an `eth_chainId` call returning HTTP 200) instead. See [`eth_syncing`](/docs/arbitrum-essentials/arbitrum-vs-ethereum/rpc-methods#eth_syncing) for the full field reference.
 
 </VanillaAdmonition>
 

@@ -64,7 +64,7 @@ This configuration sets up the sequencer to release Delayed Inbox messages earli
 - **Fast L2 finality**: For an L3 settling to <Term id="arbitrum-nova">Arbitrum Nova</Term>, configure with `--node.delayed-sequencer.use-merge-finality=false` `--node.delayed-sequencer.finalize-distance=1`. A bridge deposit is released after 1 L2 block (~1 minute), but may be <Term id="reorg">reorg</Term>'d if Nova reverts.
 - **DACert-optimized**: On Nova settlement with default flags, finality ties to DACert posting (~tens of minutes); configuring low-distance speeds reduces this to ~1 minute for gaming apps needing quick asset transfers.
 
-This feature underscores Arbitrum's modularity for performance tuning while inheriting parent security. For implementation, refer to the latest Nitro sequencer docs or your <Term id="raas">RaaS</Term>; a [list of RaaSes is on the Third-party providers page](/docs/launch-arbitrum-chain/third-party-integrations/third-party-providers.mdx#rollup-as-a-service-raas-providers).
+This feature underscores Arbitrum's modularity for performance tuning while inheriting parent security. For implementation, refer to the latest Nitro sequencer docs or your <Term id="raas">RaaS</Term>; a [list of RaaSes is on the Third-party providers page](/docs/launch-arbitrum-chain/third-party-integrations/third-party-providers#rollup-as-a-service-raas-providers).
 
 ## How to configure
 

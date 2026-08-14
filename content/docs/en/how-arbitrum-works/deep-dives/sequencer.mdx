@@ -58,7 +58,7 @@ A batch is sealed once the accumulated transactions reach a size threshold, or o
 
 <ImageZoom src="/img/haw-compression.svg" alt="Compression" className="img-600px" />
 
-Before posting, the batch is compressed with the Brotli algorithm, which exposes a compression level from 0 to 11: higher levels compress more but cost more compute time. Arbitrum adjusts this level dynamically based on the current backlog of batches waiting to be posted — favoring speed over compression ratio when the backlog grows, so the backlog clears rather than compounding. See [Compression levels](/docs/how-arbitrum-works/deep-dives/gas-and-fees.mdx#compression-levels) for the exact thresholds and how compression interacts with parent-chain pricing.
+Before posting, the batch is compressed with the Brotli algorithm, which exposes a compression level from 0 to 11: higher levels compress more but cost more compute time. Arbitrum adjusts this level dynamically based on the current backlog of batches waiting to be posted — favoring speed over compression ratio when the backlog grows, so the backlog clears rather than compounding. See [Compression levels](/docs/how-arbitrum-works/deep-dives/gas-and-fees#compression-levels) for the exact thresholds and how compression interacts with parent-chain pricing.
 
 <ImageZoom src="/img/haw-submit-to-sequencer-inbox.svg" alt="Submit to Sequencer inbox" className="img-600px" />
 
@@ -73,7 +73,7 @@ The Sequencer continuously monitors network conditions to select the most cost-e
 
 </VanillaAdmonition>
 
-Only the Sequencer can call these methods, and batch posting costs are reimbursed through ArbOS's parent-chain pricer — see [Parent chain gas pricing](/docs/how-arbitrum-works/deep-dives/gas-and-fees.mdx#parent-chain-gas-pricing) and [ArbOS state](/docs/how-arbitrum-works/deep-dives/arbos.mdx#arbos-state). For the batch poster's internal pipeline — how it pulls messages off the stream, seals and self-checks a batch, and hands it to the transaction-shipping layer — see [the batch poster](/docs/how-arbitrum-works/deep-dives/batchposter).
+Only the Sequencer can call these methods, and batch posting costs are reimbursed through ArbOS's parent-chain pricer — see [Parent chain gas pricing](/docs/how-arbitrum-works/deep-dives/gas-and-fees#parent-chain-gas-pricing) and [ArbOS state](/docs/how-arbitrum-works/deep-dives/arbos#arbos-state). For the batch poster's internal pipeline — how it pulls messages off the stream, seals and self-checks a batch, and hands it to the transaction-shipping layer — see [the batch poster](/docs/how-arbitrum-works/deep-dives/batchposter).
 
 ## High availability: the Sequencer coordinator
 
