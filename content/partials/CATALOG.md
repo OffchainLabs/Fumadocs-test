@@ -194,7 +194,7 @@ Arbitrum chains support account abstraction (AA) primarily through ERC-4337, a s
 
 ### Config challenge period l1
 
-Arbitrum chains, as optimistic Rollups, use a challenge period (typically 6.4 days on mainnet chains like Arbitrum One, though customizable in chains) during…
+General pros/cons of enforcing the challenge period on L1. Distinct from _config-l1-challenge-period.mdx (which covers confirmPeriodBlocks configuration plus an L1-vs-L2 comparison table) — reviewed and kept separately, not a duplicate.
 
 - `<include cwd>content/partials/launch-arbitrum-chain/_config-challenge-period-l1.mdx</include>`
 - ⚠️ unused — tags: `launch-arbitrum-chain`, `config`, `challenge`, `period`, `l1`
@@ -243,7 +243,7 @@ Arbitrum chains, including Arbitrum One, Nova, and customizable Arbitrum L2/L3 c
 
 ### Config l1 challenge period
 
-Configuring the challenge period on L1 means deploying your Arbitrum chain as a Layer 2 Rollup that settles directly to Ethereum, where assertions are posted…
+How to configure the L1 challenge period (confirmPeriodBlocks) plus an L1-vs-L2 tradeoff table. Distinct from _config-challenge-period-l1.mdx (a general pros/cons prose explainer) — reviewed and kept separately, not a duplicate.
 
 - `<include cwd>content/partials/launch-arbitrum-chain/_config-l1-challenge-period.mdx</include>`
 - used in 1 page — tags: `launch-arbitrum-chain`, `config`, `l1`, `challenge`, `period`
