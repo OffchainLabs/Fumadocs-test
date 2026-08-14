@@ -1,6 +1,7 @@
 {
   "title": "Fees and costs",
   "pages": [
+    "revenue-routing",
     "fee-management",
     "configure-native-mint-burn-gas-token",
     "use-a-custom-gas-token-rollup",
