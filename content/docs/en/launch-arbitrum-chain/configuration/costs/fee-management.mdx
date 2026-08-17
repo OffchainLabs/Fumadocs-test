@@ -382,7 +382,7 @@ const networkFeeAccount = await orbitChainClient.arbAggregatorReadContract({
 
 - Manually calling `ArbAggregator.addBatchPoster()` for the address, or
 - The address having successfully posted at least one batch
-  :::
+</VanillaAdmonition>
 
 To set a new fee collector for a specific batch poster, use the method `setFeeCollector(address, address)` of the [`ArbAggregator`](/docs/arbitrum-essentials/precompiles/reference#arbaggregator) precompile:
 
@@ -427,7 +427,7 @@ If you want to configure a fee collector before the batch poster sends its first
 cast send --rpc-url $ORBIT_CHAIN_RPC --private-key $OWNER_PRIVATE_KEY 0x000000000000000000000000000000000000006D "addBatchPoster(address) ()" $NEW_BATCH_POSTER_ADDRESS
 ```
 
-:::note
+<VanillaAdmonition type="note">
 
 When setting a new batch poster, its fee collector will be configured to the same address by default.
 

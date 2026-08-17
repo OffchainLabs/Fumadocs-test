@@ -94,7 +94,7 @@ All cache sizes are configured under `execution.caching`:
 | `stylus-lru-cache-capacity` | 256 MB  | Rust (via CGO)     | Compiled Stylus WASM modules.                            |
 
 <VanillaAdmonition type="tip" title="All of these caches are bounded by configuration and won't grow beyond their configured limits. This means total non-Go memory is predictable and can be calculated from your configuration.">
-:::
+</VanillaAdmonition>
 
 ## Calculating `GOMEMLIMIT`
 
@@ -146,7 +146,7 @@ You should use a safety margin of 300-500 MB to account for allocator overhead, 
 GOMEMLIMIT = 16,384 MB - 4,756 MB - 400 MB safety = ~11,228 MB ≈ 11 GB
 ```
 
-:::caution
+<VanillaAdmonition type="warning">
 If `GOMEMLIMIT` is set too high (not accounting for non-Go memory), the Go garbage collector defers collection, expecting more room than actually exists. The OS then OOM-kills the process when total RSS (Go heap plus all non-Go allocations) exceeds the container limit.
 </VanillaAdmonition>
 ### Helm chart shortcut
