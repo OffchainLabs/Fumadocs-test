@@ -24,6 +24,9 @@
     "glossary:migrate": "node scripts/migrate-glossary.mjs",
     "quicklooks:migrate": "node scripts/migrate-quicklooks.mjs",
     "references:check": "node scripts/references-check.mjs",
+    "vars:check": "node scripts/vars-check.mjs",
+    "content:lint": "node scripts/content-lint.mjs",
+    "test": "node --test \"scripts/**/*.test.mjs\"",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "postinstall": "fumadocs-mdx"
