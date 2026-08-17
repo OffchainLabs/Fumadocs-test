@@ -5,6 +5,7 @@ import {
   autoUpdate,
   flip,
   offset,
+  safePolygon,
   shift,
   useDismiss,
   useFloating,
@@ -47,7 +48,14 @@ export function HoverPopover({
     whileElementsMounted: autoUpdate,
   });
 
-  const hover = useHover(context, { move: false, delay: { open: 150, close: 150 } });
+  // `handleClose: safePolygon()` keeps the popover open while the pointer crosses the offset gap
+  // toward it — the equivalent of Tippy's `interactive: true` on the legacy site. Glossary
+  // definitions contain cross-reference links, so the content has to be reachable, not just visible.
+  const hover = useHover(context, {
+    move: false,
+    delay: { open: 150, close: 150 },
+    handleClose: safePolygon(),
+  });
   const focus = useFocus(context);
   const dismiss = useDismiss(context);
   const role = useRole(context, { role: variant === 'modal' ? 'dialog' : 'tooltip' });

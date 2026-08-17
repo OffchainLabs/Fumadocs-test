@@ -7,7 +7,7 @@ author: pete-vielhaber
 sme: Mehdi
 ---
 
-The Sequencer’s job is to receive, admit, and order transactions and then publish and post the resulting blocks. The moment ordered transactions are handed to the execution engine, responsibility shifts to the <a data-quicklook-from="state-transition-function">State Transition Function (STF)</a> and <a data-quicklook-from="arbos">ArbOS</a>, where transactions are executed against the chain state, gas is metered, and the new state root is computed. Throughout this section, we flag those handoff points and point to the relevant pages rather than duplicating them.
+The Sequencer’s job is to receive, admit, and order transactions and then publish and post the resulting blocks. The moment ordered transactions are handed to the execution engine, responsibility shifts to the <Term id="state-transition-function">State Transition Function (STF)</Term> and <Term id="arbos">ArbOS</Term>, where transactions are executed against the chain state, gas is metered, and the new state root is computed. Throughout this section, we flag those handoff points and point to the relevant pages rather than duplicating them.
 
 <ImageZoom src="/img/haw-sequencer-operations.svg" alt="Sequencer operations" className="img-600px" />
 
@@ -25,7 +25,7 @@ The real-time feed is a live broadcast that publishes transactions instantly as 
 
 #### 1. Receipt and admission
 
-A user transaction arrives over JSON-RPC. Before it is allowed anywhere near a block, it passes a series of admission checks: if this node is not the active Sequencer, the transaction is forwarded to the active one; optional sender allowlists and parent-chain fee-surplus thresholds can reject it; and internal Arbitrum transaction types and blob transactions are filtered out. When <a data-quicklook-from="timeboost">Timeboost</a> is active, and the current round has an <a data-quicklook-from="express-lane-controller">express-lane controller</a>, ordinary transactions are held back by a small advantage delay (200ms by default) so that express-lane transactions can go first. Admitted transactions are placed into a bounded queue.
+A user transaction arrives over JSON-RPC. Before it is allowed anywhere near a block, it passes a series of admission checks: if this node is not the active Sequencer, the transaction is forwarded to the active one; optional sender allowlists and parent-chain fee-surplus thresholds can reject it; and internal Arbitrum transaction types and blob transactions are filtered out. When <Term id="timeboost">Timeboost</Term> is active, and the current round has an <Term id="express-lane-controller">express-lane controller</Term>, ordinary transactions are held back by a small advantage delay (200ms by default) so that express-lane transactions can go first. Admitted transactions are placed into a bounded queue.
 
 #### 2. Block creation loop
 
@@ -81,7 +81,7 @@ In production, several Sequencer nodes run under a single logical Sequencer, wit
 
 ## Delayed messages from the parent chain
 
-Not every transaction originates with a direct RPC submission. Deposits and <a data-quicklook-from="retryable-ticket">retryable tickets</a> enter through the parent chain’s <a data-quicklook-from="delayed-inbox">delayed inbox</a>. The DelayedSequencer watches for these messages to finalize on the parent chain, then sequences them into the child chain so they appear in the ordering and on the feed alongside ordinary transactions. As with execution generally, the act of applying a delayed message is ArbOS/STF territory; the DelayedSequencer’s role is to decide when it enters the order.
+Not every transaction originates with a direct RPC submission. Deposits and <Term id="retryable-ticket">retryable tickets</Term> enter through the parent chain’s <Term id="delayed-inbox">delayed inbox</Term>. The DelayedSequencer watches for these messages to finalize on the parent chain, then sequences them into the child chain so they appear in the ordering and on the feed alongside ordinary transactions. As with execution generally, the act of applying a delayed message is ArbOS/STF territory; the DelayedSequencer’s role is to decide when it enters the order.
 
 The Nitro node can instead be configured to add delayed inbox transactions immediately after they are submitted to the parent chain, before they finalize there. This lowers latency but introduces the risk of a child-chain reorg if the transaction fails to finalize on the parent chain. To avoid that risk, on Arbitrum One and Nova the DelayedSequencer includes these transactions in the feed only after they are finalized on the parent chain.
 
@@ -93,7 +93,7 @@ Timeboost layers a priority auction on top of the default first-come-first-serve
 
 ## Censorship Timeout
 
-As mentioned in the original Arbitrum <a data-quicklook-from="bold">BoLD</a> forum post, the initial release of Arbitrum BoLD includes a feature called Censorship Timeout (formerly known as Delay Buffer).
+As mentioned in the original Arbitrum <Term id="bold">BoLD</Term> forum post, the initial release of Arbitrum BoLD includes a feature called Censorship Timeout (formerly known as Delay Buffer).
 
 Censorship Timeout aims to limit the negative effects of:
 

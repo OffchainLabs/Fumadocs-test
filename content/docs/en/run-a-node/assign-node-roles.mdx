@@ -8,7 +8,7 @@ author: Gowtham118
 sme: Gowtham118
 ---
 
-A Nitro node's _role_ is not a separate piece of software. Every role in this article runs the same `nitro` binary; what makes a node a <a data-quicklook-from="sequencer">sequencer</a>, a <a data-quicklook-from="batch-poster">batch poster</a>, a <a data-quicklook-from="validator">validator</a>, or a plain RPC node is the set of configuration flags you pass at startup. The exceptions are the feed relay — a small standalone `relay` binary shipped inside the same Docker image — and the optional split-validation setup, which moves block validation into a separate `nitro-val` binary; both are built from the same repository.
+A Nitro node's _role_ is not a separate piece of software. Every role in this article runs the same `nitro` binary; what makes a node a <Term id="sequencer">sequencer</Term>, a <Term id="batch-poster">batch poster</Term>, a <Term id="validator">validator</Term>, or a plain RPC node is the set of configuration flags you pass at startup. The exceptions are the feed relay — a small standalone `relay` binary shipped inside the same Docker image — and the optional split-validation setup, which moves block validation into a separate `nitro-val` binary; both are built from the same repository.
 
 Because roles are just configuration, you assign or change a role by editing flags and restarting. This page explains what each role's defining flags are, what else each role needs to operate (a funded parent-chain wallet, a bond, feed connectivity, a parent-chain connection), and how to convert a node from one role to another safely.
 
@@ -30,7 +30,7 @@ Roles can combine on a single node (a sequencer can also post batches, for examp
 | Validation server (split validation) | `nitro-val` binary + `--node.block-validator.validation-server.url` on the node | No wallet, no bond (all onchain action stays on the node) | Many (one node can use several)           | [Run a split validator node](/docs/launch-arbitrum-chain/run-a-node/split-validator-node) |
 | Feed relay                           | `relay` binary + `--node.feed.input.url` + `--chain.id`                         | No wallet, no bond, no parent-chain connection            | Many (stateless fan-out)                  | [Run a feed relay](/docs/run-a-node/run-feed-relay)                                |
 
-Every role except the feed relay and the split-validation server needs a parent-chain connection through `--parent-chain.connection.url`. Nodes whose parent chain is Ethereum <a data-quicklook-from="L1">L1</a> also need `--parent-chain.blob-client.beacon-url` to read batches posted as EIP-4844 blobs. For well-known chains, setting `--chain.id` or `--chain.name` auto-fills defaults such as `--execution.forwarding-target` and `--node.feed.input.url` from the chain info embedded in the binary (the forwarding target is only auto-filled when the sequencer is disabled).
+Every role except the feed relay and the split-validation server needs a parent-chain connection through `--parent-chain.connection.url`. Nodes whose parent chain is Ethereum <Term id="L1">L1</Term> also need `--parent-chain.blob-client.beacon-url` to read batches posted as EIP-4844 blobs. For well-known chains, setting `--chain.id` or `--chain.name` auto-fills defaults such as `--execution.forwarding-target` and `--node.feed.input.url` from the chain info embedded in the binary (the forwarding target is only auto-filled when the sequencer is disabled).
 
 ## RPC node (full node)
 
@@ -50,7 +50,7 @@ Operationally, a full node needs a parent-chain connection but no funded wallet 
 
 <VanillaAdmonition type="info">
 
-`--node.staker.enable` defaults to `true`, so a default full node is technically a <a data-quicklook-from="watchtower-validator">watchtower validator</a>: it watches onchain assertions and logs when one disagrees with its locally computed state. With the default watchtower strategy it loads no wallet and posts no bond, so it takes no onchain action. This is why "converting to a validator" is mostly a matter of changing the strategy and providing a wallet and bond, rather than enabling a module. To silence the watchtower entirely, set `--node.staker.enable=false`.
+`--node.staker.enable` defaults to `true`, so a default full node is technically a <Term id="watchtower-validator">watchtower validator</Term>: it watches onchain assertions and logs when one disagrees with its locally computed state. With the default watchtower strategy it loads no wallet and posts no bond, so it takes no onchain action. This is why "converting to a validator" is mostly a matter of changing the strategy and providing a wallet and bond, rather than enabling a module. To silence the watchtower entirely, set `--node.staker.enable=false`.
 
 </VanillaAdmonition>
 
@@ -75,7 +75,7 @@ For snapshots, hardware sizing, and the full setup, see [How to run an archive n
 
 ## Sequencer
 
-The sequencer orders incoming transactions, produces blocks, and publishes the <a data-quicklook-from="sequencer-feed">sequencer feed</a>. Enabling it requires two flags that must agree with each other.
+The sequencer orders incoming transactions, produces blocks, and publishes the <Term id="sequencer-feed">sequencer feed</Term>. Enabling it requires two flags that must agree with each other.
 
 | Flag                           | Default | Description                                                                      |
 | ------------------------------ | ------- | -------------------------------------------------------------------------------- |
@@ -102,7 +102,7 @@ For the complete sequencer setup and the coordinator design, see [How to run a s
 
 ## Batch poster
 
-The batch poster compresses queued sequencer messages into batches and posts them to the parent chain's <a data-quicklook-from="sequencer-inbox">Sequencer Inbox</a>. It does not need to be the sequencer; a separate node can post batches from the messages it receives over the feed.
+The batch poster compresses queued sequencer messages into batches and posts them to the parent chain's <Term id="sequencer-inbox">Sequencer Inbox</Term>. It does not need to be the sequencer; a separate node can post batches from the messages it receives over the feed.
 
 | Flag                         | Default | Description                                         |
 | ---------------------------- | ------- | --------------------------------------------------- |
@@ -124,7 +124,7 @@ For chain-owner configuration, blob posting, and troubleshooting, see [Run a bat
 
 ## Validator (staker)
 
-A validator watches the chain's onchain assertions and, depending on its strategy, participates in <a data-quicklook-from="bold">BoLD</a> and legacy disputes. The behavior is set by the strategy, not by a separate enable switch.
+A validator watches the chain's onchain assertions and, depending on its strategy, participates in <Term id="bold">BoLD</Term> and legacy disputes. The behavior is set by the strategy, not by a separate enable switch.
 
 | Flag                            | Default    | Description                                                                                |
 | ------------------------------- | ---------- | ------------------------------------------------------------------------------------------ |
@@ -140,7 +140,7 @@ With the default `watchtower` strategy the validator is observe-only: it loads n
 | `--node.staker.data-poster.external-signer.url` | `""`    | External signer RPC; an alternative to a local key                                      |
 | `--node.staker.redis-url`                       | `""`    | Redis URL backing the staker's transaction queue (queue persistence, not a leader lock) |
 
-An <a data-quicklook-from="active-validator">active validator</a> needs a funded parent-chain wallet for gas and posts a **bond** when it acts. Under BoLD, the node reads the required bond size from the chain's contracts (it is an onchain chain parameter, not a node flag), and with `--node.bold.auto-deposit` and `--node.bold.auto-increase-allowance` enabled by default, it deposits and approves the stake token automatically when entering a bond. Active strategies also require block validation, which the node force-enables. On chains where the validator allowlist is active, the wallet address must also be allowlisted; the allowlist is enforced by the chain's contracts, so transactions from a non-allowlisted validator revert.
+An <Term id="active-validator">active validator</Term> needs a funded parent-chain wallet for gas and posts a **bond** when it acts. Under BoLD, the node reads the required bond size from the chain's contracts (it is an onchain chain parameter, not a node flag), and with `--node.bold.auto-deposit` and `--node.bold.auto-increase-allowance` enabled by default, it deposits and approves the stake token automatically when entering a bond. Active strategies also require block validation, which the node force-enables. On chains where the validator allowlist is active, the wallet address must also be allowlisted; the allowlist is enforced by the chain's contracts, so transactions from a non-allowlisted validator revert.
 
 There is no leader-election or Redis-lock mechanism for the validator, unlike the batch poster or the sequencer coordinator. `--node.staker.redis-url` only moves the pending-transaction queue into Redis for failover of a single logical staker; it is not a lock. You must ensure only one active staker runs per wallet.
 
@@ -148,7 +148,7 @@ For the strategy comparison table, wallet setup, and BoLD details, see [How to r
 
 ### Split validation
 
-Block validation — re-executing blocks against the chain's <a data-quicklook-from="wasm">WASM</a> machines — is the CPU-heavy part of validating. By default this work stays inside the node: with block validation on, the default `--node.block-validator.validation-server.url` value of `self-auth` starts an internal validation server reached over the node's own authenticated websocket loopback. Split validation moves that work to a separate machine running the `nitro-val` binary, while the wallet, the bond, and the record of validation progress all stay on the main node.
+Block validation — re-executing blocks against the chain's <Term id="wasm">WASM</Term> machines — is the CPU-heavy part of validating. By default this work stays inside the node: with block validation on, the default `--node.block-validator.validation-server.url` value of `self-auth` starts an internal validation server reached over the node's own authenticated websocket loopback. Split validation moves that work to a separate machine running the `nitro-val` binary, while the wallet, the bond, and the record of validation progress all stay on the main node.
 
 On the validation server (`nitro-val` binary):
 
@@ -195,7 +195,7 @@ Converting a node from one role to another means changing its flags and restarti
 
 Some roles must not be duplicated for the same chain:
 
-- **Never run two sequencers for the same chain** unless they are in one coordinator (SQM) set. Two uncoordinated sequencers fork the feed and double-order transactions; only the ordering that reaches the parent-chain inbox survives, and nodes that followed the other ordering must <a data-quicklook-from="reorg">reorg</a> or halt.
+- **Never run two sequencers for the same chain** unless they are in one coordinator (SQM) set. Two uncoordinated sequencers fork the feed and double-order transactions; only the ordering that reaches the parent-chain inbox survives, and nodes that followed the other ordering must <Term id="reorg">reorg</Term> or halt.
 - **Never run two batch posters for the same chain outside the Redis lock.** They race on nonces and batch positions, and the loser's parent-chain transaction reverts, burning gas. The node-side protections are the Redis lock and revert polling.
 - **Never run two active stakers with the same wallet.** There is no built-in staker leader election, so they conflict on nonces and stall each other.
 - **Safe to run many:** RPC nodes, archive nodes, feed relays, and validation servers. They share no protocol state and need no coordination.
