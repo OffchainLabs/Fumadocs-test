@@ -221,7 +221,9 @@ export function extractRefs(source) {
     refs.push({ surface: 'markdown', rawUrl: raw, range: [start, end] });
   }
 
-  const mdDef = /^[ \t]*\[[^\]\n]+\]:[ \t]+(\S+)/gm;
+  // `(?!\^)` excludes GFM footnote definitions (`[^2]: Although …`), whose label is not a link label —
+  // without it the first word of every footnote is reported as a broken target.
+  const mdDef = /^[ \t]*\[(?!\^)[^\]\n]+\]:[ \t]+(\S+)/gm;
   for (let m; (m = mdDef.exec(masked));) {
     const raw = m[1];
     const start = m.index + m[0].lastIndexOf(raw);
