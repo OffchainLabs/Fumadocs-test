@@ -353,6 +353,7 @@ cast call --rpc-url $ORBIT_CHAIN_RPC 0x000000000000000000000000000000000000006D 
 - Addresses that have successfully posted at least one batch
 
 This method is primarily used for fee management purposes, not for authoritative permission verification. Always verify batch poster permissions against the `SequencerInbox` contract on the parent chain.
+
 </VanillaAdmonition>
 #### Managing fee collectors
 
@@ -382,6 +383,7 @@ const networkFeeAccount = await orbitChainClient.arbAggregatorReadContract({
 
 - Manually calling `ArbAggregator.addBatchPoster()` for the address, or
 - The address having successfully posted at least one batch
+
 </VanillaAdmonition>
 
 To set a new fee collector for a specific batch poster, use the method `setFeeCollector(address, address)` of the [`ArbAggregator`](/docs/arbitrum-essentials/precompiles/reference#arbaggregator) precompile:
