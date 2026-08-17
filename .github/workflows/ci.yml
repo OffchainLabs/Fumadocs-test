@@ -1,0 +1,113 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gates:
+    name: Gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Type check (regenerates .source/, then tsc)
+        run: pnpm types:check
+
+      - name: Script test suites
+        run: pnpm test
+
+      - name: Global variables resolve
+        run: pnpm vars:check
+
+      - name: Navigation integrity
+        run: pnpm nav:check
+
+      - name: Partials resolve and stay unrouted
+        run: pnpm partials:check
+
+      - name: Archived page registry
+        run: node scripts/versioned-docs-check.mjs
+
+  content-debt:
+    # These four gates fail on pre-existing debt, so they report without blocking.
+    # Counts at the time this workflow was added (2026-08-17):
+    #   format:check      52 files unformatted  → fix with `pnpm format`
+    #   content:lint      39 findings (mostly .md/.mdx suffixes in link targets)
+    #   references:check   3 orphan glossary ids (cross-chain-message, rollup, pebble)
+    #   check-links       19 broken internal links across 12 files
+    # Move a step into the `gates` job above once its count reaches zero.
+    name: Content debt (non-blocking)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Formatting
+        run: pnpm format:check
+        continue-on-error: true
+
+      - name: MDX structural lint
+        run: pnpm content:lint
+        continue-on-error: true
+
+      - name: Glossary references
+        run: pnpm references:check
+        continue-on-error: true
+
+      - name: Internal links
+        run: pnpm check-links
+        continue-on-error: true
+
+  build:
+    # Non-blocking: the MDX image pipeline fetches remote images at build time, so a
+    # dead third-party URL turns this red for reasons unrelated to the change under
+    # review. It still catches MDX compile errors that types:check cannot see.
+    name: Build (non-blocking)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm build
