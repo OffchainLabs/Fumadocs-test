@@ -482,8 +482,6 @@ Interface
 
 ### NodeInterface
 
-Interface
-
 - `<include cwd>content/partials/precompile-tables/_NodeInterface.mdx</include>`
 - used in 1 page — tags: `precompile-tables`, `nodeinterface`
 

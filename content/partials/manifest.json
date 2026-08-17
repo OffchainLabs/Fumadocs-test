@@ -928,7 +928,7 @@
   {
     "path": "content/partials/precompile-tables/_NodeInterface.mdx",
     "title": "NodeInterface",
-    "summary": "Interface",
+    "summary": "",
     "scope": "neutral",
     "tags": [
       "precompile-tables",
