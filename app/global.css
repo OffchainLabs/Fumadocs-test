@@ -232,6 +232,43 @@
   }
 }
 
+/* Headings inside a `not-prose` island are interactive controls, not document
+   structure: Fumadocs' accordion renders its trigger inside a Radix
+   `Accordion.Header`, which is an `<h3>`. The heading rules above carry no
+   `not-prose` exclusion (only `:where(a)` does), so an accordion trigger picked
+   up `font-size: 1.375rem` and `margin: 2em 0 0.75em` *inside* its own card —
+   44px of dead space above each title, which made a 50px collapsed row render
+   113px tall and read as a static panel rather than something expandable.
+
+   Reset rather than editing all thirteen heading selectors (the media query
+   included): one rule keeps the diff small and covers every future `not-prose`
+   component. `:is()` lifts specificity to 0,2,0 so it beats the `:where()`
+   rules above regardless of source order. font-weight is left alone — the
+   inherited 500 is what the component asks for anyway. */
+.prose :where(h1, h2, h3, h4, h5, h6):is(.not-prose, .not-prose *) {
+  font-size: inherit;
+  line-height: inherit;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Fumadocs' accordion trigger ships no pointer and no hover state — only
+   `has-focus-visible:bg-fd-accent`, which a mouse user never sees. Anchoring on
+   the Radix trigger (`button[data-state]`) means this cannot catch an ordinary
+   prose heading. Hover uses --color-fd-accent to match the component's own
+   focus treatment. */
+h3:has(> button[data-state]) {
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background: var(--color-fd-accent);
+  }
+
+  & > button {
+    cursor: pointer;
+  }
+}
+
 /* Fenced code blocks use a true monospace; inline code keeps brand Aeonik Fono.
    See the --font-code comment in app/[lang]/layout.tsx. */
 pre,
