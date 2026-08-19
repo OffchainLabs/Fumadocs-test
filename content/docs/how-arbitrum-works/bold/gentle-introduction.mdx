@@ -63,7 +63,9 @@ To summarize with an analogy and the diagram below: Arbitrum’s former dispute 
 {/* ********************************************************** */}
 {/* ********************************************************** */}
 
-<VanillaAdmonition type="note" title="The timer/clocks above are arbitrary and instead represent the duration of challenges and the sequential nature of challenges today, but they can take place in parallel with BoLD. The durations of the challenges are independent of one another.">
+<VanillaAdmonition type="note">
+
+The timer/clocks above are arbitrary and instead represent the duration of challenges and the sequential nature of challenges today, but they can take place in parallel with BoLD. The durations of the challenges are independent of one another.
 
 </VanillaAdmonition>
 ## How is this possible?
@@ -230,7 +232,9 @@ The methodology for calculating the parameters, specifically for L3 Arbitrum cha
 
 #### Q: What is the user flow for using the assertion bonding pool contract?
 
-<VanillaAdmonition type="warning" title="The autopooling feature is not available on Arbitrum Nitro as of yet.">
+<VanillaAdmonition type="warning">
+
+The autopooling feature is not available on Arbitrum Nitro as of yet.
 
 </VanillaAdmonition>
 Anyone can deploy an assertion bonding pool using [`AssertionStakingPoolCreator.sol`](https://github.com/OffchainLabs/BoLD/blob/main/contracts/src/assertionStakingPool/AssertionStakingPoolCreator.sol) as a means to crowdsource funds to put up a bond for an assertion. To defend Arbitrum using a bonding pool, an entity would first deploy this pool with the assertion they believe is correct and wish to put up a bond to challenge an adversary's assertion. Then, anyone can verify that the claim is correct by running the inputs through their node's State Transition Function (STF). If other parties agree that the assertion is correct, then they can deposit their funds into the contract. When sufficient funds are available, anyone can permissionlessly trigger the creation of the assertion onchain to initiate the challenge. Finally, once the dispute protocol confirms the honest parties' assertion, all involved entities can receive reimbursement for their funds and withdraw. The Arbitrum Nitro node validation software also features an optional "auto pooling" option that automates the entire workflow for assertion bonding pool deployment and depositing funds into the pool. If "auto pooling" is activated and the private key controlling the validator has sufficient funds, a trustless pool will get deployed alongside an assertion of the available funds. If a validator with the "auto pooling" feature enabled sees an assertion onchain that it agrees with _and_ a bonding pool already exists for that assertion. The validator will automatically deposit funds into the bonding pool to "join" others backing that onchain assertion in a trustless manner.

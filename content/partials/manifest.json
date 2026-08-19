@@ -128,7 +128,7 @@
   {
     "path": "content/partials/_not-for-production-banner-partial.mdx",
     "title": "Not for Production Warning Banner",
-    "summary": "",
+    "summary": "This code has yet to be audited.",
     "scope": "neutral",
     "tags": [
       "not",
@@ -169,7 +169,7 @@
   {
     "path": "content/partials/_reference-arbitrum-rpc-endpoints-partial.mdx",
     "title": "Arbitrum RPC Endpoints Reference",
-    "summary": "- Arbitrum public RPCs do not provide Websocket support.",
+    "summary": "- Unlike the RPC Urls, the Sequencer endpoints only support ethsendRawTransaction and ethsendRawTransactionConditional calls.",
     "scope": "neutral",
     "tags": [
       "reference",
@@ -511,8 +511,8 @@
   },
   {
     "path": "content/partials/launch-arbitrum-chain/_size-limit.mdx",
-    "title": "The `chainId` and `InitialChainOwner` parameters must be equal to the `chainId` and `owner` defined in the `Config` struct.",
-    "summary": "- Entering a contract requires reading its code from the database, which means larger code requires more work.",
+    "title": "Size limit",
+    "summary": "The chainId and InitialChainOwner parameters must be equal to the chainId and owner defined in the Config struct.",
     "scope": "neutral",
     "tags": [
       "launch-arbitrum-chain",

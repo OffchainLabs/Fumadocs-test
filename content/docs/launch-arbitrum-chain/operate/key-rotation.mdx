@@ -146,7 +146,9 @@ Call the following function on the `SequencerInbox` contract. The caller must be
 setValidKeyset(<new_keyset_bytes>)
 ```
 
-<VanillaAdmonition type="note" title="The `setValidKeyset` function takes the raw keyset bytes as its only parameter. The assumed-honest count is encoded within the keyset bytes themselves during keyset generation — it is not a separate contract parameter.">
+<VanillaAdmonition type="note">
+
+The `setValidKeyset` function takes the raw keyset bytes as its only parameter. The assumed-honest count is encoded within the keyset bytes themselves during keyset generation — it is not a separate contract parameter.
 
 </VanillaAdmonition>
 #### 3. Deploy new DAS servers
@@ -168,10 +170,14 @@ Once the new DAS servers and keyset are fully verified, you can optionally inval
 invalidateKeysetHash(<old_keyset_hash>)
 ```
 
-<VanillaAdmonition type="note" title="After invalidating the old keyset, you **must** stop and restart the batch poster so it picks up the new keyset. If you skip this step, the batch poster will continue attempting to use the old (now invalid) keyset and fail to submit batches.">
+<VanillaAdmonition type="note">
+
+After invalidating the old keyset, you **must** stop and restart the batch poster so it picks up the new keyset. If you skip this step, the batch poster will continue attempting to use the old (now invalid) keyset and fail to submit batches.
 
 </VanillaAdmonition>
-<VanillaAdmonition type="warning" title="- You can obtain the old keyset hash from the `SetValidKeyset` event that was emitted when the old keyset was originally registered">
+<VanillaAdmonition type="warning">
+
+- You can obtain the old keyset hash from the `SetValidKeyset` event that was emitted when the old keyset was originally registered
 - Do **not** invalidate the old keyset until the new keyset is fully verified and the batch poster is successfully posting with the new DAS servers — invalidating prematurely can disrupt data availability for your chain
 - After invalidation, the old keyset can no longer be used to certify data availability certificates
 

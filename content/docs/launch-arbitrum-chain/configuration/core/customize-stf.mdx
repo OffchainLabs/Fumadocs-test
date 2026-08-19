@@ -119,7 +119,9 @@ This method will only run the customized Nitro node (i.e., it will not run Block
 docker run --rm -it -v /path/to/your/node/dir:/home/user/.arbitrum -p 0.0.0.0:8449:8449 custom-nitro-node --conf.file /home/user/.arbitrum/nodeConfig.json
 ```
 
-<VanillaAdmonition type="info" title="The instructions provided in [How to run a full node](/docs/run-a-node/run-full-node) **will not** work with your Arbitrum chain node. See [Optional parameters (Arbitrum chain)](/docs/run-a-node/run-full-node#optional-parameters) for Arbitrum chain-specific CLI flags.">
+<VanillaAdmonition type="info">
+
+The instructions provided in [How to run a full node](/docs/run-a-node/run-full-node) **will not** work with your Arbitrum chain node. See [Optional parameters (Arbitrum chain)](/docs/run-a-node/run-full-node#optional-parameters) for Arbitrum chain-specific CLI flags.
 
 </VanillaAdmonition>
 Once your node is running, you can try out your modifications to the State Transition Function and confirm they work as expected.

@@ -53,7 +53,9 @@ const orbitMinimumBaseFee = await orbitChainClient.arbGasInfoReadContract({
 });
 ```
 
-<VanillaAdmonition type="note" title="This minimum base fee defines the minimum value that the chain's base fee can have. However, in periods of congestion, the actual base fee might be higher than this minimum. Check the next section &quot;Arbitrum chain surplus fee&quot; for more information.">
+<VanillaAdmonition type="note">
+
+This minimum base fee defines the minimum value that the chain's base fee can have. However, in periods of congestion, the actual base fee might be higher than this minimum. Check the next section "Arbitrum chain surplus fee" for more information.
 
 </VanillaAdmonition>
 To set a new minimum base fee, use the method `setMinimumL2BaseFee(uint256)` of the [`ArbOwner`](/docs/arbitrum-essentials/precompiles/reference#arbowner) precompile, and pass the new minimum base fee in `wei`. For example:
@@ -93,7 +95,9 @@ cast call --rpc-url $ORBIT_CHAIN_RPC 0x000000000000000000000000000000000000006C 
 
 You can then calculate the current Arbitrum chain surplus fees as `currentBaseFee - minimumBaseFee`.
 
-<VanillaAdmonition type="note" title="`getPricesInWei()` also returns the correspondent fees due to congestion in the second-to-last result of the returned tuple.">
+<VanillaAdmonition type="note">
+
+`getPricesInWei()` also returns the correspondent fees due to congestion in the second-to-last result of the returned tuple.
 
 </VanillaAdmonition>
 <VanillaAdmonition type="info" title="Arbitrum chain surplus fees are automatically adjusted">
@@ -219,7 +223,9 @@ Arbitrum chain base fees are paid to the `infraFeeAccount` configured in your ch
 cast call --rpc-url $ORBIT_CHAIN_RPC 0x000000000000000000000000000000000000006B "getInfraFeeAccount() (address)"
 ```
 
-<VanillaAdmonition type="note" title="The [`ArbOwner`](/docs/arbitrum-essentials/precompiles/reference#arbowner) precompile also has a `getInfraFeeAccount()(address)` method that can be used, but only by the owner of the chain.">
+<VanillaAdmonition type="note">
+
+The [`ArbOwner`](/docs/arbitrum-essentials/precompiles/reference#arbowner) precompile also has a `getInfraFeeAccount()(address)` method that can be used, but only by the owner of the chain.
 
 </VanillaAdmonition>
 Alternatively, you can use the Chain SDK to retrieve the current address configured as `infraFeeAccount`:
@@ -270,7 +276,9 @@ Arbitrum chain surplus fees are paid to the `networkFeeAccount` configured in yo
 cast call --rpc-url $ORBIT_CHAIN_RPC 0x000000000000000000000000000000000000006B "getNetworkFeeAccount() (address)"
 ```
 
-<VanillaAdmonition type="note" title="The [`ArbOwner`](/docs/arbitrum-essentials/precompiles/reference#arbowner) precompile also has a `getNetworkFeeAccount()(address)` method that can be used, but only by the owner of the chain.">
+<VanillaAdmonition type="note">
+
+The [`ArbOwner`](/docs/arbitrum-essentials/precompiles/reference#arbowner) precompile also has a `getNetworkFeeAccount()(address)` method that can be used, but only by the owner of the chain.
 
 </VanillaAdmonition>
 Alternatively, you can use the Chain SDK to retrieve the current address configured as `networkFeeAccount`:
@@ -347,7 +355,9 @@ You can also query batch posters by calling the `getBatchPosters()(address[])` m
 cast call --rpc-url $ORBIT_CHAIN_RPC 0x000000000000000000000000000000000000006D "getBatchPosters() (address[])"
 ```
 
-<VanillaAdmonition type="warning" title="The list returned by `ArbAggregator.getBatchPosters()` may be incomplete. It only includes:">
+<VanillaAdmonition type="warning">
+
+The list returned by `ArbAggregator.getBatchPosters()` may be incomplete. It only includes:
 
 - Addresses that have been manually added via `addBatchPoster()`
 - Addresses that have successfully posted at least one batch
@@ -379,7 +389,9 @@ const networkFeeAccount = await orbitChainClient.arbAggregatorReadContract({
 
 #### Setting a fee collector
 
-<VanillaAdmonition type="info" title="Before calling `ArbAggregator.setFeeCollector()`, you must ensure the batch poster address is already registered in the `BatchPostersTable`. This is done either by:">
+<VanillaAdmonition type="info">
+
+Before calling `ArbAggregator.setFeeCollector()`, you must ensure the batch poster address is already registered in the `BatchPostersTable`. This is done either by:
 
 - Manually calling `ArbAggregator.addBatchPoster()` for the address, or
 - The address having successfully posted at least one batch

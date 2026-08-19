@@ -697,7 +697,9 @@ Generates an **opening proof** for reading a specific **32-byte range** of the c
 }
 ```
 
-<VanillaAdmonition type="note" title="The `offset` must be 32-byte aligned (0, 32, 64, 96, ...). The proof covers exactly 32 bytes starting at this offset.">
+<VanillaAdmonition type="note">
+
+The `offset` must be 32-byte aligned (0, 32, 64, 96, ...). The proof covers exactly 32 bytes starting at this offset.
 
 </VanillaAdmonition>
 **Returns**:
@@ -1402,7 +1404,9 @@ This section covers creating the Arbitrum chain with custom DA support, configur
 
 To use a custom DA validator contract for the onchain proving process, the minimum nitro-contracts version required is v3.2, which is available in the `deploy-custom-da-val` branch on the nitro-contracts repository.
 
-<VanillaAdmonition type="info" title="Nitro contracts v3.2 have not been publicly released yet and is not supported in the latest version of the Arbitrum Chain SDK. The following instructions specify how to deploy a RollupCreator factory contract and create a new chain with it. However, it's recommended to use the canonical RollupCreator factory contract and the Arbitrum Chain SDK once they are available.">
+<VanillaAdmonition type="info">
+
+Nitro contracts v3.2 have not been publicly released yet and is not supported in the latest version of the Arbitrum Chain SDK. The following instructions specify how to deploy a RollupCreator factory contract and create a new chain with it. However, it's recommended to use the canonical RollupCreator factory contract and the Arbitrum Chain SDK once they are available.
 
 </VanillaAdmonition>
 You can deploy a RollupCreator factory contract following the instructions in [How to deploy new factory contracts](/docs/launch-arbitrum-chain/deploy/canonical-factory-contracts#deploying-a-rollupcreator).
@@ -1457,7 +1461,9 @@ Nitro nodes connect to DA providers via JSON-RPC. Configure your provider with t
 --node.batch-poster.disable-dap-fallback-store-data-onchain   # Disable fallback to EthDA (calldata/blobs)
 ```
 
-<VanillaAdmonition type="note" title="The maximum batch size is determined dynamically by querying your DA provider's `daprovider_getMaxMessageSize` method before each batch is built. There is no static configuration for maximum batch size.">
+<VanillaAdmonition type="note">
+
+The maximum batch size is determined dynamically by querying your DA provider's `daprovider_getMaxMessageSize` method before each batch is built. There is no static configuration for maximum batch size.
 
 </VanillaAdmonition>
 ### JWT authentication
@@ -1934,7 +1940,9 @@ For integrators implementing server-side logic in Go, the recommended approach i
 
 Implementing the required JSON-RPC endpoints can be reduced to simple wrappers around the `DataStreamReceiver` methods, as demonstrated below.
 
-<VanillaAdmonition type="note" title="We use the `hexutil` types to correctly handle the required `0x`-prefixed integer encoding specified in [3. Implementing reader RPC methods](#3-implementing-reader-rpc-methods).">
+<VanillaAdmonition type="note">
+
+We use the `hexutil` types to correctly handle the required `0x`-prefixed integer encoding specified in [3. Implementing reader RPC methods](#3-implementing-reader-rpc-methods).
 
 </VanillaAdmonition>
 ```go

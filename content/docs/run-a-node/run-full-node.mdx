@@ -59,7 +59,7 @@ A default full node is unaffected: it runs the watchtower strategy, which does n
 If you are running more than one node, you should [run a feed relay](/docs/run-a-node/run-feed-relay).
 
 </VanillaAdmonition>
-<VanillaAdmonition type="warning" title="PathDB and `--init.latest`">
+<VanillaAdmonition type="warning" title="PathDB and --init.latest">
 
 `--init.latest` accepts only `archive`, `pruned`, and `genesis`, and every snapshot it resolves for those kinds uses HashDB. Adding `--execution.caching.state-scheme=path` to the examples below fails, because the downloaded snapshot's scheme won't match.
 
@@ -150,7 +150,9 @@ When you leave `--execution.caching.state-history` unset, Nitro chooses the defa
 
 From v3.10.0, Nitro derives this default from the archive flag. On earlier versions the default was always 24 hours' worth of blocks, so an archive node needs an explicit `--execution.caching.state-history=0`.
 
-<VanillaAdmonition type="note" title="The pruning process occurs when the node starts (upon initialization) and will not serve RPC requests during pruning.">
+<VanillaAdmonition type="note">
+
+The pruning process occurs when the node starts (upon initialization) and will not serve RPC requests during pruning.
 
 </VanillaAdmonition>
 If you are using the default storage scheme (HashDB), then you can activate pruning by using the parameter:
@@ -169,7 +171,9 @@ Under heavy RPC load or during operations such as large `debug_traceBlockByNumbe
 
 For an in-depth breakdown of Nitro's memory allocators, cache tuning, and OOM mitigations, see [Nitro memory management](/docs/run-a-node/nitro/nitro-memory-management).
 
-<VanillaAdmonition type="tip" title="For Docker deployments, you can set these in your `docker run` command:">
+<VanillaAdmonition type="tip">
+
+For Docker deployments, you can set these in your `docker run` command:
 
 ```shell
 docker run ... -e GOMEMLIMIT=48GiB ... offchainlabs/nitro-node:... --node.resource-mgmt.mem-free-limit=4GiB ...

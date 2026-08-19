@@ -80,6 +80,8 @@ See something missing?
 
 ### Not for Production Warning Banner
 
+This code has yet to be audited.
+
 - `<include cwd>content/partials/_not-for-production-banner-partial.mdx</include>`
 - used in 19 pages — tags: `not`, `for`, `production`, `banner`
 
@@ -99,7 +101,7 @@ The following information may be useful to those building on Arbitrum.
 
 ### Arbitrum RPC Endpoints Reference
 
-- Arbitrum public RPCs do not provide Websocket support.
+- Unlike the RPC Urls, the Sequencer endpoints only support ethsendRawTransaction and ethsendRawTransactionConditional calls.
 
 - `<include cwd>content/partials/_reference-arbitrum-rpc-endpoints-partial.mdx</include>`
 - used in 2 pages — tags: `reference`, `arbitrum`, `rpc`, `endpoints`
@@ -267,9 +269,9 @@ It is highly recommended that you work with a Rollup-as-a-Service (RaaS) provide
 - `<include cwd>content/partials/launch-arbitrum-chain/_raas-providers-notice.mdx</include>`
 - used in 6 pages — tags: `launch-arbitrum-chain`, `raas`, `providers`, `notice`
 
-### The `chainId` and `InitialChainOwner` parameters must be equal to the `chainId` and `owner` defined in the `Config` struct.
+### Size limit
 
-- Entering a contract requires reading its code from the database, which means larger code requires more work.
+The chainId and InitialChainOwner parameters must be equal to the chainId and owner defined in the Config struct.
 
 - `<include cwd>content/partials/launch-arbitrum-chain/_size-limit.mdx</include>`
 - used in 2 pages — tags: `launch-arbitrum-chain`, `size`, `limit`

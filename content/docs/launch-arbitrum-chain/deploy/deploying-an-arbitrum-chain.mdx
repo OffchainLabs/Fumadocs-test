@@ -214,7 +214,9 @@ const createRollupConfig = createRollupPrepareDeploymentParamsConfig(parentChain
 });
 ```
 
-<VanillaAdmonition type="info" title="The above defaults to Arbitrum Sepolia. We've added the import `viem/chains` and the chain info to demonstrate from a popular library (`viem`) how to import the chain information already available in the Arbitrum Chain SDK.">
+<VanillaAdmonition type="info">
+
+The above defaults to Arbitrum Sepolia. We've added the import `viem/chains` and the chain info to demonstrate from a popular library (`viem`) how to import the chain information already available in the Arbitrum Chain SDK.
 
 </VanillaAdmonition>
 ### 2. Deploy the Arbitrum chain
@@ -275,7 +277,9 @@ type CreateRollupResults = {
 
 If you're creating an AnyTrust chain, the next step is to set up the keyset of your Data Availability Committee (DAC) on the `SequencerInbox` contract. This process involves setting up the Data Availability Servers (DAS) and generating the keyset with all DAS' keys. See [How to configure a DAC](/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/get-started) to learn more about setting up a DAC.
 
-<VanillaAdmonition type="info" title="The Arbitrum Chain SDK includes an example script for setting up the keyset in the `SequencerInbox`. We recommend that you first understand the process described in this section and then check the [`set-valid-keyset`](https://github.com/OffchainLabs/arbitrum-chain-sdk/blob/main/examples/set-valid-keyset/index.ts) script.">
+<VanillaAdmonition type="info">
+
+The Arbitrum Chain SDK includes an example script for setting up the keyset in the `SequencerInbox`. We recommend that you first understand the process described in this section and then check the [`set-valid-keyset`](https://github.com/OffchainLabs/arbitrum-chain-sdk/blob/main/examples/set-valid-keyset/index.ts) script.
 
 </VanillaAdmonition>
 The Chain SDK includes a `setValidKeyset` function to help set the keyset in the SequencerInbox. From the last step, you can gather the `sequencerInbox` and `upgradeExecutor` addresses and pass them to the function along with the `keyset`, a public client of the parent chain, and a wallet client of an account that has executor privileges in the `UpgradeExecutor` contract (to learn more about `UpgradeExecutor`, see [Ownership structure and access control](/docs/launch-arbitrum-chain/operate/ownership-access-control)).

@@ -69,7 +69,7 @@ test('A3 does NOT fire inside a fenced code block', () => {
   assert.deepEqual(rules('```md\n:::note\ntext\n:::\n```'), []);
 });
 
-test('A4 fires for a markdown link, inline code, or entity in title=', () => {
+test('A4 fires for a markdown link or inline code in title=', () => {
   assert.ok(
     lintSource(
       '<VanillaAdmonition type="note" title="see [docs](/docs/x)">\n\nb\n\n</VanillaAdmonition>',
@@ -80,9 +80,23 @@ test('A4 fires for a markdown link, inline code, or entity in title=', () => {
       (f) => f.rule === 'A4',
     ),
   );
+});
+
+test('A4 does NOT fire on an HTML entity — JSX decodes those in attributes', () => {
+  // `title="L1 fee &quot;baked in&quot;"` renders as `L1 fee "baked in"`, verified in a browser.
+  assert.deepEqual(
+    rules(
+      '<VanillaAdmonition type="note" title="a &quot;b&quot;">\n\nbody\n\n</VanillaAdmonition>',
+    ),
+    [],
+  );
+});
+
+test('A4 sees markup that follows an apostrophe in a double-quoted title', () => {
+  // `["']([^"']*)["']` stops at the apostrophe and never reaches the backticks.
   assert.ok(
     lintSource(
-      '<VanillaAdmonition type="note" title="a &quot;b&quot;">\n\nb\n\n</VanillaAdmonition>',
+      '<VanillaAdmonition type="note" title="it doesn\'t use `x`">\n\nb\n\n</VanillaAdmonition>',
     ).some((f) => f.rule === 'A4'),
   );
 });
@@ -91,6 +105,22 @@ test('A4 does not fire on a plain title', () => {
   assert.deepEqual(
     rules('<VanillaAdmonition type="note" title="Plain title">\n\nbody\n\n</VanillaAdmonition>'),
     [],
+  );
+});
+
+test('A1 does NOT fire when the body is only a fenced code block', () => {
+  // The body is all spaces in the code-stripped text, so reading it from there reported a
+  // populated admonition as empty.
+  assert.deepEqual(
+    rules('<VanillaAdmonition type="tip">\n\n```shell\ndocker run x\n```\n\n</VanillaAdmonition>'),
+    [],
+  );
+});
+
+test('A1 still fires on a genuinely empty body', () => {
+  assert.deepEqual(
+    rules('<VanillaAdmonition type="note" title="stranded prose here">\n\n</VanillaAdmonition>'),
+    ['A1'],
   );
 });
 

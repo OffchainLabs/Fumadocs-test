@@ -73,7 +73,9 @@ To help illustrate what this all looks like in practice, let's go through the st
 
 ❗️ _[1] Please keep in mind that some older custom gateways might not have `outboundTransferCustomRefund` implemented, and `L1GatewayRouter.outboundTransferCustomRefund` does not fallback to `outboundTransfer`. In those cases, please use the function `L1GatewayRouter.outboundTransfer`._
 
-<VanillaAdmonition type="info" title="`arbSomeERC20Token` is an instance of [`StandardArbERC20`](https://github.com/OffchainLabs/token-bridge-contracts/blob/main/contracts/tokenbridge/arbitrum/StandardArbERC20.sol), which includes `bridgeMint` and `bridgeBurn` methods only callable by the `L2ERC20Gateway`.">
+<VanillaAdmonition type="info">
+
+`arbSomeERC20Token` is an instance of [`StandardArbERC20`](https://github.com/OffchainLabs/token-bridge-contracts/blob/main/contracts/tokenbridge/arbitrum/StandardArbERC20.sol), which includes `bridgeMint` and `bridgeBurn` methods only callable by the `L2ERC20Gateway`.
 
 </VanillaAdmonition>
 #### Withdrawals

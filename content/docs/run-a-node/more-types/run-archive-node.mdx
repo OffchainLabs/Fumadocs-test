@@ -53,7 +53,7 @@ To enable PathDB on your archive node, start it with these flags:
 | `--execution.caching.archive`           | Enables archive mode; under PathDB, builds the state-history index so RPC can serve historical state |
 | `--execution.caching.state-scheme=path` | Selects PathDB instead of the default HashDB                                                         |
 
-<VanillaAdmonition type="warning" title="On Nitro before v3.10.0, also set `--execution.caching.state-history=0`">
+<VanillaAdmonition type="warning" title="On Nitro before v3.10.0, also set --execution.caching.state-history=0">
 
 `--execution.caching.state-history` controls how many blocks of state history PathDB retains. From v3.10.0 onward, setting `--execution.caching.archive` makes it default to `0`, which keeps the entire chain, so you can leave it unset.
 

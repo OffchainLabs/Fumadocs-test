@@ -66,7 +66,9 @@ Deploying a token bridge for a chain involves the following steps:
 
 ### 1. Approve the custom gas token (if configured)
 
-<VanillaAdmonition type="note" title="This step is only a requirement for Arbitrum chains configured to use a custom gas token.">
+<VanillaAdmonition type="note">
+
+This step is only a requirement for Arbitrum chains configured to use a custom gas token.
 
 </VanillaAdmonition>
 Because the token bridge creation involves sending a retryable ticket to the Arbitrum chain, the `TokenBridgeCreator` needs to be able to send the appropriate custom gas token amount for its execution on the child chain. That means that before calling the `TokenBridgeCreator`, we need to grant allowance to the contract to move our custom gas token. To facilitate this process, the Chain SDK provides two functions:

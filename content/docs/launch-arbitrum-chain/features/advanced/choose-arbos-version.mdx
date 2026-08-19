@@ -40,7 +40,9 @@ Customizing the <Term id="arbos">ArbOS</Term> version involves modifying the Nit
 - **New state variable**: Add `myNumber` initialized in `UpgradeArbosVersion` switch for v21: `ensure(state.SetNewMyNumber(randomNumber))`.
 - **STF Logic change**: Branch in a method: `if p.state.ArbOSVersion() >= 32 { return "hi, new version" } else { return "hi" }`.
 
-<VanillaAdmonition type="info" title="It is important to understand that this is part of customizing the behavior of your chain. You can read more about this on the [Choose Custom Behavior](/docs/launch-arbitrum-chain/features/advanced/choose-custom-behavior) page.">
+<VanillaAdmonition type="info">
+
+It is important to understand that this is part of customizing the behavior of your chain. You can read more about this on the [Choose Custom Behavior](/docs/launch-arbitrum-chain/features/advanced/choose-custom-behavior) page.
 
 </VanillaAdmonition>
 ## How to configure

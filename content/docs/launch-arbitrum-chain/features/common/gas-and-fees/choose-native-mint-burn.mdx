@@ -13,7 +13,9 @@ While this feature allows an Arbitrum chain to use native interop tokens as gas 
 However, by using a third-party bridge for the chain's gas token, your chain's gas token—and thus its liveness—becomes directly dependent on the security and integrity of the third-party bridge provider.
 
 </VanillaAdmonition>
-<VanillaAdmonition type="info" title="While Native Mint/Burn was introduced in ArbOS 41, we strongly recommend that teams upgrade to [ArbOS 51 Dia](/docs/run-a-node/arbos-releases/arbos51) to enable this feature.">
+<VanillaAdmonition type="info">
+
+While Native Mint/Burn was introduced in ArbOS 41, we strongly recommend that teams upgrade to [ArbOS 51 Dia](/docs/run-a-node/arbos-releases/arbos51) to enable this feature.
 
 </VanillaAdmonition>
 Arbitrum chains are designed to “lock and mint” the native gas token in the canonical bridge. This process ensures the child representation of the gas token is always backed by the parent chain's gas token, locked in the canonical bridge.
@@ -26,7 +28,9 @@ This "lock and mint" pattern is not compatible with an emerging category of "nat
 2. A security switch to timelock changes to native mint and burn permissioned addresses (mitigating the risk of misuse or attack).
 3. A collateral-sweeping method to ensure the third-party native interop token’s cross-chain adapter contract always remains properly collateralized.
 
-<VanillaAdmonition type="info" title="The native mint/burn feature permits mint and burn capability of the Rollup’s native gas token by a permissioned address on the Rollup. It does not provide a solution for cross-chain interoperability and is not a replacement for third-party omni-chain gas token products provided by partners such as LayerZero or Hyperlane. The table below helps to clarify the components needed to enable the use cases below.">
+<VanillaAdmonition type="info">
+
+The native mint/burn feature permits mint and burn capability of the Rollup’s native gas token by a permissioned address on the Rollup. It does not provide a solution for cross-chain interoperability and is not a replacement for third-party omni-chain gas token products provided by partners such as LayerZero or Hyperlane. The table below helps to clarify the components needed to enable the use cases below.
 
 </VanillaAdmonition>
 | Component                                           | Maintainer                                         | Role/purpose                                                                                                                                                                                                            |

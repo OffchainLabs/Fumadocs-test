@@ -18,7 +18,9 @@ Custom gas token support in the Arbitrum SDK introduces a suite of APIs designed
    - **APIs:** `getApproveGasTokenRequest` and `approveGasToken`.
    - **Purpose:** These APIs are essential for the bridging of native tokens to the Arbitrum chain. They facilitate the necessary approval for native tokens, allowing contracts to manage fund movements. This process includes escrowing a specified amount of the native token on the parent chain and subsequently bridging it to the Arbitrum chain.
 
-<VanillaAdmonition type="note" title="You should use `EthBridger` when bridging the native token between the parent chain and the Arbitrum chain.">
+<VanillaAdmonition type="note">
+
+You should use `EthBridger` when bridging the native token between the parent chain and the Arbitrum chain.
 
 </VanillaAdmonition>
 2. **`Erc20Bridger` Context:**

@@ -45,7 +45,9 @@ cast send --rpc-url $PARENT_CHAIN_RPC --private-key $OWNER_PRIVATE_KEY $SEQUENCE
 
 You can use only one database at a time, so you can't have both a Redis server and a DB in use simultaneously.
 
-<VanillaAdmonition type="note" title="If your parent chain is an Arbitrum chain or doesn't have a mempool, you can ignore this section. Noop storage is automatically chosen because batches post sequentially -- a new batch only posts after the previous transaction goes through. No database tracking for queued transactions is required.">
+<VanillaAdmonition type="note">
+
+If your parent chain is an Arbitrum chain or doesn't have a mempool, you can ignore this section. Noop storage is automatically chosen because batches post sequentially -- a new batch only posts after the previous transaction goes through. No database tracking for queued transactions is required.
 
 </VanillaAdmonition>
 ### Noop
@@ -70,7 +72,9 @@ To configure Redis, you can also specify a `redis-signer` value with the flag `-
 
 #### Key differences
 
-<VanillaAdmonition type="info" title="The default values are DB on by default, and Noop on by default if and only if the parent chain does not have a mempool (any L3 whose parent is an Arbitrum chain).">
+<VanillaAdmonition type="info">
+
+The default values are DB on by default, and Noop on by default if and only if the parent chain does not have a mempool (any L3 whose parent is an Arbitrum chain).
 
 </VanillaAdmonition>
 | Feature            | Noop | DB         | Redis          |
@@ -213,7 +217,9 @@ const networkFeeAccount = await orbitChainClient.arbAggregatorReadContract({
 });
 ```
 
-<VanillaAdmonition type="note" title="Before setting a fee collector for a batch poster, ensure the batch poster is registered in the `BatchPostersTable`. This can be achieved by:">
+<VanillaAdmonition type="note">
+
+Before setting a fee collector for a batch poster, ensure the batch poster is registered in the `BatchPostersTable`. This can be achieved by:
 
 - Manually calling `ArbAggregator.addBatchPoster()` for the address, or
 - The address has been successfully posted for at least one batch
@@ -254,7 +260,9 @@ cast send --rpc-url $PARENT_CHAIN_RPC --private-key $OWNER_PRIVATE_KEY $SEQUENCE
 
 ### Setting revenue values
 
-<VanillaAdmonition type="note" title="These values are only editable by the chain owner(s).">
+<VanillaAdmonition type="note">
+
+These values are only editable by the chain owner(s).
 
 </VanillaAdmonition>
 There are onchain values in ArbOS that set how much ArbOS changes per L1 gas spent on transaction data. This can be set by communicating with the [`ArbOwner` precompile](/docs/arbitrum-essentials/precompiles/reference#arbowner).

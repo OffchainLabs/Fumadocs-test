@@ -92,7 +92,9 @@ const nodeInterface = new ethers.Contract('0x00000000000000000000000000000000000
 const proofData = await nodeInterface.constructOutboxProof(batchNumber, indexInBatch);
 ```
 
-<VanillaAdmonition type="note" title="`NodeInterface` is a &quot;virtual&quot; contract accessible at `0x00000000000000000000000000000000000000C8`. It isn't a true precompile but provides Arbitrum-specific data without requiring a custom RPC.">
+<VanillaAdmonition type="note">
+
+`NodeInterface` is a "virtual" contract accessible at `0x00000000000000000000000000000000000000C8`. It isn't a true precompile but provides Arbitrum-specific data without requiring a custom RPC.
 
 </VanillaAdmonition>
 ### Step 2: Execute on the parent chain

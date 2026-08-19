@@ -11,8 +11,9 @@
  *   A2  VanillaAdmonition `type` outside the component's union (note|tip|info|warning|danger); anything
  *       else indexes `styles[type]` as undefined and renders unstyled.
  *   A3  Unconverted Docusaurus `:::` directive — renders as literal `:::caution` text to readers.
- *   A4  Markdown or entity syntax inside a `title=` attribute — attributes are plain strings, so
- *       `[text](/docs/x)` renders literally and the link is unclickable.
+ *   A4  Markdown syntax inside a `title=` attribute — `title` is a plain string prop, so
+ *       `[text](/docs/x)` renders literally and the link is unclickable. HTML entities are not
+ *       flagged: JSX decodes those in attribute values, so they render as intended.
  *   A5  Internal link target keeping a `.md`/`.mdx` suffix — 404s at runtime.
  */
 import { readFileSync } from 'node:fs';
@@ -56,21 +57,29 @@ export function lintSource(source) {
     let body = null;
     if (selfClose === '/') body = '';
     else {
-      const after = text.slice(m.index + full.length);
-      const close = after.indexOf('</VanillaAdmonition>');
-      if (close !== -1) body = after.slice(0, close);
+      // Locate the closer in the code-stripped text (so a closer inside a fence is ignored) but
+      // read the body from `source`: a body consisting only of a fenced code block is all spaces
+      // in `text`, which used to report a populated admonition as empty.
+      const close = text.indexOf('</VanillaAdmonition>', m.index + full.length);
+      if (close !== -1) body = source.slice(m.index + full.length, close);
     }
     if (body !== null && body.trim() === '') {
       add('A1', m.index, 'admonition body is empty — body prose likely moved into title=');
     }
 
-    // A4 — attributes are plain strings; markdown and entities do not render inside them.
-    const title = attrs.match(/\btitle\s*=\s*["']([^"']*)["']/)?.[1];
+    // A4 — `title` is a plain string prop, so markdown in it is printed verbatim.
+    //
+    // Match the closing quote to the opening one: `["']([^"']*)["']` stops at the first apostrophe
+    // inside a double-quoted value ("…doesn't…"), truncating the title and hiding any markup after
+    // it — that under-reported A4 by 4 findings.
+    //
+    // HTML entities are deliberately NOT flagged: JSX decodes them in attribute values, so
+    // `title="L1 fee &quot;baked in&quot;"` renders as `L1 fee "baked in"` (verified in a browser).
+    const title = attrs.match(/\btitle\s*=\s*(["'])((?:(?!\1).)*)\1/)?.[2];
     if (title) {
       const problems = [];
       if (/\]\(/.test(title)) problems.push('markdown link');
       if (/`/.test(title)) problems.push('inline code');
-      if (/&[a-zA-Z#][\w]*;/.test(title)) problems.push('HTML entity');
       if (problems.length) {
         add('A4', m.index, `title= contains ${problems.join(' + ')} which renders literally`);
       }
