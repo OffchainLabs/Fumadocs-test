@@ -20,13 +20,10 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-import { i18n } from '@/lib/i18n';
 import { docsRoute } from '@/lib/shared';
 
-export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
-  const { lang } = await params;
-  const prefix = lang === i18n.defaultLanguage ? '' : `/${lang}`;
-  const docs = (path: string) => `${prefix}${docsRoute}${path}`;
+export default function HomePage() {
+  const docs = (path: string) => `${docsRoute}${path}`;
 
   return (
     <main className="flex flex-col flex-1">

@@ -1,8 +1,6 @@
-import { createI18nMiddleware } from 'fumadocs-core/i18n/middleware';
 import { isMarkdownPreferred, rewritePath } from 'fumadocs-core/negotiation';
-import { NextFetchEvent, NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
-import { i18n } from '@/lib/i18n';
 import { docsContentRoute, docsRoute } from '@/lib/shared';
 
 const { rewrite: rewriteDocs } = rewritePath(
@@ -14,11 +12,9 @@ const { rewrite: rewriteSuffix } = rewritePath(
   `${docsContentRoute}{/*path}/content.md`,
 );
 
-const i18nMiddleware = createI18nMiddleware(i18n);
-
-export default function proxy(request: NextRequest, event: NextFetchEvent) {
+export default function proxy(request: NextRequest) {
   const path = request.nextUrl.pathname;
-  // Site-wide routes that are NOT locale-prefixed. Skip i18n + content-negotiation.
+  // Routes served verbatim — skip markdown content-negotiation entirely.
   if (
     path.startsWith('/_next/') ||
     path.startsWith('/img/') ||
@@ -50,8 +46,5 @@ export default function proxy(request: NextRequest, event: NextFetchEvent) {
     }
   }
 
-  // 3. Locale handling (en | zh-CN | ja). With `hideLocale: 'default-locale'`,
-  // English keeps clean paths; non-default locales get a `/zh-CN/...` or
-  // `/ja/...` prefix.
-  return i18nMiddleware(request, event);
+  return NextResponse.next();
 }

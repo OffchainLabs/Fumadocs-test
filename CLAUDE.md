@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-Arbitrum documentation portal — a Next.js 16 / Fumadocs migration of [`OffchainLabs/arbitrum-docs`](https://github.com/OffchainLabs/arbitrum-docs) off Docusaurus. Serves localized MDX docs (en, zh-CN, ja). Phase 0 MVP: single-committer. CI landed 2026-08-17 (`.github/workflows/`); the repo is linked to the Vercel project `fumadocs-test`.
+Arbitrum documentation portal — a Next.js 16 / Fumadocs migration of [`OffchainLabs/arbitrum-docs`](https://github.com/OffchainLabs/arbitrum-docs) off Docusaurus. Serves English MDX docs (single locale; i18n was removed 2026-08-18). Phase 0 MVP: single-committer. CI landed 2026-08-17 (`.github/workflows/`); the repo is linked to the Vercel project `fumadocs-test`.
 
 ## Commands
 
@@ -38,16 +38,16 @@ pnpm nitro:check-release  # bump the pinned Nitro release in content/vars.json
 
 ## Architecture
 
-**Build → render pipeline** (understanding it requires reading `source.config.ts`, `lib/source.ts`, and `app/[lang]/docs/[[...slug]]/page.tsx` together):
+**Build → render pipeline** (understanding it requires reading `source.config.ts`, `lib/source.ts`, and `app/docs/[[...slug]]/page.tsx` together):
 
 1. `fumadocs-mdx` scans `content/docs/**`, validates every page's frontmatter against the Zod schema in `source.config.ts`, and emits the `.source/` collection.
-2. `lib/source.ts` runs Fumadocs `loader()` over that collection with i18n + icons → the exported `source` object.
-3. Route handlers read `source`: `app/[lang]/docs/[[...slug]]/page.tsx` renders pages; the `llms.txt`, `llms-full.txt`, `llms.mdx/`, and `og/` routes all derive from the same `source`. Change the content model in one place and every consumer follows.
+2. `lib/source.ts` runs Fumadocs `loader()` over that collection with the icons plugin → the exported `source` object.
+3. Route handlers read `source`: `app/docs/[[...slug]]/page.tsx` renders pages; the `llms.txt`, `llms-full.txt`, `llms.mdx/`, and `og/` routes all derive from the same `source`. Change the content model in one place and every consumer follows.
 
 **`source` is a deliberate choke point — treat `source.config.ts` + `lib/source.ts` as one unit.** Seven files under `app/` import it (five routes, the docs page, the docs layout) and nothing else reads content:
 
 - `docs.toFumadocsSource()` is the **only** adapter for `.source/`. Never build a second read path.
-- `baseUrl` and `i18n` are arguments to the single `loader()` call. A second loader would restate them and silently drift locale URLs.
+- `baseUrl` is an argument to the single `loader()` call. A second loader would restate it and silently drift page URLs.
 - Helpers are typed `(typeof source)['$inferPage']`, so editing the frontmatter schema re-types every helper and every consumer at once.
 - `postprocess.includeProcessedMarkdown: true` is what makes `getLLMText()`'s `page.data.getText('processed')` work — remove it and the `llms*` routes break, far from where the flag lives.
 - Put URL derivation next to `source` (`getPageImage`, `getPageMarkdownUrl`, `getLLMText`), not in routes.
@@ -64,11 +64,11 @@ pnpm nitro:check-release  # bump the pinned Nitro release in content/vars.json
 
 Design: [`.claude/docs/superpowers/specs/2026-07-09-partials-registry-design.md`](.claude/docs/superpowers/specs/2026-07-09-partials-registry-design.md).
 
-**i18n + routing.** `lib/i18n.ts` uses `parser: 'dir'` (content under `content/docs/{locale}/...`) and `hideLocale: 'default-locale'` — English keeps clean paths (`/docs/...`), other locales are prefixed (`/zh-CN/docs/...`). This avoids the `Vary: Cookie` cache-buster that `'always'` forces. `proxy.ts` runs before i18n and handles: (1) an explicit **bypass list** of non-locale-prefixed routes (`/_next/`, `/img/`, `/favicon.ico`, `/llms*`, `/og/`, `/api/`), (2) `.md`-suffix rewrites and `Accept: text/markdown` content negotiation to the markdown route, then (3) the i18n middleware. **Any new top-level route must be added to the bypass list in `proxy.ts`** or it gets locale-mangled.
+**Routing.** Single locale, no i18n: pages live directly under `content/docs/...` and serve at `/docs/...`. There is no `[lang]` route segment and no locale middleware — `lib/i18n.ts` was deleted 2026-08-18 along with the `ja` and `zh-CN` trees. `proxy.ts` now does exactly two things: (1) an explicit **bypass list** of routes served verbatim (`/_next/`, `/img/`, `/favicon.ico`, `/llms*`, `/og/`, `/api/`), and (2) `.md`-suffix rewrites plus `Accept: text/markdown` content negotiation to the markdown route. **A new top-level route still belongs in that bypass list** or markdown negotiation will try to rewrite it. Re-adding localization means restoring `defineI18n`, the `i18n` argument to `loader()`, a `[lang]` segment, and `createI18nMiddleware`.
 
 **Global variables.** Writer-edited values live in `content/vars.json`, validated by the Zod schema in `content/vars.ts`, and rendered in MDX via `<Var name="..." />`. A bad value fails at module load.
 
-**Partial versioning.** Archived pages live in `content/_versions/<id>/<locale>/…` — a separate non-routed collection, outside `content/docs` for the same reason partials are. `lib/versions.ts` indexes them by path; only hand-registered English pages are versioned. Spec: [`.claude/docs/superpowers/specs/2026-07-17-partial-versioning-design.md`](.claude/docs/superpowers/specs/2026-07-17-partial-versioning-design.md).
+**Partial versioning.** Archived pages live in `content/_versions/<id>/…` — a separate non-routed collection, outside `content/docs` for the same reason partials are. `lib/versions.ts` indexes them by path; only hand-registered pages are versioned. Spec: [`.claude/docs/superpowers/specs/2026-07-17-partial-versioning-design.md`](.claude/docs/superpowers/specs/2026-07-17-partial-versioning-design.md).
 
 **Glossary / inline references.** `content/glossary/*.mdx` is a reference collection (`{ id, title, sortAs? }` — *not* the page contract), surfaced by `<Reference>` / `<Term>` / `<ReferenceList>` via the registry in `lib/references.ts`. New reference types add a collection plus one registry entry. Spec: [`.claude/docs/superpowers/specs/2026-07-10-references-glossary-design.md`](.claude/docs/superpowers/specs/2026-07-10-references-glossary-design.md).
 
@@ -78,7 +78,7 @@ Design: [`.claude/docs/superpowers/specs/2026-07-09-partials-registry-design.md`
 
 ## Known trade-off (not a bug)
 
-`app/[lang]/docs/[[...slug]]/page.tsx` has `generateStaticParams` return `[]`, deliberately disabling static prerendering (ISR-on-first-request) to work around a Next 16.2.6 prerender crash — hence `build` uses `--experimental-build-mode=compile`. The inline comment documents the restore path; don't "fix" it without addressing that.
+`app/docs/[[...slug]]/page.tsx` has `generateStaticParams` return `[]`, deliberately disabling static prerendering (ISR-on-first-request) to work around a Next 16.2.6 prerender crash — hence `build` uses `--experimental-build-mode=compile`. The inline comment documents the restore path; don't "fix" it without addressing that.
 
 ## Conventions
 

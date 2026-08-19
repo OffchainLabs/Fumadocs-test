@@ -61,7 +61,7 @@ function main() {
   const idx = argv.indexOf('--tree-a');
   const treeA = idx !== -1 ? argv[idx + 1] : DEFAULT_TREE_A;
   const treeARepo = path.dirname(treeA);
-  const treeB = path.join(process.cwd(), 'content', 'docs', 'en');
+  const treeB = path.join(process.cwd(), 'content', 'docs');
 
   if (!existsSync(treeA)) {
     console.error(`upstream-drift: legacy tree not found at ${treeA}. Pass --tree-a <path>.`);

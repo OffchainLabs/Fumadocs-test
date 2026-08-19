@@ -6,10 +6,10 @@
  * at, and re-renders a link preserving its written form. `move-doc`, `inventory-links`,
  * `check-links`, and `restructure` are thin CLIs over these primitives.
  *
- * Fumadocs specifics (vs. the Docusaurus original this ports): content lives under
- * `content/docs/{locale}/…` (`parser: 'dir'`, `hideLocale: 'default-locale'`, baseUrl `/docs`); slugs
- * are the path minus extension with a trailing `index` dropped (no numeric prefixes, no `slug:`
- * frontmatter override); navigation order lives in per-directory `meta.json` `pages` arrays.
+ * Fumadocs specifics (vs. the Docusaurus original this ports): content lives directly under
+ * `content/docs/…` (baseUrl `/docs`, single locale); slugs are the path minus extension with a
+ * trailing `index` dropped (no numeric prefixes, no `slug:` frontmatter override); navigation order
+ * lives in per-directory `meta.json` `pages` arrays.
  */
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
@@ -17,7 +17,6 @@ import path from 'node:path';
 const posix = path.posix;
 
 export const CONTENT_DIR = path.join('content', 'docs');
-export const DEFAULT_LOCALE = 'en';
 
 /** Convert an OS path to posix separators. */
 export function toPosix(p) {
@@ -59,38 +58,36 @@ export function isPartial(absPath) {
   return path.basename(absPath).startsWith('_');
 }
 
-/** Slug segments for a doc: path after the locale, minus extension, trailing `index` dropped. */
-function computeSlug(restSegs) {
-  const segs = restSegs.slice();
+/** Slug segments for a doc: path minus extension, trailing `index` dropped. */
+function computeSlug(pathSegs) {
+  const segs = pathSegs.slice();
   if (segs.length === 0) return '';
   segs[segs.length - 1] = segs[segs.length - 1].replace(/\.mdx?$/i, '');
   if (segs.length > 0 && /^index$/i.test(segs[segs.length - 1])) segs.pop();
   return segs.join('/');
 }
 
-/** The site URL for a (locale, slug), honoring `hideLocale: 'default-locale'`. */
-function buildUrl(locale, slug) {
-  const prefix = locale === DEFAULT_LOCALE ? '' : '/' + locale;
-  return normalizeUrl(prefix + '/docs' + (slug ? '/' + slug : ''));
+/** The site URL for a slug. */
+function buildUrl(slug) {
+  return normalizeUrl('/docs' + (slug ? '/' + slug : ''));
 }
 
 /**
- * Derive a doc file's locale, slug, URL, and partial flag from its path — works for a file that
- * does not exist yet (a move target), so callers can compute the destination's identity up front.
+ * Derive a doc file's slug, URL, and partial flag from its path — works for a file that does not
+ * exist yet (a move target), so callers can compute the destination's identity up front.
  */
 export function computeFileMeta(docsRoot, abs) {
   const segs = toPosix(path.relative(docsRoot, abs)).split('/').filter(Boolean);
-  const locale = segs[0];
-  const slug = computeSlug(segs.slice(1));
+  const slug = computeSlug(segs);
   const partial = isPartial(abs);
-  return { locale, slug, url: partial ? null : buildUrl(locale, slug), partial };
+  return { slug, url: partial ? null : buildUrl(slug), partial };
 }
 
 /**
  * Build the docs index for a repo.
  *
  * @param {string} repoRoot Absolute repo root.
- * @returns index with `files[]`, `byAbs`, `localeByAbs`, `slugByAbs`, `urlByAbs`, `byUrl`, `byLocaleSlug`.
+ * @returns index with `files[]`, `byAbs`, `slugByAbs`, `urlByAbs`, `byUrl`.
  */
 export function buildIndex(repoRoot) {
   const docsRoot = path.join(repoRoot, CONTENT_DIR);
@@ -100,20 +97,17 @@ export function buildIndex(repoRoot) {
 
   const files = [];
   const byAbs = new Set();
-  const localeByAbs = new Map();
   const slugByAbs = new Map();
   const urlByAbs = new Map();
   const byUrl = new Map();
-  const byLocaleSlug = new Map();
 
   for (const relFromDocs of rels) {
     const abs = path.join(docsRoot, relFromDocs);
-    const { locale, slug, url } = computeFileMeta(docsRoot, abs);
+    const { slug, url } = computeFileMeta(docsRoot, abs);
     const partial = url === null;
     const content = readFileSync(abs, 'utf8');
 
     byAbs.add(abs);
-    localeByAbs.set(abs, locale);
     slugByAbs.set(abs, slug);
     if (url !== null) {
       urlByAbs.set(abs, url);
@@ -124,13 +118,11 @@ export function buildIndex(repoRoot) {
         );
       }
       byUrl.set(url, abs);
-      byLocaleSlug.set(`${locale}\0${slug}`, abs);
     }
 
     files.push({
       abs,
       rel: toPosix(path.relative(repoRoot, abs)),
-      locale,
       slug,
       url,
       content,
@@ -143,11 +135,9 @@ export function buildIndex(repoRoot) {
     docsRoot,
     files,
     byAbs,
-    localeByAbs,
     slugByAbs,
     urlByAbs,
     byUrl,
-    byLocaleSlug,
   };
 }
 
@@ -279,19 +269,12 @@ export function resolveRefToFile(rawUrl, fromAbs, index) {
     return index.byUrl.get(target) ?? null;
   }
 
-  let rest = pathPart;
-  let locale = DEFAULT_LOCALE;
-  const loc = /^\/(zh-CN|ja)(?=\/|$)/.exec(rest);
-  if (loc) {
-    locale = loc[1];
-    rest = rest.slice(loc[0].length);
-  }
-  if (!/^\/docs(?=\/|$)/.test(rest)) return null;
-  let slug = rest
+  if (!/^\/docs(?=\/|$)/.test(pathPart)) return null;
+  const slug = pathPart
     .replace(/^\/docs\/?/, '')
     .replace(/\.mdx?$/i, '')
     .replace(/\/$/, '');
-  return index.byLocaleSlug.get(`${locale}\0${slug}`) ?? null;
+  return index.byUrl.get(buildUrl(slug)) ?? null;
 }
 
 /**

@@ -29,17 +29,17 @@ export default async function Page({
   params,
   searchParams,
 }: {
-  params: Promise<{ lang: string; slug?: string[] }>;
+  params: Promise<{ slug?: string[] }>;
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const { lang, slug } = await params;
-  const page = source.getPage(slug, lang);
+  const { slug } = await params;
+  const page = source.getPage(slug);
   if (!page) notFound();
 
-  // Partial versioning: only English pages in the registry expose a version dropdown. Other
-  // locales and unregistered pages render Latest exactly as before.
+  // Partial versioning: only pages in the registry expose a version dropdown; unregistered
+  // pages render Latest exactly as before.
   const slugKey = canonicalSlug(slug);
-  const versions = lang === 'en' ? getVersions(slugKey) : undefined;
+  const versions = getVersions(slugKey);
   const requested = (await searchParams)[VERSION_PARAM];
   const requestedId = Array.isArray(requested) ? requested[0] : requested;
   // Unknown/absent `?v=` falls back to Latest (no 404).
@@ -53,7 +53,7 @@ export default async function Page({
   const markdownUrl = getPageMarkdownUrl(page).url;
   // For an archived version, point the "edit" link at the archive file (whose repo-relative path
   // depends on the storage strategy, so it comes from lib/versions.ts) rather than the live page.
-  const repoPath = archive ? archiveRepoPath(archive) : `content/docs/${lang}/${page.path}`;
+  const repoPath = archive ? archiveRepoPath(archive) : `content/docs/${page.path}`;
 
   return (
     <DocsPage toc={toc} full={page.data.full}>
@@ -99,10 +99,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ lang: string; slug?: string[] }>;
+  params: Promise<{ slug?: string[] }>;
 }): Promise<Metadata> {
-  const { lang, slug } = await params;
-  const page = source.getPage(slug, lang);
+  const { slug } = await params;
+  const page = source.getPage(slug);
   if (!page) notFound();
 
   return {

@@ -10,8 +10,7 @@
  *      with any `#anchor`/`?query`);
  *   2. moves the file (via `git mv`), recomputing the file's *own* relative links so they stay valid;
  *   3. updates the doc's entry in the surrounding `meta.json` navigation;
- *   4. moves same-slug counterparts in other locales when present, rewriting links in every locale tree;
- *   5. records the old→new URL(s) in `redirects.config.mjs`.
+ *   4. records the old→new URL in `redirects.config.mjs`.
  *
  * `--dry-run` prints every change without touching the filesystem. Paths are repo-relative files under
  * `content/docs/` (not site URLs). After a real run, verify with `pnpm restructure` or `pnpm check-links`.
@@ -273,24 +272,9 @@ function main() {
 
   const fromMeta = computeFileMeta(docsRoot, fromAbs);
   const toMeta = computeFileMeta(docsRoot, toAbs);
-  if (fromMeta.locale !== toMeta.locale) {
-    exitErr(
-      `cross-locale moves are not supported (${fromMeta.locale} -> ${toMeta.locale}); move within a locale tree.`,
-    );
-  }
 
   const records = scanLinks(index);
   const { editsByFile, changes, unrenderable } = planMove(records, index, fromAbs, toAbs);
-
-  // Locale counterparts: same slug under a sibling locale tree, when they exist on disk.
-  const counterparts = [];
-  for (const [key, abs] of index.byLocaleSlug) {
-    const [locale, slug] = key.split('\0');
-    if (locale !== fromMeta.locale && slug === fromMeta.slug) {
-      const cpToAbs = path.join(docsRoot, locale, ...toMeta.slug.split('/')) + path.extname(abs);
-      counterparts.push({ fromAbs: abs, toAbs: cpToAbs, locale });
-    }
-  }
 
   const relFrom = toPosix(path.relative(repoRoot, fromAbs));
   const relTo = toPosix(path.relative(repoRoot, toAbs));
@@ -306,10 +290,6 @@ function main() {
     `  inbound link rewrites: ${inboundCount} across ${[...editsByFile.keys()].filter((a) => a !== fromAbs).length} file(s)`,
   );
   console.log(`  moved-file relative links rewritten: ${outboundCount}`);
-  for (const cp of counterparts)
-    console.log(
-      `  locale counterpart: ${toPosix(path.relative(repoRoot, cp.fromAbs))} -> ${toPosix(path.relative(repoRoot, cp.toAbs))}`,
-    );
 
   const partialWarns = ambiguousPartialLinks(records);
   if (unrenderable.length) {
@@ -341,12 +321,6 @@ function main() {
       console.log(
         `  redirect: { source: '${fromMeta.url}', destination: '${toMeta.url}', permanent: true }`,
       );
-      for (const cp of counterparts) {
-        const cpTo = computeFileMeta(docsRoot, cp.toAbs);
-        console.log(
-          `  redirect: { source: '${index.urlByAbs.get(cp.fromAbs)}', destination: '${cpTo.url}', permanent: true }`,
-        );
-      }
     }
     console.log('\n[dry-run] no files were changed.');
     return;
@@ -371,26 +345,12 @@ function main() {
 
   for (const n of updateMeta(fromAbs, toAbs, false)) console.log(`  ${n}`);
 
-  // Locale counterparts: move the file and update its meta (links already rewritten tree-wide above).
-  for (const cp of counterparts) {
-    const cpStaged = moveFile(cp.fromAbs, cp.toAbs, repoRoot);
-    if (!cpStaged) console.warn(`  note: counterpart ${cp.locale} moved without git — unstaged`);
-    for (const n of updateMeta(cp.fromAbs, cp.toAbs, false)) console.log(`  [${cp.locale}] ${n}`);
-  }
-
-  // Redirects (one per affected locale URL).
+  // Redirect for the moved URL.
   const redirectsPath = path.join(repoRoot, 'redirects.config.mjs');
   if (fromMeta.url !== toMeta.url) {
     console.log(
       `  redirects.config.mjs: ${appendRedirect(redirectsPath, fromMeta.url, toMeta.url, false)} ${fromMeta.url} -> ${toMeta.url}`,
     );
-    for (const cp of counterparts) {
-      const src = index.urlByAbs.get(cp.fromAbs);
-      const dst = computeFileMeta(docsRoot, cp.toAbs).url;
-      console.log(
-        `  redirects.config.mjs: ${appendRedirect(redirectsPath, src, dst, false)} ${src} -> ${dst}`,
-      );
-    }
   }
 
   console.log('\nDone. Verify with `pnpm check-links` (or `pnpm restructure` runs it for you).');

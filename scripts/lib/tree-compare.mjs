@@ -2,8 +2,8 @@
  * tree-compare — normalize the legacy Docusaurus tree onto this repo's layout.
  *
  * A raw path diff between the two trees is meaningless: the legacy tree carries Docusaurus numeric
- * ordering prefixes, has no locale segment, and several sections were renamed during the migration.
- * These helpers apply those corrections so paths can be compared.
+ * ordering prefixes, and several sections were renamed during the migration. These helpers apply
+ * those corrections so paths can be compared.
  */
 
 /** Tree A section prefix -> Tree B section prefix. Longest match wins. */

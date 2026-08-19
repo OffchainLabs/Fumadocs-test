@@ -63,7 +63,7 @@ export const docs = defineDocs({
  * Archived page versions for partial versioning (option #2, version subfolders).
  *
  * A separate, non-routed doc collection (same idiom as `glossary` below). Its content lives
- * **outside** `content/docs` — at `content/_versions/<id>/<locale>/…`, mirroring how
+ * **outside** `content/docs` — at `content/_versions/<id>/…`, mirroring how
  * `content/partials/` sits outside the routed tree — so the router never sees it (picomatch array
  * globs are OR and can't exclude a subfolder inside the routed dir). `lib/versions.ts` indexes these
  * by file path and the docs page renders the selected one.
@@ -99,7 +99,7 @@ export default defineConfig({
     //
     // remark-math + rehype-katex render the LaTeX math ($…$ / $$…$$) used across
     // the ported docs (mirrors the Docusaurus setup). KaTeX CSS is imported in
-    // app/[lang]/layout.tsx.
+    // app/layout.tsx.
     remarkPlugins: [remarkMath],
     rehypePlugins: (v) => [rehypeKatex, ...v],
     //

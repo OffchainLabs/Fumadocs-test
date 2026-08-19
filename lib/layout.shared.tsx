@@ -1,27 +1,13 @@
-import { defineI18nUI } from 'fumadocs-ui/i18n';
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import { BookOpen, Braces, Code, Coins } from 'lucide-react';
 
-import { i18n } from './i18n';
 import { appName, docsRoute } from './shared';
-
-/**
- * UI translations + display names for each locale.
- * Wired into RootProvider via `i18nUI.provider(lang)` in the root layout.
- * `en` entries act as defaults for other locales when a key is missing.
- */
-export const i18nUI = defineI18nUI(i18n, {
-  'en': { displayName: 'English' },
-  'zh-CN': { displayName: '简体中文', search: '搜索文档' },
-  'ja': { displayName: '日本語', search: 'ドキュメントを検索' },
-});
 
 /** Shared styling for the secondary icons in the "Build apps" menu. */
 const menuIconClass = 'bg-fd-primary text-fd-primary-foreground mb-2 rounded-md p-1';
 
-export function baseOptions(locale: string): BaseLayoutProps {
-  const prefix = locale === i18n.defaultLanguage ? '' : `/${locale}`;
-  const docHref = (section: string) => `${prefix}${docsRoute}/${section}`;
+export function baseOptions(): BaseLayoutProps {
+  const docHref = (section: string) => `${docsRoute}/${section}`;
   return {
     nav: {
       title: (
@@ -92,6 +78,5 @@ export function baseOptions(locale: string): BaseLayoutProps {
       { text: 'How it works', url: docHref('how-arbitrum-works') },
       { text: 'Notices', url: docHref('notices') },
     ],
-    i18n: true,
   };
 }

@@ -4,7 +4,7 @@
  * Usage:
  *   pnpm inventory-links <path-or-slug>
  *
- * Accepts a repo-relative file path (`content/docs/en/foo/bar.mdx`) or a site URL/slug
+ * Accepts a repo-relative file path (`content/docs/foo/bar.mdx`) or a site URL/slug
  * (`/docs/foo/bar`). Read-only.
  */
 import path from 'node:path';

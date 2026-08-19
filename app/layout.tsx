@@ -8,9 +8,8 @@ import type { ReactNode } from 'react';
 import { Footer } from '@/components/footer';
 import { InkeepChatButton } from '@/components/inkeep/inkeep-chat-button';
 import InkeepSearchDialog from '@/components/inkeep/inkeep-search';
-import { i18nUI } from '@/lib/layout.shared';
 
-import '../global.css';
+import './global.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
@@ -43,8 +42,8 @@ const sans = localFont({
   display: 'swap',
   fallback: ['-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'system-ui', 'sans-serif'],
   src: [
-    { path: '../../public/fonts/aeonik-regular.woff2', weight: '400', style: 'normal' },
-    { path: '../../public/fonts/aeonik-medium.woff2', weight: '500', style: 'normal' },
+    { path: '../public/fonts/aeonik-regular.woff2', weight: '400', style: 'normal' },
+    { path: '../public/fonts/aeonik-medium.woff2', weight: '500', style: 'normal' },
   ],
 });
 
@@ -61,7 +60,7 @@ const mono = localFont({
     'Consolas',
     'monospace',
   ],
-  src: [{ path: '../../public/fonts/aeonik-fono-regular.woff2', weight: '400', style: 'normal' }],
+  src: [{ path: '../public/fonts/aeonik-fono-regular.woff2', weight: '400', style: 'normal' }],
 });
 
 // Aeonik Fono is the brand "mono" but is NOT actually fixed-pitch
@@ -75,24 +74,15 @@ const code = JetBrains_Mono({
   display: 'swap',
 });
 
-export default async function Layout({
-  params,
-  children,
-}: {
-  params: Promise<{ lang: string }>;
-  children: ReactNode;
-}) {
-  const { lang } = await params;
-
+export default function Layout({ children }: { children: ReactNode }) {
   return (
     <html
-      lang={lang}
+      lang="en"
       className={`${sans.variable} ${mono.variable} ${code.variable}`}
       suppressHydrationWarning
     >
       <body className="flex flex-col min-h-screen font-sans" suppressHydrationWarning>
         <RootProvider
-          i18n={i18nUI.provider(lang)}
           theme={{ attribute: 'class', defaultTheme: 'light' }}
           search={{ SearchDialog: InkeepSearchDialog }}
         >

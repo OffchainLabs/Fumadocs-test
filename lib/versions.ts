@@ -13,11 +13,11 @@ export type { VersionOption } from '@/lib/versions-constants';
  *
  * A hand-picked set of pages expose a version dropdown: **Latest** (the live page in the routed
  * `docs` collection) plus one or more archived versions. Archived versions are compiled by the
- * separate, non-routed `docsVersions` collection (option #2: `content/_versions/<id>/<locale>/…`
+ * separate, non-routed `docsVersions` collection (option #2: `content/_versions/<id>/…`
  * subfolders) and looked up here by their virtual path. The docs page renders the selected version;
  * everything else is untouched.
  *
- * To version another page: add `content/_versions/<id>/<locale>/<slug>.mdx` and one entry to
+ * To version another page: add `content/_versions/<id>/<slug>.mdx` and one entry to
  * `VERSIONED` below.
  */
 
@@ -59,20 +59,20 @@ interface VersionSource {
 
 /**
  * Canonical slug (a page's `slugs` joined with `/`) → ordered versions, latest first.
- * Only English pages are versioned for this initial set; other locales always render Latest.
+ * Only a hand-picked set of pages is versioned; everything else always renders Latest.
  */
 const VERSIONED: Record<string, VersionSource[]> = {
   'run-a-node/start-here': [
     { id: LATEST_ID },
-    { id: 'v1', archivePath: 'v1/en/run-a-node/start-here.mdx' },
+    { id: 'v1', archivePath: 'v1/run-a-node/start-here.mdx' },
   ],
   'run-a-node/run-batch-poster': [
     { id: LATEST_ID },
-    { id: 'v1', archivePath: 'v1/en/run-a-node/run-batch-poster.mdx' },
+    { id: 'v1', archivePath: 'v1/run-a-node/run-batch-poster.mdx' },
   ],
   'run-a-node/nitro/build-nitro-locally': [
     { id: LATEST_ID },
-    { id: 'v1', archivePath: 'v1/en/run-a-node/nitro/build-nitro-locally.mdx' },
+    { id: 'v1', archivePath: 'v1/run-a-node/nitro/build-nitro-locally.mdx' },
   ],
 };
 

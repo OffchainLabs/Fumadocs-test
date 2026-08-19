@@ -27,8 +27,7 @@ const DOCS_ROOT = 'content/docs';
  * Parse the `VERSIONED` registry out of lib/versions.ts as text (the module imports the generated
  * `collections/server` and cannot be cheaply required from a plain script). Returns the set of
  * repo-relative document paths the registry pins: every archived snapshot plus every versioned live
- * page. Live paths are `content/docs/<locale>/<slug>.mdx`, with the locale derived from the archive
- * path (`<id>/<locale>/<slug>.mdx`) so a future non-English entry is picked up without edits here.
+ * page. Live paths are `content/docs/<slug>.mdx`; archives are `<id>/<slug>.mdx`.
  */
 function collectVersionedDocs() {
   const src = readFileSync(path.join(repoRoot, VERSIONS_FILE), 'utf8');
@@ -46,8 +45,7 @@ function collectVersionedDocs() {
 
     for (const archivePath of archivePaths) {
       docs.add(path.posix.join(ARCHIVE_ROOT, archivePath));
-      const locale = archivePath.split('/')[1];
-      if (locale) docs.add(path.posix.join(DOCS_ROOT, locale, `${slug}.mdx`));
+      docs.add(path.posix.join(DOCS_ROOT, `${slug}.mdx`));
     }
   }
   return [...docs];

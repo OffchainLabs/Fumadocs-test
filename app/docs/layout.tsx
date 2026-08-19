@@ -4,20 +4,13 @@ import type { CSSProperties, ReactNode } from 'react';
 import { baseOptions } from '@/lib/layout.shared';
 import { source } from '@/lib/source';
 
-export default async function Layout({
-  params,
-  children,
-}: {
-  params: Promise<{ lang: string }>;
-  children: ReactNode;
-}) {
-  const { lang } = await params;
-  const base = baseOptions(lang);
+export default function Layout({ children }: { children: ReactNode }) {
+  const base = baseOptions();
   return (
     <DocsLayout
       {...base}
       nav={{ ...base.nav, mode: 'top' }}
-      tree={source.pageTree[lang]}
+      tree={source.pageTree}
       tabs={{
         transform(option, node) {
           if (!node.icon) return option;
