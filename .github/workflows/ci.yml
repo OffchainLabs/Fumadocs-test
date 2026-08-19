@@ -51,11 +51,24 @@ jobs:
 
   content-debt:
     # These four gates fail on pre-existing debt, so they report without blocking.
-    # Counts at the time this workflow was added (2026-08-17):
+    # Counts verified against main on 2026-08-18:
     #   format:check      52 files unformatted  → fix with `pnpm format`
-    #   content:lint      39 findings (mostly .md/.mdx suffixes in link targets)
+    #   content:lint     181 findings across 79 files (breakdown below)
     #   references:check   3 orphan glossary ids (cross-chain-message, rollup, pebble)
-    #   check-links       19 broken internal links across 12 files
+    #   check-links       19 broken internal links across 11 files
+    #
+    # content:lint by rule — A1 and A4 are one defect, not 166 independent ones: the
+    # Docusaurus→Fumadocs admonition codemod stranded body prose inside `title=`.
+    # Fixing that pair needs the upstream original per page, so it is the big-ticket item.
+    #   A1  empty admonition body                  98 in 64 files
+    #   A4  markdown/entities inside title=        68 in 48 files
+    #   A5  internal link keeps a .md/.mdx suffix   8 in  5 files
+    #   A2  invalid admonition type                 7 in  4 files
+    #
+    # Read the count from the script's own summary line, not by counting printed lines:
+    # content:lint groups by rule and truncates each group, which is how this comment
+    # previously came to claim 39 findings.
+    #
     # Move a step into the `gates` job above once its count reaches zero.
     name: Content debt (non-blocking)
     runs-on: ubuntu-latest
