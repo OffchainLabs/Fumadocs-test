@@ -103,9 +103,58 @@ pnpm partials:check     # validate include/import resolution, no routing leak, c
 
 Design notes: [`.claude/docs/superpowers/specs/2026-07-09-partials-registry-design.md`](.claude/docs/superpowers/specs/2026-07-09-partials-registry-design.md).
 
+## Variables
+
+Values that move on a release cadence — version tags, chain parameters, node image names — live in
+one JSON file instead of being retyped across pages. Edit the value once and every page that
+references it follows. This replaces Docusaurus's `@@varName@@` preprocessing.
+
+### Use one
+
+```mdx
+The current Nitro release is <Var name="nitroVersionTag" />.
+```
+
+`Var` is a server component registered globally in `components/mdx.tsx`, so pages need no import. It
+works inside partials too.
+
+### Update one
+
+1. Edit the value in [`content/vars.json`](content/vars.json).
+2. Run `pnpm vars:check`.
+
+Adding a **new** variable takes both files: the key in `content/vars.json` **and** its type in the
+`varsSchema` in [`content/vars.ts`](content/vars.ts). Miss either side and the gate fails.
+
+### Why two files
+
+`vars.json` is plain JSON, so writing a value needs no TypeScript. `vars.ts` validates it with a Zod
+`strictObject` at module load, so a missing or mistyped key throws immediately with a field-level
+error — in the `pnpm dev` console and in CI.
+
+The strictness is load-bearing. A plain `z.object` silently strips keys that are present in the JSON
+but absent from the schema, so `<Var>` renders the literal string `undefined` into the page; that is
+how 27 variables once came to render `undefined` across 85 sites.
+
+`.mdx` never passes through `tsc`, so the `VarKey` type does not protect MDX callers and
+`pnpm types:check` exits 0 on a page full of broken variables. **`pnpm vars:check` is the only gate
+that catches a `<Var name>` with no matching key** — it blocks in CI.
+
+### Commands
+
+```bash
+pnpm vars:check           # fail if any <Var name> cannot resolve; also lists unreferenced keys
+pnpm vars:check --json    # machine-readable audit; exits 0
+pnpm nitro:check-release  # bump the pinned Nitro release values to the newest tag
+```
+
+Values mirror upstream [`arbitrum-docs/src/resources/globalVars.js`](https://github.com/OffchainLabs/arbitrum-docs/blob/master/src/resources/globalVars.js).
+Keep them in sync while that site is still live.
+
 ## Conventions
 
-- Global variables live in `content/vars.json` (writer-edited), validated by `content/vars.ts` (Zod), rendered via `<Var name="..." />`.
+- Global variables: see [Variables](#variables) — edit `content/vars.json`, never hardcode a version
+  or chain parameter into a page.
 - Theme tokens are `--color-fd-*` (Fumadocs) — never `--ifm-*` (legacy Docusaurus).
 
 ## Reference
