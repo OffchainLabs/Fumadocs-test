@@ -1,23 +1,25 @@
 [
   {
-    "source": "/arb-specific-things",
-    "legacyDestination": "/build-decentralized-apps/arbitrum-vs-ethereum/comparison-overview",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/arbitrum-ethereum-differences",
-    "legacyDestination": "/build-decentralized-apps/arbitrum-vs-ethereum/comparison-overview",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/arbos/common-precompiles",
     "legacyDestination": "/build-decentralized-apps/precompiles/reference",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/nodeinterface/reference",
+      "/docs/arbitrum-essentials/precompiles/reference",
+      "/docs/arbitrum-essentials/reference",
+      "/docs/how-arbitrum-works/reference"
+    ]
   },
   {
     "source": "/arbos/precompiles",
     "legacyDestination": "/build-decentralized-apps/precompiles/reference",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/nodeinterface/reference",
+      "/docs/arbitrum-essentials/precompiles/reference",
+      "/docs/arbitrum-essentials/reference",
+      "/docs/how-arbitrum-works/reference"
+    ]
   },
   {
     "source": "/arbsys",
@@ -35,54 +37,38 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/build-decentralized-apps/cross-chain-messaging",
-    "legacyDestination": "/build-decentralized-apps/bridging/cross-chain-messaging",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/build-decentralized-apps/custom-gas-token-sdk",
-    "legacyDestination": "/build-decentralized-apps/bridging/custom-gas-token-chains",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/build-decentralized-apps/how-to-bridge-from-parent-chain",
     "legacyDestination": "/build-decentralized-apps/bridging/deposit/eth-and-messages",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/bridging/deposit/eth-and-messages",
+      "/docs/arbitrum-essentials/bridging/withdraw/eth-and-messages"
+    ]
   },
   {
     "source": "/build-decentralized-apps/how-to-bridge-to-parent-chain",
     "legacyDestination": "/build-decentralized-apps/bridging/withdraw/eth-and-messages",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/build-decentralized-apps/oracles/how-to-use-oracles",
-    "legacyDestination": "/build-decentralized-apps/oracles/overview-oracles",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/build-decentralized-apps/oracles/overview",
-    "legacyDestination": "/build-decentralized-apps/oracles/overview-oracles",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/build-decentralized-apps/oracles/overview-oracles",
-    "legacyDestination": "/arbitrum-essentials/oracles/overview-oracles",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/build-decentralized-apps/oracles/reference",
-    "legacyDestination": "/build-decentralized-apps/oracles/overview-oracles",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/build-decentralized-apps/reference/useful-addresses",
-    "legacyDestination": "/build-decentralized-apps/reference/contract-addresses",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/bridging/deposit/eth-and-messages",
+      "/docs/arbitrum-essentials/bridging/withdraw/eth-and-messages"
+    ]
   },
   {
     "source": "/build-decentralized-apps/token-bridging/01-get-started",
     "legacyDestination": "/build-decentralized-apps/bridging/overview",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/bridging/overview",
+      "/docs/arbitrum-essentials/nodeinterface/overview",
+      "/docs/arbitrum-essentials/precompiles/overview",
+      "/docs/get-started/overview",
+      "/docs/launch-arbitrum-chain/overview",
+      "/docs/run-a-node/arbos-releases/overview",
+      "/docs/run-a-node/overview",
+      "/docs/stylus/cli-tools/overview",
+      "/docs/stylus/reference/overview"
+    ]
   },
   {
     "source": "/build-decentralized-apps/token-bridging/02-how-to-bridge-tokens-standard",
@@ -92,7 +78,11 @@
   {
     "source": "/build-decentralized-apps/token-bridging/02-token-bridge-ether",
     "legacyDestination": "/build-decentralized-apps/bridging/deposit/eth-and-messages",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/bridging/deposit/eth-and-messages",
+      "/docs/arbitrum-essentials/bridging/withdraw/eth-and-messages"
+    ]
   },
   {
     "source": "/build-decentralized-apps/token-bridging/03-how-to-bridge-tokens-generic-custom",
@@ -107,7 +97,18 @@
   {
     "source": "/build-decentralized-apps/token-bridging/bridge-tokens-programmatically/01-get-started",
     "legacyDestination": "/build-decentralized-apps/bridging/overview",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/bridging/overview",
+      "/docs/arbitrum-essentials/nodeinterface/overview",
+      "/docs/arbitrum-essentials/precompiles/overview",
+      "/docs/get-started/overview",
+      "/docs/launch-arbitrum-chain/overview",
+      "/docs/run-a-node/arbos-releases/overview",
+      "/docs/run-a-node/overview",
+      "/docs/stylus/cli-tools/overview",
+      "/docs/stylus/reference/overview"
+    ]
   },
   {
     "source": "/build-decentralized-apps/token-bridging/bridge-tokens-programmatically/02-how-to-bridge-tokens-standard",
@@ -127,7 +128,18 @@
   {
     "source": "/build-decentralized-apps/token-bridging/bridge-tokens-programmatically/get-started",
     "legacyDestination": "/build-decentralized-apps/bridging/overview",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/bridging/overview",
+      "/docs/arbitrum-essentials/nodeinterface/overview",
+      "/docs/arbitrum-essentials/precompiles/overview",
+      "/docs/get-started/overview",
+      "/docs/launch-arbitrum-chain/overview",
+      "/docs/run-a-node/arbos-releases/overview",
+      "/docs/run-a-node/overview",
+      "/docs/stylus/cli-tools/overview",
+      "/docs/stylus/reference/overview"
+    ]
   },
   {
     "source": "/build-decentralized-apps/token-bridging/bridge-tokens-programmatically/how-to-bridge-tokens-custom-gateway",
@@ -145,29 +157,29 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/build-decentralized-apps/token-bridging/configure-token-bridging/setup-custom-gateway",
-    "legacyDestination": "/build-decentralized-apps/bridging/configure-token-gateway/custom",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/build-decentralized-apps/token-bridging/configure-token-bridging/setup-generic-custom-gateway",
-    "legacyDestination": "/build-decentralized-apps/bridging/configure-token-gateway/generic-custom",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/build-decentralized-apps/token-bridging/configure-token-bridging/setup-standard-gateway",
-    "legacyDestination": "/build-decentralized-apps/bridging/configure-token-gateway/standard",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/build-decentralized-apps/token-bridging/deposit-tokens",
     "legacyDestination": "/build-decentralized-apps/bridging/deposit/tokens",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/bridging/deposit/tokens",
+      "/docs/arbitrum-essentials/bridging/withdraw/tokens"
+    ]
   },
   {
     "source": "/build-decentralized-apps/token-bridging/get-started",
     "legacyDestination": "/build-decentralized-apps/bridging/overview",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/bridging/overview",
+      "/docs/arbitrum-essentials/nodeinterface/overview",
+      "/docs/arbitrum-essentials/precompiles/overview",
+      "/docs/get-started/overview",
+      "/docs/launch-arbitrum-chain/overview",
+      "/docs/run-a-node/arbos-releases/overview",
+      "/docs/run-a-node/overview",
+      "/docs/stylus/cli-tools/overview",
+      "/docs/stylus/reference/overview"
+    ]
   },
   {
     "source": "/build-decentralized-apps/token-bridging/how-to-bridge-tokens-custom-gateway",
@@ -187,22 +199,45 @@
   {
     "source": "/build-decentralized-apps/token-bridging/token-bridge-ether",
     "legacyDestination": "/build-decentralized-apps/bridging/deposit/eth-and-messages",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/bridging/deposit/eth-and-messages",
+      "/docs/arbitrum-essentials/bridging/withdraw/eth-and-messages"
+    ]
   },
   {
     "source": "/build-decentralized-apps/token-bridging/withdraw-tokens",
     "legacyDestination": "/build-decentralized-apps/bridging/withdraw/tokens",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/bridging/deposit/tokens",
+      "/docs/arbitrum-essentials/bridging/withdraw/tokens"
+    ]
   },
   {
     "source": "/das/daserver-instructions",
     "legacyDestination": "/run-arbitrum-node/data-availability-committees/get-started",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/get-started",
+      "/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/get-started"
+    ]
   },
   {
     "source": "/devs-how-tos/bridge-tokens/gentle-introduction-bridge",
     "legacyDestination": "/build-decentralized-apps/token-bridging/overview",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/bridging/overview",
+      "/docs/arbitrum-essentials/nodeinterface/overview",
+      "/docs/arbitrum-essentials/precompiles/overview",
+      "/docs/get-started/overview",
+      "/docs/launch-arbitrum-chain/overview",
+      "/docs/run-a-node/arbos-releases/overview",
+      "/docs/run-a-node/overview",
+      "/docs/stylus/cli-tools/overview",
+      "/docs/stylus/reference/overview"
+    ]
   },
   {
     "source": "/devs-how-tos/bridge-tokens/how-to-bridge-tokens-custom-gateway",
@@ -222,26 +257,22 @@
   {
     "source": "/devs-how-tos/bridge-tokens/how-to-bridge-tokens-overview",
     "legacyDestination": "/build-decentralized-apps/bridging/overview",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/bridging/overview",
+      "/docs/arbitrum-essentials/nodeinterface/overview",
+      "/docs/arbitrum-essentials/precompiles/overview",
+      "/docs/get-started/overview",
+      "/docs/launch-arbitrum-chain/overview",
+      "/docs/run-a-node/arbos-releases/overview",
+      "/docs/run-a-node/overview",
+      "/docs/stylus/cli-tools/overview",
+      "/docs/stylus/reference/overview"
+    ]
   },
   {
     "source": "/devs-how-tos/bridge-tokens/how-to-bridge-tokens-standard",
     "legacyDestination": "/build-decentralized-apps/token-bridging/how-to-bridge-tokens-standard",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/devs-how-tos/how-to-estimate-gas",
-    "legacyDestination": "/build-decentralized-apps/how-to-estimate-gas",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/devs-how-tos/how-to-use-oracles",
-    "legacyDestination": "/build-decentralized-apps/oracles/overview-oracles",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/differences_overview",
-    "legacyDestination": "/build-decentralized-apps/arbitrum-vs-ethereum/comparison-overview",
     "reason": "destination-not-in-tree"
   },
   {
@@ -252,11 +283,6 @@
   {
     "source": "/faqs/anytrust-vs-rollup",
     "legacyDestination": "/faqs/protocol-faqs#q-rollup-vs-anytrust",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/faqs/beta-status",
-    "legacyDestination": "/build-decentralized-apps/reference/mainnet-risks",
     "reason": "destination-not-in-tree"
   },
   {
@@ -275,54 +301,36 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/for-devs/chain-params",
-    "legacyDestination": "/build-decentralized-apps/reference/chain-params",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/for-devs/concepts/differences-between-arbitrum-ethereum/block-numbers-and-time",
-    "legacyDestination": "/build-decentralized-apps/arbitrum-vs-ethereum/block-numbers-and-time",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/for-devs/concepts/differences-between-arbitrum-ethereum/overview",
-    "legacyDestination": "/build-decentralized-apps/arbitrum-vs-ethereum/comparison-overview",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/for-devs/concepts/differences-between-arbitrum-ethereum/rpc-methods",
-    "legacyDestination": "/build-decentralized-apps/arbitrum-vs-ethereum/rpc-methods",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/for-devs/concepts/differences-between-arbitrum-ethereum/solidity-support",
-    "legacyDestination": "/build-decentralized-apps/arbitrum-vs-ethereum/solidity-support",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/for-devs/concepts/fees",
-    "legacyDestination": "/build-decentralized-apps/how-to-estimate-gas",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/for-devs/concepts/nodeinterface",
     "legacyDestination": "/build-decentralized-apps/nodeinterface/overview",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/for-devs/concepts/oracles",
-    "legacyDestination": "/build-decentralized-apps/oracles/overview-oracles",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/bridging/overview",
+      "/docs/arbitrum-essentials/nodeinterface/overview",
+      "/docs/arbitrum-essentials/precompiles/overview",
+      "/docs/get-started/overview",
+      "/docs/launch-arbitrum-chain/overview",
+      "/docs/run-a-node/arbos-releases/overview",
+      "/docs/run-a-node/overview",
+      "/docs/stylus/cli-tools/overview",
+      "/docs/stylus/reference/overview"
+    ]
   },
   {
     "source": "/for-devs/concepts/precompiles",
     "legacyDestination": "/build-decentralized-apps/precompiles/overview",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/for-devs/concepts/public-chains",
-    "legacyDestination": "/build-decentralized-apps/public-chains",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/bridging/overview",
+      "/docs/arbitrum-essentials/nodeinterface/overview",
+      "/docs/arbitrum-essentials/precompiles/overview",
+      "/docs/get-started/overview",
+      "/docs/launch-arbitrum-chain/overview",
+      "/docs/run-a-node/arbos-releases/overview",
+      "/docs/run-a-node/overview",
+      "/docs/stylus/cli-tools/overview",
+      "/docs/stylus/reference/overview"
+    ]
   },
   {
     "source": "/for-devs/concepts/token-bridge/token-bridge-erc20",
@@ -337,62 +345,40 @@
   {
     "source": "/for-devs/concepts/token-bridge/token-bridge-overview",
     "legacyDestination": "/build-decentralized-apps/token-bridging/overview",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/for-devs/cross-chain-messsaging",
-    "legacyDestination": "/build-decentralized-apps/bridging/cross-chain-messaging",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/for-devs/dev-tools-and-resources/debugging-tools",
-    "legacyDestination": "/build-decentralized-apps/reference/debugging-tools",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/for-devs/dev-tools-and-resources/development-frameworks",
-    "legacyDestination": "/build-decentralized-apps/reference/development-frameworks",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/for-devs/dev-tools-and-resources/monitoring-tools-block-explorers",
-    "legacyDestination": "/build-decentralized-apps/reference/monitoring-tools-block-explorers",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/bridging/overview",
+      "/docs/arbitrum-essentials/nodeinterface/overview",
+      "/docs/arbitrum-essentials/precompiles/overview",
+      "/docs/get-started/overview",
+      "/docs/launch-arbitrum-chain/overview",
+      "/docs/run-a-node/arbos-releases/overview",
+      "/docs/run-a-node/overview",
+      "/docs/stylus/cli-tools/overview",
+      "/docs/stylus/reference/overview"
+    ]
   },
   {
     "source": "/for-devs/dev-tools-and-resources/nodeinterface",
     "legacyDestination": "/build-decentralized-apps/nodeinterface/reference",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/for-devs/dev-tools-and-resources/oracles",
-    "legacyDestination": "/build-decentralized-apps/oracles/overview-oracles",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/for-devs/dev-tools-and-resources/overview",
-    "legacyDestination": "/build-decentralized-apps/reference/node-providers",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/nodeinterface/reference",
+      "/docs/arbitrum-essentials/precompiles/reference",
+      "/docs/arbitrum-essentials/reference",
+      "/docs/how-arbitrum-works/reference"
+    ]
   },
   {
     "source": "/for-devs/dev-tools-and-resources/precompiles",
     "legacyDestination": "/build-decentralized-apps/precompiles/reference",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/for-devs/dev-tools-and-resources/web3-libraries-tools",
-    "legacyDestination": "/build-decentralized-apps/reference/web3-libraries-tools",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/for-devs/useful-addresses",
-    "legacyDestination": "/build-decentralized-apps/reference/contract-addresses",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/glossary",
-    "legacyDestination": "/intro/glossary",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/nodeinterface/reference",
+      "/docs/arbitrum-essentials/precompiles/reference",
+      "/docs/arbitrum-essentials/reference",
+      "/docs/how-arbitrum-works/reference"
+    ]
   },
   {
     "source": "/how-arbitrum-works/deep-dives/parent-chain-pricing",
@@ -410,11 +396,6 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/how-arbitrum-works/state-transition-function/ethereum-vs-arbitrum",
-    "legacyDestination": "/build-decentralized-apps/arbitrum-vs-ethereum/comparison-overview",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/how-arbitrum-works/state-transition-function/stf-gentle-intro",
     "legacyDestination": "/how-arbitrum-works/deep-dives/stf-gentle-intro",
     "reason": "destination-not-in-tree"
@@ -427,7 +408,11 @@
   {
     "source": "/how-arbitrum-works/token-bridging/eth-bridging",
     "legacyDestination": "/build-decentralized-apps/bridging/deposit/eth-and-messages",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/bridging/deposit/eth-and-messages",
+      "/docs/arbitrum-essentials/bridging/withdraw/eth-and-messages"
+    ]
   },
   {
     "source": "/launch-arbitrum-chain/a-gentle-introduction",
@@ -440,18 +425,8 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-arbitrum-chain/arbitrum-chain-quickstart",
-    "legacyDestination": "/launch-arbitrum-chain/a-gentle-introduction",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-arbitrum-chain/arbitrum-chain-sdk-introduction",
     "legacyDestination": "/launch-arbitrum-chain/quickstart/sdk-introduction",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/arbitrum-node-runners/enale-post-4blobs",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/enable-post-4844-blobs",
     "reason": "destination-not-in-tree"
   },
   {
@@ -460,24 +435,15 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-arbitrum-chain/arbitrum-node-runners/run-batch-poster",
-    "legacyDestination": "/launch-arbitrum-chain/run-a-node/batch-poster",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-arbitrum-chain/arbitrum-node-runners/run-split-validator-node",
     "legacyDestination": "/launch-arbitrum-chain/run-a-node/split-validator-node",
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-arbitrum-chain/bold-adoption-for-arbitrum-chains",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/bold-adoption-for-arbitrum-chains",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-arbitrum-chain/chain-config/core/arbos",
     "legacyDestination": "/launch-arbitrum-chain/extend-the-protocol/arbos",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-upstream-slug",
+    "wouldMatch": "/docs/how-arbitrum-works/deep-dives/arbos"
   },
   {
     "source": "/launch-arbitrum-chain/chain-config/core/da-api-guide",
@@ -485,33 +451,8 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-arbitrum-chain/chain-config/core/precompiles",
-    "legacyDestination": "/launch-arbitrum-chain/extend-the-protocol/precompiles",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/chain-config/core/stf",
-    "legacyDestination": "/launch-arbitrum-chain/extend-the-protocol/stf",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-arbitrum-chain/chain-config/validation/chain-finality",
     "legacyDestination": "/launch-arbitrum-chain/chain-config/sequencer/chain-finality",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/chain-config/validation/compliance-filtering",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/sequencer/compliance-filtering",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/chain-configuration/sequencer/sequencer-timing-adjustments",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/sequencer/sequencer-timing-adjustments",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/concepts/custom-gas-token-sdk",
-    "legacyDestination": "/build-decentralized-apps/bridging/custom-gas-token-chains",
     "reason": "destination-not-in-tree"
   },
   {
@@ -535,26 +476,6 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-arbitrum-chain/configure-your-chain/advanced-configurations/bold",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/bold-adoption-for-arbitrum-chains",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/advanced-configurations/bold-adoption-for-arbitrum-chains",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/ux/fast-withdrawals",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/advanced-configurations/configure-aep-fee-routing/aep-fee-router-introduction",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/aep-fees/aep-fee-router-introduction",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/advanced-configurations/configure-aep-fee-routing/reporting-on-fees",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/aep-fees/reporting-on-fees",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-arbitrum-chain/configure-your-chain/advanced-configurations/configure-aep-fee-routing/set-up-aep-fee-router",
     "legacyDestination": "/launch-arbitrum-chain/chain-config/costs/aep-router-contracts",
     "reason": "destination-not-in-tree"
@@ -575,68 +496,8 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-arbitrum-chain/configure-your-chain/advanced/compliance-filtering",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/sequencer/compliance-filtering",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/advanced/config-sequencer-timing-adjustments",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/sequencer/sequencer-timing-adjustments",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-arbitrum-chain/configure-your-chain/advanced/da-api-integration-guide",
     "legacyDestination": "/launch-arbitrum-chain/extend-the-protocol/da-api-guide",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common-configurations/arbitrum-chain-finality",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/arbitrum-chain-finality",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common-configurations/arbos-upgrade",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/arbos-upgrade",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common-configurations/batch-posting-assertion-control",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/batch-posting-assertion-control",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common-configurations/bold-adoption-for-arbitrum-chains",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/bold-adoption-for-arbitrum-chains",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common-configurations/customizable-challenge-period",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/customizable-challenge-period",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common-configurations/enable-post-4844-blobs",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/enable-post-4844-blobs",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common-configurations/fee-management",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/fees/fee-management",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common-configurations/gas-optimization-tools",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/gas/gas-optimization-tools",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common-configurations/stake-and-validator-configurations",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/stake-and-validator-configurations",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common-configurations/timeboost-for-arbitrum-chains",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/mev/timeboost-for-arbitrum-chains",
     "reason": "destination-not-in-tree"
   },
   {
@@ -650,18 +511,8 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common/additional-configuration-parameters",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/additional-configuration-parameters",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-arbitrum-chain/configure-your-chain/common/aep-fees/aep-fee-router-introduction",
     "legacyDestination": "/launch-arbitrum-chain/chain-config/costs/aep-overview",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common/aep-fees/reporting-on-fees",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/costs/reporting-on-fees",
     "reason": "destination-not-in-tree"
   },
   {
@@ -670,48 +521,8 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common/data-availability/config-data-availability",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/data-availability/config-data-availability",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common/data-availability/data-availability-committees/configure-dac",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/data-availability/configure-dac",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common/data-availability/data-availability-committees/dac-configuration-defaults",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/data-availability/dac-configuration-defaults",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common/data-availability/data-availability-committees/dac-das-operations",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/data-availability/dac-das-operations",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common/data-availability/data-availability-committees/das-rpc-method-reference",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/data-availability/das-rpc-method-reference",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common/data-availability/data-availability-committees/deploy-das",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/data-availability/deploy-das",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common/data-availability/data-availability-committees/deploy-mirror-das",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/data-availability/deploy-mirror-das",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-arbitrum-chain/configure-your-chain/common/data-availability/data-availability-committees/get-started",
     "legacyDestination": "/launch-arbitrum-chain/chain-config/data-availability/dac-get-started",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common/fees/fee-management",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/costs/fee-management",
     "reason": "destination-not-in-tree"
   },
   {
@@ -727,7 +538,8 @@
   {
     "source": "/launch-arbitrum-chain/configure-your-chain/common/gas/gas-optimization-tools",
     "legacyDestination": "/launch-arbitrum-chain/chain-config/costs/gas-optimization",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-upstream-slug",
+    "wouldMatch": "/docs/stylus/best-practices/gas-optimization"
   },
   {
     "source": "/launch-arbitrum-chain/configure-your-chain/common/gas/use-a-custom-gas-token-anytrust",
@@ -737,16 +549,6 @@
   {
     "source": "/launch-arbitrum-chain/configure-your-chain/common/gas/use-a-custom-gas-token-rollup",
     "legacyDestination": "/launch-arbitrum-chain/chain-config/costs/custom-gas-token-rollup",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common/mev/timeboost-for-arbitrum-chains",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/sequencer/timeboost",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common/ux/fast-withdrawals",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/validation/fast-withdrawals",
     "reason": "destination-not-in-tree"
   },
   {
@@ -762,11 +564,6 @@
   {
     "source": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/batch-posting-assertion-control",
     "legacyDestination": "/launch-arbitrum-chain/chain-config/validation/assertion-control",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/bold-adoption-for-arbitrum-chains",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/validation/bold",
     "reason": "destination-not-in-tree"
   },
   {
@@ -792,22 +589,8 @@
   {
     "source": "/launch-arbitrum-chain/customize-your-chain/customize-arbos",
     "legacyDestination": "/launch-arbitrum-chain/extend-the-protocol/arbos",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/customize-your-chain/customize-precompile",
-    "legacyDestination": "/launch-arbitrum-chain/extend-the-protocol/precompiles",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/customize-your-chain/customize-stf",
-    "legacyDestination": "/launch-arbitrum-chain/extend-the-protocol/stf",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/customize-deployment-configuration",
-    "legacyDestination": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploying-an-arbitrum-chain",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-upstream-slug",
+    "wouldMatch": "/docs/how-arbitrum-works/deep-dives/arbos"
   },
   {
     "source": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploy-your-first-rollup",
@@ -820,28 +603,8 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploying-rollup-chain",
-    "legacyDestination": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploying-an-arbitrum-chain",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploying-token-bridge",
     "legacyDestination": "/launch-arbitrum-chain/deploy/token-bridge",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/monitoring-tools-and-considerations",
-    "legacyDestination": "/launch-arbitrum-chain/maintain-your-chain/monitoring-tools-and-considerations",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/run-l3-rollup-from-scratch",
-    "legacyDestination": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploy-your-first-rollup",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/run-l3-rollup-testnet-infrastructure",
-    "legacyDestination": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/run-testnet-infrastructure-first-rollup",
     "reason": "destination-not-in-tree"
   },
   {
@@ -852,17 +615,14 @@
   {
     "source": "/launch-arbitrum-chain/faq-troubleshooting/troubleshooting-building-arbitrum-chain",
     "legacyDestination": "/launch-arbitrum-chain/overview/faq",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": ["/docs/get-started/faq", "/docs/run-a-node/faq"]
   },
   {
     "source": "/launch-arbitrum-chain/features/advanced/choose-arbos-version",
     "legacyDestination": "/launch-arbitrum-chain/extend-the-protocol/arbos",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/features/advanced/choose-custom-behavior",
-    "legacyDestination": "/launch-arbitrum-chain/extend-the-protocol/stf",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-upstream-slug",
+    "wouldMatch": "/docs/how-arbitrum-works/deep-dives/arbos"
   },
   {
     "source": "/launch-arbitrum-chain/features/advanced/choose-custom-delay-inbox-finality",
@@ -870,34 +630,9 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-arbitrum-chain/features/advanced/precompiles",
-    "legacyDestination": "/launch-arbitrum-chain/extend-the-protocol/precompiles",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/features/advanced/sequencer-timing-adjustments",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/sequencer/sequencer-timing-adjustments",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-arbitrum-chain/features/common/configure-aep/configure-aep/fees",
     "legacyDestination": "/https://docs.arbitrum.foundation/calculate-aep-fees",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/features/common/data-availability/choose-alt-da",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/data-availability/config-data-availability",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/features/common/data-availability/choose-anytrust",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/data-availability/config-data-availability",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/features/common/data-availability/choose-rollup",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/data-availability/config-data-availability",
-    "reason": "destination-not-in-tree"
+    "reason": "malformed-destination"
   },
   {
     "source": "/launch-arbitrum-chain/features/common/gas-and-fees/choose-custom-gas-token",
@@ -905,49 +640,39 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-arbitrum-chain/features/common/gas-and-fees/choose-fee-rebates",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/costs/fee-management",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-arbitrum-chain/features/common/gas-and-fees/choose-native-eth",
     "legacyDestination": "//launch-arbitrum-chain/chain-config/costs/custom-gas-token",
-    "reason": "destination-not-in-tree"
+    "reason": "malformed-destination"
   },
   {
     "source": "/launch-arbitrum-chain/features/common/gas-and-fees/choose-native-mint-burn",
     "legacyDestination": "//launch-arbitrum-chain/chain-config/costs/configure-native-mint-burn",
-    "reason": "destination-not-in-tree"
+    "reason": "malformed-destination"
   },
   {
     "source": "/launch-arbitrum-chain/features/common/mev/choose-timeboostburn",
     "legacyDestination": "//launch-arbitrum-chain/chain-config/sequencer/timeboost",
-    "reason": "destination-not-in-tree"
+    "reason": "malformed-destination"
   },
   {
     "source": "/launch-arbitrum-chain/features/common/ux/choose-fast-withdrawals",
     "legacyDestination": "//launch-arbitrum-chain/chain-config/validation/fast-withdrawals",
-    "reason": "destination-not-in-tree"
+    "reason": "malformed-destination"
   },
   {
     "source": "/launch-arbitrum-chain/features/common/validation-and-security/choose-bold",
     "legacyDestination": "//launch-arbitrum-chain/chain-config/validation/bold",
-    "reason": "destination-not-in-tree"
+    "reason": "malformed-destination"
   },
   {
     "source": "/launch-arbitrum-chain/features/common/validation-and-security/choose-challenge-period",
     "legacyDestination": "//launch-arbitrum-chain/chain-config/validation/challenge-period",
-    "reason": "destination-not-in-tree"
+    "reason": "malformed-destination"
   },
   {
     "source": "/launch-arbitrum-chain/features/common/validation-and-security/choose-permissioned-validators",
     "legacyDestination": "//launch-arbitrum-chain/chain-config/validation/bond-and-validator",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/how-tos/arbitrum-chain-finality",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/arbitrum-chain-finality",
-    "reason": "destination-not-in-tree"
+    "reason": "malformed-destination"
   },
   {
     "source": "/launch-arbitrum-chain/how-tos/arbitrum-chain-sdk-preparing-node-config",
@@ -960,18 +685,8 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-arbitrum-chain/maintain-your-chain/guidance/batch-poster-troubleshooting",
-    "legacyDestination": "/launch-arbitrum-chain/operate/batch-poster-troubleshooting",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-arbitrum-chain/maintain-your-chain/guidance/post-launch-contract-deployments",
     "legacyDestination": "/launch-arbitrum-chain/operate/post-launch-deployments",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/maintain-your-chain/guidance/state-size-limit",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/costs/gas-target",
     "reason": "destination-not-in-tree"
   },
   {
@@ -985,11 +700,6 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-arbitrum-chain/maintain-your-chain/upgrade-to-bold",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/bold-adoption-for-arbitrum-chains",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-arbitrum-chain/migrate-between-raases",
     "legacyDestination": "/launch-arbitrum-chain/migrate/between-raases",
     "reason": "destination-not-in-tree"
@@ -1000,14 +710,10 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-arbitrum-chain/operate/gas-target",
-    "legacyDestination": "/launch-arbitrum-chain/chain-config/costs/gas-target",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-arbitrum-chain/protocol-hacks/arbos",
     "legacyDestination": "/launch-arbitrum-chain/extend-the-protocol/arbos",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-upstream-slug",
+    "wouldMatch": "/docs/how-arbitrum-works/deep-dives/arbos"
   },
   {
     "source": "/launch-arbitrum-chain/protocol-hacks/da-api-guide",
@@ -1015,23 +721,8 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-arbitrum-chain/protocol-hacks/precompiles",
-    "legacyDestination": "/launch-arbitrum-chain/extend-the-protocol/precompiles",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/protocol-hacks/stf",
-    "legacyDestination": "/launch-arbitrum-chain/extend-the-protocol/stf",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-arbitrum-chain/reference/additional-configuration-parameters",
     "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/additional-configuration-parameters/",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/reference/arbitrum-chain-configuration-parameters",
-    "legacyDestination": "/launch-arbitrum-chain/a-gentle-introduction",
     "reason": "destination-not-in-tree"
   },
   {
@@ -1045,78 +736,8 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-arbitrum-chain/timeboost-for-arbitrum-chains",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/mev/timeboost-for-arbitrum-chains",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-arbitrum-chain/what-is-arbitrum-orbit",
-    "legacyDestination": "/launch-arbitrum-chain/a-gentle-introduction",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain",
-    "legacyDestination": "/launch-arbitrum-chain/a-gentle-introduction",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/a-gentle-introduction",
-    "legacyDestination": "/launch-arbitrum-chain/a-gentle-introduction",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/aep-fee-router-introduction",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/aep-fees/aep-fee-router-introduction",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/aep-license",
-    "legacyDestination": "/launch-arbitrum-chain/aep-license",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/aeplicense",
-    "legacyDestination": "/launch-arbitrum-chain/aep-license",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/bold-adoption-for-orbit-chains",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/bold-adoption-for-arbitrum-chains",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-orbit-chain/concepts/chain-ownership",
     "legacyDestination": "/launch-arbitrum-chain/maintain-your-chain/ownership-structure-access-control",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/concepts/custom-gas-token-sdk",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/gas/use-a-custom-gas-token-rollup",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/concepts/public-preview-expectations",
-    "legacyDestination": "/launch-arbitrum-chain/concepts/public-preview-expectations",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/configure-your-chain/advanced-configurations/aep-fee-router/aep-fee-router-introduction",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/aep-fees/aep-fee-router-introduction",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/configure-your-chain/advanced-configurations/aep-fee-router/set-up-aep-fee-router",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/aep-fees/set-up-aep-fee-router",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/configure-your-chain/advanced-configurations/bold",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/bold-adoption-for-arbitrum-chains",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/configure-your-chain/advanced-configurations/fast-withdrawals",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/ux/fast-withdrawals",
     "reason": "destination-not-in-tree"
   },
   {
@@ -1125,138 +746,8 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-orbit-chain/configure-your-chain/common-configurations/arbos-configuration",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/arbos-upgrade",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/configure-your-chain/common-configurations/arbos-upgrade",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/arbos-upgrade",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/configure-your-chain/common-configurations/batch-posting-assertion-control",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/batch-posting-assertion-control",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/configure-your-chain/common-configurations/customizable-challenge-period",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/customizable-challenge-period",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/configure-your-chain/common-configurations/customizing-anytrust",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/gas/use-a-custom-gas-token-anytrust",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/configure-your-chain/common-configurations/fee-management",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/fees/fee-management",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/configure-your-chain/common-configurations/gas-optimization-tools",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/gas/gas-optimization-tools",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/configure-your-chain/common-configurations/per-batch-gas-cost",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/fees/fee-management",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/configure-your-chain/common-configurations/set-up-aep-fee-router",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/aep-fees/set-up-aep-fee-router",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/configure-your-chain/common-configurations/stake-and-validator-configurations",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/stake-and-validator-configurations",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/configure-your-chain/common-configurations/use-a-custom-gas-token",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/gas/use-a-custom-gas-token-rollup",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/configure-your-chain/common-configurations/use-a-custom-gas-token-anytrust",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/gas/use-a-custom-gas-token-anytrust",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/configure-your-chain/common-configurations/use-a-custom-gas-token-rollup",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/gas/use-a-custom-gas-token-rollup",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/customize-your-chain/customize-arbos",
-    "legacyDestination": "/launch-arbitrum-chain/customize-your-chain/customize-arbos",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/customize-your-chain/customize-precompile",
-    "legacyDestination": "/launch-arbitrum-chain/customize-your-chain/customize-precompile",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/customize-your-chain/customize-stf",
-    "legacyDestination": "/launch-arbitrum-chain/customize-your-chain/customize-stf",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/deploy-an-orbit-chain/canonical-factory-contracts",
-    "legacyDestination": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/canonical-factory-contracts",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/deploy-an-orbit-chain/configuring-orbit-chain",
-    "legacyDestination": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploying-an-arbitrum-chain",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/deploy-an-orbit-chain/deploying-anytrust-chain",
-    "legacyDestination": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploying-an-arbitrum-chain",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/deploy-an-orbit-chain/deploying-custom-gas-token-chain",
-    "legacyDestination": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploying-an-arbitrum-chain",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/deploy-an-orbit-chain/deploying-rollup-chain",
-    "legacyDestination": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploying-an-arbitrum-chain",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/deploy-an-orbit-chain/deploying-token-bridge",
-    "legacyDestination": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploying-token-bridge",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/deploy-an-orbit-chain/monitoring-tools-and-considerations",
-    "legacyDestination": "/launch-arbitrum-chain/maintain-your-chain/monitoring-tools-and-considerations",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-orbit-chain/ecosystem-support/add-orbit-chain-to-bridge-ui",
     "legacyDestination": "/launch-arbitrum-chain/ecosystem-support/add-arbitrum-chain-to-bridge-ui",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/ecosystem-support/get-listed-orbit-platforms",
-    "legacyDestination": "/for-devs/dev-tools-and-resources/chain-info",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/ecosystem-support/orbit-portal",
-    "legacyDestination": "/for-devs/dev-tools-and-resources/chain-info",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/faq-troubleshooting/troubleshooting-building-orbit",
-    "legacyDestination": "/launch-arbitrum-chain/faq-troubleshooting/troubleshooting-building-arbitrum-chain",
     "reason": "destination-not-in-tree"
   },
   {
@@ -1265,48 +756,8 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-orbit-chain/how-tos/arbos-upgrade",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/arbos-upgrade",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/how-tos/customize-arbos",
-    "legacyDestination": "/launch-arbitrum-chain/customize-your-chain/customize-arbos",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-orbit-chain/how-tos/customize-deployment-configuration",
     "legacyDestination": "/launch-arbitrum-chain/how-tos/customize-deployment-configuration",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/how-tos/customize-precompile",
-    "legacyDestination": "/launch-arbitrum-chain/customize-your-chain/customize-precompile",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/how-tos/customize-stf",
-    "legacyDestination": "/launch-arbitrum-chain/customize-your-chain/customize-stf",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/how-tos/fast-withdrawals",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/ux/fast-withdrawals",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/how-tos/how-to-configure-your-chain",
-    "legacyDestination": "/launch-arbitrum-chain/a-gentle-introduction",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/how-tos/manage-fee-collectors",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/fees/fee-management",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/how-tos/orbit-chain-finality",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/arbitrum-chain-finality",
     "reason": "destination-not-in-tree"
   },
   {
@@ -1315,53 +766,8 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-orbit-chain/how-tos/orbit-managing-state-growth",
-    "legacyDestination": "/launch-arbitrum-chain/maintain-your-chain/guidance/state-growth",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/how-tos/orbit-sdk-configuring-orbit-chain",
-    "legacyDestination": "/launch-arbitrum-chain/a-gentle-introduction",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/how-tos/orbit-sdk-deploying-anytrust-chain",
-    "legacyDestination": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploying-an-arbitrum-chain",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-orbit-chain/how-tos/orbit-sdk-deploying-custom-gas-token-chain",
     "legacyDestination": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploying-an-arbiturm-chain",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/how-tos/orbit-sdk-deploying-rollup-chain",
-    "legacyDestination": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploying-an-arbitrum-chain",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/how-tos/orbit-sdk-deploying-token-bridge",
-    "legacyDestination": "/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploying-token-bridge",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/how-tos/orbit-sdk-preparing-node-config",
-    "legacyDestination": "/launch-arbitrum-chain/how-tos/arbitrum-chain-sdk-preparing-node-config",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/how-tos/set-up-aep-fee-router",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/aep-fees/set-up-aep-fee-router",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/how-tos/usdc-standard-bridge",
-    "legacyDestination": "/launch-arbitrum-chain/third-party-integrations/bridged-usdc-standard",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/how-tos/use-a-custom-gas-token",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/gas/use-a-custom-gas-token-rollup",
     "reason": "destination-not-in-tree"
   },
   {
@@ -1370,23 +776,8 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-orbit-chain/maintain-your-chain/guidance/post-launch-contract-deployments",
-    "legacyDestination": "/launch-arbitrum-chain/maintain-your-chain/guidance/post-launch-contract-deployments",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/maintain-your-chain/guidance/state-growth",
-    "legacyDestination": "/launch-arbitrum-chain/maintain-your-chain/guidance/state-growth",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/launch-orbit-chain/maintain-your-chain/guidance/state-size-limit",
     "legacyDestination": "/launch-arbitrum-chain/maintain-your-chain/guidance/state-size-limit",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/maintain-your-chain/monitoring",
-    "legacyDestination": "/launch-arbitrum-chain/maintain-your-chain/monitoring-tools-and-considerations",
     "reason": "destination-not-in-tree"
   },
   {
@@ -1395,119 +786,10 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/launch-orbit-chain/maintain-your-chain/upgrade-to-bold",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/bold-adoption-for-arbitrum-chains",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/orbit-gentle-introduction",
-    "legacyDestination": "/launch-arbitrum-chain/a-gentle-introduction",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/orbit-license",
-    "legacyDestination": "/launch-arbitrum-chain/aep-license",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/orbit-node-runners/orbit-node-providers",
-    "legacyDestination": "/for-devs/dev-tools-and-resources/chain-info",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/orbit-quickstart",
-    "legacyDestination": "/launch-arbitrum-chain/a-gentle-introduction",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/orbit-sdk-introduction",
-    "legacyDestination": "/launch-arbitrum-chain/arbitrum-chain-sdk-introduction",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/orbit-supported-parent-chains",
-    "legacyDestination": "/launch-arbitrum-chain/a-gentle-introduction",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/reference/additional-configuration-parameters",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/additional-configuration-parameters",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/reference/command-line-options",
-    "legacyDestination": "/launch-arbitrum-chain/a-gentle-introduction",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/reference/how-tos/orbit-managing-state-growth",
-    "legacyDestination": "/launch-arbitrum-chain/maintain-your-chain/guidance/state-growth",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/reference/monitoring-tools-and-considerations",
-    "legacyDestination": "/launch-arbitrum-chain/maintain-your-chain/monitoring-tools-and-considerations",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/reference/orbit-batch-poster-configuration",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/batch-posting-assertion-control",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/reference/orbit-configuration-parameters",
-    "legacyDestination": "/launch-arbitrum-chain/reference/additional-configuration-parameters",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/start-your-journey",
-    "legacyDestination": "/launch-arbitrum-chain/a-gentle-introduction",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/third-party-integrations/bridged-usdc-standard",
-    "legacyDestination": "/launch-arbitrum-chain/third-party-integrations/bridged-usdc-standard",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/launch-orbit-chain/troubleshooting-building-orbit",
-    "legacyDestination": "/launch-arbitrum-chain/faq-troubleshooting/troubleshooting-building-arbitrum-chain",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/learn-more/contribute",
     "legacyDestination": "/for-devs/contribute",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/mainnet",
-    "legacyDestination": "/build-decentralized-apps/reference/mainnet-risks",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/mainnet-beta",
-    "legacyDestination": "/build-decentralized-apps/reference/mainnet-risks",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/mainnet-risks",
-    "legacyDestination": "/build-decentralized-apps/reference/mainnet-risks",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/migration/dapp-migration",
-    "legacyDestination": "/build-decentralized-apps/arbitrum-vs-ethereum/comparison-overview",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/node_providers",
-    "legacyDestination": "/build-decentralized-apps/reference/node-providers",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/node-running/how-tos/data-availability-committee/configure-the-dac-in-your-chain",
-    "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/data-availability/data-availability-committees/configure-dac",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": ["/docs/contribute", "/docs/third-party-docs/contribute"]
   },
   {
     "source": "/node-running/how-tos/data-availability-committee/deploy-a-das",
@@ -1522,12 +804,20 @@
   {
     "source": "/node-running/how-tos/data-availability-committee/get-started",
     "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/data-availability/data-availability-committees/get-started",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/get-started",
+      "/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/get-started"
+    ]
   },
   {
     "source": "/node-running/how-tos/data-availability-committee/introduction",
     "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/data-availability/data-availability-committees/get-started",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/get-started",
+      "/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/get-started"
+    ]
   },
   {
     "source": "/node-running/how-tos/local-dev-node",
@@ -1537,7 +827,11 @@
   {
     "source": "/node-running/how-tos/running-a-daserver",
     "legacyDestination": "/launch-arbitrum-chain/configure-your-chain/common/data-availability/data-availability-committees/get-started",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/get-started",
+      "/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/get-started"
+    ]
   },
   {
     "source": "/node-running/local-dev-node",
@@ -1545,39 +839,15 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/node-running/node-providers",
-    "legacyDestination": "/build-decentralized-apps/reference/node-providers",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/precompiles",
     "legacyDestination": "/build-decentralized-apps/precompiles/reference",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/public_chains",
-    "legacyDestination": "/for-devs/concepts/public-chains",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/public_nitro_devnet",
-    "legacyDestination": "/for-devs/concepts/public-chains",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/public_nitro_testnet",
-    "legacyDestination": "/for-devs/concepts/public-chains",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/public_testnet",
-    "legacyDestination": "/for-devs/concepts/public-chains",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/public-chains",
-    "legacyDestination": "/for-devs/concepts/public-chains",
-    "reason": "destination-not-in-tree"
+    "reason": "ambiguous-slug",
+    "candidates": [
+      "/docs/arbitrum-essentials/nodeinterface/reference",
+      "/docs/arbitrum-essentials/precompiles/reference",
+      "/docs/arbitrum-essentials/reference",
+      "/docs/how-arbitrum-works/reference"
+    ]
   },
   {
     "source": "/run-arbitrum-node/data-availability-committees/configure-dac",
@@ -1600,43 +870,8 @@
     "reason": "destination-not-in-tree"
   },
   {
-    "source": "/run-arbitrum-node/more-types/split-validator-node",
-    "legacyDestination": "/launch-arbitrum-chain/arbitrum-node-runners/run-split-validator-node",
-    "reason": "destination-not-in-tree"
-  },
-  {
     "source": "/run-arbitrum-node/sequencer/high-availability-sequencer-docs",
     "legacyDestination": "/launch-arbitrum-chain/arbitrum-node-runners/high-availability-sequencer-docs/",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/security_considerations",
-    "legacyDestination": "/build-decentralized-apps/arbitrum-vs-ethereum/comparison-overview",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/solidity_support",
-    "legacyDestination": "/build-decentralized-apps/arbitrum-vs-ethereum/solidity-support",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/solidity-support",
-    "legacyDestination": "/build-decentralized-apps/arbitrum-vs-ethereum/solidity-support",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/special_features",
-    "legacyDestination": "/build-decentralized-apps/arbitrum-vs-ethereum/comparison-overview",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/stylus/how-tos/debug-stylus-transactions",
-    "legacyDestination": "/stylus/how-tos/debugging-tx",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/stylus/how-tos/debugging-stylus-tx",
-    "legacyDestination": "/stylus/how-tos/debugging-tx",
     "reason": "destination-not-in-tree"
   },
   {
@@ -1662,21 +897,6 @@
   {
     "source": "/stylus/tools/using-stylus-cli",
     "legacyDestination": "/stylus/using-cli",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/time",
-    "legacyDestination": "/build-decentralized-apps/arbitrum-vs-ethereum/block-numbers-and-time",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/time_in_arbitrum",
-    "legacyDestination": "/build-decentralized-apps/arbitrum-vs-ethereum/block-numbers-and-time",
-    "reason": "destination-not-in-tree"
-  },
-  {
-    "source": "/useful_addresses",
-    "legacyDestination": "/build-decentralized-apps/reference/contract-addresses",
     "reason": "destination-not-in-tree"
   },
   {
