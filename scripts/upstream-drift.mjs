@@ -22,6 +22,7 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 
+import { baselineVerdict, readBaseline } from './lib/git-freshness.mjs';
 import { bodyLineCount, buildTreeIndex, resolveTreeBMatch } from './lib/tree-compare.mjs';
 
 const PORT_WINDOW_END = '2026-07-10';
@@ -65,6 +66,17 @@ function main() {
 
   if (!existsSync(treeA)) {
     console.error(`upstream-drift: legacy tree not found at ${treeA}. Pass --tree-a <path>.`);
+    process.exitCode = 1;
+    return;
+  }
+
+  const verdict = baselineVerdict(readBaseline(treeARepo));
+  for (const w of verdict.warnings) console.error(`upstream-drift: warning: ${treeARepo} ${w}`);
+  if (!verdict.ok) {
+    console.error(`upstream-drift: refusing to run — ${treeARepo} is not a trustworthy baseline:`);
+    for (const b of verdict.blockers) console.error(`  - ${b}`);
+    console.error(`Fix: git -C ${treeARepo} pull`);
+    console.error('A stale baseline under-reports drift; it does not fail loudly on its own.');
     process.exitCode = 1;
     return;
   }

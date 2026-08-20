@@ -26,9 +26,9 @@ pnpm precompiles:check # precompile tables match the pinned Nitro refs (--check 
 pnpm nitro:check-release  # bump the pinned Nitro release in content/vars.json
 ```
 
-- **CI runs on push and PR to `main` ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) in three jobs — only the first one blocks.** A green PR does not mean the content is clean: six checks block, five report and pass anyway.
-  - **`Gates` (blocking):** `types:check`, `test`, `vars:check`, `nav:check`, `partials:check`, `node scripts/versioned-docs-check.mjs`.
-  - **`Content debt` (non-blocking):** `format:check`, `content:lint`, `references:check`, `check-links` — each marked `continue-on-error` because each still fails on pre-existing debt. The job comment records the counts when the workflow was added; **promote a step into `Gates` once its count reaches zero.** That promotion is the point of the split — the tier is a backlog, not a policy.
+- **CI runs on push and PR to `main` ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) in three jobs — only the first one blocks.** A green PR does not mean the content is clean: seven checks block, four report and pass anyway.
+  - **`Gates` (blocking):** `types:check`, `test`, `vars:check`, `nav:check`, `partials:check`, `node scripts/versioned-docs-check.mjs`, `references:check`.
+  - **`Content debt` (non-blocking):** `format:check`, `content:lint`, `check-links` — each marked `continue-on-error` because each still fails on pre-existing debt. The job comment records the counts when the workflow was added; **promote a step into `Gates` once its count reaches zero.** That promotion is the point of the split — the tier is a backlog, not a policy.
   - **`Build` (non-blocking):** `pnpm build`, deliberately not blocking — the MDX image pipeline fetches remote images at build time, so a dead third-party URL turns it red for reasons unrelated to the change under review. It still catches MDX compile errors that `types:check` cannot see.
 - **`drift` and `precompiles:check` run nowhere automatically** — invoke them by hand. `types:check` regenerates the collection, generates Next types, then type-checks. `build` runs `versioned-docs-check` first.
 - **`upstream-refresh.yml`** runs Mondays 08:00 UTC (and on `workflow_dispatch`): `nitro:check-release`, then `precompiles:generate`, then opens `automated/upstream-refresh` as a PR if anything changed. It never writes to `main`, and no-ops when the tree is clean.
