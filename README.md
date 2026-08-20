@@ -151,8 +151,29 @@ pnpm nitro:check-release  # bump the pinned Nitro release values to the newest t
 Values mirror upstream [`arbitrum-docs/src/resources/globalVars.js`](https://github.com/OffchainLabs/arbitrum-docs/blob/master/src/resources/globalVars.js).
 Keep them in sync while that site is still live.
 
+## Redirects
+
+Every redirect lives in [`redirects.config.mjs`](redirects.config.mjs) and is served by Next's
+`redirects()`. It runs **before** `proxy.ts`, so a redirected URL gets markdown negotiation on the
+destination, not on the first hop.
+
+Two blocks, neither hand-edited:
+
+- **Moved pages** — `pnpm move-doc <from> <to>` writes the old→new URL between the
+  `AUTO-GENERATED` markers.
+- **Legacy `docs.arbitrum.io` URLs** — `pnpm redirects:legacy` regenerates
+  `redirects.legacy.mjs` from the upstream `vercel.json`. It emits a redirect only when the
+  destination exists here; the rest land in `redirects.legacy.todo.json` rather than being guessed
+  at, because a redirect to a plausible-but-wrong page is worse than a 404.
+
+After either, run `pnpm redirects:check` with the site running (`pnpm dev`). It validates every
+destination against `/llms.txt` — the router's own page list — and fails on a dead destination or a
+source that shadows a live page.
+
 ## Conventions
 
+- Redirects: see [Redirects](#redirects) — never hand-edit `redirects.config.mjs`; move pages with
+  `pnpm move-doc` so the redirect is written for you.
 - Global variables: see [Variables](#variables) — edit `content/vars.json`, never hardcode a version
   or chain parameter into a page.
 - Theme tokens are `--color-fd-*` (Fumadocs) — never `--ifm-*` (legacy Docusaurus).
