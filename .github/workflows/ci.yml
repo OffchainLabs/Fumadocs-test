@@ -49,26 +49,30 @@ jobs:
       - name: Archived page registry
         run: node scripts/versioned-docs-check.mjs
 
+      - name: Glossary references resolve
+        run: pnpm references:check
+
   content-debt:
-    # These four gates fail on pre-existing debt, so they report without blocking.
-    # Counts verified against main on 2026-08-18:
+    # These three gates fail on pre-existing debt, so they report without blocking.
+    # Counts verified against main on 2026-08-20:
     #   format:check      52 files unformatted  → fix with `pnpm format`
-    #   content:lint     181 findings across 79 files (breakdown below)
-    #   references:check   3 orphan glossary ids (cross-chain-message, rollup, pebble)
+    #   content:lint      15 findings across 9 files (breakdown below)
     #   check-links       19 broken internal links across 11 files
     #
-    # content:lint by rule — A1 and A4 are one defect, not 166 independent ones: the
-    # Docusaurus→Fumadocs admonition codemod stranded body prose inside `title=`.
-    # Fixing that pair needs the upstream original per page, so it is the big-ticket item.
-    #   A1  empty admonition body                  98 in 64 files
-    #   A4  markdown/entities inside title=        68 in 48 files
+    # content:lint by rule:
     #   A5  internal link keeps a .md/.mdx suffix   8 in  5 files
     #   A2  invalid admonition type                 7 in  4 files
+    #
+    # A1 (empty admonition body, was 98) and A4 (markdown/entities inside title=, was 68)
+    # are now zero. They were one defect, not 166: the Docusaurus→Fumadocs admonition
+    # codemod stranded body prose inside `title=`. Recovering it in 0e5a64a took this
+    # job from 181 findings to 15.
     #
     # Read the count from the script's own summary line, not by counting printed lines:
     # content:lint groups by rule and truncates each group, which is how this comment
     # previously came to claim 39 findings.
     #
+    # references:check reached zero and moved into `gates` on 2026-08-20.
     # Move a step into the `gates` job above once its count reaches zero.
     name: Content debt (non-blocking)
     runs-on: ubuntu-latest
@@ -92,10 +96,6 @@ jobs:
 
       - name: MDX structural lint
         run: pnpm content:lint
-        continue-on-error: true
-
-      - name: Glossary references
-        run: pnpm references:check
         continue-on-error: true
 
       - name: Internal links
