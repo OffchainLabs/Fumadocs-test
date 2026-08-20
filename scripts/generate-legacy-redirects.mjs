@@ -45,9 +45,16 @@ const SECTION_RENAMES = [
   ['/faqs', '/get-started'],
 ];
 
-/** Every routable doc URL on this site, derived from the content tree. */
+/**
+ * Every routable doc URL on this site, derived from the content tree, keyed by lowercased URL.
+ *
+ * The legacy corpus has casing drift (`/sdk/assetbridger` next to `/sdk/assetBridger`), and this
+ * tree has mixed-case directories (`oracles/DIA`, `third-party-docs/Circle`). Matching
+ * case-sensitively would report a destination that exists as "not in tree". The map value is the
+ * real casing, which is what must be emitted — a redirect to the wrong case still 404s.
+ */
 function collectValidUrls() {
-  const urls = new Set();
+  const urls = new Map();
   const walk = (dir, prefix) => {
     for (const entry of readdirSync(dir)) {
       const full = join(dir, entry);
@@ -55,13 +62,25 @@ function collectValidUrls() {
         walk(full, `${prefix}/${entry}`);
       } else if (entry.endsWith('.mdx') && !entry.startsWith('_')) {
         const base = entry.slice(0, -'.mdx'.length);
-        urls.add(base === 'index' ? `/docs${prefix}` || '/docs' : `/docs${prefix}/${base}`);
+        const url = base === 'index' ? `/docs${prefix}` : `/docs${prefix}/${base}`;
+        const key = url.toLowerCase();
+        const clash = urls.get(key);
+        if (clash && clash !== url) {
+          throw new Error(
+            `generate-legacy-redirects: two pages differ only by case (${clash} vs ${url}); ` +
+              `case-insensitive matching cannot pick between them.`,
+          );
+        }
+        urls.set(key, url);
       }
     }
   };
   walk(CONTENT_DIR, '');
   return urls;
 }
+
+/** Resolve a URL to its real casing on this site, or undefined when no page serves it. */
+const resolveUrl = (valid, url) => valid.get(url.toLowerCase());
 
 /** `/(a/b/?)` and `/a/b/` both normalise to `/a/b`. */
 function normaliseSource(source) {
@@ -109,7 +128,7 @@ function build(sourcePath) {
     seen.add(source);
 
     // A legacy source that is already a live URL here must never be redirected.
-    if (valid.has(source)) {
+    if (resolveUrl(valid, source)) {
       todo.push({ source, legacyDestination: entry.destination, reason: 'source-is-live-url' });
       continue;
     }
@@ -120,7 +139,7 @@ function build(sourcePath) {
     }
 
     const candidates = candidateDestinations(entry.destination);
-    const index = candidates.findIndex((candidate) => valid.has(candidate));
+    const index = candidates.findIndex((candidate) => resolveUrl(valid, candidate));
     if (index === -1) {
       todo.push({
         source,
@@ -129,9 +148,11 @@ function build(sourcePath) {
       });
       continue;
     }
-    if (index > 0) renamed.push({ source, from: entry.destination, to: candidates[index] });
+    // Emit the tree's real casing, not the legacy corpus's.
+    const destination = resolveUrl(valid, candidates[index]);
+    if (index > 0) renamed.push({ source, from: entry.destination, to: destination });
 
-    redirects.push({ source, destination: candidates[index], permanent: !!entry.permanent });
+    redirects.push({ source, destination, permanent: !!entry.permanent });
   }
 
   redirects.sort((a, b) => a.source.localeCompare(b.source));
