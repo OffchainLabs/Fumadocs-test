@@ -96,6 +96,10 @@ function build(sourcePath) {
 
   for (const entry of legacy.redirects ?? []) {
     if (entry.source.includes('__redirects-autogen')) continue;
+    // The SDK reference was never ported and has no on-site home: arbitrum-docs deleted its
+    // /sdk section and links readers to the GitHub repo from the sidebar. These legacy entries
+    // are not a gap to close, so drop them instead of parking them in the worklist forever.
+    if (entry.destination === '/sdk' || entry.destination.startsWith('/sdk/')) continue;
 
     const source = normaliseSource(entry.source);
     if (seen.has(source)) {
