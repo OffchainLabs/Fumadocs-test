@@ -27,6 +27,7 @@
     "precompiles:generate": "node scripts/generate-precompile-tables.mjs",
     "precompiles:check": "node scripts/generate-precompile-tables.mjs --check",
     "references:check": "node scripts/references-check.mjs",
+    "redirects:legacy": "node scripts/generate-legacy-redirects.mjs",
     "vars:check": "node scripts/vars-check.mjs",
     "content:lint": "node scripts/content-lint.mjs",
     "test": "node --test \"scripts/**/*.test.mjs\"",
