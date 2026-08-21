@@ -56,7 +56,12 @@ export default async function Page({
   const repoPath = archive ? archiveRepoPath(archive) : `content/docs/${page.path}`;
 
   return (
-    <DocsPage toc={toc} full={page.data.full}>
+    // Tighter content gutters. Fumadocs' notebook Container puts
+    // `px-4 md:px-6 xl:px-8` on the #nd-page article, which spends 32px per side
+    // on desktop — the sidebar and the TOC already read as separate columns
+    // without it. `cn` (cnfast) drops the conflicting classes, so this replaces
+    // the md/xl padding rather than layering on top of it.
+    <DocsPage toc={toc} full={page.data.full} className="md:px-4 xl:px-4">
       <DocsTitle className="font-medium">{title}</DocsTitle>
       <DocsDescription className="mb-0">{description}</DocsDescription>
       <div className="flex flex-row gap-2 items-center border-b pb-6">
