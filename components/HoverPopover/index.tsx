@@ -20,24 +20,19 @@ import { type ReactNode, useState } from 'react';
 import './styles.css';
 
 /**
- * Generic hover/focus popover built on `@floating-ui/react`. The single interaction primitive behind
- * both `<Reference>`/`<Term>` (tooltip variant) and `FloatingHoverModal` (modal variant). Owns open
- * state, positioning, dismissal, and the portal; consumers pass a trigger (`children`) and prebuilt
+ * Generic hover/focus popover built on `@floating-ui/react`. The interaction primitive behind
+ * `<Reference>`/`<Term>`: inline, opens on hover/focus, closes on leave/blur. Owns open state,
+ * positioning, dismissal, and the portal; consumers pass a trigger (`children`) and prebuilt
  * `content` (typically server-rendered).
- *
- * - `tooltip` — inline, opens on hover/focus, closes on leave/blur. For glossary-style term hovers.
- * - `modal` — larger, scrollable, with a close button. For the feature-selector modal.
  */
 export function HoverPopover({
   children,
   content,
   title,
-  variant = 'tooltip',
 }: {
   children: ReactNode;
   content: ReactNode;
   title?: string;
-  variant?: 'tooltip' | 'modal';
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -58,7 +53,7 @@ export function HoverPopover({
   });
   const focus = useFocus(context);
   const dismiss = useDismiss(context);
-  const role = useRole(context, { role: variant === 'modal' ? 'dialog' : 'tooltip' });
+  const role = useRole(context, { role: 'tooltip' });
 
   const { getReferenceProps, getFloatingProps } = useInteractions([hover, focus, dismiss, role]);
   const triggerRef = useMergeRefs([refs.setReference]);
@@ -78,21 +73,9 @@ export function HoverPopover({
           <div
             ref={refs.setFloating}
             style={floatingStyles}
-            className={`hover-popover__content hover-popover__content--${variant}`}
+            className="hover-popover__content hover-popover__content--tooltip"
             {...getFloatingProps()}
           >
-            {variant === 'modal' && (
-              <div className="hover-popover__header">
-                <button
-                  type="button"
-                  className="hover-popover__close"
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Close"
-                >
-                  ×
-                </button>
-              </div>
-            )}
             <div className="hover-popover__body">
               {title && <p className="hover-popover__title">{title}</p>}
               {content}

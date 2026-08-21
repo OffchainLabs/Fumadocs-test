@@ -34,7 +34,6 @@ Config lives in `lib/inkeep.ts`; the widgets mount in `components/inkeep/` and a
 | `components/mdx/`      | Custom MDX components (registered in `components/mdx.tsx`).                           |
 | `lib/source.ts`        | Fumadocs source adapter.                                                              |
 | `proxy.ts`             | i18n routing + static-asset bypass list.                                              |
-| `scripts/codemods/`    | One-shot porting + landing-page generators.                                           |
 | `source.config.ts`     | Fumadocs MDX config (Zod-typed frontmatter).                                          |
 
 ## Partials

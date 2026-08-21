@@ -14,6 +14,8 @@
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import path from 'node:path';
 
+import { isPartial } from './partials.mjs';
+
 const posix = path.posix;
 
 export const CONTENT_DIR = path.join('content', 'docs');
@@ -53,10 +55,15 @@ export function isExternalOrFragment(pathPart) {
   );
 }
 
-/** True when a file is a content partial (underscore-prefixed): imported via `<include>`, not routed. */
-export function isPartial(absPath) {
-  return path.basename(absPath).startsWith('_');
-}
+/**
+ * True when a file is a content partial (underscore-prefixed): imported via `<include>`, not routed.
+ *
+ * Re-exported from `partials.mjs` so there is one definition. This module used to carry a looser
+ * copy that matched any `_`-prefixed basename, including `_diagram.png`; `partials.mjs` also
+ * requires a `.md`/`.mdx` extension. Both were live — `move-doc` read this one while
+ * `partials-check` read the other — so the answer depended on the caller's import.
+ */
+export { isPartial };
 
 /** Slug segments for a doc: path minus extension, trailing `index` dropped. */
 function computeSlug(pathSegs) {

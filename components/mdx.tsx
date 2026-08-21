@@ -7,7 +7,6 @@ import type { ComponentPropsWithoutRef, ElementType } from 'react';
 import { AddressExplorerLink } from '@/components/mdx/AddressExplorerLink';
 import { CustomDetails } from '@/components/mdx/CustomDetails';
 import FAQStructuredData from '@/components/mdx/FAQStructuredData';
-import { FloatingHoverModal } from '@/components/mdx/FloatingHoverModal';
 import { ImageZoom } from '@/components/mdx/ImageZoom';
 import { PdfModal } from '@/components/mdx/PdfModal';
 import { PendingWidget } from '@/components/mdx/PendingWidget';
@@ -74,7 +73,6 @@ export function getMDXComponents(components?: MDXComponents) {
     CustomDetails,
     FAQStructuredData,
     FAQStructuredDataJsonLd: FAQStructuredData,
-    FloatingHoverModal,
     ImageZoom,
     ImageWithCaption: ImageZoom,
     Reference,
