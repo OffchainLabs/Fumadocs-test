@@ -58,8 +58,11 @@ const SECTION_RENAMES = [
  *                choose-chain-precompiles how-to, not the arbitrum-essentials reference.
  *   batch-poster legacy "Run a batch poster" is run-batch-poster.mdx verbatim;
  *                deep-dives/batchposter.mdx is the concept page "The batch poster".
+ *   overview     legacy "/get-started/overview" is this site's get-started index; eight other
+ *                sections also have an `overview` page, so the basename cannot pick it.
  */
 const MANUAL_DESTINATIONS = new Map([
+  ['/get-started/overview', '/docs/get-started'],
   [
     '/launch-arbitrum-chain/extend-the-protocol/stf',
     '/docs/launch-arbitrum-chain/configuration/core/customize-stf',

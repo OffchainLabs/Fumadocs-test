@@ -492,7 +492,7 @@ export const legacyRedirects = [
   },
   {
     source: '/developer_quickstart',
-    destination: '/docs/get-started/overview',
+    destination: '/docs/get-started',
     permanent: false,
   },
   {
@@ -577,7 +577,7 @@ export const legacyRedirects = [
   },
   {
     source: '/faqs/the-merge',
-    destination: '/docs/get-started/overview',
+    destination: '/docs/get-started',
     permanent: false,
   },
   {
@@ -762,7 +762,7 @@ export const legacyRedirects = [
   },
   {
     source: '/get-started/get-started',
-    destination: '/docs/get-started/overview',
+    destination: '/docs/get-started',
     permanent: false,
   },
   {
@@ -2112,7 +2112,7 @@ export const legacyRedirects = [
   },
   {
     source: '/welcome',
-    destination: '/docs/get-started/overview',
+    destination: '/docs/get-started',
     permanent: false,
   },
   {
@@ -2122,7 +2122,7 @@ export const legacyRedirects = [
   },
   {
     source: '/welcome/get-started',
-    destination: '/docs/get-started/overview',
+    destination: '/docs/get-started',
     permanent: true,
   },
   {
