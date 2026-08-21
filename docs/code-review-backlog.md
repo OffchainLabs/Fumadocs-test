@@ -25,24 +25,46 @@ Either codemod the 440 call sites to `Callout` and delete
 `Callout` is deliberately unused surface. This is a migration, not a cleanup — don't start it
 casually.
 
-### 7 partials orphaned by the FloatingHoverModal deletion
+### 9 partials orphaned by the FloatingHoverModal deletion
 
-These were reachable only through a component that never rendered, so no reader has ever seen them.
-They are prose, so deleting them is a content call:
+`FloatingHoverModal` ESM-imported 18 partials. Nine of them (`*-pc.mdx`) are also `<include>`d by a
+live `choose-*.mdx` page and stay reachable. The other nine had no second consumer:
 
 ```
 content/partials/launch-arbitrum-chain/_config-account-abstraction.mdx
 content/partials/launch-arbitrum-chain/_config-customizable-governance.mdx
 content/partials/launch-arbitrum-chain/_config-data-posting-costs.mdx
 content/partials/launch-arbitrum-chain/_config-dedicated-throughput.mdx
+content/partials/launch-arbitrum-chain/_config-evm-compatibility.mdx
 content/partials/launch-arbitrum-chain/_config-force-inclusion.mdx
 content/partials/launch-arbitrum-chain/_config-hardware.mdx
+content/partials/launch-arbitrum-chain/_config-l1-challenge-period.mdx
 content/partials/launch-arbitrum-chain/_config-other-language-support.mdx
 ```
 
-Plus `content/partials/launch-arbitrum-chain/_config-challenge-period-l1.mdx`, which was already
-unreferenced before that deletion. Note `partials:check` has **no unused-partial rule**, so nothing
-catches this class.
+They had a static importer, but that importer never rendered: `FloatingHoverModal` was registered in
+`components/mdx.tsx` and used by zero `.mdx` files, so the imports pulled this prose into the JS
+bundle without ever displaying it. **No reader has ever seen it.** It is still prose, so deleting it
+is a content call.
+
+Verify with a literal search — a regex like `include[^>]*<basename>` silently matches nothing,
+because `<include cwd>` contains a `>`:
+
+```
+rg -l -F '_config-hardware.mdx' content/ app components lib scripts \
+  | grep -vE 'CATALOG.md|manifest.json|registry.json'
+```
+
+Also exclude `.claude/` when judging: `_config-evm-compatibility.mdx` and
+`_config-l1-challenge-period.mdx` are _named_ in planning docs and `registry.json`, which render
+nothing — counting those mentions as references undercounts the orphans.
+
+Separately, `content/partials/launch-arbitrum-chain/_config-challenge-period-l1.mdx` (the
+near-namesake) was already unreferenced before this deletion. `registry.json` asserts it is "not a
+duplicate" of `_config-l1-challenge-period.mdx`, but that note tracks distinctness, not usage —
+both are now dead.
+
+Note `partials:check` has **no unused-partial rule**, so nothing catches this class.
 
 ### FAQStructuredData: port the data or delete the feature
 
