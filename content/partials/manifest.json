@@ -149,7 +149,7 @@
       "preview",
       "banner"
     ],
-    "usedIn": 0,
+    "usedIn": 1,
     "snippet": "<include cwd>content/partials/_public-preview-banner-partial.mdx</include>"
   },
   {
