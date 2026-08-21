@@ -27,17 +27,12 @@ export default function HomePage() {
 
   return (
     <main className="flex flex-col flex-1">
-      <section className="flex flex-col items-center justify-center text-center px-4 py-24 gap-6 bg-linear-[135deg] from-arbitrum-gradient-from to-arbitrum-gradient-to text-white">
+      <section className="flex flex-col items-center justify-center text-center px-4 py-10 gap-2 bg-linear-[135deg] from-arbitrum-gradient-from to-arbitrum-gradient-to text-white">
         <h1 className="text-4xl font-medium tracking-tight">Get started with Arbitrum</h1>
         <p className="text-white max-w-2xl">
-          Arbitrum is the finance-native platform providing infrastructure for applications,
+          Arbitrum a finance-native platform providing infrastructure for applications,
           tokenization, and dedicated chains. These docs explain the protocols, chains, services,
           and SDKs developers use to build on the Arbitrum platform.
-        </p>
-        <p className="text-white max-w-2xl">
-          In the programmable economy, markets, transactions, and business processes run in
-          software. Arbitrum provides the infrastructure for those systems to execute with
-          configurable rules and Ethereum settlement.
         </p>
         <div className="flex gap-3">
           <Link
