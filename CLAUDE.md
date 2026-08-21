@@ -91,3 +91,13 @@ Design: [`.claude/docs/superpowers/specs/2026-07-09-partials-registry-design.md`
 - **Image zoom.** `<ImageZoom>` resolves to the wrapper in `components/mdx/ImageZoom/` (plain `<img>` child; supports `caption`; no dimensions needed; no Next image optimization). To use Fumadocs' native component instead — for `_next/image` optimization — import it per file: `import { ImageZoom } from 'fumadocs-ui/components/image-zoom'` (shadows the wrapper for that file). The native component then requires `width`/`height` or the build fails; add `style={{ width: '100%', height: 'auto' }}` for responsiveness and drop `caption`. Live example: `content/docs/en/get-started/arbitrum-introduction.mdx`.
 
 - Always get your fumadocs-related information on https://www.fumadocs.dev/llms.txt
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->
