@@ -190,7 +190,7 @@ Customizing your chain is a core benefit of building with Arbitrum chains.
 Arbitrum chains support account abstraction (AA) primarily through ERC-4337, a standard that enables smart contract wallets without requiring changes to the…
 
 - `<include cwd>content/partials/launch-arbitrum-chain/_config-account-abstraction.mdx</include>`
-- used in 1 page — tags: `launch-arbitrum-chain`, `config`, `account`, `abstraction`
+- ⚠️ unused — tags: `launch-arbitrum-chain`, `config`, `account`, `abstraction`
 
 ### Config challenge period l1
 
@@ -204,56 +204,56 @@ General pros/cons of enforcing the challenge period on L1. Distinct from _config
 Arbitrum chains (as L2 or L3 solutions settling on Ethereum or Arbitrum), feature customizable governance, which refers to the ability for chain creators to…
 
 - `<include cwd>content/partials/launch-arbitrum-chain/_config-customizable-governance.mdx</include>`
-- used in 1 page — tags: `launch-arbitrum-chain`, `config`, `customizable`, `governance`
+- ⚠️ unused — tags: `launch-arbitrum-chain`, `config`, `customizable`, `governance`
 
 ### Config data posting costs
 
 In Arbitrum chains, data posting costs refer to the fees incurred for submitting compressed batches of L2 transaction data to Ethereum (L1) as calldata, ensu…
 
 - `<include cwd>content/partials/launch-arbitrum-chain/_config-data-posting-costs.mdx</include>`
-- used in 1 page — tags: `launch-arbitrum-chain`, `config`, `data`, `posting`, `costs`
+- ⚠️ unused — tags: `launch-arbitrum-chain`, `config`, `data`, `posting`, `costs`
 
 ### Config dedicated throughput
 
 You may need dedicated throughput if your chain requires high performance or consistent resource availability.
 
 - `<include cwd>content/partials/launch-arbitrum-chain/_config-dedicated-throughput.mdx</include>`
-- used in 1 page — tags: `launch-arbitrum-chain`, `config`, `dedicated`, `throughput`
+- ⚠️ unused — tags: `launch-arbitrum-chain`, `config`, `dedicated`, `throughput`
 
 ### Config evm compatibility
 
 EVM compatibility refers to the ability of Layer-2 scaling solutions to fully support and execute smart contracts and transactions designed for the Ethereum…
 
 - `<include cwd>content/partials/launch-arbitrum-chain/_config-evm-compatibility.mdx</include>`
-- used in 1 page — tags: `launch-arbitrum-chain`, `config`, `evm`, `compatibility`
+- ⚠️ unused — tags: `launch-arbitrum-chain`, `config`, `evm`, `compatibility`
 
 ### Config force inclusion
 
 Force inclusion in Arbitrum refers to a mechanism that allows users to bypass the Sequencer by submitting transactions directly to the Delayed Inbox contract…
 
 - `<include cwd>content/partials/launch-arbitrum-chain/_config-force-inclusion.mdx</include>`
-- used in 1 page — tags: `launch-arbitrum-chain`, `config`, `force`, `inclusion`
+- ⚠️ unused — tags: `launch-arbitrum-chain`, `config`, `force`, `inclusion`
 
 ### Hardware requirements for Arbitrum chains
 
 Arbitrum chains, including Arbitrum One, Nova, and customizable Arbitrum L2/L3 chains, have varying hardware needs depending on the node type.
 
 - `<include cwd>content/partials/launch-arbitrum-chain/_config-hardware.mdx</include>`
-- used in 1 page — tags: `launch-arbitrum-chain`, `config`, `hardware`
+- ⚠️ unused — tags: `launch-arbitrum-chain`, `config`, `hardware`
 
 ### Config l1 challenge period
 
 How to configure the L1 challenge period (confirmPeriodBlocks) plus an L1-vs-L2 tradeoff table. Distinct from _config-challenge-period-l1.mdx (a general pros/cons prose explainer) — reviewed and kept separately, not a duplicate.
 
 - `<include cwd>content/partials/launch-arbitrum-chain/_config-l1-challenge-period.mdx</include>`
-- used in 1 page — tags: `launch-arbitrum-chain`, `config`, `l1`, `challenge`, `period`
+- ⚠️ unused — tags: `launch-arbitrum-chain`, `config`, `l1`, `challenge`, `period`
 
 ### Config other language support
 
 Arbitrum Stylus represents the mechanism through which Arbitrum chains support programming languages beyond those native to the Ethereum Virtual Machine (EVM…
 
 - `<include cwd>content/partials/launch-arbitrum-chain/_config-other-language-support.mdx</include>`
-- used in 1 page — tags: `launch-arbitrum-chain`, `config`, `other`, `language`, `support`
+- ⚠️ unused — tags: `launch-arbitrum-chain`, `config`, `other`, `language`, `support`
 
 ### Native Mint/Burn for Custom Gas Tokens
 
@@ -317,63 +317,63 @@ Make sure you create the directory specified in local-file-storage.data-dir befo
 - Significant cost savings: Using an Alt-DA can reduce DA fees by 75-95% compared to posting data directly to Ethereum, making it an ideal solution for high-…
 
 - `<include cwd>content/partials/launch-arbitrum-chain/features/_alt-da-pc.mdx</include>`
-- used in 2 pages — tags: `launch-arbitrum-chain`, `features`, `alt`, `da`
+- used in 1 page — tags: `launch-arbitrum-chain`, `features`, `alt`, `da`
 
 ### Pros
 
 - Ultra-low transaction fees: By offloading data availability to a Data Availability Committee (DAC) instead of posting all transaction data directly to Ethe…
 
 - `<include cwd>content/partials/launch-arbitrum-chain/features/_anytrust-pc.mdx</include>`
-- used in 2 pages — tags: `launch-arbitrum-chain`, `features`, `anytrust`
+- used in 1 page — tags: `launch-arbitrum-chain`, `features`, `anytrust`
 
 ### Pros
 
 - Improved Security: Mitigates delay attacks and ensures only valid states are confirmed, with high bonds (e.g., millions in USD equivalent) deterring malice…
 
 - `<include cwd>content/partials/launch-arbitrum-chain/features/_bold-pc.mdx</include>`
-- used in 2 pages — tags: `launch-arbitrum-chain`, `features`, `bold`
+- used in 1 page — tags: `launch-arbitrum-chain`, `features`, `bold`
 
 ### Pros
 
 - Enhanced token utility and demand: Using a custom ERC-20 token for gas fees creates inherent utility and constant demand for the project's native token, dr…
 
 - `<include cwd>content/partials/launch-arbitrum-chain/features/_custom-gas-token-pc.mdx</include>`
-- used in 2 pages — tags: `launch-arbitrum-chain`, `features`, `custom`, `gas`, `token`
+- used in 1 page — tags: `launch-arbitrum-chain`, `features`, `custom`, `gas`, `token`
 
 ### Pros
 
 - Significantly faster withdrawals and finality: Reduces withdrawal times from days to minutes, improving user experience and enabling quicker asset movement…
 
 - `<include cwd>content/partials/launch-arbitrum-chain/features/_fast-withdrawals-pc.mdx</include>`
-- used in 2 pages — tags: `launch-arbitrum-chain`, `features`, `fast`, `withdrawals`
+- used in 1 page — tags: `launch-arbitrum-chain`, `features`, `fast`, `withdrawals`
 
 ### Pros of using native **ETH**
 
 - Simplicity and familiarity for users: Native ETH is the default gas token, making it easier for users already in the Ethereum ecosystem to interact with th…
 
 - `<include cwd>content/partials/launch-arbitrum-chain/features/_native-eth-pc.mdx</include>`
-- used in 2 pages — tags: `launch-arbitrum-chain`, `features`, `native`, `eth`
+- used in 1 page — tags: `launch-arbitrum-chain`, `features`, `native`, `eth`
 
 ### Pros
 
 - Enhanced control and security in trusted environments: Permissioned validators allow the chain owner to select and vet participants, reducing risks from un…
 
 - `<include cwd>content/partials/launch-arbitrum-chain/features/_permissioned-validators-pc.mdx</include>`
-- used in 2 pages — tags: `launch-arbitrum-chain`, `features`, `permissioned`, `validators`
+- used in 1 page — tags: `launch-arbitrum-chain`, `features`, `permissioned`, `validators`
 
 ### Pros
 
 - Security: Provides maximum security and decentralization by inheriting full Ethereum-grade security without additional trust assumptions beyond the base la…
 
 - `<include cwd>content/partials/launch-arbitrum-chain/features/_rollup-pc.mdx</include>`
-- used in 2 pages — tags: `launch-arbitrum-chain`, `features`, `rollup`
+- used in 1 page — tags: `launch-arbitrum-chain`, `features`, `rollup`
 
 ### Pros
 
 - Revenue generation for chain owners.
 
 - `<include cwd>content/partials/launch-arbitrum-chain/features/_timeboost-pc.mdx</include>`
-- used in 2 pages — tags: `launch-arbitrum-chain`, `features`, `timeboost`
+- used in 1 page — tags: `launch-arbitrum-chain`, `features`, `timeboost`
 
 ## precompile-tables
 

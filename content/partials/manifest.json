@@ -348,7 +348,7 @@
       "account",
       "abstraction"
     ],
-    "usedIn": 1,
+    "usedIn": 0,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/_config-account-abstraction.mdx</include>"
   },
   {
@@ -377,7 +377,7 @@
       "customizable",
       "governance"
     ],
-    "usedIn": 1,
+    "usedIn": 0,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/_config-customizable-governance.mdx</include>"
   },
   {
@@ -392,7 +392,7 @@
       "posting",
       "costs"
     ],
-    "usedIn": 1,
+    "usedIn": 0,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/_config-data-posting-costs.mdx</include>"
   },
   {
@@ -406,7 +406,7 @@
       "dedicated",
       "throughput"
     ],
-    "usedIn": 1,
+    "usedIn": 0,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/_config-dedicated-throughput.mdx</include>"
   },
   {
@@ -420,7 +420,7 @@
       "evm",
       "compatibility"
     ],
-    "usedIn": 1,
+    "usedIn": 0,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/_config-evm-compatibility.mdx</include>"
   },
   {
@@ -434,7 +434,7 @@
       "force",
       "inclusion"
     ],
-    "usedIn": 1,
+    "usedIn": 0,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/_config-force-inclusion.mdx</include>"
   },
   {
@@ -447,7 +447,7 @@
       "config",
       "hardware"
     ],
-    "usedIn": 1,
+    "usedIn": 0,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/_config-hardware.mdx</include>"
   },
   {
@@ -462,7 +462,7 @@
       "challenge",
       "period"
     ],
-    "usedIn": 1,
+    "usedIn": 0,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/_config-l1-challenge-period.mdx</include>"
   },
   {
@@ -477,7 +477,7 @@
       "language",
       "support"
     ],
-    "usedIn": 1,
+    "usedIn": 0,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/_config-other-language-support.mdx</include>"
   },
   {
@@ -633,7 +633,7 @@
       "alt",
       "da"
     ],
-    "usedIn": 2,
+    "usedIn": 1,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/features/_alt-da-pc.mdx</include>"
   },
   {
@@ -646,7 +646,7 @@
       "features",
       "anytrust"
     ],
-    "usedIn": 2,
+    "usedIn": 1,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/features/_anytrust-pc.mdx</include>"
   },
   {
@@ -659,7 +659,7 @@
       "features",
       "bold"
     ],
-    "usedIn": 2,
+    "usedIn": 1,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/features/_bold-pc.mdx</include>"
   },
   {
@@ -674,7 +674,7 @@
       "gas",
       "token"
     ],
-    "usedIn": 2,
+    "usedIn": 1,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/features/_custom-gas-token-pc.mdx</include>"
   },
   {
@@ -688,7 +688,7 @@
       "fast",
       "withdrawals"
     ],
-    "usedIn": 2,
+    "usedIn": 1,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/features/_fast-withdrawals-pc.mdx</include>"
   },
   {
@@ -702,7 +702,7 @@
       "native",
       "eth"
     ],
-    "usedIn": 2,
+    "usedIn": 1,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/features/_native-eth-pc.mdx</include>"
   },
   {
@@ -716,7 +716,7 @@
       "permissioned",
       "validators"
     ],
-    "usedIn": 2,
+    "usedIn": 1,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/features/_permissioned-validators-pc.mdx</include>"
   },
   {
@@ -729,7 +729,7 @@
       "features",
       "rollup"
     ],
-    "usedIn": 2,
+    "usedIn": 1,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/features/_rollup-pc.mdx</include>"
   },
   {
@@ -742,7 +742,7 @@
       "features",
       "timeboost"
     ],
-    "usedIn": 2,
+    "usedIn": 1,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/features/_timeboost-pc.mdx</include>"
   },
   {
