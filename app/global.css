@@ -286,6 +286,31 @@ pre code {
   font-weight: 500;
 }
 
+/* Table of contents (right rail + the mobile popover): Fumadocs gives each TOC
+   link `class="prose … text-sm"` — `prose` only to inherit link colour. But the
+   `.prose` block above is unlayered, so it beats Tailwind's `utilities` layer
+   and overrode that `text-sm`: 16px/1.75 links in a 268px rail, wrapping most
+   headings onto two or three lines. Restore the size the component asks for.
+   The ID/attribute selectors keep this off document prose. */
+#nd-toc .prose,
+[data-toc-popover-content] .prose {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+/* Sidebar (desktop rail): match the 13px of the TOC rule above. Fumadocs puts
+   `text-sm` (14px/20px) on the `#nd-sidebar` aside itself, so the nav tree read
+   a step larger than the right rail. The id selector targets that same element
+   and outranks the utility, and every item inherits from it.
+
+   Children that declare their own size keep it — the section dropdown label
+   ("Launch arbitrum chain") stays 14px, which is the intended hierarchy. The
+   mobile drawer (#nd-sidebar-mobile, 15px) is left alone: bigger touch targets.  */
+#nd-sidebar {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
 /* Top navbar (notebook layout, nav mode "top"): mirror the legacy Docusaurus
    navbar — logo, nav links on a single line, search pushed to the far right.
    Overrides the default row (title flex-1 | search | links flex-1), which
