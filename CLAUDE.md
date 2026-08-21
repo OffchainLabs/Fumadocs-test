@@ -21,6 +21,8 @@ pnpm vars:check        # every <Var name> resolves in content/vars.json
 pnpm nav:check         # meta.json nav integrity
 pnpm references:check  # glossary ids + <Reference> targets
 pnpm drift             # compare content tree against upstream arbitrum-docs
+pnpm redirects:legacy  # regenerate the legacy docs.arbitrum.io redirect map
+pnpm redirects:check   # every redirect destination is a real page (needs `pnpm dev` running)
 pnpm format:check      # prettier
 pnpm precompiles:check # precompile tables match the pinned Nitro refs (--check = no writes)
 pnpm nitro:check-release  # bump the pinned Nitro release in content/vars.json
@@ -30,7 +32,7 @@ pnpm nitro:check-release  # bump the pinned Nitro release in content/vars.json
   - **`Gates` (blocking):** `types:check`, `test`, `vars:check`, `nav:check`, `partials:check`, `node scripts/versioned-docs-check.mjs`, `references:check`.
   - **`Content debt` (non-blocking):** `format:check`, `content:lint`, `check-links` — each marked `continue-on-error` because each still fails on pre-existing debt. The job comment records the counts when the workflow was added; **promote a step into `Gates` once its count reaches zero.** That promotion is the point of the split — the tier is a backlog, not a policy.
   - **`Build` (non-blocking):** `pnpm build`, deliberately not blocking — the MDX image pipeline fetches remote images at build time, so a dead third-party URL turns it red for reasons unrelated to the change under review. It still catches MDX compile errors that `types:check` cannot see.
-- **`drift` and `precompiles:check` run nowhere automatically** — invoke them by hand. `types:check` regenerates the collection, generates Next types, then type-checks. `build` runs `versioned-docs-check` first.
+- **`drift`, `precompiles:check`, `redirects:legacy` and `redirects:check` run nowhere automatically** — invoke them by hand. `redirects:check` cannot run in CI as-is: it reads `/llms.txt` off a running site, because no plain-node script can import `lib/source` (neither the `collections/*` alias nor TypeScript resolves — the same wall `versioned-docs-check` hits, which is why that one text-parses `lib/versions.ts`). Point it at a Vercel preview with `--base-url` to check a PR. `types:check` regenerates the collection, generates Next types, then type-checks. `build` runs `versioned-docs-check` first.
 - **`upstream-refresh.yml`** runs Mondays 08:00 UTC (and on `workflow_dispatch`): `nitro:check-release`, then `precompiles:generate`, then opens `automated/upstream-refresh` as a PR if anything changed. It never writes to `main`, and no-ops when the tree is clean.
 - **`types:check` proves the schema, not the render.** It exits 0 on pages that serve literal `:::`, `undefined`, or HTTP 500. Confirm content changes in a browser on `http://localhost:3000` — on `127.0.0.1` React does not hydrate and every component looks broken.
 - **Node 22 only** (`>=22 <23`), pnpm 10. Other Node majors are rejected by `engines`.
@@ -85,6 +87,7 @@ Design: [`.claude/docs/superpowers/specs/2026-07-09-partials-registry-design.md`
 - Theme tokens are `--color-fd-*` (Fumadocs). Never use `--ifm-*` (legacy Docusaurus).
 - `lib/shared.ts` holds route constants (`docsRoute`, `docsImageRoute`, `docsContentRoute`) and the git config used for edit links — reference these rather than hardcoding paths.
 - `scripts/codemods/` are one-shot Docusaurus→Fumadocs porting/landing-page generators, not part of the runtime.
+- **Redirects.** All of them live in `redirects.config.mjs`, consumed by `next.config.mjs`. Both blocks in it are generated — `pnpm move-doc` writes moved-page entries between the `AUTO-GENERATED` markers, `pnpm redirects:legacy` writes `redirects.legacy.mjs` — so never hand-edit it. Next's `redirects()` runs **before** `proxy.ts`, so a redirected URL gets markdown negotiation on the destination, not the first hop. Unresolvable legacy URLs are parked in `redirects.legacy.todo.json` rather than pointed at a plausible page: a redirect to the wrong page is worse than a 404, and `redirects:check` cannot catch one because the destination exists. See [README](README.md#redirects).
 - **Image zoom.** `<ImageZoom>` resolves to the wrapper in `components/mdx/ImageZoom/` (plain `<img>` child; supports `caption`; no dimensions needed; no Next image optimization). To use Fumadocs' native component instead — for `_next/image` optimization — import it per file: `import { ImageZoom } from 'fumadocs-ui/components/image-zoom'` (shadows the wrapper for that file). The native component then requires `width`/`height` or the build fails; add `style={{ width: '100%', height: 'auto' }}` for responsiveness and drop `caption`. Live example: `content/docs/en/get-started/arbitrum-introduction.mdx`.
 
 - Always get your fumadocs-related information on https://www.fumadocs.dev/llms.txt
