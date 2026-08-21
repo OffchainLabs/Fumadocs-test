@@ -29,8 +29,8 @@ export default function HomePage() {
     <main className="flex flex-col flex-1">
       <section className="flex flex-col items-center justify-center text-center px-4 py-10 gap-2 bg-linear-[135deg] from-arbitrum-gradient-from to-arbitrum-gradient-to text-white">
         <h1 className="text-4xl font-medium tracking-tight">Get started with Arbitrum</h1>
-        <p className="text-white max-w-2xl">
-          Arbitrum a finance-native platform providing infrastructure for applications,
+        <p className="max-w-2xl">
+          Arbitrum is the finance-native platform providing infrastructure for applications,
           tokenization, and dedicated chains. These docs explain the protocols, chains, services,
           and SDKs developers use to build on the Arbitrum platform.
         </p>
