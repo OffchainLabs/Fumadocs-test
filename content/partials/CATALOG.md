@@ -90,7 +90,7 @@ This code has yet to be audited.
 This document is currently in public preview and may change significantly as feedback is captured from readers like you.
 
 - `<include cwd>content/partials/_public-preview-banner-partial.mdx</include>`
-- ⚠️ unused — tags: `public`, `preview`, `banner`
+- used in 1 page — tags: `public`, `preview`, `banner`
 
 ### Arbitrum Contract Addresses Reference
 
