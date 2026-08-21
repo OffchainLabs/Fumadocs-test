@@ -46,6 +46,32 @@ const SECTION_RENAMES = [
 ];
 
 /**
+ * Legacy destination -> this site's page, where the basename fallback picks the wrong one.
+ *
+ * The fallback matches on basename, so when a how-to was renamed on the way over it can only see
+ * a same-named concept page and sends the reader there instead. Each entry below was confirmed by
+ * comparing the legacy page's frontmatter title against the candidates:
+ *
+ *   stf          legacy "How to customize your Arbitrum chain's behavior" is customize-stf.mdx
+ *                verbatim; deep-dives/stf.mdx is the concept page "State Transition Function".
+ *   precompiles  legacy "How to customize your Arbitrum chain's precompiles" is the
+ *                choose-chain-precompiles how-to, not the arbitrum-essentials reference.
+ *   batch-poster legacy "Run a batch poster" is run-batch-poster.mdx verbatim;
+ *                deep-dives/batchposter.mdx is the concept page "The batch poster".
+ */
+const MANUAL_DESTINATIONS = new Map([
+  [
+    '/launch-arbitrum-chain/extend-the-protocol/stf',
+    '/docs/launch-arbitrum-chain/configuration/core/customize-stf',
+  ],
+  [
+    '/launch-arbitrum-chain/extend-the-protocol/precompiles',
+    '/docs/launch-arbitrum-chain/features/advanced/choose-chain-precompiles',
+  ],
+  ['/launch-arbitrum-chain/run-a-node/batch-poster', '/docs/run-a-node/run-batch-poster'],
+]);
+
+/**
  * Every routable doc URL on this site, derived from the content tree, keyed by lowercased URL.
  *
  * The legacy corpus has casing drift (`/sdk/assetbridger` next to `/sdk/assetBridger`), and this
@@ -104,6 +130,7 @@ const isMalformed = (value) => value.startsWith('//') || /^\/https?:/.test(value
  */
 const slugKey = (url) =>
   url
+    .replace(/\/+$/, '')
     .split('/')
     .pop()
     .toLowerCase()
@@ -154,6 +181,25 @@ function countUpstreamSlugs(sourcePath) {
   return counts;
 }
 
+/**
+ * Follow the legacy corpus's own redirect chain to its terminal destination.
+ *
+ * 219 of the upstream redirects point at a URL that is itself a redirect source, up to three hops
+ * deep — upstream restructured after those entries were written and never collapsed them, relying
+ * on the browser to follow. So a `destination` is often not where a reader ends up. Resolving the
+ * chain first turns a guess into upstream's own answer, and is far stronger evidence than matching
+ * a basename.
+ */
+function followChain(destination, bySource) {
+  const seen = new Set();
+  let current = destination;
+  while (bySource.has(current) && !seen.has(current)) {
+    seen.add(current);
+    current = bySource.get(current);
+  }
+  return current;
+}
+
 /** Candidate destinations, most-literal first. */
 function candidateDestinations(destination) {
   const base = destination.replace(/\/+$/, '');
@@ -171,6 +217,11 @@ function build(sourcePath) {
   const valid = collectValidUrls();
   const bySlug = indexBySlug(valid);
   const upstreamSlugs = countUpstreamSlugs(sourcePath);
+  const bySource = new Map();
+  for (const entry of legacy.redirects ?? []) {
+    const key = normaliseSource(entry.source);
+    if (!bySource.has(key)) bySource.set(key, entry.destination);
+  }
 
   const redirects = [];
   const todo = [];
@@ -204,12 +255,26 @@ function build(sourcePath) {
       continue;
     }
 
-    if (isMalformed(entry.destination)) {
-      todo.push({ source, legacyDestination: entry.destination, reason: 'malformed-destination' });
+    const target = followChain(entry.destination, bySource);
+
+    const manual = MANUAL_DESTINATIONS.get(target.replace(/\/+$/, ''));
+    if (manual) {
+      const resolved = resolveUrl(valid, manual);
+      if (!resolved) {
+        throw new Error(
+          `generate-legacy-redirects: MANUAL_DESTINATIONS points at a missing page: ${manual}`,
+        );
+      }
+      redirects.push({ source, destination: resolved, permanent: !!entry.permanent });
       continue;
     }
 
-    const candidates = candidateDestinations(entry.destination);
+    if (isMalformed(target)) {
+      todo.push({ source, legacyDestination: target, reason: 'malformed-destination' });
+      continue;
+    }
+
+    const candidates = candidateDestinations(target);
     const index = candidates.findIndex((candidate) => resolveUrl(valid, candidate));
 
     if (index === -1) {
@@ -218,12 +283,12 @@ function build(sourcePath) {
       // Fall back to the basename, and accept it only when exactly one page carries that slug:
       // two candidates means the generator would be picking, and a plausible-but-wrong redirect
       // is worse than none.
-      const key = slugKey(entry.destination);
+      const key = slugKey(target);
       const hits = bySlug.get(key) ?? [];
       if (hits.length !== 1) {
         todo.push({
           source,
-          legacyDestination: entry.destination,
+          legacyDestination: target,
           reason: hits.length === 0 ? 'destination-not-in-tree' : 'ambiguous-slug',
           ...(hits.length > 1 ? { candidates: hits } : {}),
         });
@@ -233,20 +298,20 @@ function build(sourcePath) {
       if (!upstreamSlugs || (upstreamSlugs.get(key) ?? 0) > 1) {
         todo.push({
           source,
-          legacyDestination: entry.destination,
+          legacyDestination: target,
           reason: upstreamSlugs ? 'ambiguous-upstream-slug' : 'slug-fallback-unverifiable',
           ...(upstreamSlugs ? { wouldMatch: hits[0] } : {}),
         });
         continue;
       }
-      slugMatched.push({ source, from: entry.destination, to: hits[0] });
+      slugMatched.push({ source, from: target, to: hits[0] });
       redirects.push({ source, destination: hits[0], permanent: !!entry.permanent });
       continue;
     }
 
     // Emit the tree's real casing, not the legacy corpus's.
     const destination = resolveUrl(valid, candidates[index]);
-    if (index > 0) renamed.push({ source, from: entry.destination, to: destination });
+    if (index > 0) renamed.push({ source, from: target, to: destination });
 
     redirects.push({ source, destination, permanent: !!entry.permanent });
   }
