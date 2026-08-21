@@ -166,10 +166,25 @@
     padding: 1rem 1.25rem;
   }
 
+  /* Inline code reads as *bigger* than its neighbours even though the glyphs are
+     smaller (14px vs 16px, x-height 7.5px vs 8.5px measured on screen). Two
+     causes, both about the pill rather than the type:
+
+     1. Aeonik Fono ships a 400 face only (see app/layout.tsx), so `font-weight:
+        500` made the browser synthesize a fake medium — thicker, wider strokes
+        than the real face. The same synthesis the heading clamp and the `dt` /
+        `thead th` rule below already guard against. Fumadocs' own default is 400.
+     2. Fono's content area is 1.140em, so `padding: 0.2em` + a 1px border put the
+        pill at 23.5px inside a 28px line box — 84% of the line, which optically
+        dominates. 0.125em brings that to 21.5px.
+
+     font-size stays at 0.875em: Aeonik and Aeonik Fono share identical metrics
+     (x-height 510, cap 700 per 1000 upem), so unlike a typical monospace there is
+     no larger x-height to compensate for — shrinking further would undersize it. */
   :where(:not(pre) > code) {
     font-size: 0.875em;
-    font-weight: 500;
-    padding: 0.2em 0.4em;
+    font-weight: 400;
+    padding: 0.125em 0.375em;
     border: 1px solid var(--color-fd-border);
     background: var(--color-fd-muted);
   }
