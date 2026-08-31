@@ -52,16 +52,21 @@ jobs:
       - name: Glossary references resolve
         run: pnpm references:check
 
+      # Fumadocs has no `onBrokenLinks: 'throw'`, and `pnpm build` does not check links,
+      # so this step is the only thing standing between a broken link and main.
+      # Caveat: check-links does not validate anchors — a live page with a dead #anchor passes.
+      - name: Internal links
+        run: pnpm check-links
+
   content-debt:
-    # These three gates fail on pre-existing debt, so they report without blocking.
-    # Counts verified against main on 2026-08-20:
-    #   format:check      52 files unformatted  → fix with `pnpm format`
-    #   content:lint      15 findings across 9 files (breakdown below)
-    #   check-links       19 broken internal links across 11 files
+    # These two gates fail on pre-existing debt, so they report without blocking.
+    # Counts verified against main on 2026-08-31:
+    #   format:check      49 files unformatted  → fix with `pnpm format`
+    #   content:lint      13 findings across 7 files (breakdown below)
     #
     # content:lint by rule:
-    #   A5  internal link keeps a .md/.mdx suffix   8 in  5 files
     #   A2  invalid admonition type                 7 in  4 files
+    #   A5  internal link keeps a .md/.mdx suffix   6 in  3 files
     #
     # A1 (empty admonition body, was 98) and A4 (markdown/entities inside title=, was 68)
     # are now zero. They were one defect, not 166: the Docusaurus→Fumadocs admonition
@@ -73,6 +78,7 @@ jobs:
     # previously came to claim 39 findings.
     #
     # references:check reached zero and moved into `gates` on 2026-08-20.
+    # check-links reached zero and moved into `gates` on 2026-08-31.
     # Move a step into the `gates` job above once its count reaches zero.
     name: Content debt (non-blocking)
     runs-on: ubuntu-latest
@@ -96,10 +102,6 @@ jobs:
 
       - name: MDX structural lint
         run: pnpm content:lint
-        continue-on-error: true
-
-      - name: Internal links
-        run: pnpm check-links
         continue-on-error: true
 
   build:
