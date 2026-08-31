@@ -25,9 +25,9 @@ Roles can combine on a single node (a sequencer can also post batches, for examp
 | RPC node (full node)                 | none (the default)                                                              | No wallet, no bond                                        | Many (horizontal scaling)                 | [Run a full node](/docs/run-a-node/run-full-node)                               |
 | Archive node                         | `--execution.caching.archive`                                                   | No wallet, no bond                                        | Many (same as RPC nodes)                  | [Run an archive node](/docs/run-a-node/more-types/run-archive-node)             |
 | Sequencer                            | `--node.sequencer` + `--execution.sequencer.enable`                             | No wallet, no bond                                        | One per chain (or one coordinator set)    | [Run a sequencer node](/docs/run-a-node/sequencer/run-sequencer-node)           |
-| Batch poster                         | `--node.batch-poster.enable`                                                    | Funded parent-chain wallet; no bond                       | One active (Redis lock coordinates a set) | [Run a batch poster](/docs/launch-arbitrum-chain/run-a-node/batch-poster)                 |
+| Batch poster                         | `--node.batch-poster.enable`                                                    | Funded parent-chain wallet; no bond                       | One active (Redis lock coordinates a set) | [Run a batch poster](/docs/run-a-node/run-batch-poster)                 |
 | Validator (staker)                   | `--node.staker.strategy` set to an active value                                 | Funded wallet and bond for active strategies only         | One active per wallet                     | [Run a validator](/docs/run-a-node/more-types/run-validator-node)               |
-| Validation server (split validation) | `nitro-val` binary + `--node.block-validator.validation-server.url` on the node | No wallet, no bond (all onchain action stays on the node) | Many (one node can use several)           | [Run a split validator node](/docs/launch-arbitrum-chain/run-a-node/split-validator-node) |
+| Validation server (split validation) | `nitro-val` binary + `--node.block-validator.validation-server.url` on the node | No wallet, no bond (all onchain action stays on the node) | Many (one node can use several)           | [Run a split validator node](/docs/run-a-node/run-split-validator-node) |
 | Feed relay                           | `relay` binary + `--node.feed.input.url` + `--chain.id`                         | No wallet, no bond, no parent-chain connection            | Many (stateless fan-out)                  | [Run a feed relay](/docs/run-a-node/run-feed-relay)                                |
 
 Every role except the feed relay and the split-validation server needs a parent-chain connection through `--parent-chain.connection.url`. Nodes whose parent chain is Ethereum <Term id="L1">L1</Term> also need `--parent-chain.blob-client.beacon-url` to read batches posted as EIP-4844 blobs. For well-known chains, setting `--chain.id` or `--chain.name` auto-fills defaults such as `--execution.forwarding-target` and `--node.feed.input.url` from the chain info embedded in the binary (the forwarding target is only auto-filled when the sequencer is disabled).
@@ -120,7 +120,7 @@ A batch poster requires a **funded parent-chain wallet**: it pays parent-chain g
 
 The address the batch poster uses must not be the same address as the staker when the staker is active (a non-watchtower validator); the node rejects a shared address in that case.
 
-For chain-owner configuration, blob posting, and troubleshooting, see [Run a batch poster](/docs/launch-arbitrum-chain/run-a-node/batch-poster).
+For chain-owner configuration, blob posting, and troubleshooting, see [Run a batch poster](/docs/run-a-node/run-batch-poster).
 
 ## Validator (staker)
 
@@ -169,7 +169,7 @@ On the main node (`nitro` binary):
 
 The validation server holds no wallet and posts no bond, and it is stateless — it runs with an ephemeral data directory, so you can replace a server in place, or add servers with a node restart, without losing any validation progress. The `--auth.*` flags exist on both binaries with the same defaults; on the main node they back the default `self-auth` loopback. Switching between in-process and split validation is a configuration change plus a restart; no database migration is involved.
 
-For Docker images, Helm charts, and the full setup, see [Run a split validator node](/docs/launch-arbitrum-chain/run-a-node/split-validator-node) and [Docker images and CLI binaries](/docs/run-a-node/nitro/docker-and-cli-binaries).
+For Docker images, Helm charts, and the full setup, see [Run a split validator node](/docs/run-a-node/run-split-validator-node) and [Docker images and CLI binaries](/docs/run-a-node/nitro/docker-and-cli-binaries).
 
 ## Feed relay
 

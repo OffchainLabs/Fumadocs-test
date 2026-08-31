@@ -24,14 +24,85 @@ export const SECTION_MAP = {
  * wrong reason. Add an entry here whenever a port renames a file.
  */
 export const RENAME_MAP = {
+  'for-devs/contribute.mdx': 'contribute.mdx',
+  'for-devs/oracles/oracles-content-map.mdx': 'oracles/index.mdx',
+  'get-started/overview.mdx': 'get-started/index.mdx',
+  'launch-arbitrum-chain/chain-config/batch-poster/config-batch-poster.mdx':
+    'launch-arbitrum-chain/configuration/sequencer/batch-posting-assertion-control.mdx',
+  'launch-arbitrum-chain/chain-config/batch-poster/enable-4844-blobs.mdx':
+    'launch-arbitrum-chain/configuration/data-availability/enable-post-4844-blobs.mdx',
+  'launch-arbitrum-chain/chain-config/batch-poster/fee-tuning.mdx':
+    'launch-arbitrum-chain/configuration/sequencer/batch-poster-fee-tuning.mdx',
+  'launch-arbitrum-chain/chain-config/costs/aep-overview.mdx':
+    'launch-arbitrum-chain/configuration/costs/aep-fee-router-introduction.mdx',
+  'launch-arbitrum-chain/chain-config/costs/aep-router-contracts.mdx':
+    'launch-arbitrum-chain/configuration/costs/set-up-aep-fee-router.mdx',
+  'launch-arbitrum-chain/chain-config/costs/configure-native-mint-burn.mdx':
+    'launch-arbitrum-chain/configuration/costs/configure-native-mint-burn-gas-token.mdx',
+  'launch-arbitrum-chain/chain-config/costs/custom-gas-token-anytrust.mdx':
+    'launch-arbitrum-chain/configuration/costs/use-a-custom-gas-token-anytrust.mdx',
+  'launch-arbitrum-chain/chain-config/costs/custom-gas-token-rollup.mdx':
+    'launch-arbitrum-chain/configuration/costs/use-a-custom-gas-token-rollup.mdx',
+  'launch-arbitrum-chain/chain-config/costs/dynamic-pricing.mdx':
+    'launch-arbitrum-chain/configuration/costs/dynamic-pricing-for-arbitrum-chains.mdx',
+  'launch-arbitrum-chain/chain-config/data-availability/dac-get-started.mdx':
+    'launch-arbitrum-chain/configuration/data-availability/data-availability-committees/get-started.mdx',
+  'launch-arbitrum-chain/chain-config/execution/smart-contract-size-limit.mdx':
+    'launch-arbitrum-chain/configuration/core/config-smart-contract-size-limit.mdx',
+  'launch-arbitrum-chain/chain-config/sequencer/chain-finality.mdx':
+    'launch-arbitrum-chain/configuration/validation/arbitrum-chain-finality.mdx',
+  'launch-arbitrum-chain/chain-config/sequencer/sequencer-timing-adjustments.mdx':
+    'launch-arbitrum-chain/configuration/sequencer/config-sequencer-timing-adjustments.mdx',
+  'launch-arbitrum-chain/chain-config/sequencer/timeboost.mdx':
+    'launch-arbitrum-chain/configuration/sequencer/timeboost-for-arbitrum-chains.mdx',
+  // Upstream split batch-poster and assertion config across two pages; the port merged them.
+  'launch-arbitrum-chain/chain-config/validation/assertion-control.mdx':
+    'launch-arbitrum-chain/configuration/sequencer/batch-posting-assertion-control.mdx',
+  'launch-arbitrum-chain/chain-config/validation/bold.mdx':
+    'launch-arbitrum-chain/configuration/sequencer/bold-adoption-for-arbitrum-chains.mdx',
+  'launch-arbitrum-chain/chain-config/validation/bond-and-validator.mdx':
+    'launch-arbitrum-chain/configuration/validation/stake-and-validator-configurations.mdx',
+  'launch-arbitrum-chain/chain-config/validation/challenge-period.mdx':
+    'launch-arbitrum-chain/configuration/validation/customizable-challenge-period.mdx',
+  'launch-arbitrum-chain/deploy/configure-node.mdx':
+    'launch-arbitrum-chain/arbitrum-chain-sdk-preparing-node-config.mdx',
+  'launch-arbitrum-chain/deploy/deploy-chain.mdx':
+    'launch-arbitrum-chain/deploy/deploying-an-arbitrum-chain.mdx',
+  'launch-arbitrum-chain/deploy/token-bridge.mdx':
+    'launch-arbitrum-chain/deploy/deploying-token-bridge.mdx',
+  'launch-arbitrum-chain/integrations/bridged-usdc.mdx':
+    'launch-arbitrum-chain/integrations/bridged-usdc-standard.mdx',
+  'launch-arbitrum-chain/integrations/infrastructure-providers.mdx':
+    'launch-arbitrum-chain/third-party-integrations/third-party-providers.mdx',
+  'launch-arbitrum-chain/migrate/between-raases.mdx':
+    'launch-arbitrum-chain/migrate/migrate-between-raases.mdx',
+  'launch-arbitrum-chain/migrate/from-another-stack.mdx':
+    'launch-arbitrum-chain/migrate/migrate-from-another-stack.mdx',
   'launch-arbitrum-chain/operate/monitoring.mdx':
     'launch-arbitrum-chain/operate/monitoring-tools-and-considerations.mdx',
   'launch-arbitrum-chain/operate/ownership-and-access.mdx':
     'launch-arbitrum-chain/operate/ownership-access-control.mdx',
+  'launch-arbitrum-chain/operate/post-launch-deployments.mdx':
+    'launch-arbitrum-chain/operate/post-launch-contract-deployments.mdx',
+  'launch-arbitrum-chain/overview/faq.mdx':
+    'launch-arbitrum-chain/troubleshooting-building-arbitrum-chain.mdx',
   'launch-arbitrum-chain/overview/introduction.mdx':
     'launch-arbitrum-chain/overview/a-gentle-introduction.mdx',
-  'launch-arbitrum-chain/chain-config/sequencer/sequencer-timing-adjustments.mdx':
-    'launch-arbitrum-chain/configuration/sequencer/config-sequencer-timing-adjustments.mdx',
+  'launch-arbitrum-chain/overview/license.mdx': 'launch-arbitrum-chain/overview/aep-license.mdx',
+  'launch-arbitrum-chain/overview/public-preview.mdx':
+    'launch-arbitrum-chain/overview/public-preview-expectations.mdx',
+  'launch-arbitrum-chain/quickstart/l3-rollup-from-scratch.mdx':
+    'launch-arbitrum-chain/quickstart/deploy-your-first-rollup.mdx',
+  'launch-arbitrum-chain/quickstart/l3-rollup-testnet.mdx':
+    'launch-arbitrum-chain/quickstart/run-testnet-infrastructure-first-rollup.mdx',
+  'launch-arbitrum-chain/quickstart/sdk-introduction.mdx':
+    'launch-arbitrum-chain/overview/arbitrum-chain-sdk-introduction.mdx',
+  'launch-arbitrum-chain/run-a-node/high-availability-sequencer.mdx':
+    'run-a-node/high-availability-sequencer-docs.mdx',
+  'launch-arbitrum-chain/run-a-node/split-validator-node.mdx':
+    'run-a-node/run-split-validator-node.mdx',
+  'learn-more/faq.mdx': 'get-started/faq.mdx',
+  'node-running/faq.mdx': 'run-a-node/faq.mdx',
 };
 
 /** Reduce a path to a comparable slug: basename, no extension, no ordering prefix, alphanumeric only. */
