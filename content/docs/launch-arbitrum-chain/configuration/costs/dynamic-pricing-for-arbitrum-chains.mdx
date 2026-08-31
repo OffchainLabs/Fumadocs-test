@@ -37,7 +37,7 @@ For more information about Effective block gas limit, refer to the [Gas and fees
 </VanillaAdmonition>
 ## How to set multiple gas targets
 
-You can call `SetGasPricingConstraints` on the [ArbOwner precompile](/docs/for-devs/dev-tools-and-resources/partials/precompile-tables/_ArbOwner) with an array of gas targets (the code refers to these targets as "constraints"), where each constraint contains `[gasTargetPerSecond, adjustmentWindowSeconds, startingBacklogValue]`.
+You can call `SetGasPricingConstraints` on the [ArbOwner precompile](/docs/arbitrum-essentials/precompiles/reference#arbowner) with an array of gas targets (the code refers to these targets as "constraints"), where each constraint contains `[gasTargetPerSecond, adjustmentWindowSeconds, startingBacklogValue]`.
 
 ```ts
 // Example: Set short-term and long-term constraints
