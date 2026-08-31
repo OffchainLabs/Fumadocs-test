@@ -12,11 +12,15 @@
  *   Each ABSENT item is labelled DRIFT (added upstream after the port window closed, never in scope)
  *   or MISS (existed before the port window closed and should have been ported).
  *
- * NOT YET A RELIABLE WORK LIST: pairing depends on `RENAME_MAP` in lib/tree-compare.mjs, which
- * currently covers only a handful of the ~34 known migration renames. A page ported under a new
- * name that isn't in `RENAME_MAP` still surfaces here as ABSENT (looks unported) rather than being
- * matched to its real counterpart. Treat ABSENT entries as a starting point to investigate, not a
- * ground-truth backlog, until `RENAME_MAP` is filled in.
+ * Pairing depends on `RENAME_MAP` in lib/tree-compare.mjs. A page ported under a new name that
+ * isn't in that map surfaces here as ABSENT (looks unported) instead of pairing with its real
+ * counterpart, so add an entry there whenever a port renames a file — otherwise the report fills
+ * with false positives and stops being read.
+ *
+ * Two standing MISS entries are not work items:
+ *   node-running/sequencer-content-map.mdx  Docusaurus <Card> grid; the nav lives in meta.json here.
+ *   how-arbitrum-works/deep-dives/01-stf-gentle-intro.mdx  Folded into deep-dives/stf.mdx, which is
+ *     itself GUTTED. Left unmapped on purpose — mapping it would mask that content loss.
  */
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
