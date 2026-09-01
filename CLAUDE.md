@@ -1,6 +1,17 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+> **Machine-facing. Not written for humans, and not the canonical documentation.**
+>
+> This file provides guidance to Claude Code (claude.ai/code) when working with code in this
+> repository. It is tied to a specific commercial tool; parts of it are rewritten automatically by
+> `next dev`.
+>
+> The canonical docs are [README.md](README.md) (how to work on the docs) and
+> [INTERNALS.md](INTERNALS.md) (how the codebase works, and why). Humans should read those.
+>
+> **Duplication here is expected and fine** — agents need the context in-session, so anything
+> canonical that an agent needs belongs in this file too. When the same material lives in both
+> places, **edit INTERNALS.md first**, then mirror what agents need back here.
 
 Arbitrum documentation portal — a Next.js 16 / Fumadocs migration of [`OffchainLabs/arbitrum-docs`](https://github.com/OffchainLabs/arbitrum-docs) off Docusaurus. Serves English MDX docs (single locale; i18n was removed 2026-08-18). Phase 0 MVP: single-committer. CI landed 2026-08-17 (`.github/workflows/`); the repo is linked to the Vercel project `fumadocs-test`.
 
@@ -86,7 +97,7 @@ Design: [`.claude/docs/superpowers/specs/2026-07-09-partials-registry-design.md`
 
 - Theme tokens are `--color-fd-*` (Fumadocs). Never use `--ifm-*` (legacy Docusaurus).
 - `lib/shared.ts` holds route constants (`docsRoute`, `docsImageRoute`, `docsContentRoute`) and the git config used for edit links — reference these rather than hardcoding paths.
-- **Redirects.** All of them live in `redirects.config.mjs`, consumed by `next.config.mjs`. Both blocks in it are generated — `pnpm move-doc` writes moved-page entries between the `AUTO-GENERATED` markers, `pnpm redirects:legacy` writes `redirects.legacy.mjs` — so never hand-edit it. Next's `redirects()` runs **before** `proxy.ts`, so a redirected URL gets markdown negotiation on the destination, not the first hop. Unresolvable legacy URLs are parked in `redirects.legacy.todo.json` rather than pointed at a plausible page: a redirect to the wrong page is worse than a 404, and `redirects:check` cannot catch one because the destination exists. See [README](README.md#redirects).
+- **Redirects.** All of them live in `redirects.config.mjs`, consumed by `next.config.mjs`. Both blocks in it are generated — `pnpm move-doc` writes moved-page entries between the `AUTO-GENERATED` markers, `pnpm redirects:legacy` writes `redirects.legacy.mjs` — so never hand-edit it. Next's `redirects()` runs **before** `proxy.ts`, so a redirected URL gets markdown negotiation on the destination, not the first hop. Unresolvable legacy URLs are parked in `redirects.legacy.todo.json` rather than pointed at a plausible page: a redirect to the wrong page is worse than a 404, and `redirects:check` cannot catch one because the destination exists. **That file reached `[]` on 2026-08-31 and is now a tripwire, not a backlog** — a non-empty todo after `pnpm redirects:legacy` means upstream added a redirect this site cannot resolve, so map it in `MANUAL_DESTINATIONS` (confirm the upstream page's frontmatter title against the local candidates) instead of leaving it parked. See [INTERNALS](INTERNALS.md#redirects).
 - **Image zoom.** `<ImageZoom>` resolves to the wrapper in `components/mdx/ImageZoom/` (plain `<img>` child; supports `caption`; no dimensions needed; no Next image optimization). To use Fumadocs' native component instead — for `_next/image` optimization — import it per file: `import { ImageZoom } from 'fumadocs-ui/components/image-zoom'` (shadows the wrapper for that file). The native component then requires `width`/`height` or the build fails; add `style={{ width: '100%', height: 'auto' }}` for responsiveness and drop `caption`. Live example: `content/docs/en/get-started/arbitrum-introduction.mdx`.
 
 - Always get your fumadocs-related information on https://www.fumadocs.dev/llms.txt
