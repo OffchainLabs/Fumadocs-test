@@ -96,6 +96,11 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/arbsys',
+    destination: '/docs/arbitrum-essentials/precompiles/reference#arbsys',
+    permanent: false,
+  },
+  {
     source: '/assertion-tree',
     destination: '/docs/how-arbitrum-works/deep-dives/assertions',
     permanent: false,
@@ -491,8 +496,19 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/das/daserver-instructions',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/get-started',
+    permanent: false,
+  },
+  {
     source: '/developer_quickstart',
     destination: '/docs/get-started',
+    permanent: false,
+  },
+  {
+    source: '/devs-how-tos/bridge-tokens/gentle-introduction-bridge',
+    destination: '/docs/arbitrum-essentials/bridging/overview',
     permanent: false,
   },
   {
@@ -541,6 +557,17 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/docs/launch-arbitrum-chain/chain-config/validation/challenge-period',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/validation/customizable-challenge-period',
+    permanent: false,
+  },
+  {
+    source: '/faqs/anytrust-vs-rollup',
+    destination: '/docs/how-arbitrum-works/deep-dives/anytrust-protocol',
+    permanent: false,
+  },
+  {
     source: '/faqs/beta-status',
     destination: '/docs/arbitrum-essentials/reference/mainnet-risks',
     permanent: false,
@@ -576,6 +603,11 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/faqs/seq-or-val',
+    destination: '/docs/how-arbitrum-works/deep-dives/sequencer',
+    permanent: false,
+  },
+  {
     source: '/faqs/the-merge',
     destination: '/docs/get-started',
     permanent: false,
@@ -583,6 +615,11 @@ export const legacyRedirects = [
   {
     source: '/faqs/tooling-faqs',
     destination: '/docs/build-decentralized-apps/troubleshooting-building',
+    permanent: false,
+  },
+  {
+    source: '/faqs/what-if-dispute',
+    destination: '/docs/how-arbitrum-works/bold/gentle-introduction',
     permanent: false,
   },
   {
@@ -653,6 +690,11 @@ export const legacyRedirects = [
   {
     source: '/for-devs/concepts/token-bridge/token-bridge-ether',
     destination: '/docs/arbitrum-essentials/bridging/deposit/eth-and-messages',
+    permanent: false,
+  },
+  {
+    source: '/for-devs/concepts/token-bridge/token-bridge-overview',
+    destination: '/docs/arbitrum-essentials/bridging/overview',
     permanent: false,
   },
   {
@@ -782,7 +824,7 @@ export const legacyRedirects = [
   },
   {
     source: '/how-arbitrum-works',
-    destination: '/docs/how-arbitrum-works/inside-arbitrum-nitro',
+    destination: '/docs/how-arbitrum-works',
     permanent: false,
   },
   {
@@ -831,6 +873,11 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/how-arbitrum-works/deep-dives/parent-chain-pricing',
+    destination: '/docs/how-arbitrum-works/deep-dives/gas-and-fees#parent-chain-gas-pricing',
+    permanent: false,
+  },
+  {
     source: '/how-arbitrum-works/fees',
     destination: '/docs/how-arbitrum-works/deep-dives/gas-and-fees',
     permanent: false,
@@ -858,6 +905,11 @@ export const legacyRedirects = [
   {
     source: '/how-arbitrum-works/gas-fees',
     destination: '/docs/how-arbitrum-works/deep-dives/gas-and-fees',
+    permanent: false,
+  },
+  {
+    source: '/how-arbitrum-works/geth-at-the-core',
+    destination: '/docs/how-arbitrum-works/deep-dives/stf',
     permanent: false,
   },
   {
@@ -901,6 +953,11 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/how-arbitrum-works/reference/parent-chain-pricing',
+    destination: '/docs/how-arbitrum-works/deep-dives/gas-and-fees#parent-chain-gas-pricing',
+    permanent: false,
+  },
+  {
     source: '/how-arbitrum-works/separating-execution-from-proving',
     destination: '/docs/how-arbitrum-works/bold/gentle-introduction',
     permanent: false,
@@ -926,13 +983,23 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/how-arbitrum-works/state-transition-function/stf-gentle-intro',
+    destination: '/docs/how-arbitrum-works/deep-dives/stf',
+    permanent: false,
+  },
+  {
     source: '/how-arbitrum-works/state-transition-function/stf-inputs',
     destination: '/docs/how-arbitrum-works/reference/stf-inputs',
     permanent: false,
   },
   {
+    source: '/how-arbitrum-works/state-transition-function/stylus-execution-path',
+    destination: '/docs/how-arbitrum-works/deep-dives/arbos#stylus-specific-differences',
+    permanent: false,
+  },
+  {
     source: '/how-arbitrum-works/timeboost',
-    destination: '/docs/how-arbitrum-works/timeboost/gentle-introduction',
+    destination: '/docs/how-arbitrum-works/timeboost',
     permanent: false,
   },
   {
@@ -1001,13 +1068,59 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/launch-arbitrum-chain/a-gentle-introduction',
+    destination: '/docs/launch-arbitrum-chain/overview/a-gentle-introduction',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/aep-license',
+    destination: '/docs/launch-arbitrum-chain/overview/aep-license',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/arbitrum-chain-quickstart',
+    destination: '/docs/launch-arbitrum-chain/overview/a-gentle-introduction',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/arbitrum-chain-sdk-introduction',
+    destination: '/docs/launch-arbitrum-chain/overview/arbitrum-chain-sdk-introduction',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/arbitrum-node-runners/enale-post-4blobs',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/data-availability/enable-post-4844-blobs',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/arbitrum-node-runners/high-availability-sequencer-docs',
+    destination: '/docs/run-a-node/high-availability-sequencer-docs',
+    permanent: false,
+  },
+  {
     source: '/launch-arbitrum-chain/arbitrum-node-runners/run-batch-poster',
     destination: '/docs/run-a-node/run-batch-poster',
     permanent: false,
   },
   {
+    source: '/launch-arbitrum-chain/arbitrum-node-runners/run-split-validator-node',
+    destination: '/docs/run-a-node/run-split-validator-node',
+    permanent: false,
+  },
+  {
     source: '/launch-arbitrum-chain/bold-adoption-for-arbitrum-chains',
     destination: '/docs/how-arbitrum-works/bold',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/chain-config/core/arbos',
+    destination: '/docs/launch-arbitrum-chain/configuration/core/customize-arbos',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/chain-config/core/da-api-guide',
+    destination: '/docs/launch-arbitrum-chain/integrations/da-api-integration-guide',
     permanent: false,
   },
   {
@@ -1026,6 +1139,11 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/launch-arbitrum-chain/chain-config/validation/chain-finality',
+    destination: '/docs/launch-arbitrum-chain/configuration/validation/arbitrum-chain-finality',
+    permanent: false,
+  },
+  {
     source: '/launch-arbitrum-chain/chain-config/validation/compliance-filtering',
     destination: '/docs/launch-arbitrum-chain/configuration/sequencer/compliance-filtering',
     permanent: false,
@@ -1038,6 +1156,11 @@ export const legacyRedirects = [
   {
     source: '/launch-arbitrum-chain/concepts/custom-gas-token-sdk',
     destination: '/docs/arbitrum-essentials/bridging/custom-gas-token-chains',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/concepts/public-preview-expectations',
+    destination: '/docs/launch-arbitrum-chain/overview/public-preview-expectations',
     permanent: false,
   },
   {
@@ -1077,6 +1200,12 @@ export const legacyRedirects = [
   },
   {
     source:
+      '/launch-arbitrum-chain/configure-your-chain/advanced-configurations/configure-aep-fee-routing/aep-fee-router-introduction',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/aep-fee-router-introduction',
+    permanent: false,
+  },
+  {
+    source:
       '/launch-arbitrum-chain/configure-your-chain/advanced-configurations/configure-aep-fee-routing/calculate-aep-fees',
     destination: 'https://docs.arbitrum.foundation/calculate-aep-fees',
     permanent: false,
@@ -1085,6 +1214,12 @@ export const legacyRedirects = [
     source:
       '/launch-arbitrum-chain/configure-your-chain/advanced-configurations/configure-aep-fee-routing/reporting-on-fees',
     destination: '/docs/launch-arbitrum-chain/configuration/costs/reporting-on-fees',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-arbitrum-chain/configure-your-chain/advanced-configurations/configure-aep-fee-routing/set-up-aep-fee-router',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/set-up-aep-fee-router',
     permanent: false,
   },
   {
@@ -1099,6 +1234,11 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/launch-arbitrum-chain/configure-your-chain/advanced-configurations/layer-leap',
+    destination: '/docs/launch-arbitrum-chain/overview/a-gentle-introduction',
+    permanent: false,
+  },
+  {
     source: '/launch-arbitrum-chain/configure-your-chain/advanced/compliance-filtering',
     destination: '/docs/launch-arbitrum-chain/configuration/sequencer/compliance-filtering',
     permanent: false,
@@ -1110,8 +1250,26 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/launch-arbitrum-chain/configure-your-chain/advanced/da-api-integration-guide',
+    destination: '/docs/launch-arbitrum-chain/integrations/da-api-integration-guide',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-arbitrum-chain/configure-your-chain/common-configurations/arbitrum-chain-finality',
+    destination: '/docs/launch-arbitrum-chain/configuration/validation/arbitrum-chain-finality',
+    permanent: false,
+  },
+  {
     source: '/launch-arbitrum-chain/configure-your-chain/common-configurations/arbos-upgrade',
     destination: '/docs/launch-arbitrum-chain/operate/arbos-upgrade',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-arbitrum-chain/configure-your-chain/common-configurations/batch-posting-assertion-control',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/sequencer/batch-posting-assertion-control',
     permanent: false,
   },
   {
@@ -1121,8 +1279,35 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source:
+      '/launch-arbitrum-chain/configure-your-chain/common-configurations/customizable-challenge-period',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/validation/customizable-challenge-period',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-arbitrum-chain/configure-your-chain/common-configurations/enable-post-4844-blobs',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/data-availability/enable-post-4844-blobs',
+    permanent: false,
+  },
+  {
     source: '/launch-arbitrum-chain/configure-your-chain/common-configurations/fee-management',
     destination: '/docs/launch-arbitrum-chain/configuration/costs/fee-management',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-arbitrum-chain/configure-your-chain/common-configurations/gas-optimization-tools',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/gas-optimization-tools',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-arbitrum-chain/configure-your-chain/common-configurations/stake-and-validator-configurations',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/validation/stake-and-validator-configurations',
     permanent: false,
   },
   {
@@ -1151,6 +1336,12 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source:
+      '/launch-arbitrum-chain/configure-your-chain/common/aep-fees/aep-fee-router-introduction',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/aep-fee-router-introduction',
+    permanent: false,
+  },
+  {
     source: '/launch-arbitrum-chain/configure-your-chain/common/aep-fees/calculate-aep-fees',
     destination: 'https://docs.arbitrum.foundation/calculate-aep-fees',
     permanent: false,
@@ -1158,6 +1349,11 @@ export const legacyRedirects = [
   {
     source: '/launch-arbitrum-chain/configure-your-chain/common/aep-fees/reporting-on-fees',
     destination: '/docs/launch-arbitrum-chain/configuration/costs/reporting-on-fees',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/configure-your-chain/common/aep-fees/set-up-aep-fee-router',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/set-up-aep-fee-router',
     permanent: false,
   },
   {
@@ -1210,8 +1406,45 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source:
+      '/launch-arbitrum-chain/configure-your-chain/common/data-availability/data-availability-committees/get-started',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/get-started',
+    permanent: false,
+  },
+  {
     source: '/launch-arbitrum-chain/configure-your-chain/common/fees/fee-management',
     destination: '/docs/launch-arbitrum-chain/configuration/costs/fee-management',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-arbitrum-chain/configure-your-chain/common/gas/configure-native-mint-burn-gas-token',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/costs/configure-native-mint-burn-gas-token',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-arbitrum-chain/configure-your-chain/common/gas/dynamic-pricing-for-arbitrum-chains',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/costs/dynamic-pricing-for-arbitrum-chains',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/configure-your-chain/common/gas/gas-optimization-tools',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/gas-optimization-tools',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-arbitrum-chain/configure-your-chain/common/gas/use-a-custom-gas-token-anytrust',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/use-a-custom-gas-token-anytrust',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/configure-your-chain/common/gas/use-a-custom-gas-token-rollup',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/use-a-custom-gas-token-rollup',
     permanent: false,
   },
   {
@@ -1226,14 +1459,65 @@ export const legacyRedirects = [
   },
   {
     source:
+      '/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/arbitrum-chain-finality',
+    destination: '/docs/launch-arbitrum-chain/configuration/validation/arbitrum-chain-finality',
+    permanent: false,
+  },
+  {
+    source:
       '/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/arbos-upgrade',
     destination: '/docs/launch-arbitrum-chain/operate/arbos-upgrade',
     permanent: false,
   },
   {
     source:
+      '/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/batch-poster-fee-tuning',
+    destination: '/docs/launch-arbitrum-chain/configuration/sequencer/batch-poster-fee-tuning',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/batch-posting-assertion-control',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/sequencer/batch-posting-assertion-control',
+    permanent: false,
+  },
+  {
+    source:
       '/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/bold-adoption-for-arbitrum-chains',
     destination: '/docs/how-arbitrum-works/bold',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/config-smart-contract-size-limit',
+    destination: '/docs/launch-arbitrum-chain/configuration/core/config-smart-contract-size-limit',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/customizable-challenge-period',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/validation/customizable-challenge-period',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/enable-post-4844-blobs',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/data-availability/enable-post-4844-blobs',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-arbitrum-chain/configure-your-chain/common/validation-and-security/stake-and-validator-configurations',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/validation/stake-and-validator-configurations',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/customize-your-chain/customize-arbos',
+    destination: '/docs/launch-arbitrum-chain/configuration/core/customize-arbos',
     permanent: false,
   },
   {
@@ -1252,13 +1536,74 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/launch-arbitrum-chain/deploy-an-arbitrum-chain/customize-deployment-configuration',
+    destination: '/docs/launch-arbitrum-chain/deploy/deploying-an-arbitrum-chain',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploy-your-first-rollup',
+    destination: '/docs/launch-arbitrum-chain/quickstart/deploy-your-first-rollup',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploying-an-arbitrum-chain',
+    destination: '/docs/launch-arbitrum-chain/deploy/deploying-an-arbitrum-chain',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploying-rollup-chain',
+    destination: '/docs/launch-arbitrum-chain/deploy/deploying-an-arbitrum-chain',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploying-token-bridge',
+    destination: '/docs/launch-arbitrum-chain/deploy/deploying-token-bridge',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/deploy-an-arbitrum-chain/monitoring-tools-and-considerations',
+    destination: '/docs/launch-arbitrum-chain/operate/monitoring-tools-and-considerations',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/deploy-an-arbitrum-chain/run-l3-rollup-from-scratch',
+    destination: '/docs/launch-arbitrum-chain/quickstart/deploy-your-first-rollup',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/deploy-an-arbitrum-chain/run-l3-rollup-testnet-infrastructure',
+    destination: '/docs/launch-arbitrum-chain/quickstart/run-testnet-infrastructure-first-rollup',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-arbitrum-chain/deploy-an-arbitrum-chain/run-testnet-infrastructure-first-rollup',
+    destination: '/docs/launch-arbitrum-chain/quickstart/run-testnet-infrastructure-first-rollup',
+    permanent: false,
+  },
+  {
     source: '/launch-arbitrum-chain/ecosystem-support/add-arbitrum-chain-to-bridge-ui',
     destination: '/docs/launch-arbitrum-chain/integrations/bridge-ui',
     permanent: false,
   },
   {
+    source: '/launch-arbitrum-chain/faq-troubleshooting/troubleshooting-building-arbitrum-chain',
+    destination: '/docs/launch-arbitrum-chain/troubleshooting-building-arbitrum-chain',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/features/advanced/choose-arbos-version',
+    destination: '/docs/launch-arbitrum-chain/configuration/core/customize-arbos',
+    permanent: false,
+  },
+  {
     source: '/launch-arbitrum-chain/features/advanced/choose-custom-behavior',
     destination: '/docs/launch-arbitrum-chain/configuration/core/customize-stf',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/features/advanced/choose-custom-delay-inbox-finality',
+    destination: '/docs/launch-arbitrum-chain/configuration/validation/arbitrum-chain-finality',
     permanent: false,
   },
   {
@@ -1277,26 +1622,88 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/launch-arbitrum-chain/features/common/configure-aep/configure-aep/fees',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/calculate-aep-fees',
+    permanent: false,
+  },
+  {
     source: '/launch-arbitrum-chain/features/common/data-availability/choose-alt-da',
-    destination:
-      '/docs/launch-arbitrum-chain/configuration/data-availability/config-data-availability',
+    destination: '/docs/launch-arbitrum-chain/features/common/data-availability/choose-alt-da',
     permanent: false,
   },
   {
     source: '/launch-arbitrum-chain/features/common/data-availability/choose-anytrust',
-    destination:
-      '/docs/launch-arbitrum-chain/configuration/data-availability/config-data-availability',
+    destination: '/docs/launch-arbitrum-chain/features/common/data-availability/choose-anytrust',
     permanent: false,
   },
   {
     source: '/launch-arbitrum-chain/features/common/data-availability/choose-rollup',
-    destination:
-      '/docs/launch-arbitrum-chain/configuration/data-availability/config-data-availability',
+    destination: '/docs/launch-arbitrum-chain/features/common/data-availability/choose-rollup',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/features/common/gas-and-fees/choose-custom-gas-token',
+    destination: '/docs/launch-arbitrum-chain/features/common/gas-and-fees/choose-custom-gas-token',
     permanent: false,
   },
   {
     source: '/launch-arbitrum-chain/features/common/gas-and-fees/choose-fee-rebates',
-    destination: '/docs/launch-arbitrum-chain/configuration/costs/fee-management',
+    destination: '/docs/launch-arbitrum-chain/features/common/gas-and-fees/choose-fee-rebates',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/features/common/gas-and-fees/choose-native-eth',
+    destination: '/docs/launch-arbitrum-chain/features/common/gas-and-fees/choose-native-eth',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/features/common/gas-and-fees/choose-native-mint-burn',
+    destination: '/docs/launch-arbitrum-chain/features/common/gas-and-fees/choose-native-mint-burn',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/features/common/mev/choose-timeboostburn',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/sequencer/timeboost-for-arbitrum-chains',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/features/common/ux/choose-fast-withdrawals',
+    destination: '/docs/launch-arbitrum-chain/features/common/ux/choose-fast-withdrawals',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/features/common/validation-and-security/choose-bold',
+    destination: '/docs/launch-arbitrum-chain/features/common/validation-and-security/choose-bold',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-arbitrum-chain/features/common/validation-and-security/choose-challenge-period',
+    destination:
+      '/docs/launch-arbitrum-chain/features/common/validation-and-security/choose-challenge-period',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-arbitrum-chain/features/common/validation-and-security/choose-permissioned-validators',
+    destination:
+      '/docs/launch-arbitrum-chain/features/common/validation-and-security/choose-permissioned-validators',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/how-tos/arbitrum-chain-finality',
+    destination: '/docs/launch-arbitrum-chain/configuration/validation/arbitrum-chain-finality',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/how-tos/arbitrum-chain-sdk-preparing-node-config',
+    destination: '/docs/launch-arbitrum-chain/arbitrum-chain-sdk-preparing-node-config',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/how-tos/customize-deployment-configuration',
+    destination: '/docs/launch-arbitrum-chain/deploy/deploying-an-arbitrum-chain',
     permanent: false,
   },
   {
@@ -1310,6 +1717,11 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/launch-arbitrum-chain/maintain-your-chain/guidance/post-launch-contract-deployments',
+    destination: '/docs/launch-arbitrum-chain/operate/post-launch-contract-deployments',
+    permanent: false,
+  },
+  {
     source: '/launch-arbitrum-chain/maintain-your-chain/guidance/state-growth',
     destination: '/docs/launch-arbitrum-chain/operate/state-growth',
     permanent: false,
@@ -1320,13 +1732,43 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/launch-arbitrum-chain/maintain-your-chain/monitoring-tools-and-considerations',
+    destination: '/docs/launch-arbitrum-chain/operate/monitoring-tools-and-considerations',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/maintain-your-chain/ownership-structure-access-control',
+    destination: '/docs/launch-arbitrum-chain/operate/ownership-access-control',
+    permanent: false,
+  },
+  {
     source: '/launch-arbitrum-chain/maintain-your-chain/upgrade-to-bold',
     destination: '/docs/how-arbitrum-works/bold',
     permanent: false,
   },
   {
+    source: '/launch-arbitrum-chain/migrate-between-raases',
+    destination: '/docs/launch-arbitrum-chain/migrate/migrate-between-raases',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/migrate-from-another-stack',
+    destination: '/docs/launch-arbitrum-chain/migrate/migrate-from-another-stack',
+    permanent: false,
+  },
+  {
     source: '/launch-arbitrum-chain/operate/gas-target',
     destination: '/docs/launch-arbitrum-chain/operate/gas-target',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/protocol-hacks/arbos',
+    destination: '/docs/launch-arbitrum-chain/configuration/core/customize-arbos',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/protocol-hacks/da-api-guide',
+    destination: '/docs/launch-arbitrum-chain/integrations/da-api-integration-guide',
     permanent: false,
   },
   {
@@ -1346,8 +1788,53 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/launch-arbitrum-chain/reference/arbitrum-chain-configuration-parameters',
+    destination: '/docs/launch-arbitrum-chain/overview/a-gentle-introduction',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/third-party-integrations/bridged-usdc-standard',
+    destination: '/docs/launch-arbitrum-chain/integrations/bridged-usdc-standard',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/third-party-integrations/third-party-providers',
+    destination: '/docs/launch-arbitrum-chain/third-party-integrations/third-party-providers',
+    permanent: false,
+  },
+  {
     source: '/launch-arbitrum-chain/timeboost-for-arbitrum-chains',
     destination: '/docs/how-arbitrum-works/timeboost',
+    permanent: false,
+  },
+  {
+    source: '/launch-arbitrum-chain/what-is-arbitrum-orbit',
+    destination: '/docs/launch-arbitrum-chain/overview/a-gentle-introduction',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain',
+    destination: '/docs/launch-arbitrum-chain/overview/a-gentle-introduction',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/a-gentle-introduction',
+    destination: '/docs/launch-arbitrum-chain/overview/a-gentle-introduction',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/aep-fee-router-introduction',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/aep-fee-router-introduction',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/aep-license',
+    destination: '/docs/launch-arbitrum-chain/overview/aep-license',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/aeplicense',
+    destination: '/docs/launch-arbitrum-chain/overview/aep-license',
     permanent: false,
   },
   {
@@ -1356,9 +1843,36 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/launch-orbit-chain/concepts/chain-ownership',
+    destination: '/docs/launch-arbitrum-chain/operate/ownership-access-control',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/concepts/custom-gas-token-sdk',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/use-a-custom-gas-token-rollup',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/concepts/public-preview-expectations',
+    destination: '/docs/launch-arbitrum-chain/overview/public-preview-expectations',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-orbit-chain/configure-your-chain/advanced-configurations/aep-fee-router/aep-fee-router-introduction',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/aep-fee-router-introduction',
+    permanent: false,
+  },
+  {
     source:
       '/launch-orbit-chain/configure-your-chain/advanced-configurations/aep-fee-router/calculate-aep-fees',
     destination: 'https://docs.arbitrum.foundation/calculate-aep-fees',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-orbit-chain/configure-your-chain/advanced-configurations/aep-fee-router/set-up-aep-fee-router',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/set-up-aep-fee-router',
     permanent: false,
   },
   {
@@ -1372,6 +1886,11 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/launch-orbit-chain/configure-your-chain/advanced-configurations/layer-leap',
+    destination: '/docs/launch-arbitrum-chain/overview/a-gentle-introduction',
+    permanent: false,
+  },
+  {
     source: '/launch-orbit-chain/configure-your-chain/common-configurations/arbos-configuration',
     destination: '/docs/launch-arbitrum-chain/operate/arbos-upgrade',
     permanent: false,
@@ -1382,8 +1901,27 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source:
+      '/launch-orbit-chain/configure-your-chain/common-configurations/batch-posting-assertion-control',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/sequencer/batch-posting-assertion-control',
+    permanent: false,
+  },
+  {
     source: '/launch-orbit-chain/configure-your-chain/common-configurations/calculate-aep-fees',
     destination: 'https://docs.arbitrum.foundation/calculate-aep-fees',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-orbit-chain/configure-your-chain/common-configurations/customizable-challenge-period',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/validation/customizable-challenge-period',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/configure-your-chain/common-configurations/customizing-anytrust',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/use-a-custom-gas-token-anytrust',
     permanent: false,
   },
   {
@@ -1392,8 +1930,47 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/launch-orbit-chain/configure-your-chain/common-configurations/gas-optimization-tools',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/gas-optimization-tools',
+    permanent: false,
+  },
+  {
     source: '/launch-orbit-chain/configure-your-chain/common-configurations/per-batch-gas-cost',
     destination: '/docs/launch-arbitrum-chain/configuration/costs/fee-management',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/configure-your-chain/common-configurations/set-up-aep-fee-router',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/set-up-aep-fee-router',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-orbit-chain/configure-your-chain/common-configurations/stake-and-validator-configurations',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/validation/stake-and-validator-configurations',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/configure-your-chain/common-configurations/use-a-custom-gas-token',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/use-a-custom-gas-token-rollup',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-orbit-chain/configure-your-chain/common-configurations/use-a-custom-gas-token-anytrust',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/use-a-custom-gas-token-anytrust',
+    permanent: false,
+  },
+  {
+    source:
+      '/launch-orbit-chain/configure-your-chain/common-configurations/use-a-custom-gas-token-rollup',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/use-a-custom-gas-token-rollup',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/customize-your-chain/customize-arbos',
+    destination: '/docs/launch-arbitrum-chain/configuration/core/customize-arbos',
     permanent: false,
   },
   {
@@ -1412,6 +1989,36 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/launch-orbit-chain/deploy-an-orbit-chain/configuring-orbit-chain',
+    destination: '/docs/launch-arbitrum-chain/deploy/deploying-an-arbitrum-chain',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/deploy-an-orbit-chain/deploying-anytrust-chain',
+    destination: '/docs/launch-arbitrum-chain/deploy/deploying-an-arbitrum-chain',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/deploy-an-orbit-chain/deploying-custom-gas-token-chain',
+    destination: '/docs/launch-arbitrum-chain/deploy/deploying-an-arbitrum-chain',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/deploy-an-orbit-chain/deploying-rollup-chain',
+    destination: '/docs/launch-arbitrum-chain/deploy/deploying-an-arbitrum-chain',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/deploy-an-orbit-chain/deploying-token-bridge',
+    destination: '/docs/launch-arbitrum-chain/deploy/deploying-token-bridge',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/deploy-an-orbit-chain/monitoring-tools-and-considerations',
+    destination: '/docs/launch-arbitrum-chain/operate/monitoring-tools-and-considerations',
+    permanent: false,
+  },
+  {
     source: '/launch-orbit-chain/ecosystem-support/add-orbit-chain-to-bridge-ui',
     destination: '/docs/launch-arbitrum-chain/integrations/bridge-ui',
     permanent: false,
@@ -1424,6 +2031,11 @@ export const legacyRedirects = [
   {
     source: '/launch-orbit-chain/ecosystem-support/orbit-portal',
     destination: '/docs/chain-info',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/faq-troubleshooting/troubleshooting-building-orbit',
+    destination: '/docs/launch-arbitrum-chain/troubleshooting-building-arbitrum-chain',
     permanent: false,
   },
   {
@@ -1442,6 +2054,16 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/launch-orbit-chain/how-tos/customize-arbos',
+    destination: '/docs/launch-arbitrum-chain/configuration/core/customize-arbos',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/how-tos/customize-deployment-configuration',
+    destination: '/docs/launch-arbitrum-chain/deploy/deploying-an-arbitrum-chain',
+    permanent: false,
+  },
+  {
     source: '/launch-orbit-chain/how-tos/customize-precompile',
     destination: '/docs/launch-arbitrum-chain/features/advanced/choose-chain-precompiles',
     permanent: false,
@@ -1457,8 +2079,18 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/launch-orbit-chain/how-tos/how-to-configure-your-chain',
+    destination: '/docs/launch-arbitrum-chain/overview/a-gentle-introduction',
+    permanent: false,
+  },
+  {
     source: '/launch-orbit-chain/how-tos/manage-fee-collectors',
     destination: '/docs/launch-arbitrum-chain/configuration/costs/fee-management',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/how-tos/orbit-chain-finality',
+    destination: '/docs/launch-arbitrum-chain/configuration/validation/arbitrum-chain-finality',
     permanent: false,
   },
   {
@@ -1472,8 +2104,63 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/launch-orbit-chain/how-tos/orbit-sdk-configuring-orbit-chain',
+    destination: '/docs/launch-arbitrum-chain/overview/a-gentle-introduction',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/how-tos/orbit-sdk-deploying-anytrust-chain',
+    destination: '/docs/launch-arbitrum-chain/deploy/deploying-an-arbitrum-chain',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/how-tos/orbit-sdk-deploying-custom-gas-token-chain',
+    destination: '/docs/launch-arbitrum-chain/deploy/deploying-an-arbitrum-chain',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/how-tos/orbit-sdk-deploying-rollup-chain',
+    destination: '/docs/launch-arbitrum-chain/deploy/deploying-an-arbitrum-chain',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/how-tos/orbit-sdk-deploying-token-bridge',
+    destination: '/docs/launch-arbitrum-chain/deploy/deploying-token-bridge',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/how-tos/orbit-sdk-preparing-node-config',
+    destination: '/docs/launch-arbitrum-chain/arbitrum-chain-sdk-preparing-node-config',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/how-tos/set-up-aep-fee-router',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/set-up-aep-fee-router',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/how-tos/usdc-standard-bridge',
+    destination: '/docs/launch-arbitrum-chain/integrations/bridged-usdc-standard',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/how-tos/use-a-custom-gas-token',
+    destination: '/docs/launch-arbitrum-chain/configuration/costs/use-a-custom-gas-token-rollup',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/infra-options-orbit-chains',
+    destination: '/docs/launch-arbitrum-chain/third-party-integrations/third-party-providers',
+    permanent: false,
+  },
+  {
     source: '/launch-orbit-chain/maintain-your-chain/bridging',
     destination: '/docs/launch-arbitrum-chain/integrations/bridge-ui',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/maintain-your-chain/guidance/post-launch-contract-deployments',
+    destination: '/docs/launch-arbitrum-chain/operate/post-launch-contract-deployments',
     permanent: false,
   },
   {
@@ -1487,13 +2174,48 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/launch-orbit-chain/maintain-your-chain/monitoring',
+    destination: '/docs/launch-arbitrum-chain/operate/monitoring-tools-and-considerations',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/maintain-your-chain/ownership-structure-access-control',
+    destination: '/docs/launch-arbitrum-chain/operate/ownership-access-control',
+    permanent: false,
+  },
+  {
     source: '/launch-orbit-chain/maintain-your-chain/upgrade-to-bold',
     destination: '/docs/how-arbitrum-works/bold',
     permanent: false,
   },
   {
+    source: '/launch-orbit-chain/orbit-gentle-introduction',
+    destination: '/docs/launch-arbitrum-chain/overview/a-gentle-introduction',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/orbit-license',
+    destination: '/docs/launch-arbitrum-chain/overview/aep-license',
+    permanent: false,
+  },
+  {
     source: '/launch-orbit-chain/orbit-node-runners/orbit-node-providers',
     destination: '/docs/chain-info',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/orbit-quickstart',
+    destination: '/docs/launch-arbitrum-chain/overview/a-gentle-introduction',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/orbit-sdk-introduction',
+    destination: '/docs/launch-arbitrum-chain/overview/arbitrum-chain-sdk-introduction',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/orbit-supported-parent-chains',
+    destination: '/docs/launch-arbitrum-chain/overview/a-gentle-introduction',
     permanent: false,
   },
   {
@@ -1503,8 +2225,24 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/launch-orbit-chain/reference/command-line-options',
+    destination: '/docs/launch-arbitrum-chain/overview/a-gentle-introduction',
+    permanent: false,
+  },
+  {
     source: '/launch-orbit-chain/reference/how-tos/orbit-managing-state-growth',
     destination: '/docs/launch-arbitrum-chain/operate/state-growth',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/reference/monitoring-tools-and-considerations',
+    destination: '/docs/launch-arbitrum-chain/operate/monitoring-tools-and-considerations',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/reference/orbit-batch-poster-configuration',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/sequencer/batch-posting-assertion-control',
     permanent: false,
   },
   {
@@ -1514,8 +2252,38 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/launch-orbit-chain/start-your-journey',
+    destination: '/docs/launch-arbitrum-chain/overview/a-gentle-introduction',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/third-party-integrations/bridged-usdc-standard',
+    destination: '/docs/launch-arbitrum-chain/integrations/bridged-usdc-standard',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/third-party-integrations/integrations',
+    destination: '/docs/launch-arbitrum-chain/third-party-integrations/third-party-providers',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/third-party-integrations/third-party-providers',
+    destination: '/docs/launch-arbitrum-chain/third-party-integrations/third-party-providers',
+    permanent: false,
+  },
+  {
+    source: '/launch-orbit-chain/troubleshooting-building-orbit',
+    destination: '/docs/launch-arbitrum-chain/troubleshooting-building-arbitrum-chain',
+    permanent: false,
+  },
+  {
     source: '/learn-more',
     destination: '/docs/get-started/faq',
+    permanent: false,
+  },
+  {
+    source: '/learn-more/contribute',
+    destination: '/docs/contribute',
     permanent: false,
   },
   {
@@ -1580,6 +2348,30 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/node-running/how-tos/data-availability-committee/deploy-a-das',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/deploy-das',
+    permanent: false,
+  },
+  {
+    source: '/node-running/how-tos/data-availability-committee/deploy-a-mirror-das',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/deploy-mirror-das',
+    permanent: false,
+  },
+  {
+    source: '/node-running/how-tos/data-availability-committee/get-started',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/get-started',
+    permanent: false,
+  },
+  {
+    source: '/node-running/how-tos/data-availability-committee/introduction',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/get-started',
+    permanent: false,
+  },
+  {
     source: '/node-running/how-tos/local-dev-node',
     destination: '/docs/run-a-node/run-local-full-chain-simulation',
     permanent: false,
@@ -1597,6 +2389,12 @@ export const legacyRedirects = [
   {
     source: '/node-running/how-tos/running-a-classic-node',
     destination: '/docs/run-a-node/more-types/run-classic-node',
+    permanent: false,
+  },
+  {
+    source: '/node-running/how-tos/running-a-daserver',
+    destination:
+      '/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/get-started',
     permanent: false,
   },
   {
@@ -1843,6 +2641,11 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/run-arbitrum-node/more-types/split-validator-node',
+    destination: '/docs/run-a-node/run-split-validator-node',
+    permanent: false,
+  },
+  {
     source: '/run-arbitrum-node/node-types',
     destination: '/docs/run-a-node/overview',
     permanent: false,
@@ -1914,7 +2717,7 @@ export const legacyRedirects = [
   },
   {
     source: '/stylus',
-    destination: '/docs/stylus/gentle-introduction',
+    destination: '/docs/stylus',
     permanent: false,
   },
   {
@@ -2036,8 +2839,23 @@ export const legacyRedirects = [
     permanent: false,
   },
   {
+    source: '/stylus/how-tos/using-stylus-cli',
+    destination: '/docs/stylus/cli-tools/overview',
+    permanent: false,
+  },
+  {
+    source: '/stylus/how-tos/verify-contracts',
+    destination: '/docs/stylus/cli-tools/verify-contracts',
+    permanent: false,
+  },
+  {
     source: '/stylus/reference/cargo-stylus',
     destination: '/docs/stylus/gentle-introduction',
+    permanent: false,
+  },
+  {
+    source: '/stylus/reference/testnet-information',
+    destination: '/docs/stylus',
     permanent: false,
   },
   {

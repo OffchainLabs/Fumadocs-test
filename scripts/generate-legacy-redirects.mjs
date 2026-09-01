@@ -46,20 +46,17 @@ const SECTION_RENAMES = [
 ];
 
 /**
- * Legacy destination -> this site's page, where the basename fallback picks the wrong one.
+ * Legacy destination -> this site's page, where no mechanical rule can pick the right one.
  *
- * The fallback matches on basename, so when a how-to was renamed on the way over it can only see
- * a same-named concept page and sends the reader there instead. Each entry below was confirmed by
- * comparing the legacy page's frontmatter title against the candidates:
+ * Two situations land here. The basename fallback matches on basename, so when a how-to was
+ * renamed on the way over it can only see a same-named concept page and sends the reader there
+ * instead. And upstream has since restructured `launch-arbitrum-chain` into a `chain-config/…`
+ * shape this site never adopted, so its redirect chains terminate at paths that exist upstream
+ * and nowhere here — no prefix rule describes that, because the sections were re-cut, not renamed.
  *
- *   stf          legacy "How to customize your Arbitrum chain's behavior" is customize-stf.mdx
- *                verbatim; deep-dives/stf.mdx is the concept page "State Transition Function".
- *   precompiles  legacy "How to customize your Arbitrum chain's precompiles" is the
- *                choose-chain-precompiles how-to, not the arbitrum-essentials reference.
- *   batch-poster legacy "Run a batch poster" is run-batch-poster.mdx verbatim;
- *                deep-dives/batchposter.mdx is the concept page "The batch poster".
- *   overview     legacy "/get-started/overview" is this site's get-started index; eight other
- *                sections also have an `overview` page, so the basename cannot pick it.
+ * Every entry was confirmed by comparing the upstream page's frontmatter title against this
+ * site's candidates; where the titles are verbatim-identical that is noted as `=`. A value may
+ * carry an `#anchor`; the page part must resolve or the build throws.
  */
 const MANUAL_DESTINATIONS = new Map([
   ['/get-started/overview', '/docs/get-started'],
@@ -72,6 +69,229 @@ const MANUAL_DESTINATIONS = new Map([
     '/docs/launch-arbitrum-chain/features/advanced/choose-chain-precompiles',
   ],
   ['/launch-arbitrum-chain/run-a-node/batch-poster', '/docs/run-a-node/run-batch-poster'],
+
+  // --- upstream `launch-arbitrum-chain/chain-config/*` -> this site's `configuration/*` ---
+  // Upstream re-cut these sections; the leaf pages kept their content but not their path.
+  [
+    '/launch-arbitrum-chain/chain-config/batch-poster/enable-4844-blobs',
+    '/docs/launch-arbitrum-chain/configuration/data-availability/enable-post-4844-blobs',
+  ],
+  [
+    '/launch-arbitrum-chain/chain-config/batch-poster/fee-tuning',
+    '/docs/launch-arbitrum-chain/configuration/sequencer/batch-poster-fee-tuning',
+  ],
+  [
+    '/launch-arbitrum-chain/chain-config/costs/aep-overview',
+    '/docs/launch-arbitrum-chain/configuration/costs/aep-fee-router-introduction',
+  ],
+  [
+    '/launch-arbitrum-chain/chain-config/costs/aep-router-contracts',
+    '/docs/launch-arbitrum-chain/configuration/costs/set-up-aep-fee-router',
+  ],
+  [
+    '/launch-arbitrum-chain/chain-config/costs/configure-native-mint-burn',
+    '/docs/launch-arbitrum-chain/configuration/costs/configure-native-mint-burn-gas-token',
+  ],
+  [
+    '/launch-arbitrum-chain/chain-config/costs/custom-gas-token-anytrust',
+    '/docs/launch-arbitrum-chain/configuration/costs/use-a-custom-gas-token-anytrust',
+  ],
+  [
+    '/launch-arbitrum-chain/chain-config/costs/custom-gas-token-rollup',
+    '/docs/launch-arbitrum-chain/configuration/costs/use-a-custom-gas-token-rollup',
+  ],
+  [
+    '/launch-arbitrum-chain/chain-config/costs/dynamic-pricing',
+    '/docs/launch-arbitrum-chain/configuration/costs/dynamic-pricing-for-arbitrum-chains',
+  ],
+  // Without this the basename sends chain gas-optimization to stylus/best-practices/gas-optimization.
+  [
+    '/launch-arbitrum-chain/chain-config/costs/gas-optimization',
+    '/docs/launch-arbitrum-chain/configuration/costs/gas-optimization-tools',
+  ],
+  [
+    '/launch-arbitrum-chain/chain-config/data-availability/dac-get-started',
+    '/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/get-started',
+  ],
+  [
+    '/launch-arbitrum-chain/chain-config/execution/smart-contract-size-limit',
+    '/docs/launch-arbitrum-chain/configuration/core/config-smart-contract-size-limit',
+  ],
+  [
+    '/launch-arbitrum-chain/chain-config/sequencer/chain-finality',
+    '/docs/launch-arbitrum-chain/configuration/validation/arbitrum-chain-finality',
+  ],
+  [
+    '//launch-arbitrum-chain/chain-config/sequencer/timeboost',
+    '/docs/launch-arbitrum-chain/configuration/sequencer/timeboost-for-arbitrum-chains',
+  ],
+  [
+    '/launch-arbitrum-chain/chain-config/validation/assertion-control',
+    '/docs/launch-arbitrum-chain/configuration/sequencer/batch-posting-assertion-control',
+  ],
+  [
+    '/launch-arbitrum-chain/chain-config/validation/bond-and-validator',
+    '/docs/launch-arbitrum-chain/configuration/validation/stake-and-validator-configurations',
+  ],
+  [
+    '/launch-arbitrum-chain/chain-config/validation/challenge-period',
+    '/docs/launch-arbitrum-chain/configuration/validation/customizable-challenge-period',
+  ],
+  // `arbos` = "How to customize ArbOS on your Arbitrum chain", a how-to. Without this the basename
+  // sends it to how-arbitrum-works/deep-dives/arbos, which is the ArbOS concept page.
+  [
+    '/launch-arbitrum-chain/extend-the-protocol/arbos',
+    '/docs/launch-arbitrum-chain/configuration/core/customize-arbos',
+  ],
+  [
+    '/launch-arbitrum-chain/extend-the-protocol/da-api-guide',
+    '/docs/launch-arbitrum-chain/integrations/da-api-integration-guide',
+  ],
+
+  // --- upstream `configure-your-chain/*` (an earlier shape) still referenced by old entries ---
+  [
+    '/launch-arbitrum-chain/configure-your-chain/common/data-availability/data-availability-committees/deploy-a-das',
+    '/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/deploy-das',
+  ],
+  [
+    '/launch-arbitrum-chain/configure-your-chain/common/data-availability/data-availability-committees/deploy-a-mirror-das',
+    '/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/deploy-mirror-das',
+  ],
+
+  // --- deploy / quickstart / operate. Titles are verbatim-identical across both sites. ---
+  [
+    '/launch-arbitrum-chain/deploy-an-arbitrum-chain/customize-deployment-configuration',
+    '/docs/launch-arbitrum-chain/deploy/deploying-an-arbitrum-chain',
+  ],
+  // Upstream typo, kept verbatim so the lookup matches: "arbiturm".
+  [
+    '/launch-arbitrum-chain/deploy-an-arbitrum-chain/deploying-an-arbiturm-chain',
+    '/docs/launch-arbitrum-chain/deploy/deploying-an-arbitrum-chain',
+  ],
+  // = "How to configure your Arbitrum chain's node using the Chain SDK"
+  [
+    '/launch-arbitrum-chain/deploy/configure-node',
+    '/docs/launch-arbitrum-chain/arbitrum-chain-sdk-preparing-node-config',
+  ],
+  // = "How to deploy an Arbitrum chain using the Chain SDK"
+  [
+    '/launch-arbitrum-chain/deploy/deploy-chain',
+    '/docs/launch-arbitrum-chain/deploy/deploying-an-arbitrum-chain',
+  ],
+  [
+    '/launch-arbitrum-chain/deploy/token-bridge',
+    '/docs/launch-arbitrum-chain/deploy/deploying-token-bridge',
+  ],
+  // = "Run an L3 rollup from scratch"
+  [
+    '/launch-arbitrum-chain/quickstart/l3-rollup-from-scratch',
+    '/docs/launch-arbitrum-chain/quickstart/deploy-your-first-rollup',
+  ],
+  // = "Run testnet infrastructure on your first rollup (product-level testnet)"
+  [
+    '/launch-arbitrum-chain/quickstart/l3-rollup-testnet',
+    '/docs/launch-arbitrum-chain/quickstart/run-testnet-infrastructure-first-rollup',
+  ],
+  [
+    '/launch-arbitrum-chain/quickstart/sdk-introduction',
+    '/docs/launch-arbitrum-chain/overview/arbitrum-chain-sdk-introduction',
+  ],
+  [
+    '/launch-arbitrum-chain/operate/monitoring',
+    '/docs/launch-arbitrum-chain/operate/monitoring-tools-and-considerations',
+  ],
+  // = "Ownership structure and access control"
+  [
+    '/launch-arbitrum-chain/operate/ownership-and-access',
+    '/docs/launch-arbitrum-chain/operate/ownership-access-control',
+  ],
+  [
+    '/launch-arbitrum-chain/operate/post-launch-deployments',
+    '/docs/launch-arbitrum-chain/operate/post-launch-contract-deployments',
+  ],
+  [
+    '/launch-arbitrum-chain/migrate/between-raases',
+    '/docs/launch-arbitrum-chain/migrate/migrate-between-raases',
+  ],
+  [
+    '/launch-arbitrum-chain/migrate/from-another-stack',
+    '/docs/launch-arbitrum-chain/migrate/migrate-from-another-stack',
+  ],
+  [
+    '/launch-arbitrum-chain/integrations/bridged-usdc',
+    '/docs/launch-arbitrum-chain/integrations/bridged-usdc-standard',
+  ],
+  [
+    '/launch-arbitrum-chain/integrations/infrastructure-providers',
+    '/docs/launch-arbitrum-chain/third-party-integrations/third-party-providers',
+  ],
+  // = "Overview of Arbitrum chains". overview/index.mdx is a different page, titled "Concepts".
+  [
+    '/launch-arbitrum-chain/overview/introduction',
+    '/docs/launch-arbitrum-chain/overview/a-gentle-introduction',
+  ],
+  ['/launch-arbitrum-chain/overview/license', '/docs/launch-arbitrum-chain/overview/aep-license'],
+  [
+    '/launch-arbitrum-chain/overview/public-preview',
+    '/docs/launch-arbitrum-chain/overview/public-preview-expectations',
+  ],
+  [
+    '/launch-arbitrum-chain/overview/faq',
+    '/docs/launch-arbitrum-chain/troubleshooting-building-arbitrum-chain',
+  ],
+  // The node how-tos live under run-a-node here, not under launch-arbitrum-chain.
+  [
+    '/launch-arbitrum-chain/run-a-node/high-availability-sequencer',
+    '/docs/run-a-node/high-availability-sequencer-docs',
+  ],
+  [
+    '/launch-arbitrum-chain/run-a-node/split-validator-node',
+    '/docs/run-a-node/run-split-validator-node',
+  ],
+  [
+    '/run-arbitrum-node/data-availability-committees/get-started',
+    '/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/get-started',
+  ],
+  // Upstream records this as a path but wrote an absolute URL with a stray leading slash. The page
+  // it names exists here, so serve ours rather than sending readers off-site.
+  [
+    '/https://docs.arbitrum.foundation/calculate-aep-fees',
+    '/docs/launch-arbitrum-chain/configuration/costs/calculate-aep-fees',
+  ],
+
+  // --- outside launch-arbitrum-chain ---
+  [
+    '/build-decentralized-apps/token-bridging/overview',
+    '/docs/arbitrum-essentials/bridging/overview',
+  ],
+  [
+    '/build-decentralized-apps/precompiles/reference#arbsys',
+    '/docs/arbitrum-essentials/precompiles/reference#arbsys',
+  ],
+  [
+    '/how-arbitrum-works/deep-dives/arbos#stylus-specific-differences',
+    '/docs/how-arbitrum-works/deep-dives/arbos#stylus-specific-differences',
+  ],
+  [
+    '/how-arbitrum-works/deep-dives/gas-and-fees#parent-chain-gas-pricing',
+    '/docs/how-arbitrum-works/deep-dives/gas-and-fees#parent-chain-gas-pricing',
+  ],
+  // The gentle intro was folded into the STF page here; see the GUTTED entry in `pnpm drift`.
+  ['/how-arbitrum-works/deep-dives/stf-gentle-intro', '/docs/how-arbitrum-works/deep-dives/stf'],
+  ['/for-devs/contribute', '/docs/contribute'],
+  ['/stylus/cli-tools-overview', '/docs/stylus/cli-tools/overview'],
+  // = "How to verify Stylus contracts". The Arbiscan how-to is a different page.
+  ['/stylus/how-tos/verifying-contracts', '/docs/stylus/cli-tools/verify-contracts'],
+  // Upstream has no /stylus/overview page either; the section landing is the honest target.
+  ['/stylus/overview', '/docs/stylus'],
+  // `/faqs/protocol-faqs` does not exist upstream — these three anchors 404 on the live site
+  // today. Each question has a page here that actually answers it, so route to that page.
+  [
+    '/faqs/protocol-faqs#q-rollup-vs-anytrust',
+    '/docs/how-arbitrum-works/deep-dives/anytrust-protocol',
+  ],
+  ['/faqs/protocol-faqs#q-seq-vs-val', '/docs/how-arbitrum-works/deep-dives/sequencer'],
+  ['/faqs/protocol-faqs#q-dispute-reorg', '/docs/how-arbitrum-works/bold/gentle-introduction'],
 ]);
 
 /**
@@ -262,13 +482,27 @@ function build(sourcePath) {
 
     const manual = MANUAL_DESTINATIONS.get(target.replace(/\/+$/, ''));
     if (manual) {
-      const resolved = resolveUrl(valid, manual);
+      const [manualPage, anchor] = manual.split('#');
+      const resolved = resolveUrl(valid, manualPage);
       if (!resolved) {
         throw new Error(
           `generate-legacy-redirects: MANUAL_DESTINATIONS points at a missing page: ${manual}`,
         );
       }
-      redirects.push({ source, destination: resolved, permanent: !!entry.permanent });
+      redirects.push({
+        source,
+        destination: anchor ? `${resolved}#${anchor}` : resolved,
+        permanent: !!entry.permanent,
+      });
+      continue;
+    }
+
+    // The legacy path still names a live page here, only under the `/docs` prefix: upstream moved
+    // the page and we did not. Serving our own copy beats following upstream's chain to a path
+    // that exists only over there. Checked after MANUAL_DESTINATIONS so an override still wins.
+    const self = resolveUrl(valid, `/docs${source}`);
+    if (self) {
+      redirects.push({ source, destination: self, permanent: !!entry.permanent });
       continue;
     }
 
