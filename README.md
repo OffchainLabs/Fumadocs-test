@@ -1,18 +1,28 @@
-# Fumadocs-test
+# Arbitrum docs portal
 
-Arbitrum documentation portal — Next.js 16 / Fumadocs migration of [`OffchainLabs/arbitrum-docs`](https://github.com/OffchainLabs/arbitrum-docs).
+Arbitrum documentation portal — a Next.js 16 / Fumadocs migration of
+[`OffchainLabs/arbitrum-docs`](https://github.com/OffchainLabs/arbitrum-docs) off Docusaurus.
+Serves English MDX docs; deployed on Vercel.
 
-**Status:** Phase 0 MVP. Single-committer, local-only; Vercel + CI follow in Phase 0.5.
+This file covers **how to work on the docs.** For how the codebase works and why, see
+[INTERNALS.md](INTERNALS.md).
 
-## Dev
+New to Fumadocs, or coming from the Docusaurus site? Start with
+[What Fumadocs is](INTERNALS.md#what-fumadocs-is) and
+[Coming from Docusaurus](INTERNALS.md#coming-from-docusaurus) — they take about five minutes and
+cover the differences that cause the most mistakes.
+
+## Setup
 
 ```bash
-pnpm install
+pnpm install      # runs a postinstall that generates .source/
 pnpm dev          # http://localhost:3000
-pnpm types:check
 ```
 
-Node 22 LTS · pnpm 10 · TypeScript strict · Tailwind 4.
+Node 22 (`>=22 <23`) · pnpm 10. Other Node majors are rejected by `engines`.
+
+**Browse on `localhost:3000`, not `127.0.0.1`** — on `127.0.0.1` React does not hydrate and every
+component looks broken.
 
 Search and the "Ask AI" chat button are powered by [Inkeep](https://inkeep.com). Set the
 publishable key in a local `.env` (gitignored):
@@ -22,36 +32,60 @@ NEXT_PUBLIC_INKEEP_API_KEY=<inkeep-search-key>
 ```
 
 Config lives in `lib/inkeep.ts`; the widgets mount in `components/inkeep/` and are wired into
-`RootProvider` in `app/[lang]/layout.tsx` (Inkeep replaces the built-in Fumadocs search dialog).
+`RootProvider` in `app/layout.tsx`.
+
+## Before you push
+
+```bash
+pnpm types:check   # the main verification gate
+pnpm check-links   # broken internal links
+```
+
+CI runs eight blocking checks. `pnpm build` runs the same link check, so a broken link fails the
+Vercel deploy too. See [The gates](INTERNALS.md#the-gates) for the full list.
+
+`types:check` proves the schema, not the render — it passes on a page that serves literal `:::` or
+`undefined`. **Always confirm content changes in a browser.**
 
 ## Layout
 
-| Path                   | Purpose                                                                               |
-| ---------------------- | ------------------------------------------------------------------------------------- |
-| `app/[lang]/docs/`     | Localized docs routes (en, zh-CN, ja).                                                |
-| `content/docs/<lang>/` | MDX content + `meta.json` sidebars.                                                   |
-| `content/partials/`    | Reusable `_`-prefixed fragments + generated `CATALOG.md` (see [Partials](#partials)). |
-| `components/mdx/`      | Custom MDX components (registered in `components/mdx.tsx`).                           |
-| `lib/source.ts`        | Fumadocs source adapter.                                                              |
-| `proxy.ts`             | i18n routing + static-asset bypass list.                                              |
-| `source.config.ts`     | Fumadocs MDX config (Zod-typed frontmatter).                                          |
+| Path                    | Purpose                                                    |
+| ----------------------- | ---------------------------------------------------------- |
+| `content/docs/`         | MDX pages + `meta.json` sidebars                           |
+| `content/partials/`     | Reusable `_`-prefixed fragments + generated `CATALOG.md`   |
+| `content/glossary/`     | Glossary terms for `<Reference>` / `<Term>`                |
+| `content/vars.json`     | Global variables                                           |
+| `app/docs/[[...slug]]/` | Docs route                                                 |
+| `components/mdx/`       | Custom MDX components (registered in `components/mdx.tsx`) |
+| `lib/source.ts`         | Fumadocs source adapter                                    |
+| `proxy.ts`              | Markdown negotiation + static-asset bypass list            |
+| `source.config.ts`      | Fumadocs MDX config (Zod-typed frontmatter)                |
 
-## Partials
+## Write a page
 
-Reusable content fragments live in `content/partials/` — a single source of truth you can inline
-anywhere. They are `_`-prefixed and sit outside the doc collection, so they are never routed.
+Every page needs five frontmatter fields. A missing or invalid one fails the build.
 
-### Find one before writing
+```mdx
+---
+title: 'How to run a full node'
+description: One-line summary shown in search results and social cards.
+content_type: 'how-to'
+author: your-github-handle
+sme: reviewing-sme-handle
+---
+```
+
+`content_type` must be one of: `how-to`, `concept`, `quickstart`, `tutorial`, `reference`,
+`troubleshooting`, `faq`. Optional: `sidebar_label`, `user_story`, `draft`.
+
+Sidebar order comes from `meta.json` in each directory, not from file names.
+
+## Use a partial
 
 **Before writing a banner, note, config table, or troubleshooting block, search
 [`content/partials/CATALOG.md`](content/partials/CATALOG.md)** (⌘F by intent — title, summary, tags)
-and reuse it instead of duplicating prose. The catalog gives you a copy-paste snippet per partial.
-`CATALOG.md` and `manifest.json` (the machine-readable index for agents) are generated — never edit
-them by hand.
-
-### Use one
-
-Two ways to pull a partial into a page:
+and reuse the partial instead of duplicating prose. The catalog gives you a copy-paste snippet for
+each one.
 
 ```mdx
 <!-- From a doc page: root-anchored, so moving the page never breaks it -->
@@ -60,26 +94,20 @@ Two ways to pull a partial into a page:
 ```
 
 ```mdx
-<!-- From another partial: MUST be file-relative, not cwd -->
+<!-- From another partial: MUST be file-relative, never cwd -->
 
 <include>../_hardware-requirements.mdx</include>
 ```
 
-```tsx
-// As a React component (e.g. an interactive selector):
-import RollupProsCons from '@/content/partials/launch-arbitrum-chain/features/_rollup-pc.mdx';
-```
-
-Why the split: a `cwd` include resolves from the repo root and is invariant under page moves, but it
-only works in the docs pipeline — a partial compiled outside it (when ESM-imported) has no `cwd`
-context and crashes the build. So **partial→partial includes are always relative.** `partials:check`
-enforces this.
+The relative form is required inside partials — a `cwd` include there crashes the build.
+`partials:check` enforces it. ([Why](INTERNALS.md#partials).)
 
 ### Add or change one
 
 1. Create `content/partials/<area>/_your-partial.mdx`. No frontmatter — `<include>` strips it.
-2. Reference it (see above), then run `pnpm partials:catalog` to refresh the catalog + manifest.
-3. Optionally curate its title/summary/tags/scope in `content/partials/registry.json`:
+2. Reference it, then run `pnpm partials:catalog` to refresh the catalog and manifest.
+3. Optionally curate its title, summary, tags, and scope in `content/partials/registry.json`:
+
    ```json
    {
      "content/partials/<area>/_your-partial.mdx": {
@@ -90,93 +118,68 @@ enforces this.
    }
    ```
 
-### Commands
+`CATALOG.md` and `manifest.json` are generated — never edit them by hand.
 
-```bash
-pnpm partials:catalog   # regenerate content/partials/CATALOG.md + manifest.json
-pnpm partials:check     # validate include/import resolution, no routing leak, catalog freshness
-```
-
-`partials:check` fails on: an unresolved include or partial import, a `_`-prefixed file left under
-`content/docs/`, a `cwd` include inside a partial, a bad `registry.json` entry, or a stale catalog.
-
-Design notes: [`.claude/docs/superpowers/specs/2026-07-09-partials-registry-design.md`](.claude/docs/superpowers/specs/2026-07-09-partials-registry-design.md).
-
-## Variables
+## Use a variable
 
 Values that move on a release cadence — version tags, chain parameters, node image names — live in
-one JSON file instead of being retyped across pages. Edit the value once and every page that
-references it follows. This replaces Docusaurus's `@@varName@@` preprocessing.
-
-### Use one
+one file, so you edit them once and every page follows.
 
 ```mdx
 The current Nitro release is <Var name="nitroVersionTag" />.
 ```
 
-`Var` is a server component registered globally in `components/mdx.tsx`, so pages need no import. It
-works inside partials too.
+`Var` is registered globally, so pages need no import. It works inside partials too.
 
-### Update one
+**To update a value:** edit [`content/vars.json`](content/vars.json), then run `pnpm vars:check`.
 
-1. Edit the value in [`content/vars.json`](content/vars.json).
-2. Run `pnpm vars:check`.
+**To add a new variable:** add the key to `content/vars.json` **and** its type to the `varsSchema`
+in [`content/vars.ts`](content/vars.ts). Miss either side and the gate fails. ([Why two
+files](INTERNALS.md#global-variables).)
 
-Adding a **new** variable takes both files: the key in `content/vars.json` **and** its type in the
-`varsSchema` in [`content/vars.ts`](content/vars.ts). Miss either side and the gate fails.
+Never hardcode a version or chain parameter into a page.
 
-### Why two files
-
-`vars.json` is plain JSON, so writing a value needs no TypeScript. `vars.ts` validates it with a Zod
-`strictObject` at module load, so a missing or mistyped key throws immediately with a field-level
-error — in the `pnpm dev` console and in CI.
-
-The strictness is load-bearing. A plain `z.object` silently strips keys that are present in the JSON
-but absent from the schema, so `<Var>` renders the literal string `undefined` into the page; that is
-how 27 variables once came to render `undefined` across 85 sites.
-
-`.mdx` never passes through `tsc`, so the `VarKey` type does not protect MDX callers and
-`pnpm types:check` exits 0 on a page full of broken variables. **`pnpm vars:check` is the only gate
-that catches a `<Var name>` with no matching key** — it blocks in CI.
-
-### Commands
+## Move a page
 
 ```bash
-pnpm vars:check           # fail if any <Var name> cannot resolve; also lists unreferenced keys
-pnpm vars:check --json    # machine-readable audit; exits 0
-pnpm nitro:check-release  # bump the pinned Nitro release values to the newest tag
+pnpm move-doc <from> <to>
 ```
 
-Values mirror upstream [`arbitrum-docs/src/resources/globalVars.js`](https://github.com/OffchainLabs/arbitrum-docs/blob/master/src/resources/globalVars.js).
-Keep them in sync while that site is still live.
+This rewrites inbound links, re-bases the moved page's own relative links and includes, updates
+`meta.json`, and writes the redirect for you.
 
-## Redirects
+**Never hand-edit `redirects.config.mjs`** — both blocks in it are generated.
+([Details](INTERNALS.md#redirects).)
 
-Every redirect lives in [`redirects.config.mjs`](redirects.config.mjs) and is served by Next's
-`redirects()`. It runs **before** `proxy.ts`, so a redirected URL gets markdown negotiation on the
-destination, not on the first hop.
+## Commands
 
-Two blocks, neither hand-edited:
+```bash
+pnpm dev                 # http://localhost:3000
+pnpm types:check         # regenerate .source/, generate Next types, tsc --noEmit
+pnpm build               # production build (runs check-links first)
+pnpm start               # serve the production build
 
-- **Moved pages** — `pnpm move-doc <from> <to>` writes the old→new URL between the
-  `AUTO-GENERATED` markers.
-- **Legacy `docs.arbitrum.io` URLs** — `pnpm redirects:legacy` regenerates
-  `redirects.legacy.mjs` from the upstream `vercel.json`. It emits a redirect only when the
-  destination exists here; the rest land in `redirects.legacy.todo.json` rather than being guessed
-  at, because a redirect to a plausible-but-wrong page is worse than a 404.
+pnpm check-links         # broken internal doc links
+pnpm vars:check          # every <Var name> resolves
+pnpm nav:check           # meta.json navigation integrity
+pnpm partials:check      # includes resolve, no routing leak, catalog fresh
+pnpm references:check    # glossary ids + <Reference> targets
+pnpm content:lint        # MDX structural defects
+pnpm format:check        # prettier
+pnpm test                # tooling script test suites
 
-After either, run `pnpm redirects:check` with the site running (`pnpm dev`). It validates every
-destination against `/llms.txt` — the router's own page list — and fails on a dead destination or a
-source that shadows a live page.
+pnpm partials:catalog    # regenerate CATALOG.md + manifest.json
+pnpm move-doc <from> <to>
+pnpm drift               # compare content tree against upstream arbitrum-docs
+```
+
+Redirect and precompile tooling runs by hand only — see
+[The gates](INTERNALS.md#the-gates).
 
 ## Conventions
 
-- Redirects: see [Redirects](#redirects) — never hand-edit `redirects.config.mjs`; move pages with
-  `pnpm move-doc` so the redirect is written for you.
-- Global variables: see [Variables](#variables) — edit `content/vars.json`, never hardcode a version
-  or chain parameter into a page.
-- Theme tokens are `--color-fd-*` (Fumadocs) — never `--ifm-*` (legacy Docusaurus).
-
-## Reference
-
-Fumadocs docs · Next.js App Router · MDX 3.
+- Theme tokens are `--color-fd-*` (Fumadocs). Never `--ifm-*` (legacy Docusaurus).
+- Route constants live in `lib/shared.ts` — reference these rather than hardcoding paths.
+- Never hand-edit generated files: `.source/`, `CATALOG.md`, `manifest.json`,
+  `redirects.config.mjs`, `redirects.legacy.mjs`.
+- Fumadocs reference: <https://www.fumadocs.dev/llms.txt>
