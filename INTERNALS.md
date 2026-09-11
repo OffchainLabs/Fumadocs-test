@@ -211,37 +211,77 @@ Both blocks in `redirects.config.mjs` are generated. Never hand-edit it.
 **Moved pages.** `pnpm move-doc <from> <to>` writes the old→new URL between the `AUTO-GENERATED`
 markers.
 
-**Legacy `docs.arbitrum.io` URLs.** `pnpm redirects:legacy` regenerates `redirects.legacy.mjs` from
-the sibling repo's `vercel.json`. Legacy URLs were served at the site root (`/stylus/using-cli`)
-and this site serves docs under `/docs`, so sources stay root-level — that is what real inbound
-links look like — and destinations are rewritten to `/docs/…`. The output is committed, so builds
-never need the sibling repo; only regeneration does.
+**Legacy `docs.arbitrum.io` URLs.** `pnpm redirects:legacy` regenerates `redirects.legacy.mjs`.
+Legacy URLs were served at the site root (`/stylus/using-cli`) and this site serves docs under
+`/docs`, so sources stay root-level (that is what real inbound links look like) and destinations
+are rewritten to `/docs/…`. The output is committed, so builds never need the sibling repo; only
+regeneration does. The generator locates that checkout the way `scripts/data/upstream.config.json`
+describes (`--upstream <dir>`, then `UPSTREAM_DOCS_REPO`, then `repo`, then the probe paths), so it
+runs from a worktree without a flag.
 
-The generator resolves a destination in this order, declining rather than guessing:
+**Two kinds of source feed in, and both flow through the same resolution order.**
+
+- **Upstream's own redirect sources**, from the sibling repo's `vercel.json`: URLs upstream had
+  already moved before the migration.
+- **Upstream's canonical page URLs**, derived from its `docs/` tree by
+  `scripts/lib/upstream-pages.mjs`. These were never redirect sources anywhere, so until 2026-09-11
+  nothing mapped them and all ~289 of them would have 404'd at cutover, purely because of the
+  `/docs` prefix. They are now the larger half of the map.
+
+Deriving those canonical URLs means reimplementing Docusaurus's routing, because upstream sets
+`routeBasePath: '/'` and the computed slug _is_ the URL. The rules, transcribed from
+`@docusaurus/plugin-content-docs` and verified against upstream's published `/llms.txt`:
+
+- Drop the extension, and strip a `NN-` number prefix from every path segment, except date-like
+  and version-like names (`2024-06-…`, `7.0-…`), which upstream leaves alone.
+- A file named `index`, `README`, or the same as its parent directory takes the directory's URL.
+- Frontmatter `id` renames the last URL segment; frontmatter `slug` replaces the URL outright and
+  wins over `id`. Both are in use upstream (`use-supras-price-feed-oracle.mdx` serves at
+  `…/supras-price-feed`; `get-started/overview.mdx` serves at `/`).
+- `sdk/`, `api/`, `hosted-pdfs/`, `superpowers/`, any `partials/` directory, anything `_`-prefixed,
+  and `Offchain-pattern-guide.md` are not pages. This matches upstream's own
+  `nonCanonicalRoutePatterns`.
+- Category landings that exist only in `sidebars.js` (a `generated-index` link with an explicit
+  `slug`, such as `/stylus`) are real indexable URLs upstream, so they are seeded too.
+
+The generator then resolves a destination in this order, declining rather than guessing. For a
+canonical URL the target is the URL itself, because the page was live there; for a redirect it is
+the end of upstream's own chain.
 
 1. **`MANUAL_DESTINATIONS`** — hand-verified legacy destination → local page. A value may carry an
    `#anchor`; the page part must resolve or the generator throws.
 2. **Self-URL** — the legacy path still names a live page here under `/docs`. Upstream moved the
-   page and this site did not, so serve ours.
+   page and this site did not, so serve ours. This is the rule that resolves most canonical URLs.
 3. **Section renames** — whole sections that moved wholesale (`/run-arbitrum-node` → `/run-a-node`).
    Deep restructures are deliberately absent: their pages moved individually, so a prefix rule
    would produce confidently-wrong destinations.
 4. **Basename fallback** — accepted only when exactly one local page carries that slug _and_ the
    basename was unique upstream too. Where the legacy path was doing the disambiguating, the
    fallback cannot, and declines.
+5. **`SECTION_LANDINGS`**, the nearest live section, for a page upstream has and this site has not
+   ported. Not an equivalence, and last on purpose: the day the page is ported, rule 2 matches
+   first and the entry goes inert on its own.
 
 It also follows upstream's own redirect chains to their terminal destination first. Many upstream
 entries point at a URL that is itself a redirect source, up to three hops deep, so a raw
 `destination` is often not where a reader ends up.
+
+**A source that names a live route here is skipped, not emitted.** Next runs `redirects()` before
+anything renders, so such a redirect wins over the route and makes it unreachable. Upstream's
+homepage `/` is the standing example. `reservedRouteReason` in `scripts/lib/upstream-pages.mjs`
+holds the list: the root, `/llms*`, `/og`, `/api`, `/img`, the `public/` asset directories, and
+the icon and PDF files. `/docs` is checked against the content tree instead of banned wholesale.
 
 **The guiding rule: a redirect to a plausible-but-wrong page is worse than a 404.** It silently
 sends readers somewhere wrong, and `redirects:check` cannot catch it, because the destination
 exists.
 
 Anything unresolvable lands in `redirects.legacy.todo.json`. **That file reached `[]` on
-2026-08-31 and is now a tripwire, not a backlog.** A non-empty todo after a regeneration means
-upstream added a redirect this site cannot resolve; map it in `MANUAL_DESTINATIONS`, confirming the
-upstream page's frontmatter title against the local candidates, rather than leaving it parked.
+2026-08-31, stayed `[]` when canonical URLs were added on 2026-09-11, and is a tripwire, not a
+backlog.** A non-empty todo after a regeneration means upstream added a page or a redirect this
+site cannot resolve; map it in `MANUAL_DESTINATIONS` (or `SECTION_LANDINGS`, when this site has no
+such page yet), confirming the upstream page's frontmatter title against the local candidates,
+rather than leaving it parked.
 
 `pnpm redirects:check` validates every destination against `/llms.txt` — the router's own page
 list — and fails on a dead destination or a source that shadows a live page. It needs the site
