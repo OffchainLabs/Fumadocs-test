@@ -5,6 +5,7 @@
     "stake-and-validator-configurations",
     "arbitrum-chain-finality",
     "fast-withdrawals",
+    "test-chain-configuration",
     "..."
   ]
 }

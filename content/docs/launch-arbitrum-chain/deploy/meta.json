@@ -1,4 +1,11 @@
 {
-  "title": "Deploy an arbitrum chain",
-  "pages": ["deploying-an-arbitrum-chain", "deploying-token-bridge", "canonical-factory-contracts", "..."]
+  "title": "Deploy an Arbitrum chain",
+  "pages": [
+    "deploying-an-arbitrum-chain",
+    "deploying-token-bridge",
+    "token-bridge-troubleshooting",
+    "canonical-factory-contracts",
+    "custom-genesis-state",
+    "..."
+  ]
 }

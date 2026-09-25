@@ -28,3 +28,8 @@ content/partials/manifest.json
 
 # Local, git-ignored assistant guidance
 CLAUDE.md
+
+# Generator output. `stringifyMeta` (scripts/lib/doc-links.ts) writes one array entry per line;
+# Prettier collapses a short array onto one. Formatting these would fight `pnpm move-doc` on every
+# run, each undoing the other's style. `.lintstagedrc.ts` excludes them for the same reason.
+**/meta.json

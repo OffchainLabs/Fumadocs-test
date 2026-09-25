@@ -11,7 +11,9 @@
     "state-growth",
     "post-launch-contract-deployments",
     "bp-recovery",
+    "sequencer-troubleshooting",
     "validator-troubleshooting",
+    "error-index",
     "..."
   ]
 }

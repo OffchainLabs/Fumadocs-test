@@ -8,7 +8,7 @@ sme: mahsamoosavi
 
 Inheritance allows you to build upon existing smart contract functionality without duplicating code. In Stylus, the Rust SDK provides tools to implement inheritance patterns similar to Solidity, but with some important differences. This guide walks you through implementing trait-based composition in your Stylus smart contracts.
 
-<VanillaAdmonition type="caution" title="For Solidity developers">
+<VanillaAdmonition type="warning" title="For Solidity developers">
   There's no direct equivalent of inheritance in Rust, but the following will show you the Rust-way of achieving similar results.
 </VanillaAdmonition>
 
@@ -22,7 +22,7 @@ Before implementing trait-based composition, ensure you have:
 
 <CustomDetails summary="Rust toolchain">
 
-Follow the instructions on [Rust Lang's installation page](https://www.rust-lang.org/tools/install) to install a complete Rust toolchain (v1.91 or newer) on your system. After installation, ensure you can access the programs `rustup`, `rustc`, and `cargo` from your preferred terminal application.
+Follow the instructions on [Rust Lang's installation page](https://www.rust-lang.org/tools/install) to install a complete Rust toolchain (v<Var name="stylusRustToolchain" /> or newer) on your system. After installation, ensure you can access the programs `rustup`, `rustc`, and `cargo` from your preferred terminal application.
 
 </CustomDetails>
 
@@ -34,7 +34,7 @@ In your terminal, run:
 cargo install --force cargo-stylus
 ```
 
-Add WASM ([WebAssembly](https://webassembly.org/)) as a build target for the specific Rust toolchain you are using. The below example sets your default Rust toolchain to 1.91 as well as adding the WASM build target:
+Add WASM ([WebAssembly](https://webassembly.org/)) as a build target for the specific Rust toolchain you are using. The below example sets your default Rust toolchain to <Var name="stylusRustToolchain" /> as well as adding the WASM build target:
 
 ```shell
 rustup default 1.91
@@ -166,7 +166,7 @@ This approach is aligned with Rust's composition patterns and offers better type
 
 If both parent and child implement the same method, the one in the child will override the one in the parent. This allows for customizing inherited functionality.
 
-<VanillaAdmonition type="caution" title="No explicit override keywords">
+<VanillaAdmonition type="warning" title="No explicit override keywords">
   Stylus does not currently contain explicit override or virtual keywords for marking override functions. It is important to carefully ensure that contracts are only overriding the functions you intend to override.
 </VanillaAdmonition>
 
@@ -174,7 +174,7 @@ If both parent and child implement the same method, the one in the child will ov
 
 When using trait-based composition, you need to be careful about function selectors to ensure correct ABI generation. Due to how Rust handles traits, you may need to explicitly set selectors for methods to match Solidity's expected function signatures.
 
-<VanillaAdmonition type="caution" title="Selector precision">
+<VanillaAdmonition type="warning" title="Selector precision">
   When implementing traits with methods that have matching names, you must manually use the `#[selector(name = "ActualName")]` attribute to avoid method selector collisions. This is particularly important when implementing standard interfaces like **ERC-20** or **ERC-721**.
 </VanillaAdmonition>
 
@@ -233,4 +233,3 @@ In a typical composition chain:
 - If not found there, it looks in the first trait specified in the inheritance list
 - If still not found, it searches in the next trait in the list
 - This continues until the method is found or all possibilities are exhausted
-```

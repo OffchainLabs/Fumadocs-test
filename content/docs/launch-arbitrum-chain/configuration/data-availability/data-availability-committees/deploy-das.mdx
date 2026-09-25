@@ -7,9 +7,7 @@ author: Mehdi Salehi, jose-franco
 sme: Mehdi Salehi, jose-franco
 ---
 
-<p>
-  <Term id="arbitrum-anytrust-protocol">AnyTrust</Term> chains rely on an external Data Availability Committee (DAC) to store data and provide it on-demand instead of using its <Term id="parent-chain">parent chain</Term> as the Data Availability (DA) layer. The members of the DAC run a Data Availability Server (DAS) to handle these operations.
-</p>
+<Term id="arbitrum-anytrust-protocol">AnyTrust</Term> chains rely on an external Data Availability Committee (DAC) to store data and provide it on-demand instead of using its <Term id="parent-chain">parent chain</Term> as the Data Availability (DA) layer. The members of the DAC run a Data Availability Server (DAS) to handle these operations.
 
 In this how-to, you'll learn how to deploy a DAS that exposes:
 
@@ -83,7 +81,7 @@ DA servers also have an optional REST aggregator which, when a data batch is not
 
 Gather the following information:
 
-- The latest Nitro docker image: `<Var name="latestNitroNodeImage" />`
+- The latest Nitro docker image: <Var name="latestNitroNodeImage" />
 - An RPC endpoint for the <Term id="parent-chain">parent chain</Term>. It is recommended to use a [third-party provider RPC](/docs/arbitrum-essentials/reference/node-providers#third-party-rpc-providers) or [run your own node](/docs/run-a-node/run-full-node) to prevent being rate limited.
 - The `SequencerInbox` contract address in the parent chain.
 

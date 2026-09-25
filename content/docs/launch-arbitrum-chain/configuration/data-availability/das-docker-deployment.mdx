@@ -1,6 +1,5 @@
 ---
 title: 'How to deploy a Data Availability Server (DAS) with Docker'
-sidebar_label: 'Deploy DAS with Docker'
 description: 'Deploy a Data Availability Server (DAS) for your AnyTrust chain using Docker and Docker Compose, without Kubernetes: generate BLS keys in a container, run the server, and verify it.'
 user_story: 'As a Data Availability Committee member, I want to deploy a DAS with Docker and Docker Compose so that I can run a committee member server without a Kubernetes cluster.'
 content_type: 'how-to'
@@ -8,9 +7,7 @@ author: 'Gowtham118'
 sme: 'Gowtham118'
 ---
 
-<p>
-  <Term id="arbitrum-anytrust-protocol">AnyTrust</Term> chains rely on an external <Term id="data-availability-committee-dac">Data Availability Committee (DAC)</Term> to store data and provide it on-demand instead of using its <Term id="parent-chain">parent chain</Term> as the Data Availability (DA) layer. The members of the DAC run a Data Availability Server (DAS) to handle these operations.
-</p>
+<Term id="arbitrum-anytrust-protocol">AnyTrust</Term> chains rely on an external <Term id="data-availability-committee-dac">Data Availability Committee (DAC)</Term> to store data and provide it on-demand instead of using its <Term id="parent-chain">parent chain</Term> as the Data Availability (DA) layer. The members of the DAC run a Data Availability Server (DAS) to handle these operations.
 
 In this how-to, you'll learn how to deploy a DAS using Docker and [Docker Compose](https://docs.docker.com/compose/), without a Kubernetes cluster. Every step runs inside the official Nitro Docker image, including key generation, so you never need to build Nitro from source.
 
@@ -42,7 +39,7 @@ As of Nitro v3.10.0, the `daserver` and `datool` binaries have been renamed to `
 Gather the following information and tooling:
 
 - A recent version of [Docker Engine](https://docs.docker.com/engine/install/) with the Docker Compose plugin (so that `docker compose` works).
-- The latest Nitro docker image: `<Var name="latestNitroNodeImage" />`
+- The latest Nitro docker image: <Var name="latestNitroNodeImage" />
 - An RPC endpoint for the <Term id="parent-chain">parent chain</Term>. It is recommended to use a [third-party provider RPC](/docs/arbitrum-essentials/reference/node-providers#third-party-rpc-providers) or [run your own node](/docs/run-a-node/run-full-node) to prevent being rate limited.
 - The `SequencerInbox` contract address in the parent chain.
 - If you wish to configure a REST aggregator for your DAS, the URL where the list of REST endpoints is kept. Refer to [State synchronization](/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/deploy-das#state-synchronization) for more information.
@@ -66,11 +63,16 @@ The DAS container runs as a non-root user with UID and GID `1000` (the first reg
 
 We'll generate a BLS keypair. The private key will be used to sign the <Term id="data-availability-certificate">Data Availability Certificates (DACert)</Term> when receiving requests to store data, and the public key will be used to prove that the DACert was signed by the DAS. The BLS private key is sensitive and care must be taken to ensure it is generated and stored in a safe environment.
 
-The keypair is generated with the `anytrusttool keygen` utility, which ships in the same Docker image as the DAS, so you can run it with `docker run` and a volume mount to have the keys land on your host:
+The keypair is generated with the `anytrusttool keygen` utility, which ships in the same Docker image as the DAS (currently <Var name="latestNitroNodeImage" />), so you can run it with `docker run` and a volume mount to have the keys land on your host:
+
+{/* sync-with-var: latestNitroNodeImage */}
+{/* The docker run commands below hardcode the image tag, because <Var> does not evaluate inside a
+    code fence. The marker above lets `pnpm nitro:check-release` rewrite them when it bumps the
+    variable. Do not add it to a page that states a Nitro version as a historical fact. */}
 
 ```shell
 docker run --rm -v $(pwd)/bls_keys:/home/user/bls_keys --entrypoint anytrusttool \
-<Var name="latestNitroNodeImage" /> keygen --dir /home/user/bls_keys
+offchainlabs/nitro-node:v3.11.3-beb2108 keygen --dir /home/user/bls_keys
 ```
 
 This creates two files in `bls_keys/`, both base64-encoded and readable only by their owner (mode `600`):
@@ -205,12 +207,12 @@ A healthy DAS answers `{"jsonrpc":"2.0","id":0,"result":null}`.
 
 By default, the DAS only accepts store requests signed by the sequencer's key (identified via the `SequencerInbox` contract). To send a test store request yourself, configure the DAS to also accept requests signed with an ECDSA key of your choosing.
 
-First, generate an ECDSA keypair (again, no local Nitro build needed):
+First, generate an ECDSA keypair using the same <Var name="latestNitroNodeImage" /> image (again, no local Nitro build needed):
 
 ```shell
 mkdir -p ecdsa_keys
 docker run --rm -v $(pwd)/ecdsa_keys:/home/user/ecdsa_keys --entrypoint anytrusttool \
-<Var name="latestNitroNodeImage" /> keygen --dir /home/user/ecdsa_keys --ecdsa
+offchainlabs/nitro-node:v3.11.3-beb2108 keygen --dir /home/user/ecdsa_keys --ecdsa
 ```
 
 Then add the extra signer to your `docker-compose.yml` — a new flag in `command` and a new entry in `volumes` — and apply the change with `docker compose up -d`:

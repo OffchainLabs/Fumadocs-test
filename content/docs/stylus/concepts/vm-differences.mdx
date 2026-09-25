@@ -1,7 +1,6 @@
 ---
 title: 'VM and execution differences'
 description: 'Understand the differences between EVM and WASM execution models in Stylus'
-sidebar_label: 'VM differences'
 user_story: 'As a developer, I want to understand how WASM execution differs from EVM'
 content_type: 'concept'
 author: chrisco
@@ -168,7 +167,7 @@ For verified per-operation figures, see the [performance comparison](/docs/stylu
 
 ### EVM contracts
 
-- **Maximum size**: 24,576 bytes (24 KB) of deployed bytecode
+- **Maximum size**: <Var name="maxCodeSizeBytes" /> bytes of deployed bytecode
 - **Limit reason**: Block gas limit and deployment costs
 - **Workaround**: Contract splitting, proxies
 

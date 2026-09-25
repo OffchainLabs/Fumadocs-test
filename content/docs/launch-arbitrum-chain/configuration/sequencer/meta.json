@@ -1,6 +1,7 @@
 {
   "title": "Sequencer configuration",
   "pages": [
+    "sequencer-config-reference",
     "bold-adoption-for-arbitrum-chains",
     "batch-posting-assertion-control",
     "config-sequencer-timing-adjustments",

@@ -27,16 +27,18 @@ next-env.d.ts
 
 # tooling caches
 /.serena
-# Ignore .claude/ contents but keep the design docs in .claude/docs/ tracked.
-# All three lines are load-bearing, in this order:
+# Ignore .claude/ contents but keep the design docs, skills, and hooks tracked.
+# All lines are load-bearing, in this order:
 #   1. un-ignore the directory itself — the user's global excludesFile
 #      (~/.gitignore_global) ignores `.claude/`, and git will not descend into an
 #      excluded directory, so no negation below it can take effect until this
 #      repo-level rule (higher precedence) re-admits it;
 #   2. ignore the *contents* rather than the directory, because git cannot
 #      re-include a path whose parent directory is excluded;
-#   3. re-include the design docs.
+#   3. re-include the design docs, agent skills, and hooks.
 !/.claude/
 /.claude/*
 !/.claude/docs/
+!/.claude/skills/
+!/.claude/hooks/
 .env*

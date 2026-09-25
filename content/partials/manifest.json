@@ -506,7 +506,7 @@
       "providers",
       "notice"
     ],
-    "usedIn": 6,
+    "usedIn": 7,
     "snippet": "<include cwd>content/partials/launch-arbitrum-chain/_raas-providers-notice.mdx</include>"
   },
   {

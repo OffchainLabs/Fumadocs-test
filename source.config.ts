@@ -1,12 +1,60 @@
-import { rehypeCodeDefaultOptions } from 'fumadocs-core/mdx-plugins';
 import { metaSchema, pageSchema } from 'fumadocs-core/source/schema';
 import { defineCollections, defineConfig, defineDocs } from 'fumadocs-mdx/config';
-import { transformerTwoslash } from 'fumadocs-twoslash';
-import rehypeKatex from 'rehype-katex';
-import remarkMath from 'remark-math';
+import { execFileSync } from 'node:child_process';
 import { z } from 'zod';
 
+import { mdxOptions } from './lib/mdx-options.ts';
 import { referenceSchema } from './lib/reference-schema';
+
+/**
+ * Whether git can answer "when was this file last changed?" truthfully.
+ *
+ * `lastModified: true` makes fumadocs-mdx run `git log --name-only -- <dir>` once and stamp each
+ * file with the newest commit that touched it. In a **shallow** clone that answer is wrong, not
+ * missing: the oldest commit in the truncated history is grafted as a parentless root, so git
+ * diffs it against the empty tree and reports it as *adding every file in its tree*. Measured on
+ * this repo at `--depth=10` (Vercel's default clone depth): 430 of ~450 pages came back stamped
+ * with one boundary commit that in full history touched zero files under `content/docs`.
+ *
+ * A wrong "Last updated" date is worse than none, so no date is resolved unless the history is
+ * complete (see `lastModified` below for how that is expressed without changing the collection's
+ * type). To get real dates on Vercel, set `VERCEL_DEEP_CLONE=true` in the project's environment
+ * variables (see INTERNALS.md, "Last modified dates"); nothing else is needed, because a deep
+ * clone makes this probe return `true` on its own.
+ *
+ * `git` missing entirely, or a non-repo checkout, lands in the `catch` and also omits the date.
+ */
+function hasFullGitHistory(): boolean {
+  try {
+    const out = execFileSync('git', ['rev-parse', '--is-shallow-repository'], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    });
+
+    return out.trim() === 'false';
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * The `lastModified` option for both doc collections.
+ *
+ * Deliberately **never `false`**. The option is part of the collection's type contract, not just
+ * its behaviour: fumadocs-mdx only adds `lastModified?: Date` to the generated `DocData` when the
+ * option is truthy, so switching it off would delete the field from the type and
+ * `page.data.lastModified` would stop compiling. That would make `types:check` pass or fail
+ * depending on how the repository happened to be cloned, and it did: CI checks out shallow, so the
+ * first version of this change was green locally and red in CI.
+ *
+ * So the guard picks between two truthy values. With full history, `true` uses fumadocs-mdx's own
+ * batched `git log`. Without it, a resolver that answers "unknown" for every file keeps the field
+ * typed and simply yields no dates, which the page renders as no line at all.
+ *
+ * It has to be decided here rather than at render time: pages are rendered on demand in a
+ * serverless runtime that has neither git nor the repository.
+ */
+const lastModified = hasFullGitHistory() ? true : async () => undefined;
 
 /**
  * Per PRD §4.1, every doc page requires:
@@ -44,7 +92,7 @@ const arbitrumPageSchema = pageSchema.extend({
 /**
  * Partials live in `content/partials/` — outside the doc collection `dir` entirely — so they can
  * never be routed and need no glob exclusion here. They are inlined via `<include cwd>…</include>`.
- * `scripts/partials-check.mjs` enforces that no `_`-prefixed file reappears under content/docs.
+ * `scripts/partials-check.ts` enforces that no `_`-prefixed file reappears under content/docs.
  */
 export const docs = defineDocs({
   dir: 'content/docs',
@@ -53,6 +101,10 @@ export const docs = defineDocs({
     postprocess: {
       includeProcessedMarkdown: true,
     },
+    // Exposes `page.data.lastModified` (a `Date`) for the "Last updated on …" line in
+    // app/docs/[[...slug]]/page.tsx, matching upstream Docusaurus' `showLastUpdateTime`.
+    // Guarded, see `hasFullGitHistory` above.
+    lastModified,
   },
   meta: {
     schema: metaSchema,
@@ -74,6 +126,17 @@ export const docsVersions = defineCollections({
   dir: 'content/_versions',
   files: ['**/*.mdx'],
   schema: arbitrumPageSchema,
+  postprocess: {
+    // The same flag the `docs` collection sets, and it has to be set twice: the option is per
+    // collection, so that one covers live pages only. It is what makes `getText('processed')`
+    // resolve on an archive, which is how an archive gets the markdown mirror every live page has
+    // (`/docs/<slug>/<id>.md` and the two other shapes, FS-2711). Drop it and those URLs fail at
+    // request time, a long way from here.
+    includeProcessedMarkdown: true,
+  },
+  // An archived page carries its own date: the last time the archive file itself changed, not the
+  // live page's. Same guard as the docs collection.
+  lastModified,
 });
 
 /**
@@ -91,23 +154,4 @@ export const glossary = defineCollections({
   schema: referenceSchema,
 });
 
-export default defineConfig({
-  mdxOptions: {
-    // Fumadocs-mdx already wires `remark-include` internally (verified in
-    // dist/build-mdx-*.js). The `<include>` MDX directive works out of the box
-    // — no additional remark plugins required for partial inclusion.
-    //
-    // remark-math + rehype-katex render the LaTeX math ($…$ / $$…$$) used across
-    // the ported docs (mirrors the Docusaurus setup). KaTeX CSS is imported in
-    // app/layout.tsx.
-    remarkPlugins: [remarkMath],
-    rehypePlugins: (v) => [rehypeKatex, ...v],
-    //
-    // twoslash only activates on ```ts twoslash blocks (TypeScript). Other
-    // languages (shell, Rust, Solidity) fall through to the default transformers.
-    rehypeCodeOptions: {
-      ...rehypeCodeDefaultOptions,
-      transformers: [...(rehypeCodeDefaultOptions.transformers ?? []), transformerTwoslash()],
-    },
-  },
-});
+export default defineConfig({ mdxOptions });

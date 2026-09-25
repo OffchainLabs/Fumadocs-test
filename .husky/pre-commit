@@ -1,0 +1,11 @@
+# husky's own wrapper (.husky/_/h) already exits 0 when HUSKY=0, before this file ever runs.
+# Verified against the installed husky@9.1.7; this is a claim about a vendored file, so a husky
+# upgrade could change it and this comment would need re-checking.
+# CI is not affected by that check, so skip explicitly here — CI runs the full `Gates` job in
+# .github/workflows/ci.yml already, and re-running lint-staged in a CI checkout (no staged
+# files, prettier/tsc double-run) would be redundant at best and fail confusingly at worst.
+if [ "$CI" = "true" ]; then
+  exit 0
+fi
+
+pnpm exec lint-staged

@@ -21,6 +21,14 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          # Depth 2, not the default 1, for `versioned-docs-check.ts` below (FS-2747). On a
+          # `pull_request` run this checks out the synthetic merge commit, whose first parent is
+          # the base branch's tip, so depth 2 keeps that parent and the script can diff the two
+          # without a network call. Depth 1 grafts HEAD parentless, which is what made the check
+          # silently report nothing here. Still a shallow clone, so `hasFullGitHistory()` in
+          # source.config.ts keeps answering false and `lastModified` stays off, which is what
+          # stops CI stamping every page with one boundary commit's date.
+          fetch-depth: 2
 
       - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
 
@@ -47,40 +55,67 @@ jobs:
         run: pnpm partials:check
 
       - name: Archived page registry
-        run: node scripts/versioned-docs-check.mjs
+        run: node scripts/versioned-docs-check.ts
 
       - name: Glossary references resolve
         run: pnpm references:check
 
-      # Fumadocs has no `onBrokenLinks: 'throw'`, and `pnpm build` does not check links,
-      # so this step is the only thing standing between a broken link and main.
-      # Caveat: check-links does not validate anchors — a live page with a dead #anchor passes.
+      - name: FAQ structured-data ids resolve
+        run: pnpm faq:check
+
+      # A markdown image with a remote src renders as a 500: next/image needs a width and
+      # source.config.ts no longer measures remote images. Offline, so it is safe to block on.
+      - name: No remote markdown images
+        run: pnpm images:presence
+
+      # Validate paths and fragments using the site's MDX transforms (including partials).
+      # pnpm build runs this same blocking check before next build.
       - name: Internal links
         run: pnpm check-links
 
-  content-debt:
-    # These two gates fail on pre-existing debt, so they report without blocking.
-    # Counts verified against main on 2026-08-31:
-    #   format:check      49 files unformatted  → fix with `pnpm format`
-    #   content:lint      13 findings across 7 files (breakdown below)
+      # Blocking, unlike its sibling `precompiles:check`, because this generator is offline and
+      # deterministic: it reads the network registry that ships inside `@arbitrum/sdk`, and that
+      # pin is exact (`4.1.0`). So this step cannot go red on its own. It goes red on a human act,
+      # and each one deserves to block:
+      #   1. Someone edited the generated partial by hand, against the do-not-edit marker inside
+      #      it. Before this step existed, that passed CI, merged, and was then silently reverted
+      #      by the next weekly upstream-refresh run under the automation's authorship.
+      #   2. A PR bumped `@arbitrum/sdk` to a release that moves a published address. An address
+      #      is what a reader pastes into a transaction, so it must never change unreviewed.
+      #   3. A PR bumped one of the other pins the output depends on. Prettier is what aligns the
+      #      table columns (the generator emits loose pipes), so a `prettier` or
+      #      `@offchainlabs/prettier-config` release that reshapes MDX tables moves every row.
+      # None of these reddens an unrelated PR: CI installs from each branch's own lockfile, so only
+      # the bumping PR sees the new pin. The fix is the same in all three cases, one command in that
+      # PR: `pnpm contracts:generate`, then commit the regenerated partial.
+      - name: Generated contract addresses are current
+        run: pnpm contracts:check
+
+      # Both of these blocked nothing until 2026-09-15: they sat in a non-blocking
+      # `Content debt` tier while the migration worked its counts down (format:check from 49
+      # files, content:lint from 181 findings). Both reached zero, which is what the tier
+      # existed to wait for, so they moved here and the tier is gone. A failure now is a
+      # defect the PR introduced, not inherited: `pnpm format` fixes the first, and
+      # `pnpm content:lint` names the rule and line for the second.
+      - name: Formatting
+        run: pnpm format:check
+
+      - name: MDX structural lint
+        run: pnpm content:lint
+
+  network-checks:
+    # The one non-blocking check that is not about content quality. `format:check` and
+    # `content:lint` used to share this job as a `Content debt` backlog; both reached zero on
+    # 2026-09-15 and moved into `gates`, which is what the backlog existed for.
     #
-    # content:lint by rule:
-    #   A2  invalid admonition type                 7 in  4 files
-    #   A5  internal link keeps a .md/.mdx suffix   6 in  3 files
-    #
-    # A1 (empty admonition body, was 98) and A4 (markdown/entities inside title=, was 68)
-    # are now zero. They were one defect, not 166: the Docusaurus→Fumadocs admonition
-    # codemod stranded body prose inside `title=`. Recovering it in 0e5a64a took this
-    # job from 181 findings to 15.
-    #
-    # Read the count from the script's own summary line, not by counting printed lines:
-    # content:lint groups by rule and truncates each group, which is how this comment
-    # previously came to claim 39 findings.
-    #
-    # references:check reached zero and moved into `gates` on 2026-08-20.
-    # check-links reached zero and moved into `gates` on 2026-08-31.
-    # Move a step into the `gates` job above once its count reaches zero.
-    name: Content debt (non-blocking)
+    # What is left reports rather than blocks for a different reason, and reaching zero is not
+    # what would promote it: it is already green. It fetches ~30 Solidity sources from
+    # raw.githubusercontent at every run, with no retry, so a GitHub blip turns it red for reasons
+    # unrelated to the change under review. This is now the only job here that does not block:
+    # `build` was promoted by FS-2746 once FS-2681 took the network out of it. Its sibling
+    # `contracts:check` is offline, which is why that one blocks and this one cannot. Losing the
+    # network dependency is what would promote it.
+    name: Network checks (non-blocking)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -96,25 +131,45 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - name: Formatting
-        run: pnpm format:check
-        continue-on-error: true
-
-      - name: MDX structural lint
-        run: pnpm content:lint
+      - name: Generated precompile tables are current
+        run: pnpm precompiles:check
         continue-on-error: true
 
   build:
-    # Non-blocking: the MDX image pipeline fetches remote images at build time, so a
-    # dead third-party URL turns this red for reasons unrelated to the change under
-    # review. It still catches MDX compile errors that types:check cannot see.
-    name: Build (non-blocking)
+    # Blocking since FS-2746. It was advisory until then because the MDX image pipeline fetched
+    # remote images at build time, so a dead third-party URL turned it red for reasons unrelated
+    # to the change under review. FS-2681 set `remarkImageOptions: { external: false }` in
+    # source.config.ts, and the build no longer touches the network for images.
+    #
+    # What it blocks on, none of which any step in `gates` can see: render-time MDX failures
+    # (a page that compiles but throws at prerender; a syntax error already fails check-links),
+    # the 404 shape and prerender assertions of FS-2698 and FS-2688,
+    # `redirects:check`, FS-2724's og:* tags, FS-2732's "no MDX comment in the mirrors", and
+    # FS-2733's rendered link back into this repository.
+    #
+    # It stays a job of its own rather than folding into `gates`, so the build keeps running in
+    # parallel with those thirteen steps and promoting it costs no PR latency.
+    #
+    # Nothing after `pnpm install` reaches the network, since FS-2750 (the checkout and the
+    # install still do, as they must). The last dependency in the build itself was --font-code,
+    # declared with `JetBrains_Mono` from next/font/google, which made the build fetch that face
+    # from Google Fonts; the loader retries three times and only falls back to a local face in dev,
+    # so an outage failed the build, and this job caches only the pnpm store. That face is now
+    # committed under public/fonts/ and loaded with next/font/local, as all four Aeonik faces are.
+    # Do not add a next/font/google declaration back; a new face belongs in public/fonts/ with its
+    # licence beside it.
+    #
+    # "Required" is a branch-protection setting, not something this file can express: the check
+    # name `Build` has to be in the required list on `main` for a red run to hold a merge.
+    name: Build
     runs-on: ubuntu-latest
-    continue-on-error: true
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          # `pnpm build` runs `versioned-docs-check.ts` first, so this job needs the same depth
+          # the `Gates` checkout takes, and for the same reason. See the comment there.
+          fetch-depth: 2
 
       - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
 
@@ -126,3 +181,31 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       - run: pnpm build
+
+      # redirects:check needs a running site: it reads `/llms.txt`, the router's own page list.
+      # Reusing the build above is why it lives here; the step costs about three seconds.
+      # Deliberately a local server, not a Vercel preview — see INTERNALS.md#redirects.
+      - name: Redirects and static docs routing against the built site
+        run: |
+          set -euo pipefail
+          # `npx next start`, not `pnpm start`: `$!` would be the pnpm wrapper, and killing that
+          # orphans the server. Output to a file: a server on this step's stdout holds the pipe
+          # open and hangs the step until the job timeout.
+          log="$RUNNER_TEMP/next-start.log"
+          npx next start > "$log" 2>&1 &
+          server=$!
+          trap 'kill "$server" 2>/dev/null || true' EXIT
+          ready=0
+          for _ in $(seq 1 60); do
+            if curl -sf -o /dev/null http://localhost:3000/llms.txt; then ready=1; break; fi
+            # a server that died on boot should not wait out the full 120s
+            if ! kill -0 "$server" 2>/dev/null; then break; fi
+            sleep 2
+          done
+          if [ "$ready" != 1 ]; then
+            cat "$log"
+            echo "::error::next start never served /llms.txt"
+            exit 1
+          fi
+          pnpm redirects:check
+          STATIC_DOCS_TEST_URL=http://localhost:3000 node --test scripts/static-docs-http.test.ts

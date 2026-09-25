@@ -12,9 +12,7 @@ sme: jose-franco
 The main use-case for running a mirror DAS is to complement your setup as a Data Availability Committee (DAC) member. That means that you should run your main DAS first, and then configure the mirror DAS. Refer to [How to deploy a DAS](/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/deploy-das) if needed.
 
 </VanillaAdmonition>
-<p>
-  <Term id="arbitrum-anytrust-protocol">AnyTrust</Term> chains rely on an external Data Availability Committee (DAC) to store data and provide it on-demand instead of using its <Term id="parent-chain">parent chain</Term> as the Data Availability (DA) layer. The members of the DAC run a Data Availability Server (DAS) to handle these operations.
-</p>
+<Term id="arbitrum-anytrust-protocol">AnyTrust</Term> chains rely on an external Data Availability Committee (DAC) to store data and provide it on-demand instead of using its <Term id="parent-chain">parent chain</Term> as the Data Availability (DA) layer. The members of the DAC run a Data Availability Server (DAS) to handle these operations.
 
 In this how-to, you'll learn how to configure a mirror DAS that serves `GET` requests for stored batches of information through a REST HTTP interface. For a refresher on DACs, refer to the [Introduction](/docs/launch-arbitrum-chain/configuration/data-availability/data-availability-committees/get-started).
 
@@ -42,7 +40,7 @@ A mirror DAS will use the same tool and, thus, the same configuration options as
 
 Gather the following information:
 
-- The latest Nitro docker image: `<Var name="latestNitroNodeImage" />`
+- The latest Nitro docker image: <Var name="latestNitroNodeImage" />
 - An RPC endpoint for the <Term id="parent-chain">parent chain</Term>. It is recommended to use a [third-party provider RPC](/docs/arbitrum-essentials/reference/node-providers#third-party-rpc-providers) or [run your own node](/docs/run-a-node/run-full-node) to prevent being rate limited.
 - The SequencerInbox contract address in the parent chain.
 - URL of the list of REST endpoints of other DA servers to configure the REST aggregator.
